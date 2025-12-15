@@ -5,7 +5,7 @@ import re
 
 # Configuration
 BASE_DIR = "/Users/brucehuynh/Documents/Code_Projects/Daily_Promotion/content"
-DATES = ["2025-11-29", "2025-12-01","2025-12-05", "2025-12-08", "2025-12-13"]
+DATES = ["2025-11-29", "2025-12-01","2025-12-05", "2025-12-08", "2025-12-13", "2025-12-15"]
 OUTPUT_FILE = os.path.join(BASE_DIR, "analysis_result", "promo_diff_report.csv")
 
 # Column Mapping

@@ -320,12 +320,47 @@ async def scrape_product_data(page, url, csv_path, csv_lock, forced_color=None, 
     date_str = now_utc.astimezone(local_tz).strftime('%Y-%m-%d')
 
     # Data Extraction
-    product_name = await get_text_safe(page, PRODUCT_NAME_SELECTOR)
-    if not product_name:
+    # Data Extraction
+    product_name = ""
+    try:
+        # 1. Primary Selector (with waiting)
         try:
-             product_name = await page.locator(".st-name").text_content()
-        except:
-             product_name = "Unknown"
+            await page.wait_for_selector(PRODUCT_NAME_SELECTOR, timeout=5000)
+        except: pass
+        
+        product_name = await get_text_safe(page, PRODUCT_NAME_SELECTOR)
+
+        # 2. Fallback: Generic H1
+        if not product_name:
+             h1_gen = page.locator("h1").first
+             if await h1_gen.count() > 0:
+                 product_name = await h1_gen.inner_text()
+        
+        # 3. Fallback: Meta Title
+        if not product_name:
+             meta_title = page.locator('meta[property="og:title"]').first
+             if await meta_title.count() > 0:
+                 product_name = await meta_title.get_attribute("content")
+        
+        # 4. Fallback: .st-name class
+        if not product_name:
+             st_name = page.locator(".st-name").first
+             if await st_name.count() > 0:
+                 product_name = await st_name.inner_text()
+
+        # 5. Fallback: Document Title
+        if not product_name:
+             product_name = await page.title()
+             # Clean common suffixes
+             if product_name:
+                product_name = product_name.split('|')[0].split('-')[0].strip()
+
+    except Exception as e:
+        print(f"Product naming error: {e}")
+        product_name = "Unknown"
+
+    if not product_name:
+        product_name = "Unknown"
     
     # Cleanup Name
     product_name = product_name.strip().replace("Mini", "mini").replace("Wi-Fi", "WiFi")
