@@ -15,7 +15,8 @@ COLUMN_MAPPING = {
     "Khuyen_Mai": "Promotion Details",
     "Thanh_Toan": "Payment Promo",
     "Uu_Dai_Them": "Payment Promo",
-    "Other_promotion": "Other Promo"
+    "Other_promotion": "Other Promo",
+    "Link": "Link"
 }
 
 def load_data():
@@ -39,6 +40,9 @@ def load_data():
                     df = pd.read_csv(file_path, sep=None, engine='python')
                     df = df.rename(columns=COLUMN_MAPPING)
                     df['Channel'] = channel_name
+                    
+                    if "Link" not in df.columns:
+                        df["Link"] = ""
                     
                     # Date formatting
                     dt_obj = pd.to_datetime(date_str)
@@ -108,7 +112,12 @@ def collapse_colors_text(df):
             return "All Colors"
         return colors[0]
 
-    collapsed = df_filled.groupby(group_cols)['Color'].apply(agg_colors).reset_index()
+    def agg_links(x):
+        links = list(x)
+        if links: return links[0]
+        return ""
+
+    collapsed = df_filled.groupby(group_cols).agg({'Color': agg_colors, 'Link': agg_links}).reset_index()
     return collapsed
 
 def generate_diff(df):
@@ -146,6 +155,7 @@ def generate_diff(df):
                 "Channel": curr_row['Channel'],
                 "Product Name": curr_row['Product Name'],
                 "Color": curr_row['Color'],
+                "Link": curr_row['Link'],
                 "Date": curr_row['Date'],
                 "Prev_Date": prev_row['Date']
             }
@@ -170,7 +180,7 @@ def generate_diff(df):
     if changes:
         diff_df = pd.DataFrame(changes)
         # Reorder columns: Changed_Col -> New_Col -> Old_Col
-        base_cols = ["Channel", "Product Name", "Color", "Date", "Prev_Date"]
+        base_cols = ["Channel", "Product Name", "Color", "Link", "Date", "Prev_Date"]
         
         dynamic_cols = []
         for col in valid_cols:

@@ -16,7 +16,8 @@ COLUMN_MAPPING = {
     "Khuyen_Mai": "Promotion Details",
     "Thanh_Toan": "Payment Promo",
     "Uu_Dai_Them": "Payment Promo", # MW uses this
-    "Voucher_Image": "Voucher"
+    "Voucher_Image": "Voucher",
+    "Link": "Link"
 }
 
 def load_data():
@@ -47,6 +48,9 @@ def load_data():
                     
                     # Add Metadata
                     df['Channel'] = channel_name
+                    
+                    if "Link" not in df.columns:
+                        df["Link"] = ""
                     
                     # Format date with day of week (e.g. 2025-12-05-FRI)
                     dt_obj = pd.to_datetime(date_str)
@@ -87,7 +91,7 @@ def collapse_colors(df):
     df_filled = df.copy()
     
     # Fill string columns with "N/A"
-    str_cols = ['Channel', 'Date', 'Product Name', 'Promotion Details', 'Color']
+    str_cols = ['Channel', 'Date', 'Product Name', 'Promotion Details', 'Color', 'Link']
     for col in str_cols:
         if col in df_filled.columns:
             df_filled[col] = df_filled[col].fillna("N/A")
@@ -105,7 +109,12 @@ def collapse_colors(df):
             return "All Colors"
         return colors[0]
 
-    collapsed = df_filled.groupby(group_cols)['Color'].apply(agg_colors).reset_index()
+    def agg_links(x):
+        links = list(x)
+        if links: return links[0]
+        return ""
+
+    collapsed = df_filled.groupby(group_cols).agg({'Color': agg_colors, 'Link': agg_links}).reset_index()
     
     # Revert sentinels to NaN (optional, but good for cleanliness)
     for col in num_cols:
@@ -120,14 +129,14 @@ def generate_matrix(df):
         return
 
     # Pivot Data
-    # Index: Channel, Product Name, Color
+    # Index: Channel, Product Name, Color, Link
     # Columns: Date
     # Values: Promo Price
     
     # We need to handle cases where 'Listed Price' or others might differ, 
     # but our collapse_colors groups by them, so they are unique per group.
     
-    pivot_cols = ['Channel', 'Product Name', 'Color']
+    pivot_cols = ['Channel', 'Product Name', 'Color', 'Link']
     
     # Pivot for Promo Price
     pivot_price = df.pivot_table(
