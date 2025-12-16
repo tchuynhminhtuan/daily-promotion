@@ -4,7 +4,7 @@ import glob
 
 # Configuration
 BASE_DIR = "/Users/brucehuynh/Documents/Code_Projects/Daily_Promotion/content"
-DATES = ["2025-11-29", "2025-12-01","2025-12-05", "2025-12-08", "2025-12-13", "2025-12-15"]
+DATES = ["2025-11-29", "2025-12-01","2025-12-05", "2025-12-08", "2025-12-13", "2025-12-16"]
 OUTPUT_FILE = os.path.join(BASE_DIR, "analysis_result", "price_matrix.csv")
 
 # Column Mapping to normalize different CSV headers
@@ -16,8 +16,7 @@ COLUMN_MAPPING = {
     "Khuyen_Mai": "Promotion Details",
     "Thanh_Toan": "Payment Promo",
     "Uu_Dai_Them": "Payment Promo", # MW uses this
-    "Voucher_Image": "Voucher",
-    "Link": "Link"
+    "Voucher_Image": "Voucher"
 }
 
 def load_data():
@@ -48,9 +47,6 @@ def load_data():
                     
                     # Add Metadata
                     df['Channel'] = channel_name
-                    
-                    if "Link" not in df.columns:
-                        df["Link"] = ""
                     
                     # Format date with day of week (e.g. 2025-12-05-FRI)
                     dt_obj = pd.to_datetime(date_str)
@@ -91,7 +87,7 @@ def collapse_colors(df):
     df_filled = df.copy()
     
     # Fill string columns with "N/A"
-    str_cols = ['Channel', 'Date', 'Product Name', 'Promotion Details', 'Color', 'Link']
+    str_cols = ['Channel', 'Date', 'Product Name', 'Promotion Details', 'Color']
     for col in str_cols:
         if col in df_filled.columns:
             df_filled[col] = df_filled[col].fillna("N/A")
@@ -109,12 +105,7 @@ def collapse_colors(df):
             return "All Colors"
         return colors[0]
 
-    def agg_links(x):
-        links = list(x)
-        if links: return links[0]
-        return ""
-
-    collapsed = df_filled.groupby(group_cols).agg({'Color': agg_colors, 'Link': agg_links}).reset_index()
+    collapsed = df_filled.groupby(group_cols)['Color'].apply(agg_colors).reset_index()
     
     # Revert sentinels to NaN (optional, but good for cleanliness)
     for col in num_cols:
@@ -129,14 +120,14 @@ def generate_matrix(df):
         return
 
     # Pivot Data
-    # Index: Channel, Product Name, Color, Link
+    # Index: Channel, Product Name, Color
     # Columns: Date
     # Values: Promo Price
     
     # We need to handle cases where 'Listed Price' or others might differ, 
     # but our collapse_colors groups by them, so they are unique per group.
     
-    pivot_cols = ['Channel', 'Product Name', 'Color', 'Link']
+    pivot_cols = ['Channel', 'Product Name', 'Color']
     
     # Pivot for Promo Price
     pivot_price = df.pivot_table(
