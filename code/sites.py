@@ -240,7 +240,27 @@ total_links={
 
     "ddv_urls":
     [
-
+    'https://didongviet.vn/dien-thoai/iphone-13-128gb.html',
+    'https://didongviet.vn/dien-thoai/iphone-14-128gb.html',
+    'https://didongviet.vn/dien-thoai/iphone-15-128gb.html',
+    'https://didongviet.vn/dien-thoai/iphone-15-256gb.html',
+    'https://didongviet.vn/dien-thoai/iphone-16-128gb.html',
+    'https://didongviet.vn/dien-thoai/iphone-16-plus-128gb.html',
+    'https://didongviet.vn/dien-thoai/iphone-16-plus-256gb.html',
+    'https://didongviet.vn/dien-thoai/iphone-16-pro-128gb.html',
+    'https://didongviet.vn/dien-thoai/iphone-16-pro-max-1tb.html',
+    'https://didongviet.vn/dien-thoai/iphone-16-pro-max-256gb.html',
+    'https://didongviet.vn/dien-thoai/iphone-16e.html',
+    'https://didongviet.vn/dien-thoai/iphone-17-256gb.html',
+    'https://didongviet.vn/dien-thoai/iphone-17-pro-1tb.html',
+    'https://didongviet.vn/dien-thoai/iphone-17-pro-256gb.html',
+    'https://didongviet.vn/dien-thoai/iphone-17-pro-512gb.html',
+    'https://didongviet.vn/dien-thoai/iphone-17-pro-max-1tb.html',
+    'https://didongviet.vn/dien-thoai/iphone-17-pro-max-256gb.html',
+    'https://didongviet.vn/dien-thoai/iphone-17-pro-max-512gb.html',
+    'https://didongviet.vn/dien-thoai/iphone-air-1tb.html',
+    'https://didongviet.vn/dien-thoai/iphone-air-256gb.html',
+    'https://didongviet.vn/dien-thoai/iphone-air-512gb.html',
      ]
     ,
 
@@ -303,17 +323,17 @@ total_links={
 
     "cps_urls":
     [
-        # 'https://cellphones.com.vn/iphone-13.html',
-        # 'https://cellphones.com.vn/iphone-14.html',
-        # 'https://cellphones.com.vn/iphone-15.html',
-        # 'https://cellphones.com.vn/iphone-16e.html',
-        # 'https://cellphones.com.vn/iphone-16.html',
-        # 'https://cellphones.com.vn/iphone-16-plus.html',
-        # 'https://cellphones.com.vn/iphone-16-pro-256gb.html',
-        # 'https://cellphones.com.vn/iphone-16-pro-max.html',
-        # 'https://cellphones.com.vn/iphone-air-256gb.html',
-        # 'https://cellphones.com.vn/iphone-17-256gb.html',
-        # 'https://cellphones.com.vn/iphone-17-pro-max.html',
+        'https://cellphones.com.vn/iphone-13.html',
+        'https://cellphones.com.vn/iphone-14.html',
+        'https://cellphones.com.vn/iphone-15.html',
+        'https://cellphones.com.vn/iphone-16e.html',
+        'https://cellphones.com.vn/iphone-16.html',
+        'https://cellphones.com.vn/iphone-16-plus.html',
+        'https://cellphones.com.vn/iphone-16-pro-256gb.html',
+        'https://cellphones.com.vn/iphone-16-pro-max.html',
+        'https://cellphones.com.vn/iphone-air-256gb.html',
+        'https://cellphones.com.vn/iphone-17-256gb.html',
+        'https://cellphones.com.vn/iphone-17-pro-max.html',
 
         'https://cellphones.com.vn/ipad-a16-11-inch.html',
         'https://cellphones.com.vn/apple-ipad-air-m3.html',
@@ -330,6 +350,10 @@ total_links={
         'https://cellphones.com.vn/apple-watch-series-11-42mm.html',
         'https://cellphones.com.vn/apple-watch-series-10-42mm.html',
         'https://cellphones.com.vn/apple-watch-series-10-42mm-vien-nhom-day-vai.html',
+        'https://cellphones.com.vn/apple-watch-series-11-42mm-5g-m-l.html',
+        'https://cellphones.com.vn/apple-watch-series-11-42mm-5g.html',
+        'https://cellphones.com.vn/apple-watch-series-11-46mm-5g.html',
+        'https://cellphones.com.vn/apple-watch-series-11-46mm-5g-m-l.html',
         'https://cellphones.com.vn/apple-watch-ultra-3-49mm-5g.html',
         'https://cellphones.com.vn/apple-watch-se-3-40mm.html',
         'https://cellphones.com.vn/apple-watch-se-3-44mm.html',
