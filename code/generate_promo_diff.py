@@ -6,11 +6,14 @@ import html
 
 # Configuration
 BASE_DIR = "/Users/brucehuynh/Documents/Code_Projects/Daily_Promotion/content"
+# ... imports (keeping existing)
+PRICE_MATRIX_FILE = os.path.join(BASE_DIR, "analysis_result", "price_matrix.csv")
+OUTPUT_FILE = os.path.join(BASE_DIR, "analysis_result", "promo_diff_report.csv")
+HTML_OUTPUT_FILE = os.path.join(BASE_DIR, "analysis_result", "promo_diff_readable.html")
+
 DATES = [
     "2025-11-29", "2025-12-01","2025-12-05", "2025-12-08", "2025-12-13", "2025-12-17"
 ]
-OUTPUT_FILE = os.path.join(BASE_DIR, "analysis_result", "promo_diff_report.csv")
-HTML_OUTPUT_FILE = os.path.join(BASE_DIR, "analysis_result", "promo_diff_readable.html")
 
 # Column Mapping
 COLUMN_MAPPING = {
@@ -115,16 +118,54 @@ def collapse_colors_text(df):
     collapsed = df_filled.groupby(group_cols)['Color'].apply(agg_colors).reset_index()
     return collapsed
 
+# New function to load prices
+def load_prices():
+    """
+    Loads the price matrix into a lookup dictionary.
+    Key: (Channel, Product Name, Color, Date)
+    Value: Price (str or int)
+    """
+    if not os.path.exists(PRICE_MATRIX_FILE):
+        print("Price matrix file not found.")
+        return {}
+    
+    try:
+        df_price = pd.read_csv(PRICE_MATRIX_FILE)
+        # Melt the dataframe to have a long format: Channel, Product Name, Color, Date, Price
+        # Currently columns are like: Channel, Product Name, Color, 2025-11-29-SAT, ...
+        
+        # Identify date columns (columns that contain '2025')
+        date_cols = [c for c in df_price.columns if '2025-' in c and 'Diff_' not in c]
+        id_vars = ['Channel', 'Product Name', 'Color']
+        
+        # Ensure we only stick to valid columns
+        valid_date_cols = [c for c in date_cols if c in df_price.columns]
+        valid_id_vars = [c for c in id_vars if c in df_price.columns]
+        
+        melted = df_price.melt(id_vars=valid_id_vars, value_vars=valid_date_cols, var_name='Date', value_name='Price')
+        
+        # Create lookup
+        price_lookup = {}
+        for _, row in melted.iterrows():
+            key = (row['Channel'], row['Product Name'], row['Color'], row['Date'])
+            price_lookup[key] = row['Price']
+            
+        return price_lookup
+    except Exception as e:
+        print(f"Error loading price matrix: {e}")
+        return {}
+
 def generate_diff(df):
     if df.empty:
         return
+
+    # Load prices
+    price_lookup = load_prices()
 
     # Sort to ensure chronological order for comparison
     df = df.sort_values(by=['Channel', 'Product Name', 'Color', '_RawDate'])
     
     # Identify changes
-    # We will lag the text columns within each group (Channel, Product, Color)
-    
     cols_to_compare = ['Promotion Details', 'Payment Promo']
     valid_cols = [c for c in cols_to_compare if c in df.columns]
     
@@ -134,16 +175,21 @@ def generate_diff(df):
     grouped = df.groupby(['Channel', 'Product Name', 'Color'])
     
     for name, group in grouped:
-        # If only 1 record, no history to compare
         if len(group) < 2:
             continue
             
-        # Get lists
-        dates = group['Date'].tolist()
-        
         for i in range(1, len(group)):
             curr_row = group.iloc[i]
             prev_row = group.iloc[i-1]
+            
+            # Key for price lookup
+            key_curr = (curr_row['Channel'], curr_row['Product Name'], curr_row['Color'], curr_row['Date'])
+            key_prev = (prev_row['Channel'], prev_row['Product Name'], prev_row['Color'], prev_row['Prev_Date'] if 'Prev_Date' in prev_row else prev_row['Date']) 
+            # Note: prev_row['Date'] is the correct key for the previous date's price
+            key_prev_actual = (curr_row['Channel'], curr_row['Product Name'], curr_row['Color'], prev_row['Date'])
+
+            curr_price = price_lookup.get(key_curr, "")
+            prev_price = price_lookup.get(key_prev_actual, "")
             
             has_change = False
             change_record = {
@@ -151,7 +197,9 @@ def generate_diff(df):
                 "Product Name": curr_row['Product Name'],
                 "Color": curr_row['Color'],
                 "Date": curr_row['Date'],
-                "Prev_Date": prev_row['Date']
+                "Prev_Date": prev_row['Date'],
+                "New_Price": curr_price,
+                "Old_Price": prev_price
             }
             
             for col in valid_cols:
@@ -165,41 +213,35 @@ def generate_diff(df):
                     change_record[f"New_{col}"] = curr_text
                 else:
                     change_record[f"Changed_{col}"] = "NO"
-                    change_record[f"Old_{col}"] = "" # Keep empty if no change to reduce clutter? Or keep for context?
+                    change_record[f"Old_{col}"] = "" 
                     change_record[f"New_{col}"] = ""
-                    
+
+            # Check if price changed (optional: add logic to flag pure price changes)
+            # For now, we only report if comparison strings changed or if we force it.
+            # But the user asked to INTEGRATE price into the report.
+            # If price changed but promo didn't, should it show? 
+            # Assuming 'Promo Diff' focuses on text, but let's include price in the view.
+            # If ONLY price changes, it might NOT trigger this if we only check `valid_cols`.
+            # Let's add price change detection.
+            
+            if str(curr_price) != str(prev_price) and str(curr_price) != "" and str(prev_price) != "": 
+                 has_change = True # Trigger report for price change?
+                 # If we want to report price changes too, enabling this.
+
             if has_change:
                 changes.append(change_record)
                 
     if changes:
         diff_df = pd.DataFrame(changes)
-        # Reorder columns: Changed_Col -> New_Col -> Old_Col
-        base_cols = ["Channel", "Product Name", "Color", "Date", "Prev_Date"]
         
-        dynamic_cols = []
-        for col in valid_cols:
-            if f"Changed_{col}" in diff_df.columns:
-                dynamic_cols.append(f"Changed_{col}")
-            if f"New_{col}" in diff_df.columns:
-                dynamic_cols.append(f"New_{col}")
-            if f"Old_{col}" in diff_df.columns:
-                dynamic_cols.append(f"Old_{col}")
-                
-        # Ensure we don't miss any others (sanity check)
-        used_cols = set(base_cols + dynamic_cols)
-        remaining_cols = [c for c in diff_df.columns if c not in used_cols]
-        
-        diff_df = diff_df[base_cols + dynamic_cols + remaining_cols]
-        
+        # Save CSV (include prices)
         diff_df.to_csv(OUTPUT_FILE, index=False)
         print(f"Promo Diff Report saved to: {OUTPUT_FILE}")
         
         # Generate HTML Report
         save_html_report(diff_df)
-        
-        print(diff_df.head())
     else:
-        print("No text changes detected.")
+        print("No changes detected.")
 
 def parse_items(text):
     """Splits text by '|', strips whitespace, and returns a set of items."""
@@ -211,15 +253,11 @@ def parse_items(text):
     return {item.strip() for item in items if item.strip()}
 
 def save_html_report(df):
-    # Get unique channels for the filter dropdown
+    # Get unique channels and dates
     channels = sorted(df['Channel'].unique().tolist()) if not df.empty else []
     channel_options = "".join([f'<option value="{c}">{c}</option>' for c in channels])
     
-    # Get unique dates for the filter dropdown
     dates = sorted(df['Date'].unique().tolist(), reverse=True) if not df.empty else []
-    
-    # Helper to check if it's the latest date to set "Latest" option logic if needed, 
-    # but simple dropdown is better.
     date_options = "".join([f'<option value="{d}">{d}</option>' for d in dates])
 
     html_content = f"""
@@ -233,6 +271,7 @@ def save_html_report(df):
             body {{ font-family: sans-serif; margin: 20px; line-height: 1.4; }}
             h1 {{ color: #333; }}
             
+            /* ... (keeping existing styles) ... */
             .controls {{
                 background: #eee;
                 padding: 15px;
@@ -257,10 +296,14 @@ def save_html_report(df):
             .product-header {{ 
                 font-weight: bold; 
                 font-size: 1.1em; 
-                margin-bottom: 10px; 
+                margin-bottom: 5px; 
                 border-bottom: 1px solid #eee;
                 padding-bottom: 5px;
+                display: flex;
+                justify-content: space-between;
             }}
+            .price-tag {{ color: #d32f2f; font-weight: bold; }}
+            
             .meta-info {{ color: #666; font-size: 0.9em; margin-bottom: 10px; }}
             .diff-table {{ width: 100%; border-collapse: collapse; margin-top: 10px; table-layout: fixed;}}
             .diff-table th {{ text-align: left; padding: 5px; background: #eee; border-bottom: 2px solid #ccc; width: 50%; }}
@@ -276,6 +319,10 @@ def save_html_report(df):
             .section-title {{ font-weight: bold; margin-top: 10px; color: #555; text-transform: uppercase; font-size: 0.85em; }}
             
             .hidden {{ display: none !important; }}
+            
+            .price-change-down {{ color: green; font-weight: bold; }}
+            .price-change-up {{ color: red; font-weight: bold; }}
+            .price-stable {{ color: #333; }}
         </style>
     </head>
     <body>
@@ -283,7 +330,7 @@ def save_html_report(df):
         <p>Generated from: {OUTPUT_FILE}</p>
         
         <div class="controls">
-            <div class="control-group">
+             <div class="control-group">
                 <label for="dateFilter"><strong>Date:</strong></label>
                 <select id="dateFilter">
                     <option value="ALL">All Dates</option>
@@ -317,6 +364,64 @@ def save_html_report(df):
             date = row.get('Date', '')
             prev_date = row.get('Prev_Date', '')
             
+            old_price = row.get('Old_Price', '')
+            new_price = row.get('New_Price', '')
+            
+            # Helper for price display
+            def format_price(p):
+                if pd.isna(p) or str(p).strip() == "" or str(p).lower() == "nan":
+                    return ""
+                try:
+                    return "{:,.0f}".format(float(p))
+                except:
+                    return str(p)
+
+            formatted_old_price = format_price(old_price)
+            formatted_new_price = format_price(new_price)
+            
+            price_display = ""
+            if formatted_old_price or formatted_new_price:
+                price_class = "price-stable"
+                
+                # Default logic
+                if formatted_old_price and formatted_new_price:
+                    try: 
+                        old_val = float(old_price)
+                        new_val = float(new_price)
+                        diff = new_val - old_val
+                        
+                        formatted_diff = "{:,.0f}".format(diff)
+                        if diff > 0:
+                            formatted_diff = f"+{formatted_diff}"
+                            
+                        # Show Only Diff (User Request: "should be the diff ... not the formatted_new_price")
+                        if diff < 0:
+                            price_class = "price-change-down"
+                            # Green for drop
+                            price_display = f'<span class="{price_class}">{formatted_diff}</span>'
+                        elif diff > 0:
+                            price_class = "price-change-up"
+                             # Red for increase
+                            price_display = f'<span class="{price_class}">{formatted_diff}</span>'
+                        else:
+                            # No change, show current price
+                            price_display = f'<span>{formatted_new_price}</span>'
+                            
+                    except:
+                        # Fallback if parsing fails
+                        if formatted_old_price != formatted_new_price:
+                             # Just show change arrow if we can't calculate numeric diff
+                             price_display = f'<span style="font-size: 0.9em; color: gray;">{formatted_old_price} &rarr; {formatted_new_price}</span>'
+                        else:
+                            price_display = f'<span>{formatted_new_price}</span>'
+                            
+                elif formatted_new_price:
+                    # Old price missing, just show new
+                     price_display = f'<span>{formatted_new_price}</span>'
+                else:
+                    # New price missing (delisted?), show old 
+                     price_display = f'<span style="text-decoration: line-through; color: #999;">{formatted_old_price}</span>'
+
             # Escape attributes for safety
             safe_channel = html.escape(str(channel))
             safe_product = html.escape(str(product)).lower() # lower for easier search
@@ -324,9 +429,13 @@ def save_html_report(df):
 
             html_content += f"""
             <div class="product-block" data-channel="{safe_channel}" data-product="{safe_product}" data-date="{safe_date}">
-                <div class="product-header">{channel} - {product} - {color}</div>
+                <div class="product-header">
+                    <span>{channel} - {product} - {color}</span>
+                    <span class="price-tag">{price_display}</span>
+                </div>
                 <div class="meta-info">Comparison: {prev_date} vs {date}</div>
             """
+            # ... (Existing render_section logic) ... 
             
             # Helper to render a section
             def render_section(title, old_col, new_col):
