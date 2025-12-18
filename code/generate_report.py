@@ -29,7 +29,8 @@ COLUMN_MAPPING = {
     "Thanh_Toan": "Payment Promo",
     "Uu_Dai_Them": "Payment Promo", # MW uses this
     "Voucher_Image": "Voucher",
-    "Other_promotion": "Other Promo"
+    "Other_promotion": "Other Promo",
+    "Link": "Link"
 }
 
 class DataLoader:
@@ -214,6 +215,7 @@ class PromoDiffGenerator:
             
         # Ensure we have unique rows per Channel/Product/Color/Date
         # In case raw data had duplicates.
+        # Include Link in subset? Just keep the first valid link if duplicates exist.
         df_filled = df_filled.drop_duplicates(subset=['Channel', 'Date', 'Product Name', 'Color'])
             
         return df_filled
@@ -223,7 +225,14 @@ class PromoDiffGenerator:
             return ""
         text = str(text).replace('\xa0', ' ').replace('\u200b', '')
         lines = re.split(r'[\n\r]+', text)
-        clean_lines = [line.strip() for line in lines if line.strip()]
+        clean_lines = []
+        for line in lines:
+            if not line.strip(): continue
+            # Remove leading numbers/bullets (e.g., "1.", "1)", "-", "•")
+            cleaned = re.sub(r'^(\d+[\.\)]|[-•])\s*', '', line.strip())
+            if cleaned:
+                clean_lines.append(cleaned)
+        
         clean_lines.sort()
         return " | ".join(clean_lines)
 
@@ -265,7 +274,8 @@ class PromoDiffGenerator:
                     "Date": curr_row['Date'],
                     "Prev_Date": prev_row['Date'],
                     "New_Price": curr_price,
-                    "Old_Price": prev_price
+                    "Old_Price": prev_price,
+                    "Link": curr_row.get('Link', '')
                 }
                 
                 # Compare Text
@@ -344,7 +354,10 @@ class HTMLGenerator:
                     align-items: center;
                     flex-wrap: wrap;
                     border: 1px solid #e9ecef;
-                    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+                    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+                    position: sticky;
+                    top: 0;
+                    z-index: 1000;
                 }}
                 .control-group {{ display: flex; align-items: center; gap: 10px; }}
                 label {{ font-weight: 600; color: #495057; }}
@@ -410,6 +423,8 @@ class HTMLGenerator:
                     border-left: 4px solid #007bff; 
                     padding-left: 10px; 
                 }}
+                .section-title.text-promo {{ color: #6f42c1; border-left-color: #6f42c1; }} /* Purple for Promo */
+                .section-title.text-payment {{ color: #d63384; border-left-color: #d63384; }} /* Pink/Red for Payment */
                 
                 .hidden {{ display: none !important; }}
                 #matchCount {{ font-weight: bold; color: #007bff; }}
@@ -435,6 +450,22 @@ class HTMLGenerator:
                     </select>
                 </div>
                 <div class="control-group">
+                    <label for="promoFilter">Promo/Payment Changed:</label>
+                    <select id="promoFilter">
+                        <option value="ALL">All Items</option>
+                        <option value="YES">Yes</option>
+                        <option value="NO">No</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label for="priceFilter">Price Changed:</label>
+                    <select id="priceFilter">
+                        <option value="ALL">All Items</option>
+                        <option value="YES">Yes</option>
+                        <option value="NO">No</option>
+                    </select>
+                </div>
+                <div class="control-group">
                     <label for="searchInput">Search Product:</label>
                     <input type="text" id="searchInput" placeholder="e.g. iPhone 15...">
                 </div>
@@ -456,6 +487,8 @@ class HTMLGenerator:
                 document.addEventListener('DOMContentLoaded', function() {
                     const dateSelect = document.getElementById('dateFilter');
                     const channelSelect = document.getElementById('channelFilter');
+                    const promoSelect = document.getElementById('promoFilter');
+                    const priceSelect = document.getElementById('priceFilter');
                     const searchInput = document.getElementById('searchInput');
                     const productBlocks = document.querySelectorAll('.product-block');
                     const matchCountDisplay = document.getElementById('matchCount');
@@ -463,19 +496,25 @@ class HTMLGenerator:
                     function filterItems() {
                         const selectedDate = dateSelect.value;
                         const selectedChannel = channelSelect.value;
+                        const selectedPromo = promoSelect.value;
+                        const selectedPrice = priceSelect.value;
                         const searchTerm = searchInput.value.toLowerCase().trim();
                         let visibleCount = 0;
 
                         productBlocks.forEach(block => {
                             const blockDate = block.getAttribute('data-date');
                             const blockChannel = block.getAttribute('data-channel');
+                            const blockPromoChange = block.getAttribute('data-has-change');
+                            const blockPriceChange = block.getAttribute('data-price-change');
                             const blockProduct = block.getAttribute('data-product'); 
                             
                             const matchesDate = (selectedDate === 'ALL' || blockDate === selectedDate);
                             const matchesChannel = (selectedChannel === 'ALL' || blockChannel === selectedChannel);
+                            const matchesPromo = (selectedPromo === 'ALL' || blockPromoChange === selectedPromo);
+                            const matchesPrice = (selectedPrice === 'ALL' || blockPriceChange === selectedPrice);
                             const matchesSearch = (blockProduct.includes(searchTerm));
 
-                            if (matchesDate && matchesChannel && matchesSearch) {
+                            if (matchesDate && matchesChannel && matchesPromo && matchesSearch && matchesPrice) {
                                 block.classList.remove('hidden');
                                 visibleCount++;
                             } else {
@@ -488,6 +527,8 @@ class HTMLGenerator:
 
                     dateSelect.addEventListener('change', filterItems);
                     channelSelect.addEventListener('change', filterItems);
+                    promoSelect.addEventListener('change', filterItems);
+                    priceSelect.addEventListener('change', filterItems);
                     searchInput.addEventListener('input', filterItems);
                     
                     filterItems();
@@ -511,27 +552,50 @@ class HTMLGenerator:
         date = row.get('Date', '')
         prev_date = row.get('Prev_Date', '')
         
+        # Calculate if Promo Changed for data attribute
+        promo_changed = 'NO'
+        if row.get('Changed_Promotion Details') == 'YES' or row.get('Changed_Payment Promo') == 'YES':
+            promo_changed = 'YES'
+        
         # Price Logic
         price_html = self._get_price_html(row)
+        
+        # Calculate Price Changed for data attribute
+        # We need to peek at old/new price
+        price_changed = 'NO'
+        try:
+            p1 = float(row.get('New_Price', 0)) if pd.notna(row.get('New_Price')) else 0
+            p2 = float(row.get('Old_Price', 0)) if pd.notna(row.get('Old_Price')) else 0
+            if p1 != p2 and p1 > 0 and p2 > 0:
+                price_changed = 'YES'
+        except:
+            pass
+        
+        # Link Logic
+        link_url = row.get('Link', '')
+        link_html = ""
+        if pd.notna(link_url) and link_url != "":
+            link_html = f'<div style="margin-bottom: 5px;"><a href="{link_url}" target="_blank" style="font-size: 0.9em; color: #007bff; text-decoration: none;">View Product &rarr;</a></div>'
 
         safe_channel = html.escape(str(channel))
         safe_product = html.escape(str(product)).lower()
         safe_date = html.escape(str(date))
         
         block = f"""
-        <div class="product-block" data-channel="{safe_channel}" data-product="{safe_product}" data-date="{safe_date}">
+        <div class="product-block" data-channel="{safe_channel}" data-product="{safe_product}" data-date="{safe_date}" data-has-change="{promo_changed}" data-price-change="{price_changed}">
             <div class="product-header">
                 <span>{channel} - {product} - {color}</span>
                 {price_html}
             </div>
+            {link_html}
             <div class="meta-info">Comparison: {prev_date} vs {date}</div>
         """
         
         if 'Changed_Promotion Details' in row:
-             block += self._render_section(row, "Promotion Details", "Old_Promotion Details", "New_Promotion Details")
+             block += self._render_section(row, "Promotion Details", "Old_Promotion Details", "New_Promotion Details", "text-promo")
              
         if 'Changed_Payment Promo' in row:
-             block += self._render_section(row, "Payment Promotion", "Old_Payment Promo", "New_Payment Promo")
+             block += self._render_section(row, "Payment", "Old_Payment Promo", "New_Payment Promo", "text-payment")
 
         block += "</div>"
         return block
@@ -543,7 +607,10 @@ class HTMLGenerator:
         # Helper
         def fmt(p):
             if pd.isna(p) or str(p).strip() == "" or str(p).lower() == "nan": return None, None
-            try: return float(p), "{:,.0f}".format(float(p))
+            try: 
+                val = float(p)
+                if val == 0: return None, "0" # Treat 0 as effectively missing for diff comparison
+                return val, "{:,.0f}".format(val)
             except: return None, str(p)
 
         old_val, old_str = fmt(old_price)
@@ -576,7 +643,7 @@ class HTMLGenerator:
             
         return ""
 
-    def _render_section(self, row, title, old_col, new_col):
+    def _render_section(self, row, title, old_col, new_col, css_class=""):
         old_raw = row.get(old_col, "")
         new_raw = row.get(new_col, "")
         
@@ -603,7 +670,7 @@ class HTMLGenerator:
         d2 = row.get('Date', 'New')
         
         return f"""
-        <div class="section-title">{title}</div>
+        <div class="section-title {css_class}">{title}</div>
         <table class="diff-table">
             <thead>
                 <tr>
