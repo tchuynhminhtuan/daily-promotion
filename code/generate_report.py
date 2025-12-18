@@ -633,8 +633,9 @@ class HTMLGenerator:
             else:
                 return f'<span class="price-tag">{new_str}</span>'
                 
-        # Case 2: Only New (New Listing)
-        if new_str and not old_str:
+        # Case 2: Only New (New Listing OR Old was 0)
+        # If old_str is "0" (from fmt), we treat it as missing for display purposes
+        if new_str and (not old_str or old_str == "0"):
              return f'<span class="price-tag">{new_str}</span>'
 
         # Case 3: Only Old (Delisted)
