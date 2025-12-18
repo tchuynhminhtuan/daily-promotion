@@ -443,12 +443,16 @@ class HTMLGenerator:
                 /* Media Query for Mobile Devices */
                 @media (max-width: 600px) {{
                     body {{ margin: 10px; }}
-                    h1 {{ font-size: 1.25rem; text-align: center; }}
-                    .controls {{ padding: 15px; gap: 15px; flex-direction: column; align-items: stretch; }}
+                    h1 {{ font-size: 1.25rem; text-align: center; margin-bottom: 10px; }}
+                    /* Un-stick controls on mobile so they don't block the view */
+                    .controls {{ position: static; padding: 10px; gap: 10px; flex-direction: column; align-items: stretch; margin-bottom: 15px; }}
                     .control-group {{ width: 100%; margin-bottom: 0; }} 
-                    input[type="text"], select {{ width: 100%; max-width: none; font-size: 16px; height: 44px; /* Accessible touch target */ }}
+                    p {{ text-align: center; margin-bottom: 15px; }}
                     
-                    .product-block {{ padding: 12px; }}
+                    /* Slightly compact inputs but keep accessible */
+                    input[type="text"], select {{ width: 100%; max-width: none; font-size: 16px; height: 40px; }}
+                    
+                    .product-block {{ padding: 12px; margin-bottom: 15px; }}
                     .diff-table th, .diff-table td {{ padding: 8px 6px; font-size: 0.85em; }}
                     .section-title {{ font-size: 0.85em; margin-top: 15px; }}
                 }}
