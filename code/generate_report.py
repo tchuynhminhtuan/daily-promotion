@@ -8,16 +8,22 @@ import html
 BASE_DIR = "/Users/brucehuynh/Documents/Code_Projects/Daily_Promotion/content"
 DATES = [
     # "2025-11-29", "2025-12-01","2025-12-05", "2025-12-08", 
-    "2025-12-15", "2025-12-18"
+    "2025-12-13", "2025-12-18"
 ]
 
 # Output Paths
 OUTPUT_DIR = os.path.join(BASE_DIR, "analysis_result")
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
+# GitHub Pages Directory (Root/docs)
+PROJECT_ROOT = os.path.dirname(BASE_DIR)
+DOCS_DIR = os.path.join(PROJECT_ROOT, "docs")
+os.makedirs(DOCS_DIR, exist_ok=True)
+
 PRICE_MATRIX_FILE = os.path.join(OUTPUT_DIR, "price_matrix.csv")
 PROMO_DIFF_CSV = os.path.join(OUTPUT_DIR, "promo_diff_report.csv")
-PROMO_DIFF_HTML = os.path.join(OUTPUT_DIR, "promo_diff_readable.html")
+# Save HTML to docs/index.html for GitHub Pages hosting
+PROMO_DIFF_HTML = os.path.join(DOCS_DIR, "index.html")
 
 # Column Mapping (Superset)
 COLUMN_MAPPING = {
