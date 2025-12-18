@@ -444,14 +444,13 @@ class HTMLGenerator:
                 @media (max-width: 600px) {{
                     body {{ margin: 10px; }}
                     h1 {{ font-size: 1.25rem; text-align: center; }}
-                    .controls {{ padding: 10px; gap: 10px; justify-content: space-between; }}
-                    .control-group {{ width: 48%; min-width: 140px; margin-bottom: 5px; flex-direction: column; align-items: flex-start; gap: 5px; }}
-                    .control-group:last-child {{ width: 100%; margin-top: 5px; }} /* Search and count */
-                    input[type="text"], select {{ width: 100%; max-width: none; font-size: 16px; /* Avoid iOS zoom on focus */ }}
+                    .controls {{ padding: 15px; gap: 15px; flex-direction: column; align-items: stretch; }}
+                    .control-group {{ width: 100%; margin-bottom: 0; }} 
+                    input[type="text"], select {{ width: 100%; max-width: none; font-size: 16px; height: 44px; /* Accessible touch target */ }}
                     
                     .product-block {{ padding: 12px; }}
                     .diff-table th, .diff-table td {{ padding: 8px 6px; font-size: 0.85em; }}
-                    .section-title {{ font-size: 0.8em; margin-top: 15px; }}
+                    .section-title {{ font-size: 0.85em; margin-top: 15px; }}
                 }}
             </style>
         </head>
