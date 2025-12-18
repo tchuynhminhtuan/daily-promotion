@@ -351,14 +351,14 @@ class HTMLGenerator:
             <title>Promotion Difference Report</title>
             <style>
                 body {{ font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 20px; line-height: 1.5; color: #333; }}
-                h1 {{ color: #2c3e50; }}
+                h1 {{ color: #2c3e50; font-size: 1.5rem; }}
                 .controls {{
                     background: #f8f9fa;
-                    padding: 20px;
+                    padding: 15px;
                     border-radius: 8px;
                     margin-bottom: 25px;
                     display: flex;
-                    gap: 20px;
+                    gap: 15px;
                     align-items: center;
                     flex-wrap: wrap;
                     border: 1px solid #e9ecef;
@@ -367,23 +367,24 @@ class HTMLGenerator:
                     top: 0;
                     z-index: 1000;
                 }}
-                .control-group {{ display: flex; align-items: center; gap: 10px; }}
-                label {{ font-weight: 600; color: #495057; }}
+                .control-group {{ display: flex; align-items: center; gap: 8px; flex: 1 1 auto; }}
+                label {{ font-weight: 600; color: #495057; white-space: nowrap; font-size: 0.9em; }}
                 input[type="text"], select {{ 
                     padding: 8px 12px; 
                     border: 1px solid #ced4da; 
                     border-radius: 4px; 
                     font-size: 14px;
                     outline: none;
+                    width: 100%;
+                    max-width: 250px;
                 }}
                 input[type="text"]:focus, select:focus {{ border-color: #80bdff; box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25); }}
-                input[type="text"] {{ width: 250px; }}
                 
                 .product-block {{ 
                     background: #fff; 
                     border: 1px solid #dee2e6; 
                     margin-bottom: 25px; 
-                    padding: 20px; 
+                    padding: 15px; 
                     border-radius: 8px;
                     box-shadow: 0 2px 4px rgba(0,0,0,0.02);
                     transition: box-shadow 0.2s;
@@ -392,17 +393,19 @@ class HTMLGenerator:
                 
                 .product-header {{ 
                     font-weight: 700; 
-                    font-size: 1.2em; 
+                    font-size: 1.1em; 
                     margin-bottom: 8px; 
                     border-bottom: 2px solid #e9ecef;
                     padding-bottom: 10px;
                     display: flex;
                     justify-content: space-between;
                     align-items: center;
+                    flex-wrap: wrap;
+                    gap: 10px;
                 }}
                 
                 /* Price Tags */
-                .price-tag {{ font-weight: bold; font-size: 1em; }}
+                .price-tag {{ font-weight: bold; font-size: 1em; white-space: nowrap; }}
                 .price-change-down {{ color: #28a745; font-weight: 800; }} /* Green */
                 .price-change-up {{ color: #dc3545; font-weight: 800; }}   /* Red */
                 
@@ -414,7 +417,7 @@ class HTMLGenerator:
                 .diff-table tr:last-child td {{ border-bottom: none; }}
                 
                 .diff-list {{ list-style-type: none; padding-left: 0; margin: 0; }}
-                .diff-list li {{ padding: 6px 0; border-bottom: 1px dashed #e9ecef; }}
+                .diff-list li {{ padding: 4px 0; border-bottom: 1px dashed #e9ecef; }}
                 .diff-list li:last-child {{ border-bottom: none; }}
                 
                 .added {{ color: #155724; background-color: #d4edda; text-decoration: none; display: block; padding: 2px 5px; border-radius: 3px; }}
@@ -436,6 +439,20 @@ class HTMLGenerator:
                 
                 .hidden {{ display: none !important; }}
                 #matchCount {{ font-weight: bold; color: #007bff; }}
+
+                /* Media Query for Mobile Devices */
+                @media (max-width: 600px) {{
+                    body {{ margin: 10px; }}
+                    h1 {{ font-size: 1.25rem; text-align: center; }}
+                    .controls {{ padding: 10px; gap: 10px; justify-content: space-between; }}
+                    .control-group {{ width: 48%; min-width: 140px; margin-bottom: 5px; flex-direction: column; align-items: flex-start; gap: 5px; }}
+                    .control-group:last-child {{ width: 100%; margin-top: 5px; }} /* Search and count */
+                    input[type="text"], select {{ width: 100%; max-width: none; font-size: 16px; /* Avoid iOS zoom on focus */ }}
+                    
+                    .product-block {{ padding: 12px; }}
+                    .diff-table th, .diff-table td {{ padding: 8px 6px; font-size: 0.85em; }}
+                    .section-title {{ font-size: 0.8em; margin-top: 15px; }}
+                }}
             </style>
         </head>
         <body>
