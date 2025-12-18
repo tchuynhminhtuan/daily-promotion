@@ -8,7 +8,7 @@ import html
 BASE_DIR = "/Users/brucehuynh/Documents/Code_Projects/Daily_Promotion/content"
 DATES = [
     # "2025-11-29", "2025-12-01","2025-12-05", "2025-12-08", 
-    "2025-12-13", "2025-12-18"
+    "2025-12-15", "2025-12-18"
 ]
 
 # Output Paths
@@ -51,6 +51,8 @@ class DataLoader:
                 "FPT": f"1-fpt-{date_str}.csv",
                 "MW": f"2-mw-{date_str}.csv",
                 "Viettel": f"3-viettel-{date_str}.csv",
+                "HoangHa": f"4-hoangha-{date_str}.csv",
+                "DDV": f"5-ddv-{date_str}.csv",
                 "CPS": f"6-cps-{date_str}.csv"
             }
             
@@ -290,8 +292,8 @@ class PromoDiffGenerator:
                         change_record[f"New_{col}"] = curr_text
                     else:
                         change_record[f"Changed_{col}"] = "NO"
-                        change_record[f"Old_{col}"] = "" 
-                        change_record[f"New_{col}"] = ""
+                        change_record[f"Old_{col}"] = prev_text 
+                        change_record[f"New_{col}"] = curr_text
                 
                 # Compare Price (Force inclusion if price changed)
                 # Convert to float for comparison safety
@@ -592,10 +594,10 @@ class HTMLGenerator:
         """
         
         if 'Changed_Promotion Details' in row:
-             block += self._render_section(row, "Promotion Details", "Old_Promotion Details", "New_Promotion Details", "text-promo")
+             block += self._render_section(row, "Promotion Details", "Old_Promotion Details", "New_Promotion Details", "text-promo", row.get('Changed_Promotion Details'))
              
         if 'Changed_Payment Promo' in row:
-             block += self._render_section(row, "Payment", "Old_Payment Promo", "New_Payment Promo", "text-payment")
+             block += self._render_section(row, "Payment", "Old_Payment Promo", "New_Payment Promo", "text-payment", row.get('Changed_Payment Promo'))
 
         block += "</div>"
         return block
@@ -644,13 +646,27 @@ class HTMLGenerator:
             
         return ""
 
-    def _render_section(self, row, title, old_col, new_col, css_class=""):
+    def _render_section(self, row, title, old_col, new_col, css_class="", change_status=None):
         old_raw = row.get(old_col, "")
         new_raw = row.get(new_col, "")
         
         if (pd.isna(old_raw) or old_raw == "") and (pd.isna(new_raw) or new_raw == ""):
-            return ""
+             return f"""
+            <div class="section-title {css_class}">{title}</div>
+            <div style="color: #6c757d; font-style: italic; margin-left:15px; margin-top:5px; font-size: 0.95em;">
+                Không có dữ liệu trong file raw/gốc
+            </div>
+            """
             
+        # Specific User Request: If No Change, show notification text
+        if change_status == 'NO':
+             return f"""
+            <div class="section-title {css_class}">{title}</div>
+            <div style="color: #6c757d; font-style: italic; margin-left:15px; margin-top:5px; font-size: 0.95em;">
+                Không có thay đổi, dữ liệu tương đồng giữa 2 ngày so sánh
+            </div>
+            """
+
         old_items = self._parse_items(old_raw)
         new_items = self._parse_items(new_raw)
         
