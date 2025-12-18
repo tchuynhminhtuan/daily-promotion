@@ -8,7 +8,7 @@ import html
 BASE_DIR = "/Users/brucehuynh/Documents/Code_Projects/Daily_Promotion/content"
 DATES = [
     # "2025-11-29", "2025-12-01","2025-12-05", "2025-12-08", 
-    "2025-12-13", "2025-12-17"
+    "2025-12-13", "2025-12-18"
 ]
 
 # Output Paths
