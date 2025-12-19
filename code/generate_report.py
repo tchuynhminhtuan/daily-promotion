@@ -49,7 +49,7 @@ class DataLoader:
         target_dates = dates if dates else DATES
         target_base_dir = base_dir if base_dir else BASE_DIR
         all_data = []
-        print("Loading data...")
+        print("📥 Đang tải dữ liệu...")
         
         for date_str in target_dates:
             day_dir = os.path.join(target_base_dir, date_str)
@@ -104,7 +104,7 @@ class PriceMatrixGenerator:
         self.price_lookup = {} # Key: (Channel, Product, Color, Date), Value: Price
 
     def run(self):
-        print("Generating Price Matrix...")
+        print("⚡ Đang tạo Ma trận Giá...")
         if self.df.empty: return
 
         # 1. Collapse Colors (Group by attributes to see if colors share same price)
@@ -114,7 +114,7 @@ class PriceMatrixGenerator:
         if not self.skip_csv:
              self._generate_csv(df_collapsed)
         else:
-             print("💡 Generating Price Matrix (Skipping CSV save)...")
+             print("💡 Đang xử lý Ma trận Giá (Bỏ qua lưu file CSV)...")
         
         # 3. Build Lookup (Use the collapsed DF or original? Original is safer for specific lookups, 
         #    but we often compare on the "collapsed" entity in Diff Report. 
@@ -200,7 +200,7 @@ class PromoDiffGenerator:
         self.skip_csv = skip_csv
 
     def run(self):
-        print("Generating Promo Diff Report...")
+        print("🔍 Đang phân tích thay đổi khuyến mãi...")
         if self.df.empty: return
 
         # 1. Normalize Text & Collapse for Promo View
@@ -213,9 +213,9 @@ class PromoDiffGenerator:
             # 3. Save CSV
             if not self.skip_csv:
                 df_diff.to_csv(self.output_file, index=False)
-                print(f"Promo Diff CSV saved to: {self.output_file}")
+                print(f"✅ Đã lưu CSV thay đổi KM tại: {self.output_file}")
             else:
-                print("🌐 Generating HTML Report (Skipping CSV save)...")
+                print("🌐 Đang tạo báo cáo HTML (Bỏ qua lưu file CSV)...")
             
             # 4. Save HTML
             # If output_file is a CSV path, derive HTML path or use default
@@ -228,7 +228,7 @@ class PromoDiffGenerator:
             
             self._save_html(df_diff, html_path)
         else:
-            print("No promotion changes detected.")
+            print("⚠️ Không tìm thấy thay đổi khuyến mãi nào.")
 
     def _collapse_for_promo(self, df):
         # We NO LONGER collapse colors. We just normalize text.
@@ -663,7 +663,7 @@ class HTMLGenerator:
 
 def get_available_dates(base_path):
     if not os.path.exists(base_path):
-        print(f"Error: Base directory not found: {base_path}")
+        print(f"❌ Lỗi: Không tìm thấy thư mục dữ liệu: {base_path}")
         return []
     
     date_pattern = re.compile(r'^\d{4}-\d{2}-\d{2}$')
@@ -672,31 +672,31 @@ def get_available_dates(base_path):
 
 def select_dates(available_dates):
     if not available_dates:
-        print("❌ No data folders found in BASE_DIR.")
+        print("❌ Không tìm thấy thư mục dữ liệu nào trong BASE_DIR.")
         return None, None
 
     print("\n" + "="*40)
-    print("📅 AVAILABLE DATES")
+    print("📅 CÁC NGÀY CÓ DỮ LIỆU HIỆN CÓ")
     print("="*40)
     for i, d in enumerate(available_dates):
-        print(f" [{i}] Date: {d}")
+        print(f" [{i}] Ngày: {d}")
     print("="*40)
     
     try:
-        new_prompt = f"\n👉 Select NEWEST date index [Default 0 ({available_dates[0]})]: "
+        new_prompt = f"\n👉 Chọn số thứ tự ngày MỚI NHẤT [Mặc định 0 ({available_dates[0]})]: "
         new_idx = int(input(new_prompt) or 0)
         
         default_old = min(1, len(available_dates)-1)
-        old_prompt = f"👉 Select OLDER date index to compare [Default {default_old} ({available_dates[default_old]})]: "
+        old_prompt = f"👉 Chọn số thứ tự ngày CŨ HƠN để so sánh [Mặc định {default_old} ({available_dates[default_old]})]: "
         old_idx = int(input(old_prompt) or default_old)
         
         if new_idx < 0 or new_idx >= len(available_dates) or old_idx < 0 or old_idx >= len(available_dates):
-            print("⚠️ Invalid selection. Please try again.")
+            print("⚠️ Lựa chọn không hợp lệ. Vui lòng thử lại.")
             return None, None
             
         return available_dates[new_idx], available_dates[old_idx]
     except ValueError:
-        print("⚠️ Please enter numbers only.")
+        print("⚠️ Vui lòng chỉ nhập số thứ tự từ danh sách trên.")
         return None, None
 
 
@@ -712,8 +712,8 @@ def main():
     target_dates = DATES
     is_interactive = args.interactive
     
-    print(f"--- Starting Report Generation (Interactive: {is_interactive}) ---")
-    print(f"📂 Source Directory: {base_dir}")
+    print(f"🚀 --- BẮT ĐẦU TẠO BÁO CÁO (Interactive: {is_interactive}) ---")
+    print(f"📁 Thư mục nguồn: {base_dir}")
 
     output_html_path = PROMO_DIFF_HTML
 
@@ -721,10 +721,10 @@ def main():
         available = get_available_dates(base_dir)
         newer, older = select_dates(available)
         if not newer or not older:
-             print("❌ Date selection aborted.")
+             print("❌ Quá trình chọn ngày bị hủy hoặc thất bại.")
              return
         target_dates = [older, newer]
-        print(f"\n🔄 Comparing: {older} vs {newer}...")
+        print(f"\n🔄 Đang so sánh: {older} (Cũ) ➔ {newer} (Mới)...")
         
         # In interactive, we might want a specific filename or just default
         # Let's keep default docs/index.html so it works with GitHub pages
@@ -733,10 +733,10 @@ def main():
     # Pass target_dates and base_dir directly to DataLoader
     
     df = DataLoader.load_all_data(dates=target_dates, base_dir=base_dir)
-    print(f"Total Rows Loaded: {len(df)}")
+    print(f"📊 Tổng số dòng dữ liệu đã tải: {len(df)}")
     
     if df.empty:
-        print("❌ No data loaded. Exiting.")
+        print("❌ Không có dữ liệu. Đang thoát.")
         return
     
     # 2. Price Matrix
@@ -749,9 +749,11 @@ def main():
     promo_gen = PromoDiffGenerator(df, price_gen, output_file=output_html_path, skip_csv=is_interactive)
     promo_gen.run()
     
-    print("--- Process Completed Successfully ---")
+    print("\n" + "✨"*20)
+    print("🎯 QUÁ TRÌNH HOÀN TẤT THÀNH CÔNG!")
     if is_interactive:
-        print(f"📌 Report available at: {output_html_path}")
+        print(f"📌 Xem báo cáo tại: {output_html_path}")
+    print("✨"*20 + "\n")
 
 if __name__ == "__main__":
     main()
