@@ -330,7 +330,6 @@ class PromoDiffGenerator:
         HTMLGenerator(df, PROMO_DIFF_HTML).generate()
 
 class HTMLGenerator:
-    """Handles HTML generation logic."""
     def __init__(self, df, output_file):
         self.df = df
         self.output_file = output_file
@@ -338,164 +337,73 @@ class HTMLGenerator:
     def generate(self):
         channels = sorted(self.df['Channel'].unique().tolist())
         dates = sorted(self.df['Date'].unique().tolist(), reverse=True)
-        
         channel_opts = "".join([f'<option value="{c}">{c}</option>' for c in channels])
         date_opts = "".join([f'<option value="{d}">{d}</option>' for d in dates])
         
-        html_content = f"""
+        html_head = f"""
         <!DOCTYPE html>
         <html lang="en">
         <head>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Promotion Difference Report</title>
+            <title>Báo cáo So sánh Khuyến mãi</title>
             <style>
                 body {{ font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 20px; line-height: 1.5; color: #333; }}
                 h1 {{ color: #2c3e50; font-size: 1.5rem; }}
-                .controls {{
-                    background: #f8f9fa;
-                    padding: 15px;
-                    border-radius: 8px;
-                    margin-bottom: 25px;
-                    display: flex;
-                    gap: 15px;
-                    align-items: center;
-                    flex-wrap: wrap;
-                    border: 1px solid #e9ecef;
-                    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-                    position: sticky;
-                    top: 0;
-                    z-index: 1000;
-                }}
+                .controls {{ background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 25px; display: flex; gap: 15px; align-items: center; flex-wrap: wrap; border: 1px solid #e9ecef; position: sticky; top: 0; z-index: 1000; }}
                 .control-group {{ display: flex; align-items: center; gap: 8px; flex: 1 1 auto; }}
-                label {{ font-weight: 600; color: #495057; white-space: nowrap; font-size: 0.9em; }}
-                input[type="text"], select {{ 
-                    padding: 8px 12px; 
-                    border: 1px solid #ced4da; 
-                    border-radius: 4px; 
-                    font-size: 14px;
-                    outline: none;
-                    width: 100%;
-                    max-width: 250px;
-                }}
-                input[type="text"]:focus, select:focus {{ border-color: #80bdff; box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25); }}
-                
-                .product-block {{ 
-                    background: #fff; 
-                    border: 1px solid #dee2e6; 
-                    margin-bottom: 25px; 
-                    padding: 15px; 
-                    border-radius: 8px;
-                    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
-                    transition: box-shadow 0.2s;
-                }}
-                .product-block:hover {{ box-shadow: 0 4px 8px rgba(0,0,0,0.05); }}
-                
-                .product-header {{ 
-                    font-weight: 700; 
-                    font-size: 1.1em; 
-                    margin-bottom: 8px; 
-                    border-bottom: 2px solid #e9ecef;
-                    padding-bottom: 10px;
-                    display: flex;
-                    justify-content: space-between;
-                    align-items: center;
-                    flex-wrap: wrap;
-                    gap: 10px;
-                }}
-                
-                /* Price Tags */
-                .price-tag {{ font-weight: bold; font-size: 1em; white-space: nowrap; }}
-                .price-change-down {{ color: #28a745; font-weight: 800; }} /* Green */
-                .price-change-up {{ color: #dc3545; font-weight: 800; }}   /* Red */
-                
-                .meta-info {{ color: #6c757d; font-size: 0.9em; margin-bottom: 15px; font-style: italic; }}
-                
-                .diff-table {{ width: 100%; border-collapse: separate; border-spacing: 0; margin-top: 15px; table-layout: fixed; border: 1px solid #dee2e6; border-radius: 6px; overflow: hidden; }}
-                .diff-table th {{ text-align: left; padding: 12px; background: #f1f3f5; border-bottom: 1px solid #dee2e6; width: 50%; font-weight: 600; }}
-                .diff-table td {{ vertical-align: top; padding: 15px; border-bottom: 1px solid #eee; word-wrap: break-word; background: #fff; }}
-                .diff-table tr:last-child td {{ border-bottom: none; }}
-                
-                .diff-list {{ list-style-type: none; padding-left: 0; margin: 0; }}
-                .diff-list li {{ padding: 4px 0; border-bottom: 1px dashed #e9ecef; }}
-                .diff-list li:last-child {{ border-bottom: none; }}
-                
-                .added {{ color: #155724; background-color: #d4edda; text-decoration: none; display: block; padding: 2px 5px; border-radius: 3px; }}
-                .removed {{ color: #721c24; background-color: #f8d7da; text-decoration: line-through; display: block; padding: 2px 5px; border-radius: 3px; }}
-                .common {{ color: #495057; }}
-                
-                .section-title {{ 
-                    font-weight: 700; 
-                    margin-top: 20px; 
-                    color: #495057; 
-                    text-transform: uppercase; 
-                    font-size: 0.85em; 
-                    letter-spacing: 0.5px; 
-                    border-left: 4px solid #007bff; 
-                    padding-left: 10px; 
-                }}
-                .section-title.text-promo {{ color: #6f42c1; border-left-color: #6f42c1; }} /* Purple for Promo */
-                .section-title.text-payment {{ color: #d63384; border-left-color: #d63384; }} /* Pink/Red for Payment */
-                
+                label {{ font-weight: 600; font-size: 0.9em; white-space: nowrap; }}
+                select, input {{ padding: 8px; border-radius: 4px; border: 1px solid #ccc; }}
+                .product-block {{ background: #fff; border: 1px solid #dee2e6; margin-bottom: 20px; padding: 15px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }}
+                .product-header {{ font-weight: bold; border-bottom: 1px solid #eee; padding-bottom: 8px; margin-bottom: 10px; display: flex; justify-content: space-between; }}
+                .price-change-down {{ color: #28a745; font-weight: bold; }}
+                .price-change-up {{ color: #dc3545; font-weight: bold; }}
+                .diff-table {{ width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 0.9em; }}
+                .diff-table th, .diff-table td {{ border: 1px solid #eee; padding: 10px; text-align: left; vertical-align: top; width: 50%; }}
+                .added {{ background: #d4edda; color: #155724; padding: 2px 4px; border-radius: 2px; }}
+                .removed {{ background: #f8d7da; color: #721c24; text-decoration: line-through; padding: 2px 4px; border-radius: 2px; }}
                 .hidden {{ display: none !important; }}
-                #matchCount {{ font-weight: bold; color: #007bff; }}
-
-                /* Media Query for Mobile Devices */
-                @media (max-width: 600px) {{
-                    body {{ margin: 10px; }}
-                    h1 {{ font-size: 1.25rem; text-align: center; margin-bottom: 10px; }}
-                    /* Un-stick controls on mobile so they don't block the view */
-                    .controls {{ position: static; padding: 10px; gap: 10px; flex-direction: column; align-items: stretch; margin-bottom: 15px; }}
-                    .control-group {{ width: 100%; margin-bottom: 0; }} 
-                    p {{ text-align: center; margin-bottom: 15px; }}
-                    
-                    /* Slightly compact inputs but keep accessible */
-                    input[type="text"], select {{ width: 100%; max-width: none; font-size: 16px; height: 40px; }}
-                    
-                    .product-block {{ padding: 12px; margin-bottom: 15px; }}
-                    .diff-table th, .diff-table td {{ padding: 8px 6px; font-size: 0.85em; }}
-                    .section-title {{ font-size: 0.85em; margin-top: 15px; }}
-                }}
+                @media (max-width: 600px) {{ .controls {{ position: static; flex-direction: column; align-items: stretch; }} .diff-table th, .diff-table td {{ padding: 5px; }} }}
             </style>
         </head>
         <body>
-            <h1>Promotion Analysis Report</h1>
+            <h1>Báo cáo So sánh Khuyến mãi</h1>
             <p style="color: grey;">Generated: {pd.Timestamp.now().strftime('%Y-%m-%d %H:%M')}</p>
             
             <div class="controls">
                  <div class="control-group">
-                    <label for="dateFilter">Date:</label>
+                    <label for="dateFilter">Ngày:</label>
                     <select id="dateFilter">
-                        <option value="ALL">All Dates</option>
+                        <option value="ALL">Tất cả</option>
                         {date_opts}
                     </select>
                 </div>
                 <div class="control-group">
-                    <label for="channelFilter">Channel:</label>
+                    <label for="channelFilter">Kênh:</label>
                     <select id="channelFilter">
-                        <option value="ALL">All Channels</option>
+                        <option value="ALL">Tất cả</option>
                         {channel_opts}
                     </select>
                 </div>
                 <div class="control-group">
-                    <label for="promoFilter">Promo/Payment Changed:</label>
+                    <label for="promoFilter">Thay đổi KM:</label>
                     <select id="promoFilter">
-                        <option value="ALL">All Items</option>
-                        <option value="YES">Yes</option>
-                        <option value="NO">No</option>
+                        <option value="ALL">Tất cả</option>
+                        <option value="YES">Có thay đổi</option>
+                        <option value="NO">Không</option>
                     </select>
                 </div>
                 <div class="control-group">
-                    <label for="priceFilter">Price Changed:</label>
+                    <label for="priceFilter">Thay đổi Giá:</label>
                     <select id="priceFilter">
-                        <option value="ALL">All Items</option>
-                        <option value="YES">Yes</option>
-                        <option value="NO">No</option>
+                        <option value="ALL">Tất cả</option>
+                        <option value="YES">Đổi Giá</option>
+                        <option value="NO">Không Đổi</option>
                     </select>
                 </div>
                 <div class="control-group">
-                    <label for="searchInput">Search Product:</label>
-                    <input type="text" id="searchInput" placeholder="e.g. iPhone 15...">
+                    <label for="searchInput">Tìm kiếm:</label>
+                    <input type="text" id="searchInput" placeholder="Ví dụ: iPhone 15...">
                 </div>
                  <div class="control-group" style="margin-left: auto;">
                     <span id="matchCount"></span>
@@ -505,10 +413,11 @@ class HTMLGenerator:
             <div id="report-container">
         """
         
+        container_content = ""
         for index, row in self.df.iterrows():
-            html_content += self._render_block(row)
+            container_content += self._render_block(row)
             
-        html_content += """
+        html_foot = """
             </div>
             
             <script>
@@ -532,7 +441,7 @@ class HTMLGenerator:
                         productBlocks.forEach(block => {
                             const blockDate = block.getAttribute('data-date');
                             const blockChannel = block.getAttribute('data-channel');
-                            const blockPromoChange = block.getAttribute('data-has-change');
+                            const blockPromoChange = block.getAttribute('data-promo-change');
                             const blockPriceChange = block.getAttribute('data-price-change');
                             const blockProduct = block.getAttribute('data-product'); 
                             
@@ -550,7 +459,7 @@ class HTMLGenerator:
                             }
                         });
                         
-                        matchCountDisplay.textContent = `Showing ${visibleCount} items`;
+                        matchCountDisplay.textContent = `Hiển thị ${visibleCount} mục`;
                     }
 
                     dateSelect.addEventListener('change', filterItems);
@@ -568,7 +477,7 @@ class HTMLGenerator:
         
         try:
             with open(self.output_file, "w", encoding="utf-8") as f:
-                f.write(html_content)
+                f.write(html_head + container_content + html_foot)
             print(f"HTML Report saved to: {self.output_file}")
         except Exception as e:
             print(f"Error saving HTML: {e}")
@@ -580,50 +489,52 @@ class HTMLGenerator:
         date = row.get('Date', '')
         prev_date = row.get('Prev_Date', '')
         
-        # Calculate if Promo Changed for data attribute
+        # Calculate Change Statuses for Filter
         promo_changed = 'NO'
         if row.get('Changed_Promotion Details') == 'YES' or row.get('Changed_Payment Promo') == 'YES':
             promo_changed = 'YES'
         
-        # Price Logic
-        price_html = self._get_price_html(row)
-        
-        # Calculate Price Changed for data attribute
-        # We need to peek at old/new price
         price_changed = 'NO'
         try:
-            p1 = float(row.get('New_Price', 0)) if pd.notna(row.get('New_Price')) else 0
-            p2 = float(row.get('Old_Price', 0)) if pd.notna(row.get('Old_Price')) else 0
-            if p1 != p2 and p1 > 0 and p2 > 0:
-                price_changed = 'YES'
-        except:
-            pass
+             p1 = float(row.get('New_Price', 0)) if pd.notna(row.get('New_Price')) else 0
+             p2 = float(row.get('Old_Price', 0)) if pd.notna(row.get('Old_Price')) else 0
+             if p1 != p2 and p1 > 0 and p2 > 0:
+                 price_changed = 'YES'
+        except: pass
+
+        # Price Display Logic
+        price_html = self._get_price_html(row)
         
         # Link Logic
         link_url = row.get('Link', '')
         link_html = ""
         if pd.notna(link_url) and link_url != "":
-            link_html = f'<div style="margin-bottom: 5px;"><a href="{link_url}" target="_blank" style="font-size: 0.9em; color: #007bff; text-decoration: none;">View Product &rarr;</a></div>'
+            link_html = f'<div style="margin-bottom: 5px;"><a href="{link_url}" target="_blank" style="font-size: 0.9em; color: #007bff; text-decoration: none;">Xem sản phẩm &rarr;</a></div>'
 
         safe_channel = html.escape(str(channel))
         safe_product = html.escape(str(product)).lower()
         safe_date = html.escape(str(date))
         
         block = f"""
-        <div class="product-block" data-channel="{safe_channel}" data-product="{safe_product}" data-date="{safe_date}" data-has-change="{promo_changed}" data-price-change="{price_changed}">
+        <div class="product-block" 
+             data-channel="{safe_channel}" 
+             data-product="{safe_product}" 
+             data-date="{safe_date}" 
+             data-promo-change="{promo_changed}" 
+             data-price-change="{price_changed}">
             <div class="product-header">
                 <span>{channel} - {product} - {color}</span>
                 {price_html}
             </div>
             {link_html}
-            <div class="meta-info">Comparison: {prev_date} vs {date}</div>
+            <div class="meta-info">So sánh: {prev_date} vs {date}</div>
         """
         
         if 'Changed_Promotion Details' in row:
-             block += self._render_section(row, "Promotion Details", "Old_Promotion Details", "New_Promotion Details", "text-promo", row.get('Changed_Promotion Details'))
+             block += self._render_section(row, "Khuyến mãi", "Old_Promotion Details", "New_Promotion Details", "text-promo", row.get('Changed_Promotion Details'))
              
         if 'Changed_Payment Promo' in row:
-             block += self._render_section(row, "Payment", "Old_Payment Promo", "New_Payment Promo", "text-payment", row.get('Changed_Payment Promo'))
+             block += self._render_section(row, "Thanh toán", "Old_Payment Promo", "New_Payment Promo", "text-payment", row.get('Changed_Payment Promo'))
 
         block += "</div>"
         return block
@@ -637,7 +548,7 @@ class HTMLGenerator:
             if pd.isna(p) or str(p).strip() == "" or str(p).lower() == "nan": return None, None
             try: 
                 val = float(p)
-                if val == 0: return None, "0" # Treat 0 as effectively missing for diff comparison
+                if val == 0: return None, "0" 
                 return val, "{:,.0f}".format(val)
             except: return None, str(p)
 
@@ -647,26 +558,21 @@ class HTMLGenerator:
         if not old_str and not new_str:
             return ""
             
-        # Case 1: Both exist - Show Diff
         if old_val is not None and new_val is not None:
             diff = new_val - old_val
             diff_str = "{:,.0f}".format(diff)
             if diff > 0: diff_str = f"+{diff_str}"
             
             if diff < 0:
-                # Format: New Price (Diff) - Diff is Greed/Red
                 return f'<span class="price-tag">{new_str} <span class="price-change-down">({diff_str})</span></span>'
             elif diff > 0:
                 return f'<span class="price-tag">{new_str} <span class="price-change-up">({diff_str})</span></span>'
             else:
                 return f'<span class="price-tag">{new_str}</span>'
                 
-        # Case 2: Only New (New Listing OR Old was 0)
-        # If old_str is "0" (from fmt), we treat it as missing for display purposes
         if new_str and (not old_str or old_str == "0"):
              return f'<span class="price-tag">{new_str}</span>'
 
-        # Case 3: Only Old (Delisted)
         if old_str and not new_str:
             return f'<span class="price-tag" style="text-decoration: line-through; color: #999;">{old_str}</span>'
             
@@ -680,16 +586,15 @@ class HTMLGenerator:
              return f"""
             <div class="section-title {css_class}">{title}</div>
             <div style="color: #6c757d; font-style: italic; margin-left:15px; margin-top:5px; font-size: 0.95em;">
-                Không có dữ liệu trong file raw/gốc
+                Không có dữ liệu
             </div>
             """
             
-        # Specific User Request: If No Change, show notification text
         if change_status == 'NO':
              return f"""
             <div class="section-title {css_class}">{title}</div>
             <div style="color: #6c757d; font-style: italic; margin-left:15px; margin-top:5px; font-size: 0.95em;">
-                Không có thay đổi, dữ liệu tương đồng giữa 2 ngày so sánh
+                Không có thay đổi
             </div>
             """
 
@@ -708,7 +613,6 @@ class HTMLGenerator:
         left_content = build_list(removed, 'removed') + build_list(common, 'common')
         right_content = build_list(added, 'added') + build_list(common, 'common')
         
-        # Helper date labels
         d1 = row.get('Prev_Date', 'Old')
         d2 = row.get('Date', 'New')
         
