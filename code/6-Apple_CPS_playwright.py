@@ -7,7 +7,7 @@ import sys
 from datetime import datetime
 import pytz
 from playwright.async_api import async_playwright, Page
-from sites import total_links
+from utils.sites import total_links
 
 # Constants
 MAX_CONCURRENT_TABS = 10

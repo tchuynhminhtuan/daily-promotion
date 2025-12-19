@@ -10,7 +10,7 @@ from playwright.async_api import async_playwright
 import sys
 current_dir = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(current_dir)
-from sites import total_links
+from utils.sites import total_links
 
 # Configuration
 OUTPUT_DIR = "content"
