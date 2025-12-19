@@ -1,3 +1,5 @@
+import argparse
+import sys
 import pandas as pd
 import os
 import glob
@@ -43,12 +45,14 @@ class DataLoader:
     """Handles loading and normalizing data from multiple CSV sources."""
     
     @staticmethod
-    def load_all_data():
+    def load_all_data(dates=None, base_dir=None):
+        target_dates = dates if dates else DATES
+        target_base_dir = base_dir if base_dir else BASE_DIR
         all_data = []
         print("Loading data...")
         
-        for date_str in DATES:
-            day_dir = os.path.join(BASE_DIR, date_str)
+        for date_str in target_dates:
+            day_dir = os.path.join(target_base_dir, date_str)
             if not os.path.exists(day_dir):
                 print(f"Skipping missing directory: {day_dir}")
                 continue
@@ -94,8 +98,9 @@ class DataLoader:
 class PriceMatrixGenerator:
     """Generates the Price Matrix CSV and provides a Price Lookup Service."""
     
-    def __init__(self, df):
+    def __init__(self, df, skip_csv=False):
         self.df = df
+        self.skip_csv = skip_csv
         self.price_lookup = {} # Key: (Channel, Product, Color, Date), Value: Price
 
     def run(self):
@@ -106,7 +111,10 @@ class PriceMatrixGenerator:
         df_collapsed = self._collapse_for_matrix(self.df)
         
         # 2. Pivot for Matrix CSV
-        self._generate_csv(df_collapsed)
+        if not self.skip_csv:
+             self._generate_csv(df_collapsed)
+        else:
+             print("💡 Generating Price Matrix (Skipping CSV save)...")
         
         # 3. Build Lookup (Use the collapsed DF or original? Original is safer for specific lookups, 
         #    but we often compare on the "collapsed" entity in Diff Report. 
@@ -185,9 +193,11 @@ class PriceMatrixGenerator:
 class PromoDiffGenerator:
     """Generates the Promotion Difference CSV and HTML Report."""
     
-    def __init__(self, df, price_generator):
+    def __init__(self, df, price_generator, output_file=None, skip_csv=False):
         self.df = df
         self.price_gen = price_generator
+        self.output_file = output_file or PROMO_DIFF_CSV # Default if not provided
+        self.skip_csv = skip_csv
 
     def run(self):
         print("Generating Promo Diff Report...")
@@ -201,11 +211,22 @@ class PromoDiffGenerator:
         
         if df_diff is not None and not df_diff.empty:
             # 3. Save CSV
-            df_diff.to_csv(PROMO_DIFF_CSV, index=False)
-            print(f"Promo Diff CSV saved to: {PROMO_DIFF_CSV}")
+            if not self.skip_csv:
+                df_diff.to_csv(self.output_file, index=False)
+                print(f"Promo Diff CSV saved to: {self.output_file}")
+            else:
+                print("🌐 Generating HTML Report (Skipping CSV save)...")
             
             # 4. Save HTML
-            self._save_html(df_diff)
+            # If output_file is a CSV path, derive HTML path or use default
+            # But usually for interactive we might pass a specific HTML path
+            # Let's standardize: If skip_csv is True, output_file might be HTML
+            
+            html_path = PROMO_DIFF_HTML
+            if self.skip_csv and self.output_file.endswith('.html'):
+                html_path = self.output_file
+            
+            self._save_html(df_diff, html_path)
         else:
             print("No promotion changes detected.")
 
@@ -325,9 +346,9 @@ class PromoDiffGenerator:
                 return val
         return None
 
-    def _save_html(self, df):
+    def _save_html(self, df, path):
         # Use HTMLGenerator class to keep this clean
-        HTMLGenerator(df, PROMO_DIFF_HTML).generate()
+        HTMLGenerator(df, path).generate()
 
 class HTMLGenerator:
     def __init__(self, df, output_file):
@@ -640,23 +661,97 @@ class HTMLGenerator:
         items = str(text).split('|')
         return {item.strip() for item in items if item.strip()}
 
+def get_available_dates(base_path):
+    if not os.path.exists(base_path):
+        print(f"Error: Base directory not found: {base_path}")
+        return []
+    
+    date_pattern = re.compile(r'^\d{4}-\d{2}-\d{2}$')
+    dates = [d for d in os.listdir(base_path) if os.path.isdir(os.path.join(base_path, d)) and date_pattern.match(d)]
+    return sorted(dates, reverse=True)
+
+def select_dates(available_dates):
+    if not available_dates:
+        print("❌ No data folders found in BASE_DIR.")
+        return None, None
+
+    print("\n" + "="*40)
+    print("📅 AVAILABLE DATES")
+    print("="*40)
+    for i, d in enumerate(available_dates):
+        print(f" [{i}] Date: {d}")
+    print("="*40)
+    
+    try:
+        new_prompt = f"\n👉 Select NEWEST date index [Default 0 ({available_dates[0]})]: "
+        new_idx = int(input(new_prompt) or 0)
+        
+        default_old = min(1, len(available_dates)-1)
+        old_prompt = f"👉 Select OLDER date index to compare [Default {default_old} ({available_dates[default_old]})]: "
+        old_idx = int(input(old_prompt) or default_old)
+        
+        if new_idx < 0 or new_idx >= len(available_dates) or old_idx < 0 or old_idx >= len(available_dates):
+            print("⚠️ Invalid selection. Please try again.")
+            return None, None
+            
+        return available_dates[new_idx], available_dates[old_idx]
+    except ValueError:
+        print("⚠️ Please enter numbers only.")
+        return None, None
+
 
 def main():
-    print("--- Starting Consolidated Report Generation ---")
+    parser = argparse.ArgumentParser(description="Daily Promotion Report Generator")
+    parser.add_argument("--interactive", action="store_true", help="Run in interactive mode (prompt for dates)")
+    args = parser.parse_args()
+
+    # Determine Base Directory
+    # Priority: Env Var -> Global Config
+    base_dir = os.getenv("DAILY_PROMOTION_BASE_DIR", BASE_DIR)
+    
+    target_dates = DATES
+    is_interactive = args.interactive
+    
+    print(f"--- Starting Report Generation (Interactive: {is_interactive}) ---")
+    print(f"📂 Source Directory: {base_dir}")
+
+    output_html_path = PROMO_DIFF_HTML
+
+    if is_interactive:
+        available = get_available_dates(base_dir)
+        newer, older = select_dates(available)
+        if not newer or not older:
+             print("❌ Date selection aborted.")
+             return
+        target_dates = [older, newer]
+        print(f"\n🔄 Comparing: {older} vs {newer}...")
+        
+        # In interactive, we might want a specific filename or just default
+        # Let's keep default docs/index.html so it works with GitHub pages
     
     # 1. Load Data
-    df = DataLoader.load_all_data()
+    # Pass target_dates and base_dir directly to DataLoader
+    
+    df = DataLoader.load_all_data(dates=target_dates, base_dir=base_dir)
     print(f"Total Rows Loaded: {len(df)}")
     
+    if df.empty:
+        print("❌ No data loaded. Exiting.")
+        return
+    
     # 2. Price Matrix
-    price_gen = PriceMatrixGenerator(df)
+    price_gen = PriceMatrixGenerator(df, skip_csv=is_interactive)
     price_gen.run()
     
     # 3. Promo Diff
-    promo_gen = PromoDiffGenerator(df, price_gen)
+    # If interactive, skip CSV and maybe use specific HTML output?
+    # For now, we overwrite docs/index.html as requested.
+    promo_gen = PromoDiffGenerator(df, price_gen, output_file=output_html_path, skip_csv=is_interactive)
     promo_gen.run()
     
     print("--- Process Completed Successfully ---")
+    if is_interactive:
+        print(f"📌 Report available at: {output_html_path}")
 
 if __name__ == "__main__":
     main()

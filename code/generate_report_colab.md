@@ -39,7 +39,8 @@ os.environ['DAILY_PROMOTION_BASE_DIR'] = BASE_DIR_DRIVE
 
 # Chạy script tương tác từ repository đã clone
 # Script này sử dụng input() nên sẽ tương thích tốt với Colab
-!python3 "/content/daily-promotion/code/generate_report_interactive.py"
+# Lưu ý: Chúng ta dùng script chính với cờ --interactive
+!python3 "/content/daily-promotion/code/generate_report.py" --interactive
 
 # Tự động tìm file HTML vừa tạo để tải xuống
 # Script interactive lưu output vào folder docs/index.html của repo
