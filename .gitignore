@@ -3,5 +3,8 @@ __pycache__/
 *.pyc
 .idea/
 .ipynb_checkpoints/
-content/
+# Ignore content unless it's a CSV
+content/*
+!content/*.csv
+!content/*/*.csv
 source/
