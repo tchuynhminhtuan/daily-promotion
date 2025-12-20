@@ -10,7 +10,7 @@ import html
 BASE_DIR = "/Users/brucehuynh/Documents/Code_Projects/Daily_Promotion/content"
 DATES = [
     # "2025-11-29", "2025-12-01","2025-12-05", "2025-12-08", 
-    "2025-12-18", "2025-12-19"
+    "2025-12-19", "2025-12-20"
 ]
 
 # Output Paths
@@ -418,7 +418,8 @@ class HTMLGenerator:
                     <label for="priceFilter">Thay đổi Giá:</label>
                     <select id="priceFilter">
                         <option value="ALL">Tất cả</option>
-                        <option value="YES">Đổi Giá</option>
+                        <option value="UP">Tăng Giá</option>
+                        <option value="DOWN">Giảm Giá</option>
                         <option value="NO">Không Đổi</option>
                     </select>
                 </div>
@@ -519,8 +520,11 @@ class HTMLGenerator:
         try:
              p1 = float(row.get('New_Price', 0)) if pd.notna(row.get('New_Price')) else 0
              p2 = float(row.get('Old_Price', 0)) if pd.notna(row.get('Old_Price')) else 0
-             if p1 != p2 and p1 > 0 and p2 > 0:
-                 price_changed = 'YES'
+             if p1 > 0 and p2 > 0:
+                 if p1 > p2:
+                     price_changed = 'UP'
+                 elif p1 < p2:
+                     price_changed = 'DOWN'
         except: pass
 
         # Price Display Logic
