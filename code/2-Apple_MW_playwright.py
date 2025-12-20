@@ -11,7 +11,7 @@ from playwright.async_api import async_playwright, TimeoutError as PlaywrightTim
 # Add the current directory to sys.path to import sites
 current_dir = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(current_dir)
-import sites
+from utils import sites
 
 # --- Configuration ---
 MAX_CONCURRENT_TABS = 10
@@ -323,4 +323,7 @@ async def main():
 if __name__ == "__main__":
     start_time = datetime.now()
     asyncio.run(main())
-    print(f"Total execution time: {datetime.now() - start_time}")
+    
+    duration = datetime.now() - start_time
+    seconds = duration.total_seconds()
+    print(f"Total execution time: {int(seconds // 3600)} hours {int((seconds % 3600) // 60)} minutes {int(seconds % 60)} seconds")

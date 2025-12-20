@@ -240,4 +240,9 @@ async def main():
         await browser.close()
 
 if __name__ == "__main__":
+    start_time = datetime.now()
     asyncio.run(main())
+    
+    duration = datetime.now() - start_time
+    seconds = duration.total_seconds()
+    print(f"Total execution time: {int(seconds // 3600)} hours {int((seconds % 3600) // 60)} minutes {int(seconds % 60)} seconds")
