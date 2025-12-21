@@ -11,10 +11,10 @@ from utils.sites import total_links
 
 # Constants
 MAX_CONCURRENT_TABS = 10
-# Default: Take screenshots = True (Safe for local), Block Images = False (Safe for local)
-# For GitHub Actions/Proxies: Set TAKE_SCREENSHOT=False, BLOCK_IMAGES=True
-TAKE_SCREENSHOT = os.environ.get("TAKE_SCREENSHOT", "True").lower() == "true"
-BLOCK_IMAGES = os.environ.get("BLOCK_IMAGES", "False").lower() == "true"
+# Default: Take screenshots = False, Block Images = True
+# For GitHub Actions/Proxies: These defaults are now optimized for speed/cost.
+TAKE_SCREENSHOT = os.environ.get("TAKE_SCREENSHOT", "False").lower() == "true"
+BLOCK_IMAGES = os.environ.get("BLOCK_IMAGES", "True").lower() == "true"
 
 HEADLESS = True
 USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36"

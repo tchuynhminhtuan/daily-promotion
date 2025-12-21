@@ -16,10 +16,10 @@ from utils.sites import total_links
 OUTPUT_DIR = "content"
 DDV_URLS = total_links['ddv_urls']
 
-# Default: Take screenshots = True (Safe for local), Block Images = False (Safe for local)
-# For GitHub Actions/Proxies: Set TAKE_SCREENSHOT=False, BLOCK_IMAGES=True
-TAKE_SCREENSHOT = os.environ.get("TAKE_SCREENSHOT", "True").lower() == "true"
-BLOCK_IMAGES = os.environ.get("BLOCK_IMAGES", "False").lower() == "true"
+# Default: Take screenshots = False, Block Images = True
+# For GitHub Actions/Proxies: These defaults are now optimized for speed/cost.
+TAKE_SCREENSHOT = os.environ.get("TAKE_SCREENSHOT", "False").lower() == "true"
+BLOCK_IMAGES = os.environ.get("BLOCK_IMAGES", "True").lower() == "true"
 
 # Stealth / Anti-bot constants
 MAX_CONCURRENT_TABS = 10
