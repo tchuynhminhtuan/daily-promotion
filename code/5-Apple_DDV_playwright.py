@@ -16,6 +16,11 @@ from utils.sites import total_links
 OUTPUT_DIR = "content"
 DDV_URLS = total_links['ddv_urls']
 
+# Default: Take screenshots = True (Safe for local), Block Images = False (Safe for local)
+# For GitHub Actions/Proxies: Set TAKE_SCREENSHOT=False, BLOCK_IMAGES=True
+TAKE_SCREENSHOT = os.environ.get("TAKE_SCREENSHOT", "True").lower() == "true"
+BLOCK_IMAGES = os.environ.get("BLOCK_IMAGES", "False").lower() == "true"
+
 # Stealth / Anti-bot constants
 MAX_CONCURRENT_TABS = 10
 HEADLESS = True
@@ -200,7 +205,7 @@ async def scrape_product(page, url, csv_path, csv_lock, forced_color="Unknown", 
 
     # Screenshot
     screenshot_name = ""
-    if screenshot:
+    if screenshot and TAKE_SCREENSHOT:
         try:
             img_dir = os.path.join(os.path.dirname(csv_path), 'img_ddv')
             safe_name = re.sub(r'[^\w\-\.]', '_', product_name)[:30]
@@ -245,6 +250,12 @@ async def process_url(semaphore, browser, url, csv_path, csv_lock):
         )
         await add_stealth_scripts(page)
         
+        # Optimize: Block images to save bandwidth/speed if requested
+        if BLOCK_IMAGES:
+            await page.route("**/*", lambda route: route.abort() 
+                if route.request.resource_type in ["image", "media", "font"] 
+                else route.continue_())
+
         print(f"Processing: {url}")
         try:
             try:

@@ -11,6 +11,11 @@ from utils.sites import total_links
 
 # Constants
 MAX_CONCURRENT_TABS = 10
+# Default: Take screenshots = True (Safe for local), Block Images = False (Safe for local)
+# For GitHub Actions/Proxies: Set TAKE_SCREENSHOT=False, BLOCK_IMAGES=True
+TAKE_SCREENSHOT = os.environ.get("TAKE_SCREENSHOT", "True").lower() == "true"
+BLOCK_IMAGES = os.environ.get("BLOCK_IMAGES", "False").lower() == "true"
+
 HEADLESS = True
 USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36"
 
@@ -69,6 +74,12 @@ async def process_url(semaphore, browser, url, csv_path):
             viewport={"width": 1920, "height": 1080},
             device_scale_factor=1,
         )
+        
+        # Optimize: Block images to save bandwidth/speed if requested
+        if BLOCK_IMAGES:
+            await page.route("**/*", lambda route: route.abort() 
+                if route.request.resource_type in ["image", "media", "font"] 
+                else route.continue_())
         
         try:
             print(f"Processing: {url}")
@@ -207,18 +218,21 @@ async def scrape_product_data(page, url, csv_path, color_name):
 
     # Screenshot
     screenshot_name = ""
-    try:
-        img_dir = os.path.join(os.path.dirname(csv_path), 'img_hoangha')
-        safe_product_name = re.sub(r'[^\w\-\.]', '_', product_name).strip('. ')
-        safe_color = re.sub(r'[^\w\-\.]', '_', str(color_name)).strip('. ')
-        timestamp = datetime.now(local_tz).strftime("%Y-%m-%d_%H-%M-%S")
-        filename = f"{safe_product_name}_{safe_color}_{timestamp}.png"
-        full_path = os.path.join(img_dir, filename)
-        
-        await page.screenshot(path=full_path, full_page=True)
-        screenshot_name = filename
-    except Exception as e:
-        print(f"Screenshot failed: {e}")
+    if TAKE_SCREENSHOT:
+        try:
+            img_dir = os.path.join(os.path.dirname(csv_path), 'img_hoangha')
+            safe_product_name = re.sub(r'[^\w\-\.]', '_', product_name).strip('. ')
+            safe_color = re.sub(r'[^\w\-\.]', '_', str(color_name)).strip('. ')
+            timestamp = datetime.now(local_tz).strftime("%Y-%m-%d_%H-%M-%S")
+            filename = f"{safe_product_name}_{safe_color}_{timestamp}.png"
+            full_path = os.path.join(img_dir, filename)
+            
+            await page.screenshot(path=full_path, full_page=True)
+            screenshot_name = filename
+        except Exception as e:
+            print(f"Screenshot failed: {e}")
+    else:
+        screenshot_name = "Disabled"
 
     # Prepare Data
     data = {
