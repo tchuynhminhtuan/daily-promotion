@@ -11,10 +11,48 @@ import html
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 PROJECT_ROOT = os.path.dirname(SCRIPT_DIR)
 BASE_DIR = os.path.join(PROJECT_ROOT, "content")
-DATES = [
-    # "2025-11-29", "2025-12-01","2025-12-05", "2025-12-08", 
-    "2025-12-19", "2025-12-20"
-]
+# --- Date Selection Options ---
+# Option 1: Auto-select the two most recent dates (Default)
+# Option 2: Hardcoded specific dates (Set AUTO_SELECT_DATES = False)
+AUTO_SELECT_DATES = True
+
+def get_available_dates(base_dir):
+    """Scans content directory for date-like folders (YYYY-MM-DD) and returns them sorted."""
+    if not os.path.exists(base_dir):
+        return []
+    
+    dates = []
+    date_pattern = re.compile(r'^\d{4}-\d{2}-\d{2}$')
+    
+    try:
+        entries = os.listdir(base_dir)
+        for entry in entries:
+            full_path = os.path.join(base_dir, entry)
+            if os.path.isdir(full_path) and date_pattern.match(entry):
+                dates.append(entry)
+    except OSError:
+        return []
+        
+    return sorted(dates)
+
+if AUTO_SELECT_DATES:
+    available_dates = get_available_dates(BASE_DIR)
+    if len(available_dates) >= 2:
+        print(f"🔄 Auto-selecting latest dates from {len(available_dates)} available...")
+        DATES = available_dates[-2:]
+        print(f"✅ Selected: {DATES}")
+    elif available_dates:
+        DATES = available_dates
+        print(f"⚠️ Only found these dates: {DATES}")
+    else:
+        print("❌ No date folders found in content/. Using fallback.")
+        DATES = ["2025-12-19", "2025-12-20"] # Fallback
+else:
+    # Option 2: Hardcoded manual selection
+    DATES = [
+        # "2025-11-29", "2025-12-01","2025-12-05", "2025-12-08", 
+        "2025-12-19", "2025-12-20"
+    ]
 
 # Output Paths
 OUTPUT_DIR = os.path.join(BASE_DIR, "analysis_result")
