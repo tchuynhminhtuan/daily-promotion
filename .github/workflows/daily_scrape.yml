@@ -32,6 +32,8 @@ jobs:
       - name: Run Scrapers
         env:
           MAX_CONCURRENT_TABS: 2
+          TAKE_SCREENSHOT: "False"
+          BLOCK_IMAGES: "True"
         run: |
           echo "Starting MW Test Run..."
           python3 code/2-Apple_MW_playwright.py

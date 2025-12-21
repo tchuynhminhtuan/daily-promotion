@@ -15,6 +15,11 @@ from utils import sites
 
 # --- Configuration ---
 MAX_CONCURRENT_TABS = int(os.environ.get("MAX_CONCURRENT_TABS", 10))
+# Default: Take screenshots = True (Safe for local), Block Images = False (Safe for local)
+# For GitHub Actions/Proxies: Set TAKE_SCREENSHOT=False, BLOCK_IMAGES=True
+TAKE_SCREENSHOT = os.environ.get("TAKE_SCREENSHOT", "True").lower() == "true"
+BLOCK_IMAGES = os.environ.get("BLOCK_IMAGES", "False").lower() == "true"
+
 HEADLESS = True
 USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
 
@@ -138,6 +143,13 @@ async def process_url(context, url, semaphore, csv_path, date_str):
     discovered_urls = []
     async with semaphore:
         page = await context.new_page()
+        
+        # Optimize: Block images to save bandwidth/speed if requested
+        if BLOCK_IMAGES:
+            await page.route("**/*", lambda route: route.abort() 
+                if route.request.resource_type in ["image", "media", "font"] 
+                else route.continue_())
+
         print(f"Processing: {url}")
         
         data = {
@@ -229,33 +241,36 @@ async def process_url(context, url, semaphore, csv_path, date_str):
 
 
             # 6. Screenshot Capture
-            try:
-                # Create img_mw directory if it doesn't exist
-                img_dir = os.path.join(os.path.dirname(csv_path), 'img_mw')
-                if not os.path.exists(img_dir):
-                    os.makedirs(img_dir)
+            if TAKE_SCREENSHOT:
+                try:
+                    # Create img_mw directory if it doesn't exist
+                    img_dir = os.path.join(os.path.dirname(csv_path), 'img_mw')
+                    if not os.path.exists(img_dir):
+                        os.makedirs(img_dir)
 
-                # Sanitize product name for filename
-                safe_product_name = re.sub(r'[^\w\-\.]', '_', data['Product_Name']).strip('. ')
-                
-                # Generate timestamp
-                tz = pytz.timezone('Asia/Ho_Chi_Minh')
-                timestamp = datetime.now(tz).strftime("%Y-%m-%d_%H-%M-%S")
-                
-                filename = f"{safe_product_name}_{timestamp}.png"
-                full_path = os.path.join(img_dir, filename)
-                
-                # Set viewport size for better capture (optional, but good for full page details)
-                await page.set_viewport_size({"width": 1920, "height": 2080})
-                
-                # Take screenshot
-                await page.screenshot(path=full_path, full_page=True)
-                
-                # Save just the filename to CSV
-                data['screenshot_name'] = filename
-                
-            except Exception as e:
-                print(f"Warning: Could not take screenshot for {url}: {e}")
+                    # Sanitize product name for filename
+                    safe_product_name = re.sub(r'[^\w\-\.]', '_', data['Product_Name']).strip('. ')
+                    
+                    # Generate timestamp
+                    tz = pytz.timezone('Asia/Ho_Chi_Minh')
+                    timestamp = datetime.now(tz).strftime("%Y-%m-%d_%H-%M-%S")
+                    
+                    filename = f"{safe_product_name}_{timestamp}.png"
+                    full_path = os.path.join(img_dir, filename)
+                    
+                    # Set viewport size for better capture (optional, but good for full page details)
+                    await page.set_viewport_size({"width": 1920, "height": 2080})
+                    
+                    # Take screenshot
+                    await page.screenshot(path=full_path, full_page=True)
+                    
+                    # Save just the filename to CSV
+                    data['screenshot_name'] = filename
+                    
+                except Exception as e:
+                    print(f"Warning: Could not take screenshot for {url}: {e}")
+            else:
+                data['screenshot_name'] = "Disabled"
 
             # Check for "Hàng sắp về" or similar text if needed
             # page_text = await page.content()
