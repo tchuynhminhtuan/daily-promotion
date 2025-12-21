@@ -14,7 +14,7 @@ sys.path.append(current_dir)
 from utils import sites
 
 # --- Configuration ---
-MAX_CONCURRENT_TABS = 10
+MAX_CONCURRENT_TABS = int(os.environ.get("MAX_CONCURRENT_TABS", 10))
 HEADLESS = True
 USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
 

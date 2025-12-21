@@ -1,0 +1,60 @@
+name: Daily Scraping Job
+
+on:
+  schedule:
+    # Runs at 1:00 UTC (8:00 AM Vietnam Time) every day
+    - cron: "0 1 * * *"
+  workflow_dispatch: # Allows manual trigger from GitHub UI
+
+permissions:
+  contents: write
+
+jobs:
+  scrape_and_report:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          playwright install chromium
+          playwright install-deps
+
+      - name: Run Scrapers
+        env:
+          MAX_CONCURRENT_TABS: 2
+        run: |
+          echo "Starting MW Test Run..."
+          python3 code/2-Apple_MW_playwright.py
+
+      - name: Generate Report
+        run: |
+          echo "Generating HTML Report..."
+          # Run the interactive report in non-interactive mode (default)
+          python3 code/generate_report.py
+
+      - name: Commit and Push Results
+        run: |
+          git config --global user.name "GitHub Action Scraper"
+          git config --global user.email "action@github.com"
+
+          # Add new content files (data)
+          git add content/
+
+          # Add the updated report
+          git add docs/index.html
+
+          # Commit if there are changes
+          git commit -m "Auto: Update Daily Promotion Data & Report [skip ci]" || echo "No changes to commit"
+
+          # Push changes
+          git push
