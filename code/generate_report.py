@@ -7,7 +7,10 @@ import re
 import html
 
 # --- Configuration ---
-BASE_DIR = "/Users/brucehuynh/Documents/Code_Projects/Daily_Promotion/content"
+# Determine the project root directory (parent of 'code')
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+PROJECT_ROOT = os.path.dirname(SCRIPT_DIR)
+BASE_DIR = os.path.join(PROJECT_ROOT, "content")
 DATES = [
     # "2025-11-29", "2025-12-01","2025-12-05", "2025-12-08", 
     "2025-12-19", "2025-12-20"
