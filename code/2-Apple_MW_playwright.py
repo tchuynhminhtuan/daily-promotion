@@ -159,7 +159,17 @@ async def process_url(context, url, semaphore, csv_path, date_str):
         }
 
         try:
-            await page.goto(url, timeout=60000)
+            # Retry logic for navigation
+            max_retries = 3
+            for attempt in range(max_retries):
+                try:
+                    await page.goto(url, timeout=120000, wait_until="domcontentloaded")
+                    break
+                except Exception as e:
+                    print(f"⚠️ Navigation attempt {attempt+1}/{max_retries} failed: {e}")
+                    if attempt == max_retries - 1:
+                        raise e # Re-raise to trigger outer except
+                    await asyncio.sleep(5)
             
             # Wait for price element to load
             try:

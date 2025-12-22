@@ -174,8 +174,17 @@ async def process_url(semaphore, browser, url, csv_path, csv_lock):
 
         try:
             print(f"Processing: {url}")
-            await page.goto(url, timeout=60000, wait_until="domcontentloaded")
-            await page.goto(url, timeout=60000, wait_until="domcontentloaded")
+            # Retry logic for navigation
+            max_retries = 3
+            for attempt in range(max_retries):
+                try:
+                    await page.goto(url, timeout=120000, wait_until="domcontentloaded")
+                    break
+                except Exception as e:
+                    print(f"⚠️ Navigation attempt {attempt+1}/{max_retries} failed: {e}")
+                    if attempt == max_retries - 1:
+                        raise e
+                    await asyncio.sleep(5)
             
             if not USE_SMART_WAIT:
                 await page.wait_for_timeout(5000) # Wait for dynamic content
