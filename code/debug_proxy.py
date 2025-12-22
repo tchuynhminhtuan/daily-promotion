@@ -31,10 +31,10 @@ async def main():
             )
             page = await browser.new_page()
             
-            print("⏳ DEBUG: Attempting to connect to http://example.com ...")
+            print("⏳ DEBUG: Attempting to connect to https://fptshop.com.vn ...")
             start_time = asyncio.get_event_loop().time()
             
-            response = await page.goto("http://example.com", timeout=30000)
+            response = await page.goto("https://fptshop.com.vn", timeout=60000)
             
             end_time = asyncio.get_event_loop().time()
             print(f"✅ DEBUG: Connection Successful! Status: {response.status}")
