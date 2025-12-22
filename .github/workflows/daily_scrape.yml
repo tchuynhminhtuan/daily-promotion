@@ -41,7 +41,7 @@ jobs:
           BLOCK_IMAGES: "True"
           PROXY_SERVER: ${{ secrets.PROXY_SERVER }}
           # Proxy Toggles (True/False)
-          ENABLE_PROXY_FPT: "True"
+          ENABLE_PROXY_FPT: "False"
           ENABLE_PROXY_MW: "True"
           ENABLE_PROXY_VIETTEL: "False"
           ENABLE_PROXY_HOANGHA: "False"
