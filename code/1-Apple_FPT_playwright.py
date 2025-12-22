@@ -146,7 +146,18 @@ async def process_url(semaphore, browser, url, csv_path, csv_lock):
             user_agent=USER_AGENT,
             viewport={"width": 1920, "height": 1080},
             device_scale_factor=1,
+            # Anti-detection: Add extra headers
+            extra_http_headers={
+                "Accept-Language": "vi-VN,vi;q=0.9,en-US;q=0.8,en;q=0.7",
+                "Referer": "https://fptshop.com.vn/",
+                "sec-ch-ua": '"Google Chrome";v="123", "Not:A-Brand";v="8", "Chromium";v="123"',
+                "sec-ch-ua-mobile": "?0",
+                "sec-ch-ua-platform": '"macOS"',
+            }
         )
+        
+        # Anti-detection: Remove webdriver property
+        await page.add_init_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
         
         # Optimize: Block images to save bandwidth/speed if requested
         if BLOCK_IMAGES:
@@ -431,7 +442,15 @@ async def main():
     async with async_playwright() as p:
         browser = await p.chromium.launch(
             headless=HEADLESS,
-            args=["--disable-blink-features=AutomationControlled"]
+            args=[
+                "--disable-blink-features=AutomationControlled",
+                "--no-sandbox",
+                "--disable-setuid-sandbox",
+                "--disable-dev-shm-usage",
+                "--disable-gpu",
+                "--window-size=1920,1080"
+            ],
+            ignore_default_args=["--enable-automation"]
         )
         
         tasks = [process_url(semaphore, browser, url, csv_path, csv_lock) for url in urls]
