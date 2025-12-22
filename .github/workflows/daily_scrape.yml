@@ -35,6 +35,13 @@ jobs:
           TAKE_SCREENSHOT: "False"
           BLOCK_IMAGES: "False"
           PROXY_SERVER: ${{ secrets.PROXY_SERVER }}
+          # Proxy Toggles (True/False)
+          ENABLE_PROXY_FPT: "True"
+          ENABLE_PROXY_MW: "True"
+          ENABLE_PROXY_VIETTEL: "False"
+          ENABLE_PROXY_HOANGHA: "False"
+          ENABLE_PROXY_DDV: "False"
+          ENABLE_PROXY_CPS: "False"
         run: |
           echo "Starting Daily Promotion Scraping..."
 

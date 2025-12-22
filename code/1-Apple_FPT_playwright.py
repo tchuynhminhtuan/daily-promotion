@@ -455,8 +455,8 @@ async def main():
             "ignore_default_args": ["--enable-automation"]
         }
         
-        if proxy_server:
-            print(f"🌐 Using Proxy: {proxy_server}")
+        if proxy_server and os.environ.get("ENABLE_PROXY_FPT", "False").lower() == "true":
+            print(f"🌐 Using Proxy (FPT): {proxy_server}")
             launch_options["proxy"] = {"server": proxy_server}
         
         browser = await p.chromium.launch(**launch_options)

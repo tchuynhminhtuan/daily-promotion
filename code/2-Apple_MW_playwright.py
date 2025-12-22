@@ -302,10 +302,26 @@ async def main():
     urls_to_process = list(initial_urls)
     
     async with async_playwright() as p:
-        browser = await p.chromium.launch(
-            headless=HEADLESS,
-            args=["--disable-blink-features=AutomationControlled"]
-        )
+        # Proxy Configuration
+        proxy_server = os.environ.get("PROXY_SERVER")
+        launch_options = {
+            "headless": HEADLESS,
+            "args": [
+                "--disable-blink-features=AutomationControlled",
+                "--no-sandbox",
+                "--disable-setuid-sandbox",
+                "--disable-dev-shm-usage",
+                "--disable-gpu",
+                "--window-size=1280,720"
+            ],
+            "ignore_default_args": ["--enable-automation"]
+        }
+        
+        if proxy_server and os.environ.get("ENABLE_PROXY_MW", "False").lower() == "true":
+            print(f"🌐 Using Proxy (MW): {proxy_server}")
+            launch_options["proxy"] = {"server": proxy_server}
+
+        browser = await p.chromium.launch(**launch_options)
         context = await browser.new_context(
             user_agent=USER_AGENT,
             viewport={"width": 1280, "height": 720}

@@ -376,19 +376,28 @@ async def main():
     semaphore = asyncio.Semaphore(MAX_CONCURRENT_TABS)
 
     async with async_playwright() as p:
-        browser = await p.chromium.launch(
-            headless=HEADLESS,
-            channel="chrome",
-            args=[
+        # Proxy Configuration
+        proxy_server = os.environ.get("PROXY_SERVER")
+        launch_options = {
+            "headless": HEADLESS,
+            "channel": "chrome",
+            "args": [
                 "--disable-blink-features=AutomationControlled",
                 "--no-sandbox",
                 "--disable-setuid-sandbox",
                 "--disable-dev-shm-usage",
                 "--disable-accelerated-2d-canvas",
                 "--disable-gpu",
+                "--window-size=1920,1080"
             ],
-            ignore_default_args=["--enable-automation"]
-        )
+            "ignore_default_args": ["--enable-automation"]
+        }
+        
+        if proxy_server and os.environ.get("ENABLE_PROXY_DDV", "False").lower() == "true":
+            print(f"🌐 Using Proxy (DDV): {proxy_server}")
+            launch_options["proxy"] = {"server": proxy_server}
+
+        browser = await p.chromium.launch(**launch_options)
         
         tasks = [process_url(semaphore, browser, url, csv_path, csv_lock) for url in DDV_URLS]
         await asyncio.gather(*tasks)

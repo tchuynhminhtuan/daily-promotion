@@ -309,10 +309,26 @@ async def main():
     semaphore = asyncio.Semaphore(MAX_CONCURRENT_TABS)
     
     async with async_playwright() as p:
-        browser = await p.chromium.launch(
-            headless=HEADLESS,
-            args=["--disable-blink-features=AutomationControlled"]
-        )
+        # Proxy Configuration
+        proxy_server = os.environ.get("PROXY_SERVER")
+        launch_options = {
+            "headless": HEADLESS,
+            "args": [
+                "--disable-blink-features=AutomationControlled",
+                "--no-sandbox",
+                "--disable-setuid-sandbox",
+                "--disable-dev-shm-usage",
+                "--disable-gpu",
+                "--window-size=1920,1080"
+            ],
+            "ignore_default_args": ["--enable-automation"]
+        }
+        
+        if proxy_server and os.environ.get("ENABLE_PROXY_VIETTEL", "False").lower() == "true":
+            print(f"🌐 Using Proxy (Viettel): {proxy_server}")
+            launch_options["proxy"] = {"server": proxy_server}
+
+        browser = await p.chromium.launch(**launch_options)
         
         tasks = [process_url(semaphore, browser, url, csv_path) for url in urls]
         await asyncio.gather(*tasks)
