@@ -306,7 +306,18 @@ async def main():
     
     async with async_playwright() as p:
         # Proxy Configuration
-        proxy_server = os.environ.get("PROXY_SERVER")
+        proxy_server = os.environ.get("PROXY_SERVER", "").strip()
+        if proxy_server:
+             # Handle IP:PORT:USER:PASS format
+             parts = proxy_server.split(':')
+             if len(parts) == 4 and "@" not in proxy_server and not proxy_server.startswith("http"):
+                 ip, port, user, pw = parts
+                 proxy_server = f"http://{user}:{pw}@{ip}:{port}"
+                 print("⚠️ Detected IP:PORT:USER:PASS format. Reformatted to http://USER:PASS@IP:PORT")
+
+             if not proxy_server.startswith("http"):
+                proxy_server = f"http://{proxy_server}"
+            
         launch_options = {
             "headless": HEADLESS,
             "args": [
