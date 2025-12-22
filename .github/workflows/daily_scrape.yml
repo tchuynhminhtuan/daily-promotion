@@ -33,7 +33,7 @@ jobs:
         env:
           MAX_CONCURRENT_TABS: 5
           TAKE_SCREENSHOT: "False"
-          BLOCK_IMAGES: "False"
+          BLOCK_IMAGES: "True"
           PROXY_SERVER: ${{ secrets.PROXY_SERVER }}
           # Proxy Toggles (True/False)
           ENABLE_PROXY_FPT: "True"
