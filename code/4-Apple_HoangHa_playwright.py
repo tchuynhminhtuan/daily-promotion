@@ -263,6 +263,9 @@ async def main():
     
     # urls = ["https://hoanghamobile.com/dien-thoai/iphone-17-pro-max"]
     urls = total_links['hh_urls']
+    if os.environ.get("TEST_MODE") == "True":
+        print("⚠️ TEST MODE ENABLED: Processing only 4 URLs")
+        urls = urls[:4]
     print(f"Processing {len(urls)} URL(s).")
     
     semaphore = asyncio.Semaphore(MAX_CONCURRENT_TABS)

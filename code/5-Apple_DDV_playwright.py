@@ -400,6 +400,10 @@ async def main():
         browser = await p.chromium.launch(**launch_options)
         
         tasks = [process_url(semaphore, browser, url, csv_path, csv_lock) for url in DDV_URLS]
+        if os.environ.get("TEST_MODE") == "True":
+             print("⚠️ TEST MODE ENABLED: Processing only 4 URLs")
+             tasks = tasks[:4]
+        
         await asyncio.gather(*tasks)
             
         await browser.close()

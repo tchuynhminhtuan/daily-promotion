@@ -292,6 +292,9 @@ async def main():
     csv_path = setup_csv(base_path, date_str)
     
     initial_urls = sites.total_links['mw_urls']
+    if os.environ.get("TEST_MODE") == "True":
+        print("⚠️ TEST MODE ENABLED: Processing only 4 URLs")
+        initial_urls = initial_urls[:4]
     # initial_urls = ["https://www.thegioididong.com/dtdd/iphone-16-pro-max"] # Testing
     
     print(f"Found {len(initial_urls)} initial URLs to process.")

@@ -435,6 +435,9 @@ async def main():
     csv_lock = asyncio.Lock()
     
     urls = total_links['fpt_urls']
+    if os.environ.get("TEST_MODE") == "True":
+        print("⚠️ TEST MODE ENABLED: Processing only 4 URLs")
+        urls = urls[:4]
     print(f"Found {len(urls)} URLs to process.")
     
     semaphore = asyncio.Semaphore(MAX_CONCURRENT_TABS)

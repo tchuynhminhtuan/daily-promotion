@@ -238,6 +238,9 @@ async def main():
     # Use the specific URL requested by user for testing
     # urls = ["https://cellphones.com.vn/iphone-air-256gb.html"]
     urls = total_links['cps_urls'] # Uncomment for full run
+    if os.environ.get("TEST_MODE") == "True":
+        print("⚠️ TEST MODE ENABLED: Processing only 4 URLs")
+        urls = urls[:4]
     print(f"Processing {len(urls)} URL(s).")
     
     semaphore = asyncio.Semaphore(MAX_CONCURRENT_TABS)

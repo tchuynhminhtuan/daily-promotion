@@ -304,6 +304,9 @@ async def main():
     # For PoC, use the single URL we found
     # urls = ["https://viettelstore.vn/dien-thoai/iphone-17-256gb-pid355077.html"]
     urls = total_links['vt_urls']
+    if os.environ.get("TEST_MODE") == "True":
+        print("⚠️ TEST MODE ENABLED: Processing only 4 URLs")
+        urls = urls[:4]
     print(f"Processing {len(urls)} URL(s) for PoC.")
     
     semaphore = asyncio.Semaphore(MAX_CONCURRENT_TABS)
