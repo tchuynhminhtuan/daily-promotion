@@ -11,7 +11,7 @@ from utils.sites import total_links
 import pandas as pd
 
 # Constants
-MAX_CONCURRENT_TABS = 4 # Variable 1: Increase concurrency (Default: 4 -> 8)
+MAX_CONCURRENT_TABS = int(os.environ.get("MAX_CONCURRENT_TABS", 4)) # Variable 1: Increase concurrency (Default: 4 -> 8)
 
 # Optimization Flags
 # Optimization Flags

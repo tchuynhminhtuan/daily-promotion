@@ -22,7 +22,7 @@ TAKE_SCREENSHOT = os.environ.get("TAKE_SCREENSHOT", "False").lower() == "true"
 BLOCK_IMAGES = os.environ.get("BLOCK_IMAGES", "True").lower() == "true"
 
 # Stealth / Anti-bot constants
-MAX_CONCURRENT_TABS = 10
+MAX_CONCURRENT_TABS = int(os.environ.get("MAX_CONCURRENT_TABS", 10))
 HEADLESS = True
 # User asked based on experience of others which were Headless=True. I'll stick to True but add User Agent.
 

@@ -10,7 +10,7 @@ from playwright.async_api import async_playwright, Page
 from utils.sites import total_links
 
 # Constants
-MAX_CONCURRENT_TABS = 10
+MAX_CONCURRENT_TABS = int(os.environ.get("MAX_CONCURRENT_TABS", 10))
 # Default: Take screenshots = False, Block Images = True
 # For GitHub Actions/Proxies: These defaults are now optimized for speed/cost.
 TAKE_SCREENSHOT = os.environ.get("TAKE_SCREENSHOT", "False").lower() == "true"
