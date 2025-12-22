@@ -29,11 +29,6 @@ jobs:
           python -m playwright install chromium
           python -m playwright install-deps
 
-      - name: Debug Proxy Connection
-        env:
-          PROXY_SERVER: ${{ secrets.PROXY_SERVER }}
-        run: python3 code/debug_proxy.py
-
       - name: Run Scrapers
         env:
           MAX_CONCURRENT_TABS: 2
