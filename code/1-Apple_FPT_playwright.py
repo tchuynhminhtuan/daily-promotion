@@ -160,9 +160,10 @@ async def process_url(semaphore, browser, url, csv_path, csv_lock):
         await page.add_init_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
         
         # Optimize: Block images to save bandwidth/speed if requested
+        # Optimize: Block images/media to save bandwidth, but ALLOW fonts (blocking fonts can break sites)
         if BLOCK_IMAGES:
             await page.route("**/*", lambda route: route.abort() 
-                if route.request.resource_type in ["image", "media", "font"] 
+                if route.request.resource_type in ["image", "media"] 
                 else route.continue_())
         
         # Anti-detection script

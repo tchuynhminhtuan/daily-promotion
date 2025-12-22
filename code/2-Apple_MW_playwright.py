@@ -147,7 +147,7 @@ async def process_url(context, url, semaphore, csv_path, date_str):
         # Optimize: Block images to save bandwidth/speed if requested
         if BLOCK_IMAGES:
             await page.route("**/*", lambda route: route.abort() 
-                if route.request.resource_type in ["image", "media", "font"] 
+                if route.request.resource_type in ["image", "media"] 
                 else route.continue_())
 
         print(f"Processing: {url}")
