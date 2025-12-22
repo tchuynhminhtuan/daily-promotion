@@ -440,9 +440,11 @@ async def main():
     semaphore = asyncio.Semaphore(MAX_CONCURRENT_TABS)
     
     async with async_playwright() as p:
-        browser = await p.chromium.launch(
-            headless=HEADLESS,
-            args=[
+        # Proxy Configuration
+        proxy_server = os.environ.get("PROXY_SERVER")
+        launch_options = {
+            "headless": HEADLESS,
+            "args": [
                 "--disable-blink-features=AutomationControlled",
                 "--no-sandbox",
                 "--disable-setuid-sandbox",
@@ -450,8 +452,14 @@ async def main():
                 "--disable-gpu",
                 "--window-size=1920,1080"
             ],
-            ignore_default_args=["--enable-automation"]
-        )
+            "ignore_default_args": ["--enable-automation"]
+        }
+        
+        if proxy_server:
+            print(f"🌐 Using Proxy: {proxy_server}")
+            launch_options["proxy"] = {"server": proxy_server}
+        
+        browser = await p.chromium.launch(**launch_options)
         
         tasks = [process_url(semaphore, browser, url, csv_path, csv_lock) for url in urls]
         await asyncio.gather(*tasks)

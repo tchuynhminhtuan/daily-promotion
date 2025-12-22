@@ -34,6 +34,7 @@ jobs:
           MAX_CONCURRENT_TABS: 5
           TAKE_SCREENSHOT: "False"
           BLOCK_IMAGES: "False"
+          PROXY_SERVER: ${{ secrets.PROXY_SERVER }}
         run: |
           echo "Starting Daily Promotion Scraping..."
 
