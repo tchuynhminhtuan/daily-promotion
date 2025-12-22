@@ -38,9 +38,19 @@ def get_available_dates(base_dir):
 if AUTO_SELECT_DATES:
     available_dates = get_available_dates(BASE_DIR)
     if len(available_dates) >= 2:
-        print(f"🔄 Auto-selecting latest dates from {len(available_dates)} available...")
-        DATES = available_dates[-2:]
-        print(f"✅ Selected: {DATES}")
+        print(f"🔄 Auto-selecting... (Goal: Compare 2025-12-20 vs Latest)")
+        
+        baseline_date = "2025-12-20"
+        latest_date = available_dates[-1]
+        
+        if baseline_date in available_dates and latest_date != baseline_date:
+             DATES = [baseline_date, latest_date]
+             print(f"🎯 Found specific baseline! Comparing: {DATES}")
+        else:
+             DATES = available_dates[-2:]
+             print(f"⚠️ Baseline {baseline_date} not found or same as latest. using last 2 days: {DATES}")
+             
+        print(f"✅ Final Selection: {DATES}")
     elif available_dates:
         DATES = available_dates
         print(f"⚠️ Only found these dates: {DATES}")
