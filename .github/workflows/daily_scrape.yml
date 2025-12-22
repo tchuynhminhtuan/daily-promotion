@@ -83,5 +83,8 @@ jobs:
           # Commit if there are changes
           git commit -m "Auto: Update Daily Promotion Data & Report [skip ci]" || echo "No changes to commit"
 
+          # Pull latest changes to avoid conflicts (Fix for concurrent runs/edits)
+          git pull --rebase origin main
+
           # Push changes
           git push
