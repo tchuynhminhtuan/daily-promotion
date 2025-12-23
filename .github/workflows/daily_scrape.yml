@@ -36,19 +36,19 @@ jobs:
           BLOCK_IMAGES: "True"
           PROXY_SERVER: ${{ secrets.PROXY_SERVER }}
           # Proxy Toggles (True/False)
-          ENABLE_PROXY_FPT: "False"
+          ENABLE_PROXY_FPT: "True"
           ENABLE_PROXY_MW: "False"
           ENABLE_PROXY_VIETTEL: "False"
           ENABLE_PROXY_HOANGHA: "False"
           ENABLE_PROXY_DDV: "False"
           ENABLE_PROXY_CPS: "False"
           # Test Mode (True/False) - Limits to 4 URLs
-          TEST_MODE: "False"
+          TEST_MODE: "True"
         run: |
           echo "Starting Daily Promotion Scraping..."
 
-          # echo "1. Scraping FPT Shop..."
-          # python3 code/1-Apple_FPT_playwright.py
+          echo "1. Scraping FPT Shop..."
+          python3 code/1-Apple_FPT_playwright.py
 
           # echo "2. Scraping Mobile World..."
           # python3 code/2-Apple_MW_playwright.py
