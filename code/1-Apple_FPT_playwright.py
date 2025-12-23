@@ -11,19 +11,19 @@ from utils.sites import total_links
 import pandas as pd
 
 # Constants
-MAX_CONCURRENT_TABS = int(os.environ.get("MAX_CONCURRENT_TABS", 4)) # Variable 1: Increase concurrency (Default: 4 -> 8)
+MAX_CONCURRENT_TABS = int(os.environ.get("MAX_CONCURRENT_TABS", 8)) # Increased from 4 for local speed
 
 # Optimization Flags
-# Optimization Flags
-USE_SMART_WAIT = True       # Variable 2: Use smart logic to wait for elements instead of hard sleep
-SCREENSHOT_STRATEGY = "FIRST_ONLY" # Variable 3: Options: "ALL", "FIRST_ONLY", "NONE"
+USE_SMART_WAIT = True
+SCREENSHOT_STRATEGY = "FIRST_ONLY" 
 
 # Default: Take screenshots = False, Block Images = True
-# For GitHub Actions/Proxies: These defaults are now optimized for speed/cost.
-TAKE_SCREENSHOT = os.environ.get("TAKE_SCREENSHOT", "False").lower() == "true"
+# TAKE_SCREENSHOT = os.environ.get("TAKE_SCREENSHOT", "False").lower() == "true"
+TAKE_SCREENSHOT = False # User explicitly disabled screenshots
+# For local run, we might want to see images, but blocking them is key for speed.
 BLOCK_IMAGES = os.environ.get("BLOCK_IMAGES", "True").lower() == "true"
 
-HEADLESS = True  # Set to False for debugging
+HEADLESS = True  
 USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36"
 
 # Selectors
@@ -35,12 +35,10 @@ THANH_TOAN_SELECTOR = "//div[@class='flex h-max w-full flex-col gap-3 p-4']"
 THANH_TOAN_BTN_SELECTOR = "(//div[contains(@class, 'flex flex-col overflow-hidden bg-white')])[2]/div/button"
 OTHER_PROMO_SELECTOR = "(//div[contains(@class, 'flex flex-col overflow-hidden bg-white')])[1]"
 OTHER_PROMO_BTN_SELECTOR = "(//div[contains(@class, 'flex flex-col overflow-hidden bg-white')])[1]/div/button"
+
 # User defined containers for iteration
 STORAGE_OPTIONS_XPATH = "(//div[contains(@class, 'flex flex-wrap gap-2')])[1]/div//button"
 COLOR_OPTIONS_XPATH = "(//div[contains(@class, 'flex flex-wrap gap-2')])[2]/div//button"
-# We still need a way to identify the active color for the CSV, but we can rely on the click.
-# The previous COLOR_SELECTOR_INDICATOR is still useful for verification or fallback.
-COLOR_SELECTOR_INDICATOR = "//span[contains(text(), 'Màu')]/following-sibling::div//button[descendant::span[contains(@class, 'Selection_triangle__csu2Y')]]"
 BUY_BUTTON_SELECTOR = "//div[@id='detail-buying-btns']/button[2]"
 NOTI_SELECTOR = ".st-stt__noti"
 
@@ -66,7 +64,6 @@ def setup_csv(base_path, date_str):
     with open(file_path, "w", newline="", encoding="utf-8") as file:
         writer = csv.DictWriter(file, fieldnames=[
             "Product_Name", "Color", "Ton_Kho", "Gia_Niem_Yet", "Gia_Khuyen_Mai",
-            # , "+VNPAY"
              "Date", "Khuyen_Mai", "Thanh_Toan", "Other_promotion", "Link", "screenshot_name"
         ], delimiter=";")
         writer.writeheader()
@@ -77,17 +74,13 @@ async def write_to_csv(file_path, data, lock):
         with open(file_path, "a", newline="", encoding="utf-8") as file:
             writer = csv.DictWriter(file, fieldnames=[
                 "Product_Name", "Color", "Ton_Kho", "Gia_Niem_Yet", "Gia_Khuyen_Mai",
-                #  "+VNPAY",
                  "Date", "Khuyen_Mai", "Thanh_Toan", "Other_promotion", "Link", "screenshot_name"
             ], delimiter=";")
             writer.writerow(data)
 
-
-
 async def get_text_safe(page, selector, timeout=2000):
     try:
         if await page.locator(selector).count() > 0:
-             # Wait for visibility to ensure text is rendered
             if await page.locator(selector).first.is_visible(timeout=timeout):
                 return await page.locator(selector).first.inner_text()
         return ""
@@ -96,49 +89,38 @@ async def get_text_safe(page, selector, timeout=2000):
 
 async def click_and_get_text(page, container_selector, button_selector):
     try:
-        # Check if button exists and is visible
         btn = page.locator(button_selector).first
-        if await btn.count() > 0 and await btn.is_visible():
+        if await btn.count() > 0:
             try:
-                print(f"Clicking button: {button_selector}")
-                await btn.click()
+                # Force click to bypass overlays
+                await btn.click(force=True, timeout=3000)
                 if not USE_SMART_WAIT:
-                    await page.wait_for_timeout(1000) # Wait for expansion
+                    await page.wait_for_timeout(1000)
                 else:
-                     # Smart wait: wait for network idle or a short buffer
                     try:
                         await page.wait_for_load_state("domcontentloaded", timeout=2000)
                     except: pass
             except Exception as e:
-                print(f"Error clicking button {button_selector}: {e}")
+                pass
         
-        # Get text from container
         return await get_text_safe(page, container_selector)
     except Exception:
         return ""
 
-async def wait_for_overlay(page):
+async def remove_overlays(page):
+    """Aggressively remove know overlays/backdrops via JS"""
     try:
-        # Wait for the specific overlay class seen in debug logs
-        # The class might be dynamic, but 'bg-black-opacity-70' seems stable for a modal backdrop
-        overlay = page.locator(".bg-black-opacity-70")
-        if await overlay.count() > 0 and await overlay.is_visible():
-            print("Waiting for overlay to disappear...")
-            await overlay.wait_for(state="hidden", timeout=10000)
-    except Exception as e:
-        print(f"Overlay wait warning: {e}")
+        await page.evaluate("""() => {
+            document.querySelectorAll('.Backdrop_backdrop__A7yIC').forEach(el => el.remove());
+            document.querySelectorAll('.bg-black-opacity-70').forEach(el => el.remove());
+            // Also dismiss potential popup buttons if simple
+            const deSau = Array.from(document.querySelectorAll('button')).find(b => b.textContent.includes('Để sau'));
+            if (deSau) deSau.click();
+        }""")
+    except: pass
 
 async def handle_popup(page):
-    try:
-        # Check for "Để sau" button using a more robust locator
-        # Use filter(has_text=...) to match text even if nested
-        de_sau_btn = page.locator("button").filter(has_text="Để sau")
-        if await de_sau_btn.count() > 0 and await de_sau_btn.is_visible():
-            print("Found 'Để sau' popup, clicking...")
-            await de_sau_btn.click()
-            await page.wait_for_timeout(3000)
-    except Exception as e:
-        print(f"Popup handler warning: {e}")
+    await remove_overlays(page)
 
 async def process_url(semaphore, browser, url, csv_path, csv_lock):
     async with semaphore:
@@ -146,180 +128,184 @@ async def process_url(semaphore, browser, url, csv_path, csv_lock):
             user_agent=USER_AGENT,
             viewport={"width": 1920, "height": 1080},
             device_scale_factor=1,
-            # Anti-detection: Add extra headers
             extra_http_headers={
                 "Accept-Language": "vi-VN,vi;q=0.9,en-US;q=0.8,en;q=0.7",
                 "Referer": "https://fptshop.com.vn/",
-                "sec-ch-ua": '"Google Chrome";v="123", "Not:A-Brand";v="8", "Chromium";v="123"',
-                "sec-ch-ua-mobile": "?0",
-                "sec-ch-ua-platform": '"macOS"',
             },
             ignore_https_errors=True
         )
         
-        # Anti-detection: Remove webdriver property
-        await page.add_init_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
-        
-        # Optimize: Block images to save bandwidth/speed if requested
-        # Optimize: Block images/media to save bandwidth, but ALLOW fonts (blocking fonts can break sites)
         if BLOCK_IMAGES:
             await page.route("**/*", lambda route: route.abort() 
-                if route.request.resource_type in ["image", "media"] 
+                if route.request.resource_type in ["image", "media", "font"] 
                 else route.continue_())
-        
-        # Anti-detection script
-        await page.add_init_script("""
-            Object.defineProperty(navigator, 'webdriver', {
-                get: () => undefined
-            });
-        """)
 
         try:
             print(f"Processing: {url}")
-            # Retry logic for navigation
-            max_retries = 3
-            for attempt in range(max_retries):
-                try:
-                    await page.goto(url, timeout=60000, wait_until="domcontentloaded")
-                    break
-                except Exception as e:
-                    print(f"⚠️ Navigation attempt {attempt+1}/{max_retries} failed: {e}")
-                    if attempt == max_retries - 1:
-                        raise e
-                    await asyncio.sleep(5)
-            
-            if not USE_SMART_WAIT:
-                await page.wait_for_timeout(5000) # Wait for dynamic content
-            else:
-                 # Smart wait for essential elements
-                try:
-                    await page.wait_for_selector(PRODUCT_NAME_SELECTOR, timeout=5000)
-                except:
-                    pass
+            try:
+                await page.goto(url, timeout=60000, wait_until="domcontentloaded")
+            except Exception as e:
+                print(f"⚠️ Navigation failed: {url} - {e}")
+                return
+
             await handle_popup(page)
 
-            await process_storage_options(page, url, csv_path, csv_lock)
+            # Ensure Name is visible before doing anything
+            try:
+                await page.locator(PRODUCT_NAME_SELECTOR).wait_for(state="visible", timeout=10000)
+            except:
+                print(f"⚠️ H1 not found within 10s: {url}")
+
+            # 1. Dynamic Option Container Identification
+            container_xpath = "//div[contains(@class, 'flex flex-wrap gap-2')]"
+            all_containers = page.locator(container_xpath)
+            total_count = await all_containers.count()
+            
+            # Filter out "Review" containers (containing "Hài lòng")
+            valid_indices = []
+            for i in range(total_count):
+                txt = await all_containers.nth(i).text_content()
+                if "Hài lòng" not in txt and "Thích" not in txt:
+                    valid_indices.append(i)
+            
+            container_count = len(valid_indices)
+            
+            storage_idx = -1
+            color_idx = -1
+            
+            if container_count == 1:
+                # Ambiguous: Is it Storage or Color?
+                real_idx = valid_indices[0]
+                try:
+                    first_text = await all_containers.nth(real_idx).locator("button").first.text_content()
+                    if "GB" in first_text or "TB" in first_text:
+                        storage_idx = real_idx
+                    else:
+                        color_idx = real_idx
+                except:
+                     color_idx = real_idx 
+            
+            elif container_count >= 2:
+                # Standard: First is Storage, Last is Color
+                storage_idx = valid_indices[0]
+                color_idx = valid_indices[-1]
+            
+            # --- Storage Loop ---
+            if storage_idx >= 0:
+                storage_btns = all_containers.nth(storage_idx).locator("button")
+                storage_count = await storage_btns.count()
+                
+                for i in range(storage_count):
+                    # Re-locate container and buttons to avoid stale handles
+                    all_containers = page.locator(container_xpath)
+                    storage_btns = all_containers.nth(storage_idx).locator("button")
+                    btn = storage_btns.nth(i)
+                    
+                    if await btn.is_visible():
+                        name = (await btn.text_content()).strip()
+                        try:
+                            # FORCE CLICK
+                            current_url = page.url
+                            await btn.click(force=True, timeout=5000)
+                            
+                            # Check Navigation
+                            try:
+                                await page.wait_for_timeout(2000)
+                                await page.wait_for_load_state("domcontentloaded", timeout=3000)
+                            except: pass
+                            
+                            if page.url != current_url:
+                                print(f"  -> Navigated to: {page.url}")
+                                await handle_popup(page)
+                                await remove_overlays(page)
+                            else:
+                                pass
+
+                            # Recurse: Colors (Pass index explicitly)
+                            await process_color_options_optimized(page, url, csv_path, csv_lock, color_idx=color_idx)
+
+                        except Exception as e:
+                            print(f"Error clicking storage {name}: {e}")
+            else:
+                # No storage loop, just colors
+                await process_color_options_optimized(page, url, csv_path, csv_lock, color_idx=color_idx)
 
         except Exception as e:
             print(f"Error processing {url}: {e}")
         finally:
             await page.close()
 
-async def process_storage_options(page, url, csv_path, csv_lock):
-    # Container 1: Usually Storage
-    storage_container_xpath = "(//div[contains(@class, 'flex flex-wrap gap-2')])[1]"
+async def process_color_options_optimized(page, url, csv_path, csv_lock, color_idx=-1):
+    await remove_overlays(page)
     
-    # Check for links (<a> tags) in Container 1
-    storage_links = page.locator(f"{storage_container_xpath}//a")
-    link_count = await storage_links.count()
-
-    if link_count > 0:
-        print(f"Found {link_count} storage links. Iterating via URL...")
-        hrefs = []
-        for i in range(link_count):
-            href = await storage_links.nth(i).get_attribute("href")
-            if href:
-                if not href.startswith("http"):
-                    href = "https://fptshop.com.vn" + href
-                hrefs.append(href)
-        
-        # Iterate unique URLs
-        seen_urls = set()
-        for link in hrefs:
-            if link in seen_urls: continue
-            seen_urls.add(link)
-            
-            print(f"Navigating to: {link}")
-            try:
-                await page.goto(link, timeout=60000, wait_until="domcontentloaded")
-                await page.wait_for_timeout(3000)
-                await handle_popup(page)
-                # After navigating to a specific storage URL, iterate colors
-                await process_color_options(page, link, csv_path, csv_lock)
-            except Exception as e:
-                print(f"Failed to navigate/scrape {link}: {e}")
-
-    else:
-        # Check for Buttons in Container 1
-        storage_btns_xpath = f"{storage_container_xpath}/div//button"
-        storage_btns = page.locator(storage_btns_xpath)
-        count = await storage_btns.count()
-        
-        if count == 0:
-            print("No storage buttons found. Checking for colors directly...")
-            await process_color_options(page, url, csv_path, csv_lock)
+    if color_idx == -1:
+        # Should not happen with new logic, but fallback to "Last Found"?
+        container_xpath = "//div[contains(@class, 'flex flex-wrap gap-2')]"
+        count = await page.locator(container_xpath).count()
+        if count > 0:
+            color_idx = count - 1
         else:
-            print(f"Found {count} storage buttons.")
-            for i in range(count):
-                # Re-locate
-                storage_btns = page.locator(storage_btns_xpath)
-                btn = storage_btns.nth(i)
-                
-                await wait_for_overlay(page)
-                await handle_popup(page)
-                
-                if await btn.is_visible():
-                    txt = await btn.text_content()
-                    name = txt.strip()
-                    print(f"Clicking Storage [{i}]: {name}", flush=True)
-                    try:
-                        await btn.evaluate("node => node.click()")
-                        await page.wait_for_timeout(2000)
-                        await handle_popup(page)
-                        
-                        # Check if name looks like storage
-                        is_storage = "GB" in name or "TB" in name
-                        potential_color = None
-                        if not is_storage:
-                            potential_color = name
+            await scrape_product_data(page, url, csv_path, csv_lock)
+            return
 
-                        # After clicking Storage, iterate Colors
-                        await process_color_options(page, url, csv_path, csv_lock, parent_color=potential_color)
-                    except Exception as e:
-                        print(f"Error clicking storage {i}: {e}")
-
-async def process_color_options(page, url, csv_path, csv_lock, parent_color=None):
-    # Container 2: Usually Colors
-    color_container_xpath = "(//div[contains(@class, 'flex flex-wrap gap-2')])[2]"
-    color_btns_xpath = f"{color_container_xpath}/div//button"
+    container_xpath = "//div[contains(@class, 'flex flex-wrap gap-2')]"
+    # Note: nth(i) is 0-indexed.
+    color_container = page.locator(container_xpath).nth(color_idx)
+    color_btns = color_container.locator("button")
     
-    color_btns = page.locator(color_btns_xpath)
     count = await color_btns.count()
     
     if count > 0:
-        print(f"Found {count} color buttons.")
         for i in range(count):
-            # Re-locate
-            color_btns = page.locator(color_btns_xpath)
-            btn = color_btns.nth(i)
+            await remove_overlays(page)
             
-            await wait_for_overlay(page)
-            await handle_popup(page)
+            # Re-locate
+            container = page.locator(container_xpath).nth(color_idx)
+            btn = container.locator("button").nth(i)
             
             if await btn.is_visible():
-                txt = await btn.text_content()
-                color_name = txt.strip()
-                print(f"Clicking Color [{i}]: {color_name}", flush=True)
+                color_name = (await btn.text_content()).strip()
                 try:
-                    await btn.evaluate("node => node.click()")
-                    await page.wait_for_timeout(2000)
-                    await handle_popup(page)
+                    # FORCE CLICK
+                    await btn.click(force=True, timeout=5000)
                     
-                    take_screenshot = True
-                    if not TAKE_SCREENSHOT:
-                        take_screenshot = False
-                    elif SCREENSHOT_STRATEGY == "FIRST_ONLY" and i > 0:
-                        take_screenshot = False
-                    elif SCREENSHOT_STRATEGY == "NONE":
-                        take_screenshot = False
-
-                    await scrape_product_data(page, url, csv_path, csv_lock, forced_color=color_name, do_screenshot=take_screenshot)
+                    await page.wait_for_timeout(500)
+                    
+                    take_s = (TAKE_SCREENSHOT and (SCREENSHOT_STRATEGY != "FIRST_ONLY" or i == 0))
+                    await scrape_product_data(page, url, csv_path, csv_lock, forced_color=color_name, do_screenshot=take_s)
                 except Exception as e:
                     print(f"Error clicking color {i}: {e}")
     else:
-        # No color buttons found in Container 2.
-        # Use parent_color if available (e.g. from Container 1)
-        await scrape_product_data(page, url, csv_path, csv_lock, forced_color=parent_color)
+        await scrape_product_data(page, url, csv_path, csv_lock)
+
+async def get_product_name(page, url):
+    """Robust name retrieval with fallbacks."""
+    name = "Error getting name: " + url
+    
+    # 1. Try Primary Selector
+    try:
+        if await page.locator(PRODUCT_NAME_SELECTOR).count() > 0:
+            name = (await page.locator(PRODUCT_NAME_SELECTOR).first.text_content()).strip()
+            if name: return name
+    except: pass
+    
+    # 2. Try Generic H1
+    try:
+        if await page.locator("h1").count() > 0:
+            name = (await page.locator("h1").first.text_content()).strip()
+            if name: return name
+    except: pass
+    
+    # 3. Try Page Title (Most robust fallback)
+    try:
+        title = await page.title()
+        # Clean title: "iPhone 15 128GB | Fptshop.com.vn" -> "iPhone 15 128GB"
+        if title:
+             clean_title = title.split("|")[0].split("- Fptshop")[0].strip()
+             return clean_title
+    except: pass
+    
+    return name
 
 async def scrape_product_data(page, url, csv_path, csv_lock, forced_color=None, do_screenshot=True):
     # Time setup
@@ -327,27 +313,20 @@ async def scrape_product_data(page, url, csv_path, csv_lock, forced_color=None, 
     now_utc = datetime.now(pytz.utc)
     date_str = now_utc.astimezone(local_tz).strftime('%Y-%m-%d')
 
-    # Product Name
-    product_name = await get_text_safe(page, PRODUCT_NAME_SELECTOR)
-    if not product_name:
-        # Fallback or error handling
-        try:
-             product_name = await page.locator(".st-name").text_content()
-        except:
-             product_name = f"Error getting name: {url}"
+    # Get Name using robust function
+    product_name = await get_product_name(page, url)
     
     product_name = product_name.strip().replace("Mini", "mini").replace("Wi-Fi", "WiFi")
     for item in ["Tai nghe ", "Thiết bị định vị thông minh ", "Bộ chuyển đổi "]:
         product_name = product_name.replace(item, "")
 
-    # Stock (Ton_Kho)
+    # Stock
     ton_kho = "No"
     try:
         buy_btn_text = await get_text_safe(page, BUY_BUTTON_SELECTOR)
         if "mua" in buy_btn_text.lower():
             ton_kho = "Yes"
-    except:
-        pass
+    except: pass
 
     # Prices
     gia_khuyen_mai_raw = await get_text_safe(page, PRICE_MAIN_SELECTOR)
@@ -356,7 +335,6 @@ async def scrape_product_data(page, url, csv_path, csv_lock, forced_color=None, 
     if not gia_niem_yet_raw and gia_khuyen_mai_raw:
         gia_niem_yet_raw = gia_khuyen_mai_raw
     
-    # Clean prices
     def clean_price(p):
         if not p: return 0
         return p.replace("đ", "").replace("₫", "").replace(".", "").strip()
@@ -365,34 +343,17 @@ async def scrape_product_data(page, url, csv_path, csv_lock, forced_color=None, 
     gia_niem_yet = clean_price(gia_niem_yet_raw)
 
     # Color
-    color = "Unknown"
-    if forced_color:
-        color = forced_color
-    else:
-        try:
-            # Find the active color button
-            # Try COLOR_SELECTOR_INDICATOR first
-            active_color_btn = page.locator(COLOR_SELECTOR_INDICATOR).first
-            if await active_color_btn.count() > 0:
-                 color = await active_color_btn.text_content()
-            else:
-                # Fallback: Try to find selected button in Container 2
-                color_container_xpath = "(//div[contains(@class, 'flex flex-wrap gap-2')])[2]"
-                # Assuming 'border-primary' or similar marks selected. FPT uses 'border-primary' for selected.
-                # But let's rely on the one with 'Selection_triangle' if possible, or just take the first one?
-                # No, if we are here, we probably didn't click anything or extraction failed.
-                pass
-                
-        except Exception as e:
-            print(f"Color extraction failed: {e}")
-    color = color.strip()
-
+    color = forced_color if forced_color else "Unknown"
+    
     # Promo & Payment
     khuyen_mai = await get_text_safe(page, PROMO_SELECTOR)
     khuyen_mai = khuyen_mai.replace("Xem chi tiết", "\n").strip()
 
     other_promo = await click_and_get_text(page, OTHER_PROMO_SELECTOR, OTHER_PROMO_BTN_SELECTOR)
     other_promo = other_promo.replace("Xem chi tiết", "\n").replace("Thu gọn", "").strip()
+
+    thanh_toan = await click_and_get_text(page, THANH_TOAN_SELECTOR, THANH_TOAN_BTN_SELECTOR)
+    thanh_toan = thanh_toan.replace("Xem chi tiết", "\n").replace("Thu gọn", "").strip()
 
     # Screenshot
     screenshot_name = ""
@@ -404,16 +365,19 @@ async def scrape_product_data(page, url, csv_path, csv_lock, forced_color=None, 
             filename = f"{safe_product_name}_{timestamp}.png"
             full_path = os.path.join(img_dir, filename)
             
-            await page.set_viewport_size({"width": 1920, "height": 2080})
-            await page.screenshot(path=full_path, full_page=True)
+            # Quick screenshot, don't wait too long
+            await page.screenshot(path=full_path, full_page=True, timeout=5000)
             screenshot_name = filename
-        except Exception as e:
-            print(f"Screenshot failed: {e}")
+        except:
+            screenshot_name = "Failed"
     else:
         screenshot_name = "Skipped"
     
-    thanh_toan = await click_and_get_text(page, THANH_TOAN_SELECTOR, THANH_TOAN_BTN_SELECTOR)
-    thanh_toan = thanh_toan.replace("Xem chi tiết", "\n").replace("Thu gọn", "").strip()
+    # Validation: If we scraped a "0" price, it might be loading. Retry once?
+    if gia_khuyen_mai == 0 or gia_khuyen_mai == "0":
+        await page.wait_for_timeout(1000)
+        # simplistic retry
+        gia_khuyen_mai = clean_price(await get_text_safe(page, PRICE_MAIN_SELECTOR))
 
     # Prepare Data
     data = {
@@ -422,7 +386,6 @@ async def scrape_product_data(page, url, csv_path, csv_lock, forced_color=None, 
         "Ton_Kho": ton_kho,
         "Gia_Niem_Yet": gia_niem_yet,
         "Gia_Khuyen_Mai": gia_khuyen_mai,
-        # "+VNPAY": gia_khuyen_mai_vnpay,
         "Date": date_str,
         "Khuyen_Mai": khuyen_mai,
         "Thanh_Toan": thanh_toan,
@@ -432,7 +395,7 @@ async def scrape_product_data(page, url, csv_path, csv_lock, forced_color=None, 
     }
     
     await write_to_csv(csv_path, data, csv_lock)
-    print(f"Saved: {product_name} - {color}")
+    print(f"Saved: {product_name} - {color} | Price: {gia_khuyen_mai}")
 
 async def main():
     # Setup
@@ -454,21 +417,8 @@ async def main():
     semaphore = asyncio.Semaphore(MAX_CONCURRENT_TABS)
     
     async with async_playwright() as p:
-        # Proxy Configuration
+        # Proxy Logic (Optional, for completeness)
         proxy_server = os.environ.get("PROXY_SERVER", "").strip()
-        
-        if proxy_server:
-             # Handle IP:PORT:USER:PASS format (Common copy-paste format)
-             # Note: This is a simple heuristic. If password contains ':', this might break.
-             parts = proxy_server.split(':')
-             if len(parts) == 4 and "@" not in proxy_server and not proxy_server.startswith("http"):
-                 ip, port, user, pw = parts
-                 proxy_server = f"http://{user}:{pw}@{ip}:{port}"
-                 print("⚠️ Detected IP:PORT:USER:PASS format. Reformatted to http://USER:PASS@IP:PORT")
-
-             if not proxy_server.startswith("http"):
-                proxy_server = f"http://{proxy_server}"
-            
         launch_options = {
             "headless": HEADLESS,
             "args": [
@@ -478,14 +428,22 @@ async def main():
                 "--disable-dev-shm-usage",
                 "--disable-gpu",
                 "--window-size=1920,1080",
-                "--ignore-certificate-errors"
+                 "--ignore-certificate-errors"
             ],
             "ignore_default_args": ["--enable-automation"]
         }
         
         if proxy_server and os.environ.get("ENABLE_PROXY_FPT", "False").lower() == "true":
-            print(f"🌐 Using Proxy (FPT): {proxy_server}")
-            launch_options["proxy"] = {"server": proxy_server}
+            # Just minimal proxy format handling
+             if not proxy_server.startswith("http"):
+                parts = proxy_server.split(':')
+                if len(parts) == 4 and "@" not in proxy_server:
+                    ip, port, user, pw = parts
+                    proxy_server = f"http://{user}:{pw}@{ip}:{port}"
+                else:
+                    proxy_server = f"http://{proxy_server}"
+             print(f"🌐 Using Proxy (FPT): {proxy_server}")
+             launch_options["proxy"] = {"server": proxy_server}
         
         browser = await p.chromium.launch(**launch_options)
         
