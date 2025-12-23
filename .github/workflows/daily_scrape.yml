@@ -35,9 +35,8 @@ jobs:
           TAKE_SCREENSHOT: "False"
           BLOCK_IMAGES: "True"
           PROXY_SERVER: ${{ secrets.PROXY_SERVER }}
-          # Proxy Toggles (True/False)
           ENABLE_PROXY_FPT: "True"
-          ENABLE_PROXY_MW: "False"
+          ENABLE_PROXY_MW: "True"
           ENABLE_PROXY_VIETTEL: "False"
           ENABLE_PROXY_HOANGHA: "False"
           ENABLE_PROXY_DDV: "False"
@@ -50,8 +49,8 @@ jobs:
           echo "1. Scraping FPT Shop..."
           python3 code/1-Apple_FPT_playwright.py
 
-          # echo "2. Scraping Mobile World..."
-          # python3 code/2-Apple_MW_playwright.py
+          echo "2. Scraping Mobile World..."
+          python3 code/2-Apple_MW_playwright.py
 
           echo "3. Scraping Viettel Store..."
           python3 code/3-Apple_Viettel_playwright.py
