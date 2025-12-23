@@ -1,4 +1,4 @@
-Channel,Product Name,Color,2025-12-20-SAT,2025-12-23-TUE,Diff_2025-12-20-SAT_to_2025-12-23-TUE
+Channel,Product Name,Color,2025-12-20-SAT,2025-12-22-MON,Diff_2025-12-20-SAT_to_2025-12-22-MON
 CPS,Apple MacBook Air 13 256GB 2020,Bạc,23020000,,
 CPS,Apple MacBook Air 13 256GB 2020,Vàng,23020000,,
 CPS,Apple MacBook Air 13 256GB 2020,Xám,23020000,,
@@ -196,7 +196,7 @@ CPS,MacBook Pro 16 M4 Pro 14CPU 20GPU 24GB 512GB,Đen,63990000,,
 CPS,MacBook Pro 16 M4 Pro 14CPU 20GPU 48GB 512GB,Bạc,74990000,,
 CPS,MacBook Pro 16 M4 Pro 14CPU 20GPU 48GB 512GB,Đen,74990000,,
 CPS,Tai nghe Bluetooth Apple AirPods 4,Trắng,,3050000,
-CPS,Tai nghe Bluetooth Apple AirPods 4 chống ồn chủ động,Trắng,,4450000,
+CPS,Tai nghe Bluetooth Apple AirPods 4 chống ồn chủ động,Trắng,,4390000,
 CPS,Tai nghe Bluetooth Apple AirPods Pro 2 2023 USB-C,Trắng,,4990000,
 CPS,Tai nghe Bluetooth Apple AirPods Pro 3 2025 Type-C (MFHP4ZP/A),Trắng,,6790000,
 CPS,iMac M4 2024 24 inch 10CPU 10GPU 16GB 256GB,Bạc,37590000,,
@@ -485,43 +485,57 @@ DDV,iPhone Air 512GB Chính Hãng,Trắng Mây,35290000,,
 DDV,iPhone Air 512GB Chính Hãng,Vàng Nhạt,35290000,,
 DDV,iPhone Air 512GB Chính Hãng,Xanh Da Trời,35290000,,
 DDV,iPhone Air 512GB Chính Hãng,Đen Không Gian,35290000,,
+FPT,iPad mini 7 2024 Wifi 128GB,Tím,,11790000,
+FPT,iPad mini 7 2024 Wifi 128GB,Xanh dương,,11790000,
+FPT,iPad mini 7 2024 Wifi 128GB,Xám không gian,,11790000,
+FPT,iPad mini 7 2024 Wifi 128GB,Ánh Sao,,11790000,
 FPT,iPad mini 7 2024 Wifi 256GB,Tím,14190000,,
 FPT,iPad mini 7 2024 Wifi 256GB,Xanh dương,14190000,,
 FPT,iPad mini 7 2024 Wifi 256GB,Xám không gian,14190000,,
 FPT,iPad mini 7 2024 Wifi 256GB,Ánh Sao,14190000,,
-FPT,Apple Watch SE 2024 GPS 40mm Viền Nhôm Dây Cao Su S/M,Bạc,4590000,,
-FPT,Apple Watch SE 2024 GPS 40mm Viền Nhôm Dây Cao Su S/M,Ánh Sao,4590000,,
-FPT,Apple Watch SE 2024 GPS 40mm Viền Nhôm Dây Cao Su S/M,Đêm Xanh Thẳm,4590000,,
-FPT,Apple Watch SE 2024 GPS 40mm Viền Nhôm Dây Vải,Bạc,4790000,,
-FPT,Apple Watch SE 2024 GPS 40mm Viền Nhôm Dây Vải,Ánh Sao,4590000,,
-FPT,Apple Watch SE 2024 GPS 40mm Viền Nhôm Dây Vải,Đêm Xanh Thẳm,4790000,,
-FPT,Apple Watch SE 2024 GPS 44mm Viền Nhôm Dây Cao Su S/M,Bạc,5890000,,
-FPT,Apple Watch SE 2024 GPS 44mm Viền Nhôm Dây Cao Su S/M,Đêm Xanh Thẳm,5890000,,
-FPT,Apple Watch SE 3 GPS + Cellular 40mm Viền nhôm dây cao su,Size M/L,7590000,,
-FPT,Apple Watch SE 3 GPS + Cellular 40mm Viền nhôm dây cao su,Size S/M,7590000,,
+FPT,iPhone 14 128GB,Trắng,,13990000,
+FPT,iPhone 14 128GB,Tím,,0,
+FPT,iPhone 14 128GB,Vàng,,0,
+FPT,iPhone 14 128GB,Xanh dương,,13690000,
+FPT,iPhone 14 128GB,Đen,,13990000,
+FPT,iPhone 14 128GB,Đỏ,,0,
+FPT,Apple Watch SE 2024 GPS 40mm Viền Nhôm Dây Cao Su S/M,Bạc,4590000,4590000,0
+FPT,Apple Watch SE 2024 GPS 40mm Viền Nhôm Dây Cao Su S/M,Ánh Sao,4590000,4590000,0
+FPT,Apple Watch SE 2024 GPS 40mm Viền Nhôm Dây Cao Su S/M,Đêm Xanh Thẳm,4590000,4590000,0
+FPT,Apple Watch SE 2024 GPS 40mm Viền Nhôm Dây Vải,Bạc,4790000,4790000,0
+FPT,Apple Watch SE 2024 GPS 40mm Viền Nhôm Dây Vải,Ánh Sao,4590000,4590000,0
+FPT,Apple Watch SE 2024 GPS 40mm Viền Nhôm Dây Vải,Đêm Xanh Thẳm,4790000,4790000,0
+FPT,Apple Watch SE 2024 GPS 44mm Viền Nhôm Dây Cao Su S/M,Bạc,5890000,5890000,0
+FPT,Apple Watch SE 2024 GPS 44mm Viền Nhôm Dây Cao Su S/M,Ánh Sao,,5890000,
+FPT,Apple Watch SE 2024 GPS 44mm Viền Nhôm Dây Cao Su S/M,Đêm Xanh Thẳm,5890000,5590000,-300000
+FPT,Apple Watch SE 3 GPS + Cellular 40mm Viền nhôm dây cao su,Size M/L,7590000,7590000,0
+FPT,Apple Watch SE 3 GPS + Cellular 40mm Viền nhôm dây cao su,Size S/M,7590000,7590000,0
 FPT,Apple Watch SE 3 GPS + Cellular 44mm Viền nhôm dây cao su,Size M/L,8790000,,
 FPT,Apple Watch SE 3 GPS + Cellular 44mm Viền nhôm dây cao su,Size S/M,8790000,,
-FPT,Apple Watch SE 3 GPS 40mm Viền nhôm dây cao su,Size M/L,5690000,,
-FPT,Apple Watch SE 3 GPS 40mm Viền nhôm dây cao su,Size S/M,5590000,,
+FPT,Apple Watch SE 3 GPS + Cellular 44mm Viền nhôm dây cao su,Ánh Sao,,8290000,
+FPT,Apple Watch SE 3 GPS 40mm Viền nhôm dây cao su,Size M/L,5690000,5690000,0
+FPT,Apple Watch SE 3 GPS 40mm Viền nhôm dây cao su,Size S/M,5590000,5590000,0
 FPT,Apple Watch SE 3 GPS 44mm Viền nhôm dây cao su,Size M/L,6990000,,
 FPT,Apple Watch SE 3 GPS 44mm Viền nhôm dây cao su,Size S/M,6990000,,
-FPT,Apple Watch Series 11 GPS + Cellular 42mm Viền nhôm dây cao su,Size S/M,12190000,,
-FPT,Apple Watch Series 11 GPS + Cellular 42mm Viền titan dây Milan,Free size,19790000,,
-FPT,Apple Watch Series 11 GPS + Cellular 46mm Viền nhôm dây cao su,Size M/L,13090000,,
-FPT,Apple Watch Series 11 GPS + Cellular 46mm Viền nhôm dây cao su,Size S/M,13090000,,
-FPT,Apple Watch Series 11 GPS + Cellular 46mm Viền titan dây Milan,Size M/L,21190000,,
-FPT,Apple Watch Series 11 GPS + Cellular 46mm Viền titan dây Milan,Size S/M,21190000,,
-FPT,Apple Watch Series 11 GPS 42mm Viền nhôm dây cao su,Size S/M,9290000,,
+FPT,Apple Watch SE 3 GPS 44mm Viền nhôm Ánh sao Dây cao su Ánh sao - M/L,Size M/L,,6990000,
+FPT,Apple Watch SE 3 GPS 44mm Viền nhôm Ánh sao Dây cao su Ánh sao - S/M,Size S/M,,6990000,
+FPT,Apple Watch Series 11 GPS + Cellular 42mm Viền nhôm dây cao su,Size S/M,12190000,12490000,300000
+FPT,Apple Watch Series 11 GPS + Cellular 42mm Viền titan dây Milan,Free size,19790000,19590000,-200000
+FPT,Apple Watch Series 11 GPS + Cellular 46mm Viền nhôm dây cao su,Size M/L,13090000,13290000,200000
+FPT,Apple Watch Series 11 GPS + Cellular 46mm Viền nhôm dây cao su,Size S/M,13090000,13090000,0
+FPT,Apple Watch Series 11 GPS + Cellular 46mm Viền titan dây Milan,Size M/L,21190000,21190000,0
+FPT,Apple Watch Series 11 GPS + Cellular 46mm Viền titan dây Milan,Size S/M,21190000,21190000,0
+FPT,Apple Watch Series 11 GPS 42mm Viền nhôm dây cao su,Size S/M,9290000,9290000,0
 FPT,Apple Watch Series 11 GPS 46mm Viền nhôm dây cao su,Bạc,0,,
-FPT,Apple Watch Series 11 GPS 46mm Viền nhôm dây cao su,Size M/L,9990000,,
-FPT,Apple Watch Series 11 GPS 46mm Viền nhôm dây cao su,Size S/M,9990000,,
-FPT,Apple Watch Ultra 3 GPS + Cellular 49mm Viền titan Dây Ocean,Free size,23190000,,
-FPT,Apple Watch Ultra 3 GPS + Cellular 49mm Viền titan Dây quấn Alpine,Size L,23190000,,
-FPT,Apple Watch Ultra 3 GPS + Cellular 49mm Viền titan Dây quấn Alpine,Size M,23190000,,
-FPT,Apple Watch Ultra 3 GPS + Cellular 49mm Viền titan Dây quấn Alpine,Size S,23190000,,
-FPT,Apple Watch Ultra 3 GPS + Cellular 49mm Viền titan Dây quấn Milan Titan,Size L,26990000,,
-FPT,Apple Watch Ultra 3 GPS + Cellular 49mm Viền titan Dây quấn Milan Titan,Size M,26290000,,
-FPT,Apple Watch Ultra 3 GPS + Cellular 49mm Viền titan Dây quấn Milan Titan,Size S,26290000,,
+FPT,Apple Watch Series 11 GPS 46mm Viền nhôm dây cao su,Size M/L,9990000,9990000,0
+FPT,Apple Watch Series 11 GPS 46mm Viền nhôm dây cao su,Size S/M,9990000,9990000,0
+FPT,Apple Watch Ultra 3 GPS + Cellular 49mm Viền titan Dây Ocean,Free size,23190000,23190000,0
+FPT,Apple Watch Ultra 3 GPS + Cellular 49mm Viền titan Dây quấn Alpine,Size L,23190000,23190000,0
+FPT,Apple Watch Ultra 3 GPS + Cellular 49mm Viền titan Dây quấn Alpine,Size M,23190000,23190000,0
+FPT,Apple Watch Ultra 3 GPS + Cellular 49mm Viền titan Dây quấn Alpine,Size S,23190000,23190000,0
+FPT,Apple Watch Ultra 3 GPS + Cellular 49mm Viền titan Dây quấn Milan Titan,Size L,26990000,26290000,-700000
+FPT,Apple Watch Ultra 3 GPS + Cellular 49mm Viền titan Dây quấn Milan Titan,Size M,26290000,26290000,0
+FPT,Apple Watch Ultra 3 GPS + Cellular 49mm Viền titan Dây quấn Milan Titan,Size S,26290000,26290000,0
 FPT,Error getting name: https://fptshop.com.vn/dien-thoai/iphone-14,Xanh dương,13390000,,
 FPT,Error getting name: https://fptshop.com.vn/dien-thoai/iphone-15,Hồng,16990000,,
 FPT,Error getting name: https://fptshop.com.vn/dien-thoai/iphone-16-plus,Hồng,24590000,,
@@ -542,84 +556,97 @@ FPT,Error getting name: https://fptshop.com.vn/smartwatch/apple-watch-series-11-
 FPT,Error getting name: https://fptshop.com.vn/smartwatch/apple-watch-series-11-gps-cellular-46mm-vien-nhom-day-cao-su,Bạc,13090000,,
 FPT,Error getting name: https://fptshop.com.vn/smartwatch/apple-watch-series-11-gps-cellular-46mm-vien-titan-day-milan,Tự nhiên,21190000,,
 FPT,Error getting name: https://fptshop.com.vn/smartwatch/apple-watch-ultra-3-gps-cellular-49mm-vien-titan-day-quan-milan-titan,Đen,26290000,,
-FPT,MacBook Air 15 inch M2 2023 8CPU 10GPU/8GB/512GB/Sạc 70W,Vàng,37890000,,
-FPT,MacBook Air 15 inch M2 2023 8CPU 10GPU/8GB/512GB/Sạc 70W,Xanh dương,37890000,,
-FPT,MacBook Pro 14 2023 M3 Pro 12 CPU/18 GPU/18GB/1TB,Đen,56990000,,
-FPT,MacBook Pro 14 M4 Pro 2024 12CPU/16GPU/24GB/512GB,Bạc,49990000,,
-FPT,MacBook Pro 16 M4 Max 2024 16CPU/40GPU/48GB/1TB,Bạc,103690000,,
-FPT,Macbook Air 13 M4 2025 10CPU/10GPU/16GB/512GB,Bạc,30490000,,
-FPT,Macbook Air 13 M4 2025 10CPU/10GPU/16GB/512GB,Xanh Da Trời,30490000,,
-FPT,Macbook Air 13 M4 2025 10CPU/10GPU/16GB/512GB,Ánh Sao,30490000,,
-FPT,Macbook Air 13 M4 2025 10CPU/10GPU/16GB/512GB,Đêm Xanh Thẳm,30490000,,
-FPT,Macbook Air 13 M4 2025 10CPU/10GPU/24GB/512GB,Bạc,34690000,,
-FPT,Macbook Air 13 M4 2025 10CPU/10GPU/24GB/512GB,Xanh Da Trời,34690000,,
-FPT,Macbook Air 13 M4 2025 10CPU/10GPU/24GB/512GB,Ánh Sao,34690000,,
-FPT,Macbook Air 13 M4 2025 10CPU/10GPU/24GB/512GB,Đêm Xanh Thẳm,34690000,,
-FPT,Macbook Air 13 M4 2025 10CPU/8GPU/16GB/256GB,Bạc,25290000,,
-FPT,Macbook Air 13 M4 2025 10CPU/8GPU/16GB/256GB,Xanh Da Trời,25290000,,
-FPT,Macbook Air 13 M4 2025 10CPU/8GPU/16GB/256GB,Ánh Sao,24490000,,
-FPT,Macbook Air 13 M4 2025 10CPU/8GPU/16GB/256GB,Đêm Xanh Thẳm,25290000,,
-FPT,Macbook Air 15 M4 2025 10CPU/ 10GPU/ 24GB/ 512GB,Bạc,39490000,,
-FPT,Macbook Air 15 M4 2025 10CPU/ 10GPU/ 24GB/ 512GB,Xanh Da Trời,39490000,,
-FPT,Macbook Air 15 M4 2025 10CPU/ 10GPU/ 24GB/ 512GB,Đêm Xanh Thẳm,38990000,,
-FPT,Macbook Air 15 M4 2025 10CPU/10GPU/16GB/256GB,Bạc,29990000,,
-FPT,Macbook Air 15 M4 2025 10CPU/10GPU/16GB/512GB,Bạc,33990000,,
-FPT,Macbook Air 15 M4 2025 10CPU/10GPU/16GB/512GB,Xanh Da Trời,33990000,,
-FPT,Macbook Air 15 M4 2025 10CPU/10GPU/16GB/512GB,Đêm Xanh Thẳm,33990000,,
-FPT,Macbook Pro 14 M5 2025 10CPU/10GPU/16GB/1TB,Bạc,46890000,,
-FPT,Macbook Pro 14 M5 2025 10CPU/10GPU/16GB/1TB,Đen,46890000,,
-FPT,Macbook Pro 14 M5 2025 10CPU/10GPU/16GB/512GB,Bạc,41990000,,
-FPT,Macbook Pro 14 M5 2025 10CPU/10GPU/16GB/512GB,Đen,41990000,,
-FPT,Macbook Pro 14 M5 2025 10CPU/10GPU/16GB/512GB Nano,Bạc,45590000,,
-FPT,Macbook Pro 14 M5 2025 10CPU/10GPU/16GB/512GB Nano,Đen,45590000,,
-FPT,Macbook Pro 14 M5 2025 10CPU/10GPU/24GB/1TB Nano,Bạc,55390000,,
-FPT,Macbook Pro 14 M5 2025 10CPU/10GPU/24GB/1TB Nano,Đen,55390000,,
+FPT,MacBook Air 15 inch M2 2023 8CPU 10GPU/8GB/512GB/Sạc 70W,Vàng,37890000,0,-37890000
+FPT,MacBook Air 15 inch M2 2023 8CPU 10GPU/8GB/512GB/Sạc 70W,Xanh dương,37890000,37890000,0
+FPT,MacBook Pro 14 2023 M3 Pro 12 CPU/18 GPU/18GB/1TB,Bạc,,56990000,
+FPT,MacBook Pro 14 2023 M3 Pro 12 CPU/18 GPU/18GB/1TB,Đen,56990000,56990000,0
+FPT,MacBook Pro 14 M4 Pro 2024 12CPU/16GPU/24GB/512GB,Bạc,49990000,49990000,0
+FPT,MacBook Pro 14 M4 Pro 2024 12CPU/16GPU/24GB/512GB,Đen,,49990000,
+FPT,MacBook Pro 16 M4 Max 2024 16CPU/40GPU/48GB/1TB,Bạc,103690000,103690000,0
+FPT,MacBook Pro 16 M4 Max 2024 16CPU/40GPU/48GB/1TB,Xanh Đen,,103690000,
+FPT,Macbook Air 13 M2 2024 8CPU/8GPU/16GB/256GB,Bạc,,20190000,
+FPT,Macbook Air 13 M2 2024 8CPU/8GPU/16GB/256GB,Vàng,,20190000,
+FPT,Macbook Air 13 M2 2024 8CPU/8GPU/16GB/256GB,Xanh Đen,,19690000,
+FPT,Macbook Air 13 M2 2024 8CPU/8GPU/16GB/256GB,Xám,,20190000,
+FPT,Macbook Air 13 M4 2025 10CPU/10GPU/16GB/512GB,Bạc,30490000,30490000,0
+FPT,Macbook Air 13 M4 2025 10CPU/10GPU/16GB/512GB,Xanh Da Trời,30490000,30490000,0
+FPT,Macbook Air 13 M4 2025 10CPU/10GPU/16GB/512GB,Ánh Sao,30490000,30490000,0
+FPT,Macbook Air 13 M4 2025 10CPU/10GPU/16GB/512GB,Đêm Xanh Thẳm,30490000,30490000,0
+FPT,Macbook Air 13 M4 2025 10CPU/10GPU/24GB/512GB,Bạc,34690000,34690000,0
+FPT,Macbook Air 13 M4 2025 10CPU/10GPU/24GB/512GB,Xanh Da Trời,34690000,34690000,0
+FPT,Macbook Air 13 M4 2025 10CPU/10GPU/24GB/512GB,Ánh Sao,34690000,34690000,0
+FPT,Macbook Air 13 M4 2025 10CPU/10GPU/24GB/512GB,Đêm Xanh Thẳm,34690000,34690000,0
+FPT,Macbook Air 13 M4 2025 10CPU/8GPU/16GB/256GB,Bạc,25290000,25290000,0
+FPT,Macbook Air 13 M4 2025 10CPU/8GPU/16GB/256GB,Xanh Da Trời,25290000,25090000,-200000
+FPT,Macbook Air 13 M4 2025 10CPU/8GPU/16GB/256GB,Ánh Sao,24490000,25290000,800000
+FPT,Macbook Air 13 M4 2025 10CPU/8GPU/16GB/256GB,Đêm Xanh Thẳm,25290000,25290000,0
+FPT,Macbook Air 15 M4 2025 10CPU/ 10GPU/ 24GB/ 512GB,Bạc,39490000,39490000,0
+FPT,Macbook Air 15 M4 2025 10CPU/ 10GPU/ 24GB/ 512GB,Xanh Da Trời,39490000,38990000,-500000
+FPT,Macbook Air 15 M4 2025 10CPU/ 10GPU/ 24GB/ 512GB,Ánh Sao,,39490000,
+FPT,Macbook Air 15 M4 2025 10CPU/ 10GPU/ 24GB/ 512GB,Đêm Xanh Thẳm,38990000,38990000,0
+FPT,Macbook Air 15 M4 2025 10CPU/10GPU/16GB/256GB,Bạc,29990000,29990000,0
+FPT,Macbook Air 15 M4 2025 10CPU/10GPU/16GB/256GB,Xanh Da Trời,,29990000,
+FPT,Macbook Air 15 M4 2025 10CPU/10GPU/16GB/256GB,Ánh Sao,,29990000,
+FPT,Macbook Air 15 M4 2025 10CPU/10GPU/16GB/256GB,Đêm Xanh Thẳm,,29990000,
+FPT,Macbook Air 15 M4 2025 10CPU/10GPU/16GB/512GB,Bạc,33990000,33990000,0
+FPT,Macbook Air 15 M4 2025 10CPU/10GPU/16GB/512GB,Xanh Da Trời,33990000,33990000,0
+FPT,Macbook Air 15 M4 2025 10CPU/10GPU/16GB/512GB,Ánh Sao,,33990000,
+FPT,Macbook Air 15 M4 2025 10CPU/10GPU/16GB/512GB,Đêm Xanh Thẳm,33990000,33990000,0
+FPT,Macbook Pro 14 M5 2025 10CPU/10GPU/16GB/1TB,Bạc,46890000,46890000,0
+FPT,Macbook Pro 14 M5 2025 10CPU/10GPU/16GB/1TB,Đen,46890000,46890000,0
+FPT,Macbook Pro 14 M5 2025 10CPU/10GPU/16GB/1TB Nano,Bạc,,50490000,
+FPT,Macbook Pro 14 M5 2025 10CPU/10GPU/16GB/512GB,Bạc,41990000,41990000,0
+FPT,Macbook Pro 14 M5 2025 10CPU/10GPU/16GB/512GB,Đen,41990000,41990000,0
+FPT,Macbook Pro 14 M5 2025 10CPU/10GPU/16GB/512GB Nano,Bạc,45590000,45590000,0
+FPT,Macbook Pro 14 M5 2025 10CPU/10GPU/16GB/512GB Nano,Đen,45590000,45590000,0
+FPT,Macbook Pro 14 M5 2025 10CPU/10GPU/24GB/1TB Nano,Bạc,55390000,55390000,0
+FPT,Macbook Pro 14 M5 2025 10CPU/10GPU/24GB/1TB Nano,Đen,55390000,55390000,0
 FPT,Macbook Pro 14 inch M5 2025 10CPU/10GPU/16GB/1TB Nano,Bạc,50490000,,
-FPT,Macbook Pro 14 inch M5 2025 10CPU/10GPU/16GB/1TB Nano,Đen,50490000,,
-FPT,iPad A16 5G 128GB,Bạc,12990000,,
-FPT,iPad A16 5G 128GB,Hồng,12990000,,
-FPT,iPad A16 5G 128GB,Vàng,12990000,,
-FPT,iPad A16 5G 128GB,Xanh dương,12990000,,
-FPT,iPad A16 5G 256GB,Bạc,15790000,,
-FPT,iPad A16 5G 256GB,Hồng,15790000,,
-FPT,iPad A16 5G 256GB,Vàng,15790000,,
-FPT,iPad A16 5G 256GB,Xanh dương,15790000,,
-FPT,iPad A16 5G 512GB,Bạc,22190000,,
-FPT,iPad A16 5G 512GB,Hồng,22190000,,
-FPT,iPad A16 5G 512GB,Vàng,22190000,,
-FPT,iPad A16 5G 512GB,Xanh dương,22190000,,
-FPT,iPad A16 WiFi 128GB,Bạc,8490000,,
-FPT,iPad A16 WiFi 128GB,Hồng,8790000,,
-FPT,iPad A16 WiFi 128GB,Vàng,8790000,,
-FPT,iPad A16 WiFi 128GB,Xanh dương,8790000,,
-FPT,iPad A16 WiFi 256GB,Bạc,11590000,,
-FPT,iPad A16 WiFi 256GB,Hồng,11590000,,
-FPT,iPad A16 WiFi 256GB,Vàng,11590000,,
-FPT,iPad A16 WiFi 256GB,Xanh dương,11590000,,
-FPT,iPad A16 WiFi 512GB,Bạc,17990000,,
-FPT,iPad A16 WiFi 512GB,Hồng,17990000,,
-FPT,iPad A16 WiFi 512GB,Vàng,17990000,,
-FPT,iPad A16 WiFi 512GB,Xanh dương,17990000,,
-FPT,iPad Air 11 inch M2 2024 Wifi + Cellular 128GB,Trắng,17990000,,
-FPT,iPad Air 11 inch M2 2024 Wifi + Cellular 128GB,Tím,17990000,,
-FPT,iPad Air 11 inch M2 2024 Wifi + Cellular 128GB,Xanh dương,17990000,,
-FPT,iPad Air 11 inch M2 2024 Wifi + Cellular 128GB,Xám,17990000,,
-FPT,iPad Air 11 inch M2 2024 Wifi + Cellular 1TB,Trắng,0,,
-FPT,iPad Air 11 inch M2 2024 Wifi + Cellular 1TB,Tím,0,,
-FPT,iPad Air 11 inch M2 2024 Wifi + Cellular 1TB,Xanh dương,0,,
-FPT,iPad Air 11 inch M2 2024 Wifi + Cellular 1TB,Xám,0,,
-FPT,iPad Air 11 inch M2 2024 Wifi + Cellular 256GB,Trắng,19990000,,
-FPT,iPad Air 11 inch M2 2024 Wifi + Cellular 256GB,Tím,0,,
-FPT,iPad Air 11 inch M2 2024 Wifi + Cellular 256GB,Xanh dương,19990000,,
-FPT,iPad Air 11 inch M2 2024 Wifi + Cellular 256GB,Xám,0,,
-FPT,iPad Air 11 inch M2 2024 Wifi + Cellular 512GB,Trắng,0,,
-FPT,iPad Air 11 inch M2 2024 Wifi + Cellular 512GB,Tím,0,,
-FPT,iPad Air 11 inch M2 2024 Wifi + Cellular 512GB,Xanh dương,28990000,,
-FPT,iPad Air 11 inch M2 2024 Wifi + Cellular 512GB,Xám,28990000,,
-FPT,iPad Air 11 inch M2 2024 Wifi 128GB,Trắng,16990000,,
-FPT,iPad Air 11 inch M2 2024 Wifi 128GB,Tím,16990000,,
-FPT,iPad Air 11 inch M2 2024 Wifi 128GB,Xanh dương,0,,
-FPT,iPad Air 11 inch M2 2024 Wifi 128GB,Xám,0,,
+FPT,Macbook Pro 14 inch M5 2025 10CPU/10GPU/16GB/1TB Nano,Đen,50490000,50490000,0
+FPT,iPad A16 5G 128GB,Bạc,12990000,12990000,0
+FPT,iPad A16 5G 128GB,Hồng,12990000,12990000,0
+FPT,iPad A16 5G 128GB,Vàng,12990000,12990000,0
+FPT,iPad A16 5G 128GB,Xanh dương,12990000,12990000,0
+FPT,iPad A16 5G 256GB,Bạc,15790000,15790000,0
+FPT,iPad A16 5G 256GB,Hồng,15790000,15790000,0
+FPT,iPad A16 5G 256GB,Vàng,15790000,15790000,0
+FPT,iPad A16 5G 256GB,Xanh dương,15790000,15790000,0
+FPT,iPad A16 5G 512GB,Bạc,22190000,21290000,-900000
+FPT,iPad A16 5G 512GB,Hồng,22190000,22190000,0
+FPT,iPad A16 5G 512GB,Vàng,22190000,22190000,0
+FPT,iPad A16 5G 512GB,Xanh dương,22190000,21290000,-900000
+FPT,iPad A16 WiFi 128GB,Bạc,8490000,8690000,200000
+FPT,iPad A16 WiFi 128GB,Hồng,8790000,8790000,0
+FPT,iPad A16 WiFi 128GB,Vàng,8790000,8790000,0
+FPT,iPad A16 WiFi 128GB,Xanh dương,8790000,8790000,0
+FPT,iPad A16 WiFi 256GB,Bạc,11590000,11590000,0
+FPT,iPad A16 WiFi 256GB,Hồng,11590000,11590000,0
+FPT,iPad A16 WiFi 256GB,Vàng,11590000,11590000,0
+FPT,iPad A16 WiFi 256GB,Xanh dương,11590000,11590000,0
+FPT,iPad A16 WiFi 512GB,Bạc,17990000,17990000,0
+FPT,iPad A16 WiFi 512GB,Hồng,17990000,17090000,-900000
+FPT,iPad A16 WiFi 512GB,Vàng,17990000,17990000,0
+FPT,iPad A16 WiFi 512GB,Xanh dương,17990000,17990000,0
+FPT,iPad Air 11 inch M2 2024 Wifi + Cellular 128GB,Trắng,17990000,17990000,0
+FPT,iPad Air 11 inch M2 2024 Wifi + Cellular 128GB,Tím,17990000,17990000,0
+FPT,iPad Air 11 inch M2 2024 Wifi + Cellular 128GB,Xanh dương,17990000,17990000,0
+FPT,iPad Air 11 inch M2 2024 Wifi + Cellular 128GB,Xám,17990000,17990000,0
+FPT,iPad Air 11 inch M2 2024 Wifi + Cellular 1TB,Trắng,0,28990000,28990000
+FPT,iPad Air 11 inch M2 2024 Wifi + Cellular 1TB,Tím,0,28990000,28990000
+FPT,iPad Air 11 inch M2 2024 Wifi + Cellular 1TB,Xanh dương,0,28990000,28990000
+FPT,iPad Air 11 inch M2 2024 Wifi + Cellular 1TB,Xám,0,28990000,28990000
+FPT,iPad Air 11 inch M2 2024 Wifi + Cellular 256GB,Trắng,19990000,19990000,0
+FPT,iPad Air 11 inch M2 2024 Wifi + Cellular 256GB,Tím,0,0,0
+FPT,iPad Air 11 inch M2 2024 Wifi + Cellular 256GB,Xanh dương,19990000,19990000,0
+FPT,iPad Air 11 inch M2 2024 Wifi + Cellular 256GB,Xám,0,19990000,19990000
+FPT,iPad Air 11 inch M2 2024 Wifi + Cellular 512GB,Trắng,0,0,0
+FPT,iPad Air 11 inch M2 2024 Wifi + Cellular 512GB,Tím,0,0,0
+FPT,iPad Air 11 inch M2 2024 Wifi + Cellular 512GB,Xanh dương,28990000,28990000,0
+FPT,iPad Air 11 inch M2 2024 Wifi + Cellular 512GB,Xám,28990000,28990000,0
+FPT,iPad Air 11 inch M2 2024 Wifi 128GB,Trắng,16990000,16990000,0
+FPT,iPad Air 11 inch M2 2024 Wifi 128GB,Tím,16990000,16990000,0
+FPT,iPad Air 11 inch M2 2024 Wifi 128GB,Xanh dương,0,16990000,16990000
+FPT,iPad Air 11 inch M2 2024 Wifi 128GB,Xám,0,16990000,16990000
 FPT,iPad Air 11 inch M2 2024 Wifi 1TB,Trắng,0,,
 FPT,iPad Air 11 inch M2 2024 Wifi 1TB,Tím,0,,
 FPT,iPad Air 11 inch M2 2024 Wifi 1TB,Xanh dương,0,,
@@ -632,10 +659,10 @@ FPT,iPad Air 11 inch M2 2024 Wifi 512GB,Trắng,21990000,,
 FPT,iPad Air 11 inch M2 2024 Wifi 512GB,Tím,21990000,,
 FPT,iPad Air 11 inch M2 2024 Wifi 512GB,Xanh dương,0,,
 FPT,iPad Air 11 inch M2 2024 Wifi 512GB,Xám,21990000,,
-FPT,iPad Air 11 inch M3 2025 WiFi + Cellular 128GB,Tím,17590000,,
-FPT,iPad Air 11 inch M3 2025 WiFi + Cellular 128GB,Xanh dương,17590000,,
-FPT,iPad Air 11 inch M3 2025 WiFi + Cellular 128GB,Xám không gian,17590000,,
-FPT,iPad Air 11 inch M3 2025 WiFi + Cellular 128GB,Ánh Sao,17490000,,
+FPT,iPad Air 11 inch M3 2025 WiFi + Cellular 128GB,Tím,17590000,17590000,0
+FPT,iPad Air 11 inch M3 2025 WiFi + Cellular 128GB,Xanh dương,17590000,17590000,0
+FPT,iPad Air 11 inch M3 2025 WiFi + Cellular 128GB,Xám không gian,17590000,17490000,-100000
+FPT,iPad Air 11 inch M3 2025 WiFi + Cellular 128GB,Ánh Sao,17490000,17590000,100000
 FPT,iPad Air 11 inch M3 2025 WiFi + Cellular 1TB,Tím,34790000,,
 FPT,iPad Air 11 inch M3 2025 WiFi + Cellular 1TB,Xanh dương,34790000,,
 FPT,iPad Air 11 inch M3 2025 WiFi + Cellular 1TB,Xám không gian,34790000,,
@@ -648,7 +675,7 @@ FPT,iPad Air 11 inch M3 2025 WiFi + Cellular 512GB,Tím,29190000,,
 FPT,iPad Air 11 inch M3 2025 WiFi + Cellular 512GB,Xanh dương,29190000,,
 FPT,iPad Air 11 inch M3 2025 WiFi + Cellular 512GB,Xám không gian,29190000,,
 FPT,iPad Air 11 inch M3 2025 WiFi + Cellular 512GB,Ánh Sao,29190000,,
-FPT,iPad Air 11 inch M3 2025 WiFi 128GB,Tím,13390000,,
+FPT,iPad Air 11 inch M3 2025 WiFi 128GB,Tím,13390000,13290000,-100000
 FPT,iPad Air 11 inch M3 2025 WiFi 128GB,Xanh dương,12990000,,
 FPT,iPad Air 11 inch M3 2025 WiFi 128GB,Xám không gian,13290000,,
 FPT,iPad Air 11 inch M3 2025 WiFi 128GB,Ánh Sao,13390000,,
@@ -664,10 +691,10 @@ FPT,iPad Air 11 inch M3 2025 WiFi 512GB,Tím,24990000,,
 FPT,iPad Air 11 inch M3 2025 WiFi 512GB,Xanh dương,24990000,,
 FPT,iPad Air 11 inch M3 2025 WiFi 512GB,Xám không gian,24990000,,
 FPT,iPad Air 11 inch M3 2025 WiFi 512GB,Ánh Sao,24990000,,
-FPT,iPad Air 13 inch M3 2025 WiFi + Cellular 128GB,Tím,23390000,,
-FPT,iPad Air 13 inch M3 2025 WiFi + Cellular 128GB,Xanh dương,23390000,,
-FPT,iPad Air 13 inch M3 2025 WiFi + Cellular 128GB,Xám không gian,23390000,,
-FPT,iPad Air 13 inch M3 2025 WiFi + Cellular 128GB,Ánh Sao,23390000,,
+FPT,iPad Air 13 inch M3 2025 WiFi + Cellular 128GB,Tím,23390000,23390000,0
+FPT,iPad Air 13 inch M3 2025 WiFi + Cellular 128GB,Xanh dương,23390000,23390000,0
+FPT,iPad Air 13 inch M3 2025 WiFi + Cellular 128GB,Xám không gian,23390000,23390000,0
+FPT,iPad Air 13 inch M3 2025 WiFi + Cellular 128GB,Ánh Sao,23390000,23390000,0
 FPT,iPad Air 13 inch M3 2025 WiFi + Cellular 1TB,Tím,40190000,,
 FPT,iPad Air 13 inch M3 2025 WiFi + Cellular 1TB,Xanh dương,40190000,,
 FPT,iPad Air 13 inch M3 2025 WiFi + Cellular 1TB,Xám không gian,40190000,,
@@ -676,18 +703,18 @@ FPT,iPad Air 13 inch M3 2025 WiFi + Cellular 512GB,Tím,34590000,,
 FPT,iPad Air 13 inch M3 2025 WiFi + Cellular 512GB,Xanh dương,34590000,,
 FPT,iPad Air 13 inch M3 2025 WiFi + Cellular 512GB,Xám không gian,34590000,,
 FPT,iPad Air 13 inch M3 2025 WiFi + Cellular 512GB,Ánh Sao,34590000,,
-FPT,iPad Air 13 inch M3 2025 WiFi 128GB,Tím,19290000,,
-FPT,iPad Air 13 inch M3 2025 WiFi 128GB,Xanh dương,18690000,,
-FPT,iPad Air 13 inch M3 2025 WiFi 128GB,Xám không gian,18690000,,
-FPT,iPad Air 13 inch M3 2025 WiFi 128GB,Ánh Sao,19290000,,
+FPT,iPad Air 13 inch M3 2025 WiFi 128GB,Tím,19290000,19290000,0
+FPT,iPad Air 13 inch M3 2025 WiFi 128GB,Xanh dương,18690000,19290000,600000
+FPT,iPad Air 13 inch M3 2025 WiFi 128GB,Xám không gian,18690000,18690000,0
+FPT,iPad Air 13 inch M3 2025 WiFi 128GB,Ánh Sao,19290000,19290000,0
 FPT,iPad Air 13 inch M3 2025 WiFi 1TB,Tím,35990000,,
 FPT,iPad Air 13 inch M3 2025 WiFi 1TB,Xanh dương,35990000,,
 FPT,iPad Air 13 inch M3 2025 WiFi 1TB,Xám không gian,35990000,,
 FPT,iPad Air 13 inch M3 2025 WiFi 1TB,Ánh Sao,35990000,,
-FPT,iPad Air 13 inch M3 2025 WiFi 256GB,Tím,21990000,,
-FPT,iPad Air 13 inch M3 2025 WiFi 256GB,Xanh dương,21990000,,
-FPT,iPad Air 13 inch M3 2025 WiFi 256GB,Xám không gian,21990000,,
-FPT,iPad Air 13 inch M3 2025 WiFi 256GB,Ánh Sao,21990000,,
+FPT,iPad Air 13 inch M3 2025 WiFi 256GB,Tím,21990000,19290000,-2700000
+FPT,iPad Air 13 inch M3 2025 WiFi 256GB,Xanh dương,21990000,19290000,-2700000
+FPT,iPad Air 13 inch M3 2025 WiFi 256GB,Xám không gian,21990000,19290000,-2700000
+FPT,iPad Air 13 inch M3 2025 WiFi 256GB,Ánh Sao,21990000,19290000,-2700000
 FPT,iPad Air 13 inch M3 2025 WiFi 512GB,Tím,29990000,,
 FPT,iPad Air 13 inch M3 2025 WiFi 512GB,Xanh dương,29990000,,
 FPT,iPad Air 13 inch M3 2025 WiFi 512GB,Xám không gian,29990000,,
@@ -697,34 +724,42 @@ FPT,iPad Air 5 2022 10.9 inch M1 WiFi 5G 256GB,Trắng,0,,
 FPT,iPad Air 5 2022 10.9 inch M1 WiFi 5G 256GB,Tím,0,,
 FPT,iPad Air 5 2022 10.9 inch M1 WiFi 5G 256GB,Xanh dương,24990000,,
 FPT,iPad Air 5 2022 10.9 inch M1 WiFi 5G 256GB,Xám,0,,
-FPT,iPad Air 5 2022 10.9 inch M1 WiFi 5G 64GB,Hồng,20990000,,
-FPT,iPad Air 5 2022 10.9 inch M1 WiFi 5G 64GB,Trắng,20990000,,
-FPT,iPad Air 5 2022 10.9 inch M1 WiFi 5G 64GB,Tím,20990000,,
-FPT,iPad Air 5 2022 10.9 inch M1 WiFi 5G 64GB,Xanh dương,0,,
-FPT,iPad Air 5 2022 10.9 inch M1 WiFi 5G 64GB,Xám,20990000,,
-FPT,iPad Pro 11 M5 2025 WiFi + Cellular 12GB 256GB,Bạc,35590000,,
-FPT,iPad Pro 11 M5 2025 WiFi + Cellular 12GB 256GB,Đen,35590000,,
-FPT,iPad Pro 11 M5 2025 WiFi + Cellular 12GB 512GB,Bạc,41190000,,
-FPT,iPad Pro 11 M5 2025 WiFi + Cellular 12GB 512GB,Đen,41190000,,
-FPT,iPad Pro 11 M5 2025 WiFi 12GB 256GB,Bạc,29990000,,
-FPT,iPad Pro 11 M5 2025 WiFi 12GB 256GB,Đen,29990000,,
-FPT,iPad Pro 11 M5 2025 WiFi 12GB 512GB,Bạc,35590000,,
-FPT,iPad Pro 11 M5 2025 WiFi 12GB 512GB,Đen,35590000,,
-FPT,iPad Pro 11 inch M4 2024 Wifi 1TB,Bạc,45990000,,
-FPT,iPad Pro 11 inch M4 2024 Wifi 1TB,Ðen,45990000,,
+FPT,iPad Air 5 2022 10.9 inch M1 WiFi 5G 64GB,Hồng,20990000,20990000,0
+FPT,iPad Air 5 2022 10.9 inch M1 WiFi 5G 64GB,Trắng,20990000,20990000,0
+FPT,iPad Air 5 2022 10.9 inch M1 WiFi 5G 64GB,Tím,20990000,20990000,0
+FPT,iPad Air 5 2022 10.9 inch M1 WiFi 5G 64GB,Xanh dương,0,20990000,20990000
+FPT,iPad Air 5 2022 10.9 inch M1 WiFi 5G 64GB,Xám,20990000,20990000,0
+FPT,iPad Pro 11 M5 2025 WiFi + Cellular 12GB 256GB,Bạc,35590000,35590000,0
+FPT,iPad Pro 11 M5 2025 WiFi + Cellular 12GB 256GB,Đen,35590000,35590000,0
+FPT,iPad Pro 11 M5 2025 WiFi + Cellular 12GB 512GB,Bạc,41190000,41190000,0
+FPT,iPad Pro 11 M5 2025 WiFi + Cellular 12GB 512GB,Đen,41190000,41190000,0
+FPT,iPad Pro 11 M5 2025 WiFi 12GB 256GB,Bạc,29990000,29990000,0
+FPT,iPad Pro 11 M5 2025 WiFi 12GB 256GB,Đen,29990000,29990000,0
+FPT,iPad Pro 11 M5 2025 WiFi 12GB 512GB,Bạc,35590000,35590000,0
+FPT,iPad Pro 11 M5 2025 WiFi 12GB 512GB,Đen,35590000,35590000,0
+FPT,iPad Pro 11 inch M4 2024 Wifi 1TB,Bạc,45990000,45990000,0
+FPT,iPad Pro 11 inch M4 2024 Wifi 1TB,Ðen,45990000,45990000,0
+FPT,iPad Pro 11 inch M4 2024 Wifi 256GB,Bạc,,27990000,
 FPT,iPad Pro 11 inch M4 2024 Wifi 256GB,Unknown,0,,
-FPT,iPad Pro 11 inch M4 2024 Wifi 2TB,Bạc,57490000,,
-FPT,iPad Pro 11 inch M4 2024 Wifi 2TB,Ðen,57490000,,
-FPT,iPad Pro 11 inch M4 2024 Wifi 512GB,Bạc,33890000,,
-FPT,iPad Pro 11 inch M4 2024 Wifi 512GB,Ðen,33890000,,
+FPT,iPad Pro 11 inch M4 2024 Wifi 256GB,Ðen,,27990000,
+FPT,iPad Pro 11 inch M4 2024 Wifi 2TB,Bạc,57490000,57490000,0
+FPT,iPad Pro 11 inch M4 2024 Wifi 2TB,Ðen,57490000,57490000,0
+FPT,iPad Pro 11 inch M4 2024 Wifi 512GB,Bạc,33890000,33890000,0
+FPT,iPad Pro 11 inch M4 2024 Wifi 512GB,Ðen,33890000,33890000,0
+FPT,iPad Pro 13 M5 2025 WiFi + Cellular 12GB 256GB,Bạc,,45590000,
 FPT,iPad Pro 13 M5 2025 WiFi + Cellular 12GB 256GB,Unknown,0,,
-FPT,iPad Pro 13 M5 2025 WiFi + Cellular 12GB 512GB,Bạc,51190000,,
-FPT,iPad Pro 13 M5 2025 WiFi + Cellular 12GB 512GB,Đen,51190000,,
+FPT,iPad Pro 13 M5 2025 WiFi + Cellular 12GB 256GB,Đen,,45590000,
+FPT,iPad Pro 13 M5 2025 WiFi + Cellular 12GB 512GB,Bạc,51190000,51190000,0
+FPT,iPad Pro 13 M5 2025 WiFi + Cellular 12GB 512GB,Đen,51190000,51190000,0
+FPT,iPad Pro 13 M5 2025 WiFi 12GB 256GB,Bạc,,39990000,
 FPT,iPad Pro 13 M5 2025 WiFi 12GB 256GB,Unknown,0,,
-FPT,iPad mini 7 2024 Wifi + Cellular 128GB,Tím,15690000,,
-FPT,iPad mini 7 2024 Wifi + Cellular 128GB,Xanh dương,15690000,,
-FPT,iPad mini 7 2024 Wifi + Cellular 128GB,Xám không gian,15690000,,
-FPT,iPad mini 7 2024 Wifi + Cellular 128GB,Ánh Sao,15690000,,
+FPT,iPad Pro 13 M5 2025 WiFi 12GB 256GB,Đen,,39990000,
+FPT,iPad Pro 13 M5 2025 WiFi 12GB 512GB,Bạc,,45590000,
+FPT,iPad Pro 13 M5 2025 WiFi 12GB 512GB,Đen,,45590000,
+FPT,iPad mini 7 2024 Wifi + Cellular 128GB,Tím,15690000,15690000,0
+FPT,iPad mini 7 2024 Wifi + Cellular 128GB,Xanh dương,15690000,15690000,0
+FPT,iPad mini 7 2024 Wifi + Cellular 128GB,Xám không gian,15690000,15690000,0
+FPT,iPad mini 7 2024 Wifi + Cellular 128GB,Ánh Sao,15690000,15690000,0
 FPT,iPad mini 7 2024 Wifi + Cellular 256GB,Tím,18490000,,
 FPT,iPad mini 7 2024 Wifi + Cellular 256GB,Xanh dương,18490000,,
 FPT,iPad mini 7 2024 Wifi + Cellular 256GB,Xám không gian,18490000,,
@@ -737,107 +772,162 @@ FPT,iPad mini 7 2024 Wifi 512GB,Tím,19990000,,
 FPT,iPad mini 7 2024 Wifi 512GB,Xanh dương,19990000,,
 FPT,iPad mini 7 2024 Wifi 512GB,Xám không gian,19990000,,
 FPT,iPad mini 7 2024 Wifi 512GB,Ánh Sao,19990000,,
-FPT,iPhone 14 256GB,Trắng,0,,
-FPT,iPhone 14 256GB,Tím,0,,
-FPT,iPhone 14 256GB,Vàng,20590000,,
-FPT,iPhone 14 256GB,Xanh dương,0,,
-FPT,iPhone 14 256GB,Đen,20590000,,
-FPT,iPhone 14 256GB,Đỏ,20590000,,
-FPT,iPhone 14 512GB,Trắng,0,,
-FPT,iPhone 14 512GB,Tím,0,,
-FPT,iPhone 14 512GB,Vàng,0,,
-FPT,iPhone 14 512GB,Xanh dương,0,,
-FPT,iPhone 14 512GB,Đen,0,,
-FPT,iPhone 14 512GB,Đỏ,0,,
-FPT,iPhone 15 256GB,Hồng,20390000,,
-FPT,iPhone 15 256GB,Vàng,20990000,,
-FPT,iPhone 15 256GB,Xanh dương,20390000,,
-FPT,iPhone 15 256GB,Xanh lá,20690000,,
-FPT,iPhone 15 256GB,Đen,20690000,,
-FPT,iPhone 15 512GB,Hồng,0,,
-FPT,iPhone 15 512GB,Vàng,28390000,,
-FPT,iPhone 15 512GB,Xanh dương,0,,
-FPT,iPhone 15 512GB,Xanh lá,0,,
-FPT,iPhone 15 512GB,Đen,0,,
-FPT,iPhone 16 128GB,Hồng,21190000,,
-FPT,iPhone 16 128GB,Trắng,20890000,,
-FPT,iPhone 16 128GB,Xanh Lưu Ly,21190000,,
-FPT,iPhone 16 128GB,Xanh Mòng Két,21190000,,
-FPT,iPhone 16 128GB,Đen,21190000,,
-FPT,iPhone 16 256GB,Hồng,22990000,,
-FPT,iPhone 16 256GB,Trắng,22990000,,
-FPT,iPhone 16 256GB,Xanh Lưu Ly,22990000,,
-FPT,iPhone 16 256GB,Xanh Mòng Két,22990000,,
-FPT,iPhone 16 256GB,Đen,22990000,,
-FPT,iPhone 16 512GB,Hồng,31390000,,
-FPT,iPhone 16 512GB,Trắng,31390000,,
-FPT,iPhone 16 512GB,Xanh Lưu Ly,31390000,,
-FPT,iPhone 16 512GB,Xanh Mòng Két,31390000,,
-FPT,iPhone 16 512GB,Đen,31390000,,
-FPT,iPhone 16 Plus 256GB,Hồng,27890000,,
-FPT,iPhone 16 Plus 256GB,Trắng,28190000,,
-FPT,iPhone 16 Plus 256GB,Xanh Lưu Ly,28190000,,
-FPT,iPhone 16 Plus 256GB,Xanh Mòng Két,28190000,,
-FPT,iPhone 16 Plus 256GB,Đen,28190000,,
-FPT,iPhone 16 Plus 512GB,Hồng,34290000,,
-FPT,iPhone 16 Plus 512GB,Trắng,0,,
-FPT,iPhone 16 Plus 512GB,Xanh Lưu Ly,34290000,,
-FPT,iPhone 16 Plus 512GB,Xanh Mòng Két,34290000,,
-FPT,iPhone 16 Plus 512GB,Đen,34290000,,
-FPT,iPhone 16 Pro 128GB,Titan Sa Mạc,25590000,,
-FPT,iPhone 16 Pro 128GB,Titan Trắng,25590000,,
-FPT,iPhone 16 Pro 128GB,Titan Tự nhiên,25590000,,
-FPT,iPhone 16 Pro 128GB,Titan Đen,25590000,,
-FPT,iPhone 16 Pro 1TB,Titan Sa Mạc,39890000,,
-FPT,iPhone 16 Pro 1TB,Titan Trắng,39890000,,
-FPT,iPhone 16 Pro 1TB,Titan Tự nhiên,39890000,,
-FPT,iPhone 16 Pro 1TB,Titan Đen,39890000,,
-FPT,iPhone 16 Pro 256GB,Titan Sa Mạc,28590000,,
-FPT,iPhone 16 Pro 256GB,Titan Trắng,28590000,,
-FPT,iPhone 16 Pro 256GB,Titan Tự nhiên,28590000,,
-FPT,iPhone 16 Pro 256GB,Titan Đen,28590000,,
-FPT,iPhone 16 Pro 512GB,Titan Sa Mạc,37190000,,
-FPT,iPhone 16 Pro 512GB,Titan Trắng,37190000,,
-FPT,iPhone 16 Pro 512GB,Titan Tự nhiên,37190000,,
-FPT,iPhone 16 Pro 512GB,Titan Đen,37190000,,
-FPT,iPhone 16 Pro Max 1TB,Titan Sa Mạc,42990000,,
-FPT,iPhone 16 Pro Max 1TB,Titan Trắng,42990000,,
-FPT,iPhone 16 Pro Max 1TB,Titan Tự nhiên,42990000,,
-FPT,iPhone 16 Pro Max 1TB,Titan Đen,42990000,,
-FPT,iPhone 16 Pro Max 256GB,Titan Sa Mạc,30490000,,
-FPT,iPhone 16 Pro Max 256GB,Titan Trắng,31590000,,
-FPT,iPhone 16 Pro Max 256GB,Titan Tự nhiên,31590000,,
-FPT,iPhone 16 Pro Max 256GB,Titan Đen,31590000,,
-FPT,iPhone 16 Pro Max 512GB,Titan Sa Mạc,40190000,,
-FPT,iPhone 16 Pro Max 512GB,Titan Trắng,40190000,,
-FPT,iPhone 16 Pro Max 512GB,Titan Tự nhiên,40190000,,
-FPT,iPhone 16 Pro Max 512GB,Titan Đen,40190000,,
-FPT,iPhone 16e 128GB,Trắng,15190000,,
-FPT,iPhone 16e 128GB,Đen,15190000,,
-FPT,iPhone 17 Pro Max 1TB,Bạc,50990000,,
-FPT,iPhone 17 Pro Max 1TB,Cam Vũ Trụ,49990000,,
-FPT,iPhone 17 Pro Max 1TB,Xanh Đậm,50990000,,
-FPT,iPhone 17 Pro Max 256GB,Bạc,37990000,,
-FPT,iPhone 17 Pro Max 256GB,Cam Vũ Trụ,37990000,,
-FPT,iPhone 17 Pro Max 256GB,Xanh Đậm,37990000,,
+FPT,iPhone 13 128GB,Hồng,,0,
+FPT,iPhone 13 128GB,Trắng,,12490000,
+FPT,iPhone 13 128GB,Xanh,,0,
+FPT,iPhone 13 128GB,Xanh lá,,12590000,
+FPT,iPhone 13 128GB,Đen,,12190000,
+FPT,iPhone 13 128GB,Đỏ,,0,
+FPT,iPhone 13 256GB,Hồng,,0,
+FPT,iPhone 13 256GB,Trắng,,0,
+FPT,iPhone 13 256GB,Xanh,,17990000,
+FPT,iPhone 13 256GB,Xanh rêu,,17990000,
+FPT,iPhone 13 256GB,Đen,,17990000,
+FPT,iPhone 13 256GB,Đỏ,,17990000,
+FPT,iPhone 13 512GB,Đen,,0,
+FPT,iPhone 14 256GB,Trắng,0,0,0
+FPT,iPhone 14 256GB,Tím,0,0,0
+FPT,iPhone 14 256GB,Vàng,20590000,20590000,0
+FPT,iPhone 14 256GB,Xanh dương,0,0,0
+FPT,iPhone 14 256GB,Đen,20590000,20590000,0
+FPT,iPhone 14 256GB,Đỏ,20590000,20590000,0
+FPT,iPhone 14 512GB,Trắng,0,0,0
+FPT,iPhone 14 512GB,Tím,0,0,0
+FPT,iPhone 14 512GB,Vàng,0,0,0
+FPT,iPhone 14 512GB,Xanh dương,0,0,0
+FPT,iPhone 14 512GB,Đen,0,0,0
+FPT,iPhone 14 512GB,Đỏ,0,0,0
+FPT,iPhone 15 128GB,Hồng,,16990000,
+FPT,iPhone 15 128GB,Vàng,,17290000,
+FPT,iPhone 15 128GB,Xanh dương,,16990000,
+FPT,iPhone 15 128GB,Xanh lá,,17290000,
+FPT,iPhone 15 128GB,Đen,,17290000,
+FPT,iPhone 15 256GB,Hồng,20390000,20390000,0
+FPT,iPhone 15 256GB,Vàng,20990000,20990000,0
+FPT,iPhone 15 256GB,Xanh dương,20390000,20390000,0
+FPT,iPhone 15 256GB,Xanh lá,20690000,20690000,0
+FPT,iPhone 15 256GB,Đen,20690000,20690000,0
+FPT,iPhone 15 512GB,Hồng,0,0,0
+FPT,iPhone 15 512GB,Vàng,28390000,28390000,0
+FPT,iPhone 15 512GB,Xanh dương,0,0,0
+FPT,iPhone 15 512GB,Xanh lá,0,0,0
+FPT,iPhone 15 512GB,Đen,0,0,0
+FPT,iPhone 16 128GB,Hồng,21190000,21190000,0
+FPT,iPhone 16 128GB,Trắng,20890000,20890000,0
+FPT,iPhone 16 128GB,Xanh Lưu Ly,21190000,21190000,0
+FPT,iPhone 16 128GB,Xanh Mòng Két,21190000,21190000,0
+FPT,iPhone 16 128GB,Đen,21190000,21190000,0
+FPT,iPhone 16 256GB,Hồng,22990000,22990000,0
+FPT,iPhone 16 256GB,Trắng,22990000,22990000,0
+FPT,iPhone 16 256GB,Xanh Lưu Ly,22990000,22990000,0
+FPT,iPhone 16 256GB,Xanh Mòng Két,22990000,22990000,0
+FPT,iPhone 16 256GB,Đen,22990000,22990000,0
+FPT,iPhone 16 512GB,Hồng,31390000,31390000,0
+FPT,iPhone 16 512GB,Trắng,31390000,31390000,0
+FPT,iPhone 16 512GB,Xanh Lưu Ly,31390000,31390000,0
+FPT,iPhone 16 512GB,Xanh Mòng Két,31390000,31390000,0
+FPT,iPhone 16 512GB,Đen,31390000,31390000,0
+FPT,iPhone 16 Plus 128GB,Hồng,,24590000,
+FPT,iPhone 16 Plus 128GB,Trắng,,24590000,
+FPT,iPhone 16 Plus 128GB,Xanh Lưu Ly,,24890000,
+FPT,iPhone 16 Plus 128GB,Xanh Mòng Két,,24890000,
+FPT,iPhone 16 Plus 128GB,Đen,,24890000,
+FPT,iPhone 16 Plus 256GB,Hồng,27890000,27890000,0
+FPT,iPhone 16 Plus 256GB,Trắng,28190000,28190000,0
+FPT,iPhone 16 Plus 256GB,Xanh Lưu Ly,28190000,28190000,0
+FPT,iPhone 16 Plus 256GB,Xanh Mòng Két,28190000,28190000,0
+FPT,iPhone 16 Plus 256GB,Đen,28190000,28190000,0
+FPT,iPhone 16 Plus 512GB,Hồng,34290000,34290000,0
+FPT,iPhone 16 Plus 512GB,Trắng,0,0,0
+FPT,iPhone 16 Plus 512GB,Xanh Lưu Ly,34290000,34290000,0
+FPT,iPhone 16 Plus 512GB,Xanh Mòng Két,34290000,34290000,0
+FPT,iPhone 16 Plus 512GB,Đen,34290000,34290000,0
+FPT,iPhone 16 Pro 128GB,Titan Sa Mạc,25590000,25590000,0
+FPT,iPhone 16 Pro 128GB,Titan Trắng,25590000,25590000,0
+FPT,iPhone 16 Pro 128GB,Titan Tự nhiên,25590000,25590000,0
+FPT,iPhone 16 Pro 128GB,Titan Đen,25590000,25590000,0
+FPT,iPhone 16 Pro 1TB,Titan Sa Mạc,39890000,39890000,0
+FPT,iPhone 16 Pro 1TB,Titan Trắng,39890000,39890000,0
+FPT,iPhone 16 Pro 1TB,Titan Tự nhiên,39890000,39890000,0
+FPT,iPhone 16 Pro 1TB,Titan Đen,39890000,39890000,0
+FPT,iPhone 16 Pro 256GB,Titan Sa Mạc,28590000,28590000,0
+FPT,iPhone 16 Pro 256GB,Titan Trắng,28590000,28590000,0
+FPT,iPhone 16 Pro 256GB,Titan Tự nhiên,28590000,28590000,0
+FPT,iPhone 16 Pro 256GB,Titan Đen,28590000,28590000,0
+FPT,iPhone 16 Pro 512GB,Titan Sa Mạc,37190000,37190000,0
+FPT,iPhone 16 Pro 512GB,Titan Trắng,37190000,37190000,0
+FPT,iPhone 16 Pro 512GB,Titan Tự nhiên,37190000,37190000,0
+FPT,iPhone 16 Pro 512GB,Titan Đen,37190000,37190000,0
+FPT,iPhone 16 Pro Max 1TB,Titan Sa Mạc,42990000,42990000,0
+FPT,iPhone 16 Pro Max 1TB,Titan Trắng,42990000,42990000,0
+FPT,iPhone 16 Pro Max 1TB,Titan Tự nhiên,42990000,42990000,0
+FPT,iPhone 16 Pro Max 1TB,Titan Đen,42990000,42990000,0
+FPT,iPhone 16 Pro Max 256GB,Titan Sa Mạc,30490000,30990000,500000
+FPT,iPhone 16 Pro Max 256GB,Titan Trắng,31590000,31590000,0
+FPT,iPhone 16 Pro Max 256GB,Titan Tự nhiên,31590000,31590000,0
+FPT,iPhone 16 Pro Max 256GB,Titan Đen,31590000,31590000,0
+FPT,iPhone 16 Pro Max 512GB,Titan Sa Mạc,40190000,40190000,0
+FPT,iPhone 16 Pro Max 512GB,Titan Trắng,40190000,40190000,0
+FPT,iPhone 16 Pro Max 512GB,Titan Tự nhiên,40190000,40190000,0
+FPT,iPhone 16 Pro Max 512GB,Titan Đen,40190000,40190000,0
+FPT,iPhone 16e 128GB,Trắng,15190000,15190000,0
+FPT,iPhone 16e 128GB,Đen,15190000,15190000,0
+FPT,iPhone 16e 256GB,Trắng,,19590000,
+FPT,iPhone 16e 256GB,Đen,,19590000,
+FPT,iPhone 16e 512GB,Trắng,,23990000,
+FPT,iPhone 16e 512GB,Đen,,23990000,
+FPT,iPhone 17 256GB,Trắng,,24990000,
+FPT,iPhone 17 256GB,Tím Oải Hương,,24890000,
+FPT,iPhone 17 256GB,Xanh Lam Khói,,24990000,
+FPT,iPhone 17 256GB,Xanh Lá Xô Thơm,,24990000,
+FPT,iPhone 17 256GB,Đen,,24990000,
+FPT,iPhone 17 Pro 1TB,Bạc,,47990000,
+FPT,iPhone 17 Pro 1TB,Cam Vũ Trụ,,46990000,
+FPT,iPhone 17 Pro 1TB,Xanh Đậm,,47990000,
+FPT,iPhone 17 Pro 256GB,Bạc,,34990000,
+FPT,iPhone 17 Pro 256GB,Cam Vũ Trụ,,34390000,
+FPT,iPhone 17 Pro 256GB,Xanh Đậm,,34790000,
+FPT,iPhone 17 Pro 512GB,Bạc,,41490000,
+FPT,iPhone 17 Pro 512GB,Cam Vũ Trụ,,41490000,
+FPT,iPhone 17 Pro 512GB,Xanh Đậm,,40590000,
+FPT,iPhone 17 Pro Max 1TB,Bạc,50990000,50990000,0
+FPT,iPhone 17 Pro Max 1TB,Cam Vũ Trụ,49990000,50990000,1000000
+FPT,iPhone 17 Pro Max 1TB,Xanh Đậm,50990000,50990000,0
+FPT,iPhone 17 Pro Max 256GB,Bạc,37990000,37990000,0
+FPT,iPhone 17 Pro Max 256GB,Cam Vũ Trụ,37990000,37990000,0
+FPT,iPhone 17 Pro Max 256GB,Xanh Đậm,37990000,37990000,0
 FPT,iPhone 17 Pro Max 2TB,Bạc,63990000,,
 FPT,iPhone 17 Pro Max 2TB,Cam Vũ Trụ,63990000,,
 FPT,iPhone 17 Pro Max 2TB,Xanh Đậm,63990000,,
-FPT,iPhone 17 Pro Max 512GB,Bạc,44290000,,
-FPT,iPhone 17 Pro Max 512GB,Cam Vũ Trụ,43490000,,
-FPT,iPhone 17 Pro Max 512GB,Xanh Đậm,44490000,,
-FPT,iPhone Air 1TB,Trắng Mây,41490000,,
-FPT,iPhone Air 1TB,Vàng Nhạt,40990000,,
-FPT,iPhone Air 1TB,Xanh Da Trời,41490000,,
-FPT,iPhone Air 1TB,Đen Không Gian,41490000,,
-FPT,iPhone Air 256GB,Trắng Mây,30890000,,
-FPT,iPhone Air 256GB,Vàng Nhạt,30890000,,
-FPT,iPhone Air 256GB,Xanh Da Trời,30590000,,
-FPT,iPhone Air 256GB,Đen Không Gian,30890000,,
-FPT,iPhone Air 512GB,Trắng Mây,36490000,,
-FPT,iPhone Air 512GB,Vàng Nhạt,36490000,,
-FPT,iPhone Air 512GB,Xanh Da Trời,35490000,,
-FPT,iPhone Air 512GB,Đen Không Gian,36490000,,
+FPT,iPhone 17 Pro Max 512GB,Bạc,44290000,44290000,0
+FPT,iPhone 17 Pro Max 512GB,Cam Vũ Trụ,43490000,43990000,500000
+FPT,iPhone 17 Pro Max 512GB,Xanh Đậm,44490000,44490000,0
+FPT,iPhone Air 1TB,Trắng Mây,41490000,41490000,0
+FPT,iPhone Air 1TB,Vàng Nhạt,40990000,40990000,0
+FPT,iPhone Air 1TB,Xanh Da Trời,41490000,41490000,0
+FPT,iPhone Air 1TB,Đen Không Gian,41490000,41490000,0
+FPT,iPhone Air 256GB,Trắng Mây,30890000,30890000,0
+FPT,iPhone Air 256GB,Vàng Nhạt,30890000,30890000,0
+FPT,iPhone Air 256GB,Xanh Da Trời,30590000,30590000,0
+FPT,iPhone Air 256GB,Đen Không Gian,30890000,30890000,0
+FPT,iPhone Air 512GB,Trắng Mây,36490000,36490000,0
+FPT,iPhone Air 512GB,Vàng Nhạt,36490000,36490000,0
+FPT,iPhone Air 512GB,Xanh Da Trời,35490000,35490000,0
+FPT,iPhone Air 512GB,Đen Không Gian,36490000,36490000,0
+HoangHa,iPhone 17 256GB,Trắng,24790000,,
+HoangHa,iPhone 17 256GB,Tím Oải Hương,24790000,,
+HoangHa,iPhone 17 256GB,Xanh Lam Khói,24790000,,
+HoangHa,iPhone 17 256GB,Xanh Lá Xô Thơm,24790000,,
+HoangHa,iPhone 17 256GB,Đen,24790000,,
+HoangHa,iPhone 17 Pro 1TB,Bạc,46990000,,
+HoangHa,iPhone 17 Pro 1TB,Cam vũ trụ,46990000,,
+HoangHa,iPhone 17 Pro 1TB,Xanh đậm,46990000,,
+HoangHa,iPhone 17 Pro 256GB,Bạc,34790000,,
+HoangHa,iPhone 17 Pro 256GB,Cam vũ trụ,33990000,,
+HoangHa,iPhone 17 Pro 256GB,Xanh đậm,33990000,,
+HoangHa,iPhone 17 Pro 512GB,Bạc,40490000,,
+HoangHa,iPhone 17 Pro 512GB,Cam vũ trụ,40490000,,
+HoangHa,iPhone 17 Pro 512GB,Xanh đậm,40490000,,
 HoangHa,iPhone 17 Pro Max 1TB,Bạc,49990000,,
 HoangHa,iPhone 17 Pro Max 1TB,Cam vũ trụ,49990000,,
 HoangHa,iPhone 17 Pro Max 1TB,Xanh đậm,49990000,,
@@ -1262,193 +1352,279 @@ HoangHa,iPhone 16e (128GB),Trắng,15250000,,
 HoangHa,iPhone 16e (128GB),Đen,15250000,,
 HoangHa,iPhone 16e (256GB),Trắng,18350000,,
 HoangHa,iPhone 16e (256GB),Đen,18350000,,
-HoangHa,iPhone 17 256GB,Trắng,24790000,,
-HoangHa,iPhone 17 256GB,Tím Oải Hương,24790000,,
-HoangHa,iPhone 17 256GB,Xanh Lam Khói,24790000,,
-HoangHa,iPhone 17 256GB,Xanh Lá Xô Thơm,24790000,,
-HoangHa,iPhone 17 256GB,Đen,24790000,,
 HoangHa,iPhone 17 512GB,Trắng,30490000,,
 HoangHa,iPhone 17 512GB,Tím Oải Hương,30490000,,
 HoangHa,iPhone 17 512GB,Xanh Lam Khói,30490000,,
 HoangHa,iPhone 17 512GB,Xanh Lá Xô Thơm,30490000,,
 HoangHa,iPhone 17 512GB,Đen,30490000,,
-HoangHa,iPhone 17 Pro 1TB,Bạc,46990000,,
-HoangHa,iPhone 17 Pro 1TB,Cam vũ trụ,46990000,,
-HoangHa,iPhone 17 Pro 1TB,Xanh đậm,46990000,,
-HoangHa,iPhone 17 Pro 256GB,Bạc,34790000,,
-HoangHa,iPhone 17 Pro 256GB,Cam vũ trụ,33990000,,
-HoangHa,iPhone 17 Pro 256GB,Xanh đậm,33990000,,
-HoangHa,iPhone 17 Pro 512GB,Bạc,40490000,,
-HoangHa,iPhone 17 Pro 512GB,Cam vũ trụ,40490000,,
-HoangHa,iPhone 17 Pro 512GB,Xanh đậm,40490000,,
 HoangHa,Điện thoại iPhone 16e (512GB),Trắng,23690000,,
 HoangHa,Điện thoại iPhone 16e (512GB),Đen,23690000,,
-MW,iPad Pro M4 13 inch 5G 256GB,Đen,39990000,,
-MW,iPhone 14 128GB,Trắng,13990000,,
-MW,iPhone 14 128GB,Xanh Dương,13990000,,
-MW,iPhone 14 128GB,Đen,13990000,,
-MW,iPad A16 5G 128GB,Hồng,12990000,,
-MW,iPad A16 5G 128GB,Vàng,12990000,,
-MW,iPad A16 WiFi 256GB,Bạc,11590000,,
-MW,iPad A16 WiFi 256GB,Hồng,11590000,,
-MW,iPad A16 WiFi 256GB,Vàng,11590000,,
-MW,iPad A16 WiFi 256GB,Xanh Dương,11590000,,
-MW,iPhone 14 256GB,Trắng,16990000,,
-MW,iPhone 14 256GB,Xanh Dương,16990000,,
-MW,iPhone 14 256GB,Đen,16990000,,
-MW,iPhone 15 256GB,Vàng nhạt,20990000,,
-MW,iPhone 15 512GB,Hồng nhạt,23990000,,
-MW,iPhone 15 512GB,Vàng nhạt,23990000,,
-MW,iPhone 15 512GB,Xanh dương nhạt,23990000,,
-MW,iPhone 15 512GB,Xanh lá nhạt,23990000,,
-MW,iPhone 15 512GB,Đen,23990000,,
-MW,iPhone 16 Plus 512GB,Hồng,29990000,,
-MW,iPhone 16 Plus 512GB,Trắng,29990000,,
-MW,iPhone 16 Plus 512GB,Xanh Lưu Ly,29990000,,
-MW,iPhone 16 Plus 512GB,Xanh Mòng Két,29990000,,
-MW,iPhone 16 Plus 512GB,Đen,29990000,,
-MW,iPhone 16 Pro 128GB,Titan Sa Mạc,25590000,,
-MW,iPhone 17 Pro Max 256GB,Bạc,37990000,,
-MW,iPhone 17 256GB,Tím Oải Hương,24990000,,
-MW,AirPods 4 (chống ồn),N/A,4490000,,
-MW,AirPods 4 MXP63,N/A,3090000,,
-MW,AirPods Pro Gen 2 MagSafe Charge (USB-C) Apple MTJV3,N/A,4990000,,
-MW,Apple AirPods Pro 3 Trắng MFHP4,N/A,6790000,,
+MW,iPad Pro M4 13 inch 5G 256GB,Bạc,,39990000,
+MW,iPad Pro M4 13 inch 5G 256GB,Đen,39990000,39990000,0
+MW,iPhone 14 128GB,Trắng,13990000,13990000,0
+MW,iPhone 14 128GB,Xanh Dương,13990000,13990000,0
+MW,iPhone 14 128GB,Đen,13990000,13990000,0
+MW,iPad A16 5G 128GB,Bạc,,12990000,
+MW,iPad A16 5G 128GB,Hồng,12990000,12990000,0
+MW,iPad A16 5G 128GB,Vàng,12990000,12990000,0
+MW,iPad A16 5G 128GB,Xanh Dương,,12990000,
+MW,iPad A16 WiFi 256GB,Bạc,11590000,11590000,0
+MW,iPad A16 WiFi 256GB,Hồng,11590000,11590000,0
+MW,iPad A16 WiFi 256GB,Vàng,11590000,11590000,0
+MW,iPad A16 WiFi 256GB,Xanh Dương,11590000,11590000,0
+MW,iPhone 13 128GB,Trắng,12490000,12490000,0
+MW,iPhone 13 128GB,Đen,12490000,12490000,0
+MW,iPhone 14 256GB,Trắng,16990000,16990000,0
+MW,iPhone 14 256GB,Xanh Dương,16990000,16990000,0
+MW,iPhone 14 256GB,Đen,16990000,16990000,0
+MW,iPhone 15 128GB,Vàng nhạt,17990000,17990000,0
+MW,iPhone 15 256GB,Vàng nhạt,20990000,20990000,0
+MW,iPhone 15 512GB,Hồng nhạt,23990000,23990000,0
+MW,iPhone 15 512GB,Vàng nhạt,23990000,23990000,0
+MW,iPhone 15 512GB,Xanh dương nhạt,23990000,23990000,0
+MW,iPhone 15 512GB,Xanh lá nhạt,23990000,23990000,0
+MW,iPhone 15 512GB,Đen,23990000,23990000,0
+MW,iPhone 16 Plus 512GB,Hồng,29990000,29990000,0
+MW,iPhone 16 Plus 512GB,Trắng,29990000,29990000,0
+MW,iPhone 16 Plus 512GB,Xanh Lưu Ly,29990000,29990000,0
+MW,iPhone 16 Plus 512GB,Xanh Mòng Két,29990000,29990000,0
+MW,iPhone 16 Plus 512GB,Đen,29990000,29990000,0
+MW,iPhone 16 Pro 128GB,Titan Sa Mạc,25590000,25590000,0
+MW,iPhone 16 Pro 128GB,Titan trắng,,25590000,
+MW,iPhone 16 Pro 128GB,Titan tự nhiên,,25590000,
+MW,iPhone 16 Pro 128GB,Titan đen,,25590000,
+MW,iPhone 16 Pro 1TB,Titan Sa Mạc,,39990000,
+MW,iPhone 16 Pro 1TB,Titan trắng,,39990000,
+MW,iPhone 16 Pro 1TB,Titan tự nhiên,,39990000,
+MW,iPhone 16 Pro 1TB,Titan đen,,39990000,
+MW,iPhone 16 Pro Max 256GB,Titan trắng,,31590000,
+MW,iPhone 16 Pro Max 256GB,Titan tự nhiên,,31590000,
+MW,iPhone 16 Pro Max 256GB,Titan đen,,31590000,
+MW,iPhone 16 Pro Max 512GB,Titan Sa Mạc,,37990000,
+MW,iPhone 16 Pro Max 512GB,Titan trắng,,37990000,
+MW,iPhone 16 Pro Max 512GB,Titan tự nhiên,,37990000,
+MW,iPhone 16 Pro Max 512GB,Titan đen,,37990000,
+MW,iPhone 16e 256GB,Đen,,18990000,
+MW,iPhone 16e 512GB,Đen,,23990000,
+MW,iPhone 17 256GB,Trắng,,24990000,
+MW,iPhone 17 256GB,Tím Oải Hương,24990000,24990000,0
+MW,iPhone 17 256GB,Xanh Lam Khói,,24990000,
+MW,iPhone 17 256GB,Xanh Lá Xô Thơm,,24990000,
+MW,iPhone 17 256GB,Đen,,24990000,
+MW,iPhone 17 Pro 1TB,Bạc,,47990000,
+MW,iPhone 17 Pro 1TB,Xanh đậm,,47990000,
+MW,iPhone 17 Pro 256GB,Bạc,,34990000,
+MW,iPhone 17 Pro 256GB,Xanh đậm,,34990000,
+MW,iPhone 17 Pro 512GB,Bạc,,41490000,
+MW,iPhone 17 Pro 512GB,Cam Vũ Trụ,,41490000,
+MW,iPhone 17 Pro Max 1TB,Cam Vũ Trụ,,50990000,
+MW,iPhone 17 Pro Max 1TB,Xanh đậm,,50990000,
+MW,iPhone 17 Pro Max 256GB,Bạc,37990000,37990000,0
+MW,iPhone 17 Pro Max 256GB,Cam Vũ Trụ,,37990000,
+MW,iPhone 17 Pro Max 256GB,Xanh đậm,,37990000,
+MW,iPhone 17 Pro Max 512GB,Bạc,,44490000,
+MW,iPhone 17 Pro Max 512GB,Xanh đậm,,44490000,
+MW,iPhone Air 1TB,Trắng Mây,,41990000,
+MW,iPhone Air 1TB,Vàng Nhạt,,41990000,
+MW,iPhone Air 1TB,Xanh da trời,,41990000,
+MW,iPhone Air 1TB,Đen Không Gian,,41990000,
+MW,iPhone Air 512GB,Trắng Mây,,36490000,
+MW,iPhone Air 512GB,Vàng Nhạt,,36490000,
+MW,iPhone Air 512GB,Xanh da trời,,36490000,
+MW,iPhone Air 512GB,Đen Không Gian,,36490000,
+MW,iPhone 17 512GB,Trắng,,31490000,
+MW,iPhone 17 512GB,Tím Oải Hương,,31490000,
+MW,iPhone 17 512GB,Xanh Lam Khói,,31490000,
+MW,iPhone 17 512GB,Xanh Lá Xô Thơm,,31490000,
+MW,iPhone 17 512GB,Đen,,31490000,
+MW,AirPods 4 (chống ồn),N/A,4490000,4490000,0
+MW,AirPods 4 MXP63,N/A,3090000,3090000,0
+MW,AirPods Pro Gen 2 MagSafe Charge (USB-C) Apple MTJV3,N/A,4990000,4990000,0
+MW,Apple AirPods Pro 3 Trắng MFHP4,N/A,6790000,6790000,0
 MW,Apple Watch SE 2 GPS 40mm viền nhôm dây thể thao,N/A,4590000,,
+MW,Apple Watch SE 2 GPS 44mm viền nhôm dây thể thao,Bạc,,0,
+MW,Apple Watch SE 2 GPS 44mm viền nhôm dây thể thao,Trắng Starlight,,0,
+MW,Apple Watch SE 2 GPS 44mm viền nhôm dây thể thao,Xanh đen,,0,
 MW,Apple Watch SE 2 GPS 44mm viền nhôm dây vải,N/A,5490000,,
-MW,Apple Watch SE 3 GPS + Cellular 40mm viền nhôm dây thể thao,Trắng Starlight,7790000,,
-MW,Apple Watch SE 3 GPS + Cellular 40mm viền nhôm dây thể thao,Xanh đen,7590000,,
-MW,Apple Watch SE 3 GPS + Cellular 44mm viền nhôm dây thể thao,Trắng Starlight,8290000,,
-MW,Apple Watch SE 3 GPS + Cellular 44mm viền nhôm dây thể thao,Xanh đen,8390000,,
-MW,Apple Watch SE 3 GPS 40mm viền nhôm dây thể thao,Trắng Starlight,5690000,,
-MW,Apple Watch SE 3 GPS 40mm viền nhôm dây thể thao,Xanh đen,5590000,,
-MW,Apple Watch SE 3 GPS 44mm viền nhôm dây thể thao,N/A,6990000,,
-MW,Apple Watch Series 10 GPS + Cellular 42mm viền nhôm dây vải,N/A,11590000,,
-MW,Apple Watch Series 10 GPS + Cellular 46mm viền Titanium dây Milan,Titan xám,18190000,,
-MW,Apple Watch Series 10 GPS + Cellular 46mm viền Titanium dây thể thao,N/A,17190000,,
-MW,Apple Watch Series 10 GPS + Cellular 46mm viền nhôm dây vải,Bạc,12590000,,
-MW,Apple Watch Series 10 GPS + Cellular 46mm viền nhôm dây vải,Vàng Hồng,12590000,,
+MW,Apple Watch SE 2 GPS 44mm viền nhôm dây vải,Trắng Starlight,,5490000,
+MW,Apple Watch SE 2 GPS 44mm viền nhôm dây vải,Xanh đen,,5490000,
+MW,Apple Watch SE 3 GPS + Cellular 40mm viền nhôm dây thể thao,Trắng Starlight,7790000,7790000,0
+MW,Apple Watch SE 3 GPS + Cellular 40mm viền nhôm dây thể thao,Xanh đen,7590000,7590000,0
+MW,Apple Watch SE 3 GPS + Cellular 44mm viền nhôm dây thể thao,Trắng Starlight,8290000,8290000,0
+MW,Apple Watch SE 3 GPS + Cellular 44mm viền nhôm dây thể thao,Xanh đen,8390000,8390000,0
+MW,Apple Watch SE 3 GPS 40mm viền nhôm dây thể thao,Trắng Starlight,5690000,5690000,0
+MW,Apple Watch SE 3 GPS 40mm viền nhôm dây thể thao,Xanh đen,5590000,5590000,0
+MW,Apple Watch SE 3 GPS 44mm viền nhôm dây thể thao,N/A,6990000,6990000,0
+MW,Apple Watch Series 10 GPS + Cellular 42mm viền nhôm dây vải,N/A,11590000,11590000,0
+MW,Apple Watch Series 10 GPS + Cellular 46mm viền Titanium dây Milan,Titan xám,18190000,18190000,0
+MW,Apple Watch Series 10 GPS + Cellular 46mm viền Titanium dây thể thao,N/A,17190000,17190000,0
+MW,Apple Watch Series 10 GPS + Cellular 46mm viền nhôm dây vải,Bạc,12590000,12590000,0
+MW,Apple Watch Series 10 GPS + Cellular 46mm viền nhôm dây vải,Vàng Hồng,12590000,12590000,0
 MW,Apple Watch Series 10 GPS + Cellular 46mm viền nhôm dây vải,Đen bóng,12590000,,
-MW,Apple Watch Series 10 GPS 42mm viền nhôm dây vải,Đen bóng,8090000,,
-MW,Apple Watch Series 10 GPS 46mm viền nhôm dây vải,N/A,9890000,,
-MW,Apple Watch Series 11 GPS + Cellular 42m viền Titanium dây thể thao,Titan tự nhiên,18190000,,
-MW,Apple Watch Series 11 GPS + Cellular 42m viền Titanium dây thể thao,Titan vàng,18190000,,
-MW,Apple Watch Series 11 GPS + Cellular 42m viền Titanium dây thể thao,Titan xám,18190000,,
+MW,Apple Watch Series 10 GPS 42mm viền nhôm dây vải,Đen bóng,8090000,8090000,0
+MW,Apple Watch Series 10 GPS 46mm viền nhôm dây vải,N/A,9890000,9890000,0
+MW,Apple Watch Series 11 GPS + Cellular 42m viền Titanium dây thể thao,Titan tự nhiên,18190000,18190000,0
+MW,Apple Watch Series 11 GPS + Cellular 42m viền Titanium dây thể thao,Titan vàng,18190000,18190000,0
+MW,Apple Watch Series 11 GPS + Cellular 42m viền Titanium dây thể thao,Titan xám,18190000,18190000,0
 MW,Apple Watch Series 11 GPS + Cellular 42mm viền Titanium dây Milan,N/A,19590000,,
-MW,Apple Watch Series 11 GPS + Cellular 42mm viền nhôm dây thể thao,N/A,12190000,,
+MW,Apple Watch Series 11 GPS + Cellular 42mm viền Titanium dây Milan,Titan tự nhiên,,19590000,
+MW,Apple Watch Series 11 GPS + Cellular 42mm viền Titanium dây Milan,Titan vàng,,19590000,
+MW,Apple Watch Series 11 GPS + Cellular 42mm viền Titanium dây Milan,Titan xám,,19590000,
+MW,Apple Watch Series 11 GPS + Cellular 42mm viền nhôm dây thể thao,N/A,12190000,12190000,0
 MW,Apple Watch Series 11 GPS + Cellular 42mm viền nhôm dây thể thao,Đen bóng,12190000,,
 MW,Apple Watch Series 11 GPS + Cellular 46mm viền Titanium dây Milan,N/A,0,,
 MW,Apple Watch Series 11 GPS + Cellular 46mm viền Titanium dây Milan,Titan tự nhiên,21190000,,
 MW,Apple Watch Series 11 GPS + Cellular 46mm viền Titanium dây Milan,Titan vàng,21190000,,
 MW,Apple Watch Series 11 GPS + Cellular 46mm viền Titanium dây Milan,Titan xám,21190000,,
-MW,Apple Watch Series 11 GPS + Cellular 46mm viền Titanium dây thể thao,Titan tự nhiên,20090000,,
-MW,Apple Watch Series 11 GPS + Cellular 46mm viền Titanium dây thể thao,Titan vàng,20090000,,
-MW,Apple Watch Series 11 GPS + Cellular 46mm viền Titanium dây thể thao,Titan xám,20090000,,
-MW,Apple Watch Series 11 GPS 42mm viền nhôm dây thể thao,Bạc,9290000,,
-MW,Apple Watch Series 11 GPS 42mm viền nhôm dây thể thao,Vàng Hồng,9290000,,
-MW,Apple Watch Series 11 GPS 42mm viền nhôm dây thể thao,Xám,9290000,,
-MW,Apple Watch Series 11 GPS 42mm viền nhôm dây thể thao,Đen bóng,9290000,,
-MW,Apple Watch Series 11 GPS 46mm viền nhôm dây thể thao,Vàng Hồng,9990000,,
+MW,Apple Watch Series 11 GPS + Cellular 46mm viền Titanium dây thể thao,Titan tự nhiên,20090000,20090000,0
+MW,Apple Watch Series 11 GPS + Cellular 46mm viền Titanium dây thể thao,Titan vàng,20090000,20090000,0
+MW,Apple Watch Series 11 GPS + Cellular 46mm viền Titanium dây thể thao,Titan xám,20090000,20090000,0
+MW,Apple Watch Series 11 GPS 42mm viền nhôm dây thể thao,Bạc,9290000,9290000,0
+MW,Apple Watch Series 11 GPS 42mm viền nhôm dây thể thao,Vàng Hồng,9290000,9290000,0
+MW,Apple Watch Series 11 GPS 42mm viền nhôm dây thể thao,Xám,9290000,9290000,0
+MW,Apple Watch Series 11 GPS 42mm viền nhôm dây thể thao,Đen bóng,9290000,9290000,0
+MW,Apple Watch Series 11 GPS 46mm viền nhôm dây thể thao,Vàng Hồng,9990000,9990000,0
 MW,Apple Watch Series 11 GPS 46mm viền nhôm dây thể thao,Xám,9990000,,
-MW,Apple Watch Series 11 GPS 46mm viền nhôm dây thể thao,Đen bóng,9990000,,
-MW,Apple Watch Ultra 2 GPS + Cellular 49mm viền Titanium dây Ocean,N/A,19690000,,
-MW,Apple Watch Ultra 2 GPS + Cellular 49mm viền Titanium đen dây Alpine,N/A,19690000,,
-MW,Apple Watch Ultra 3 GPS + Cellular 49mm viền Titanium dây Alpine,Titan tự nhiên,23190000,,
-MW,Apple Watch Ultra 3 GPS + Cellular 49mm viền Titanium dây Alpine,Titan đen,23190000,,
-MW,Apple Watch Ultra 3 GPS + Cellular 49mm viền Titanium dây Milan,Titan tự nhiên,26290000,,
-MW,Apple Watch Ultra 3 GPS + Cellular 49mm viền Titanium dây Milan,Titan đen,26290000,,
-MW,Apple Watch Ultra 3 GPS + Cellular 49mm viền Titanium dây Ocean,Titan tự nhiên,23190000,,
-MW,Apple Watch Ultra 3 GPS + Cellular 49mm viền Titanium dây Ocean,Titan đen,23190000,,
+MW,Apple Watch Series 11 GPS 46mm viền nhôm dây thể thao,Đen bóng,9990000,9990000,0
+MW,Apple Watch Ultra 2 GPS + Cellular 49mm viền Titanium dây Ocean,N/A,19690000,19690000,0
+MW,Apple Watch Ultra 2 GPS + Cellular 49mm viền Titanium đen dây Alpine,N/A,19690000,19690000,0
+MW,Apple Watch Ultra 3 GPS + Cellular 49mm viền Titanium dây Alpine,Titan tự nhiên,23190000,23190000,0
+MW,Apple Watch Ultra 3 GPS + Cellular 49mm viền Titanium dây Alpine,Titan đen,23190000,23190000,0
+MW,Apple Watch Ultra 3 GPS + Cellular 49mm viền Titanium dây Milan,Titan tự nhiên,26290000,26290000,0
+MW,Apple Watch Ultra 3 GPS + Cellular 49mm viền Titanium dây Milan,Titan đen,26290000,26290000,0
+MW,Apple Watch Ultra 3 GPS + Cellular 49mm viền Titanium dây Ocean,Titan tự nhiên,23190000,23190000,0
+MW,Apple Watch Ultra 3 GPS + Cellular 49mm viền Titanium dây Ocean,Titan đen,23190000,23190000,0
+MW,Apple Watch Ultra 3 GPS + Cellular 49mm viền Titanium dây Trail,N/A,,23190000,
 MW,Apple Watch Ultra 3 GPS + Cellular 49mm viền Titanium dây Trail,Titan tự nhiên,23190000,,
 MW,Apple Watch Ultra 3 GPS + Cellular 49mm viền Titanium dây Trail,Titan đen,23190000,,
 MW,Laptop MacBook Air 13 inch M2 16GB/256GB,N/A,19690000,,
-MW,Laptop MacBook Air 13 inch M4 16GB/256GB,Xanh đen,25290000,,
-MW,Laptop MacBook Air 13 inch M4 16GB/256GB Sạc 70W,Vàng,25790000,,
-MW,Laptop MacBook Air 13 inch M4 24GB/256GB,Bạc,30390000,,
-MW,Laptop MacBook Air 13 inch M4 32GB/256GB,Xanh da trời nhạt,33990000,,
-MW,Laptop MacBook Air 15 inch M4 16GB/256GB,Vàng,29990000,,
-MW,Laptop MacBook Air 15 inch M4 16GB/256GB,Xanh đen,29990000,,
-MW,Laptop MacBook Air 15 inch M4 24GB/1TB,Bạc,44590000,,
-MW,Laptop MacBook Air 15 inch M4 24GB/1TB,Vàng,44590000,,
-MW,Laptop MacBook Air 15 inch M4 24GB/1TB,Xanh da trời nhạt,44590000,,
-MW,Laptop MacBook Air 15 inch M4 24GB/1TB,Xanh đen,44590000,,
+MW,Laptop MacBook Air 13 inch M2 16GB/256GB,Vàng đồng,,19790000,
+MW,Laptop MacBook Air 13 inch M2 16GB/256GB,Xanh đen,,19690000,
+MW,Laptop MacBook Air 13 inch M4 16GB/256GB,Bạc,,25290000,
+MW,Laptop MacBook Air 13 inch M4 16GB/256GB,Vàng,,25290000,
+MW,Laptop MacBook Air 13 inch M4 16GB/256GB,Xanh da trời nhạt,,25290000,
+MW,Laptop MacBook Air 13 inch M4 16GB/256GB,Xanh đen,25290000,25290000,0
+MW,Laptop MacBook Air 13 inch M4 16GB/256GB Sạc 70W,Vàng,25790000,25790000,0
+MW,Laptop MacBook Air 13 inch M4 16GB/256GB Sạc 70W,Xanh da trời nhạt,,26090000,
+MW,Laptop MacBook Air 13 inch M4 16GB/256GB Sạc 70W,Xanh đen,,25490000,
+MW,Laptop MacBook Air 13 inch M4 24GB/256GB,Bạc,30390000,30390000,0
+MW,Laptop MacBook Air 13 inch M4 24GB/256GB,Vàng,,30390000,
+MW,Laptop MacBook Air 13 inch M4 24GB/256GB,Xanh da trời nhạt,,30390000,
+MW,Laptop MacBook Air 13 inch M4 24GB/256GB,Xanh đen,,30390000,
+MW,Laptop MacBook Air 13 inch M4 32GB/256GB,Bạc,,34490000,
+MW,Laptop MacBook Air 13 inch M4 32GB/256GB,Vàng,,34490000,
+MW,Laptop MacBook Air 13 inch M4 32GB/256GB,Xanh da trời nhạt,33990000,33990000,0
+MW,Laptop MacBook Air 13 inch M4 32GB/256GB,Xanh đen,,34490000,
+MW,Laptop MacBook Air 13 inch M4 32GB/512GB,Bạc,,38990000,
+MW,Laptop MacBook Air 13 inch M4 32GB/512GB,Vàng,,38990000,
+MW,Laptop MacBook Air 13 inch M4 32GB/512GB,Xanh da trời nhạt,,38990000,
+MW,Laptop MacBook Air 13 inch M4 32GB/512GB,Xanh đen,,38990000,
+MW,Laptop MacBook Air 15 inch M4 16GB/1TB,Bạc,,39690000,
+MW,Laptop MacBook Air 15 inch M4 16GB/1TB,Vàng,,39690000,
+MW,Laptop MacBook Air 15 inch M4 16GB/1TB,Xanh da trời nhạt,,39690000,
+MW,Laptop MacBook Air 15 inch M4 16GB/1TB,Xanh đen,,39690000,
+MW,Laptop MacBook Air 15 inch M4 16GB/256GB,Bạc,,29990000,
+MW,Laptop MacBook Air 15 inch M4 16GB/256GB,Vàng,29990000,29990000,0
+MW,Laptop MacBook Air 15 inch M4 16GB/256GB,Xanh da trời nhạt,,29990000,
+MW,Laptop MacBook Air 15 inch M4 16GB/256GB,Xanh đen,29990000,29990000,0
+MW,Laptop MacBook Air 15 inch M4 16GB/512GB,Bạc,,33990000,
+MW,Laptop MacBook Air 15 inch M4 16GB/512GB,Vàng,,33990000,
+MW,Laptop MacBook Air 15 inch M4 16GB/512GB,Xanh da trời nhạt,,33990000,
+MW,Laptop MacBook Air 15 inch M4 16GB/512GB,Xanh đen,,33990000,
+MW,Laptop MacBook Air 15 inch M4 24GB/1TB,Bạc,44590000,44590000,0
+MW,Laptop MacBook Air 15 inch M4 24GB/1TB,Vàng,44590000,44590000,0
+MW,Laptop MacBook Air 15 inch M4 24GB/1TB,Xanh da trời nhạt,44590000,44590000,0
+MW,Laptop MacBook Air 15 inch M4 24GB/1TB,Xanh đen,44590000,44590000,0
+MW,Laptop MacBook Air 15 inch M4 24GB/512GB,Bạc,,39490000,
 MW,Laptop MacBook Air 15 inch M4 24GB/512GB,N/A,39490000,,
-MW,Laptop MacBook Air 15 inch M4 24GB/512GB,Vàng,39490000,,
-MW,Laptop MacBook Air 15 inch M4 24GB/512GB,Xanh da trời nhạt,39490000,,
-MW,Laptop MacBook Air 15 inch M4 24GB/512GB,Xanh đen,39490000,,
+MW,Laptop MacBook Air 15 inch M4 24GB/512GB,Vàng,39490000,39490000,0
+MW,Laptop MacBook Air 15 inch M4 24GB/512GB,Xanh da trời nhạt,39490000,39490000,0
+MW,Laptop MacBook Air 15 inch M4 24GB/512GB,Xanh đen,39490000,39490000,0
+MW,Laptop MacBook Pro 14 inch M4 Pro 24GB/512GB,Bạc,,49990000,
 MW,Laptop MacBook Pro 14 inch M4 Pro 24GB/512GB,N/A,49990000,,
-MW,Laptop MacBook Pro 14 inch M4 Pro 24GB/512GB,Đen,49990000,,
-MW,Laptop MacBook Pro 14 inch M5 16GB/512GB,Bạc,41990000,,
-MW,Laptop MacBook Pro 14 inch M5 16GB/512GB,Đen,41990000,,
-MW,Laptop MacBook Pro 16 inch M4 Pro 48GB/1TB,Bạc,79090000,,
-MW,Laptop MacBook Pro 16 inch M4 Pro 48GB/1TB,Đen,79090000,,
-MW,iPad Air M3 11 inch 5G 128GB,Trắng Starlight,17590000,,
-MW,iPad Air M3 11 inch 5G 128GB,Tím,17590000,,
-MW,iPad Air M3 11 inch 5G 128GB,Xanh Dương,17590000,,
-MW,iPad Air M3 11 inch 5G 128GB,Đen - Xám,17590000,,
-MW,iPad Air M3 11 inch WiFi 256GB,Trắng Starlight,16190000,,
-MW,iPad Air M3 11 inch WiFi 256GB,Tím,16190000,,
-MW,iPad Air M3 11 inch WiFi 256GB,Xanh Dương,16190000,,
-MW,iPad Air M3 11 inch WiFi 256GB,Đen - Xám,16190000,,
+MW,Laptop MacBook Pro 14 inch M4 Pro 24GB/512GB,Đen,49990000,49990000,0
+MW,Laptop MacBook Pro 14 inch M5 16GB/512GB,Bạc,41990000,41990000,0
+MW,Laptop MacBook Pro 14 inch M5 16GB/512GB,Đen,41990000,41990000,0
+MW,Laptop MacBook Pro 16 inch M4 Pro 48GB/1TB,Bạc,79090000,79090000,0
+MW,Laptop MacBook Pro 16 inch M4 Pro 48GB/1TB,Đen,79090000,79090000,0
+MW,iPad Air M3 11 inch 5G 128GB,Trắng Starlight,17590000,17590000,0
+MW,iPad Air M3 11 inch 5G 128GB,Tím,17590000,17590000,0
+MW,iPad Air M3 11 inch 5G 128GB,Xanh Dương,17590000,17590000,0
+MW,iPad Air M3 11 inch 5G 128GB,Đen - Xám,17590000,17590000,0
+MW,iPad Air M3 11 inch WiFi 256GB,Trắng Starlight,16190000,16190000,0
+MW,iPad Air M3 11 inch WiFi 256GB,Tím,16190000,16190000,0
+MW,iPad Air M3 11 inch WiFi 256GB,Xanh Dương,16190000,16190000,0
+MW,iPad Air M3 11 inch WiFi 256GB,Đen - Xám,16190000,16190000,0
 MW,iPad Air M3 13 inch 5G 128GB,N/A,23390000,,
-MW,iPad Air M3 13 inch 5G 128GB,Trắng Starlight,23390000,,
-MW,iPad Air M3 13 inch 5G 128GB,Tím,23390000,,
-MW,iPad Air M3 13 inch 5G 128GB,Đen - Xám,23390000,,
-MW,iPad Pro M5 11 inch 5G 256GB,Bạc,35590000,,
-MW,iPad Pro M5 11 inch 5G 256GB,Đen,35590000,,
-MW,iPad Pro M5 11 inch WiFi 256GB,Bạc,29990000,,
-MW,iPad Pro M5 11 inch WiFi 256GB,Đen,29990000,,
-MW,iPad Pro M5 11 inch WiFi 512GB,Bạc,35590000,,
-MW,iPad Pro M5 11 inch WiFi 512GB,Đen,35590000,,
-MW,iPad Pro M5 13 inch WiFi 256GB,Bạc,39990000,,
-MW,iPad Pro M5 13 inch WiFi 256GB,Đen,39990000,,
-MW,iPad Pro M5 13 inch WiFi 512GB,Bạc,45590000,,
-MW,iPad Pro M5 13 inch WiFi 512GB,Đen,45590000,,
-MW,iPad mini 7 5G 128GB,Trắng Starlight,15690000,,
-MW,iPad mini 7 5G 128GB,Tím,15690000,,
-MW,iPad mini 7 5G 128GB,Xanh Dương,15690000,,
-MW,iPad mini 7 5G 128GB,Đen - Xám,15690000,,
-MW,iPad mini 7 WiFi 128GB,Trắng Starlight,11790000,,
-MW,iPad mini 7 WiFi 128GB,Tím,11790000,,
-MW,iPad mini 7 WiFi 128GB,Xanh Dương,11790000,,
-MW,iPad mini 7 WiFi 128GB,Đen - Xám,11790000,,
-MW,iPad mini 7 WiFi 256GB,Trắng Starlight,14190000,,
-MW,iPad mini 7 WiFi 256GB,Tím,14190000,,
-MW,iPad mini 7 WiFi 256GB,Xanh Dương,14190000,,
-MW,iPad mini 7 WiFi 256GB,Đen - Xám,14190000,,
-MW,iPad mini 7 WiFi 512GB,Trắng Starlight,19590000,,
-MW,iPad mini 7 WiFi 512GB,Tím,19590000,,
-MW,iPad mini 7 WiFi 512GB,Xanh Dương,19590000,,
-MW,iPad mini 7 WiFi 512GB,Đen - Xám,19590000,,
-MW,iPhone 13 128GB,Trắng,12490000,,
-MW,iPhone 13 128GB,Đen,12490000,,
-MW,iPhone 15 128GB,Vàng nhạt,17990000,,
-MW,iPhone 15 Plus 128GB,Hồng nhạt,19590000,,
-MW,iPhone 15 Plus 128GB,Vàng nhạt,19590000,,
-MW,iPhone 15 Plus 128GB,Xanh dương nhạt,19590000,,
-MW,iPhone 15 Plus 128GB,Xanh lá nhạt,19590000,,
-MW,iPhone 15 Plus 128GB,Đen,19590000,,
-MW,iPhone 15 Plus 256GB,Hồng nhạt,22590000,,
-MW,iPhone 15 Plus 256GB,Vàng nhạt,22590000,,
-MW,iPhone 15 Plus 256GB,Xanh dương nhạt,22590000,,
-MW,iPhone 15 Plus 256GB,Xanh lá nhạt,22590000,,
-MW,iPhone 15 Plus 256GB,Đen,22590000,,
-MW,iPhone 15 Plus 512GB,Hồng nhạt,27990000,,
-MW,iPhone 15 Plus 512GB,Vàng nhạt,27990000,,
-MW,iPhone 15 Plus 512GB,Xanh dương nhạt,27990000,,
-MW,iPhone 15 Plus 512GB,Xanh lá nhạt,27990000,,
-MW,iPhone 15 Plus 512GB,Đen,27990000,,
+MW,iPad Air M3 13 inch 5G 128GB,Trắng Starlight,23390000,23390000,0
+MW,iPad Air M3 13 inch 5G 128GB,Tím,23390000,23390000,0
+MW,iPad Air M3 13 inch 5G 128GB,Xanh Dương,,23390000,
+MW,iPad Air M3 13 inch 5G 128GB,Đen - Xám,23390000,23390000,0
+MW,iPad Pro M5 11 inch 5G 256GB,Bạc,35590000,35590000,0
+MW,iPad Pro M5 11 inch 5G 256GB,Đen,35590000,35590000,0
+MW,iPad Pro M5 11 inch WiFi 256GB,Bạc,29990000,29990000,0
+MW,iPad Pro M5 11 inch WiFi 256GB,Đen,29990000,29990000,0
+MW,iPad Pro M5 11 inch WiFi 512GB,Bạc,35590000,35590000,0
+MW,iPad Pro M5 11 inch WiFi 512GB,Đen,35590000,35590000,0
+MW,iPad Pro M5 13 inch WiFi 256GB,Bạc,39990000,39990000,0
+MW,iPad Pro M5 13 inch WiFi 256GB,Đen,39990000,39990000,0
+MW,iPad Pro M5 13 inch WiFi 512GB,Bạc,45590000,45590000,0
+MW,iPad Pro M5 13 inch WiFi 512GB,Đen,45590000,45590000,0
+MW,iPad mini 7 5G 128GB,Trắng Starlight,15690000,15690000,0
+MW,iPad mini 7 5G 128GB,Tím,15690000,15690000,0
+MW,iPad mini 7 5G 128GB,Xanh Dương,15690000,15690000,0
+MW,iPad mini 7 5G 128GB,Đen - Xám,15690000,15690000,0
+MW,iPad mini 7 WiFi 128GB,Trắng Starlight,11790000,11790000,0
+MW,iPad mini 7 WiFi 128GB,Tím,11790000,11790000,0
+MW,iPad mini 7 WiFi 128GB,Xanh Dương,11790000,11790000,0
+MW,iPad mini 7 WiFi 128GB,Đen - Xám,11790000,11790000,0
+MW,iPad mini 7 WiFi 256GB,Trắng Starlight,14190000,14190000,0
+MW,iPad mini 7 WiFi 256GB,Tím,14190000,14190000,0
+MW,iPad mini 7 WiFi 256GB,Xanh Dương,14190000,14190000,0
+MW,iPad mini 7 WiFi 256GB,Đen - Xám,14190000,14190000,0
+MW,iPad mini 7 WiFi 512GB,Trắng Starlight,19590000,19590000,0
+MW,iPad mini 7 WiFi 512GB,Tím,19590000,19590000,0
+MW,iPad mini 7 WiFi 512GB,Xanh Dương,19590000,19590000,0
+MW,iPad mini 7 WiFi 512GB,Đen - Xám,19590000,19590000,0
+MW,iPhone 15 Plus 128GB,Hồng nhạt,19590000,19590000,0
+MW,iPhone 15 Plus 128GB,Vàng nhạt,19590000,19590000,0
+MW,iPhone 15 Plus 128GB,Xanh dương nhạt,19590000,19590000,0
+MW,iPhone 15 Plus 128GB,Xanh lá nhạt,19590000,19590000,0
+MW,iPhone 15 Plus 128GB,Đen,19590000,19590000,0
+MW,iPhone 15 Plus 256GB,Hồng nhạt,22590000,22590000,0
+MW,iPhone 15 Plus 256GB,Vàng nhạt,22590000,22590000,0
+MW,iPhone 15 Plus 256GB,Xanh dương nhạt,22590000,22590000,0
+MW,iPhone 15 Plus 256GB,Xanh lá nhạt,22590000,22590000,0
+MW,iPhone 15 Plus 256GB,Đen,22590000,22590000,0
+MW,iPhone 15 Plus 512GB,Hồng nhạt,27990000,27990000,0
+MW,iPhone 15 Plus 512GB,Vàng nhạt,27990000,27990000,0
+MW,iPhone 15 Plus 512GB,Xanh dương nhạt,27990000,27990000,0
+MW,iPhone 15 Plus 512GB,Xanh lá nhạt,27990000,27990000,0
+MW,iPhone 15 Plus 512GB,Đen,27990000,27990000,0
 Viettel,iPhone 14 128GB,BLUE,13390000,13390000,0
 Viettel,iPhone 14 128GB,MIDNIGHT,13390000,13390000,0
 Viettel,iPhone 14 128GB,PURPLE,13390000,13390000,0
 Viettel,iPhone 14 128GB,RED,13390000,13390000,0
 Viettel,iPhone 14 128GB,STARLIGHT,13390000,13390000,0
 Viettel,iPhone 14 128GB,YELLOW,13390000,13390000,0
+Viettel,iPhone 13 128GB,BLUE,12090000,12090000,0
+Viettel,iPhone 13 128GB,GREEN,12090000,12090000,0
+Viettel,iPhone 13 128GB,MIDNIGHT,12090000,12090000,0
+Viettel,iPhone 13 128GB,RED,12090000,12090000,0
+Viettel,iPhone 13 128GB,STARLIGHT,12090000,12090000,0
+Viettel,iPhone 13 256GB,BLUE,18490000,18490000,0
+Viettel,iPhone 13 256GB,MIDNIGHT,18490000,18490000,0
+Viettel,iPhone 13 256GB,RED,18490000,18490000,0
 Viettel,iPhone 14 256GB,BLUE,16190000,16190000,0
 Viettel,iPhone 14 256GB,MIDNIGHT,16190000,16190000,0
 Viettel,iPhone 14 256GB,STARLIGHT,16190000,16190000,0
 Viettel,iPhone 14 512GB,BLUE,24990000,,
 Viettel,iPhone 14 512GB,PURPLE,24990000,,
+Viettel,iPhone 15 128GB,Hồng,16890000,,
+Viettel,iPhone 15 128GB,Vàng,16890000,,
+Viettel,iPhone 15 128GB,Xanh Dương,16890000,,
+Viettel,iPhone 15 128GB,Xanh Lá,16890000,,
+Viettel,iPhone 15 128GB,Đen,16890000,,
 Viettel,iPhone 15 256GB,Hồng,19990000,,
 Viettel,iPhone 15 256GB,Vàng,19990000,,
 Viettel,iPhone 15 256GB,Xanh Dương,19990000,,
@@ -1464,6 +1640,11 @@ Viettel,iPhone 16 128GB,Trắng,20590000,,
 Viettel,iPhone 16 128GB,Xanh Lưu Ly,20590000,,
 Viettel,iPhone 16 128GB,Xanh Mòng Két,20590000,,
 Viettel,iPhone 16 128GB,Đen,20590000,,
+Viettel,iPhone 16 Plus 128GB,Hồng,23990000,,
+Viettel,iPhone 16 Plus 128GB,Trắng,23990000,,
+Viettel,iPhone 16 Plus 128GB,Xanh Lưu Ly,23990000,,
+Viettel,iPhone 16 Plus 128GB,Xanh Mòng Két,23990000,,
+Viettel,iPhone 16 Plus 128GB,Đen,23990000,,
 Viettel,iPhone 16 Plus 256GB,Hồng,26990000,,
 Viettel,iPhone 16 Plus 256GB,Trắng,26990000,,
 Viettel,iPhone 16 Plus 256GB,Xanh Lưu Ly,26990000,,
@@ -1485,6 +1666,21 @@ Viettel,iPhone 16 Pro Max 512GB,Titan Tự Nhiên,35990000,,
 Viettel,iPhone 16 Pro Max 512GB,Titan Đen,35990000,,
 Viettel,iPhone 16e 128GB,Trắng,12490000,,
 Viettel,iPhone 16e 128GB,Đen,12490000,,
+Viettel,iPhone 16e 256GB,Trắng,15490000,,
+Viettel,iPhone 16e 256GB,Đen,15490000,,
+Viettel,iPhone 17 256GB,Trắng,24990000,,
+Viettel,iPhone 17 256GB,Tím Oải Hương,24990000,,
+Viettel,iPhone 17 256GB,Xanh Lam Khói,24990000,,
+Viettel,iPhone 17 256GB,Xanh Lá Xô Thơm,24990000,,
+Viettel,iPhone 17 256GB,Đen,24990000,,
+Viettel,iPhone 17 Pro 1TB,Bạc,46490000,,
+Viettel,iPhone 17 Pro 1TB,Cam Vũ Trụ,46490000,,
+Viettel,iPhone 17 Pro 1TB,Xanh Đậm,46490000,,
+Viettel,iPhone 17 Pro 256GB,Bạc,33990000,,
+Viettel,iPhone 17 Pro 256GB,Cam Vũ Trụ,33990000,,
+Viettel,iPhone 17 Pro 256GB,Xanh Đậm,33990000,,
+Viettel,iPhone 17 Pro 512GB,Cam Vũ Trụ,40190000,,
+Viettel,iPhone 17 Pro 512GB,Xanh Đậm,40190000,,
 Viettel,iPhone 17 Pro Max 1TB,Bạc,50990000,,
 Viettel,iPhone 17 Pro Max 1TB,Cam Vũ Trụ,50990000,,
 Viettel,iPhone 17 Pro Max 1TB,Xanh Đậm,50990000,,
@@ -1509,34 +1705,11 @@ Viettel,iPhone Air 512GB,Trắng Mây,35790000,,
 Viettel,iPhone Air 512GB,Vàng Nhạt,35790000,,
 Viettel,iPhone Air 512GB,Xanh Da Trời,35790000,,
 Viettel,iPhone Air 512GB,Đen Không Gian,35790000,,
-Viettel,iPhone 17 256GB,Trắng,24990000,,
-Viettel,iPhone 17 256GB,Tím Oải Hương,24990000,,
-Viettel,iPhone 17 256GB,Xanh Lam Khói,24990000,,
-Viettel,iPhone 17 256GB,Xanh Lá Xô Thơm,24990000,,
-Viettel,iPhone 17 256GB,Đen,24990000,,
 Viettel,iPhone 17 512GB,Trắng,30490000,,
 Viettel,iPhone 17 512GB,Tím Oải Hương,30490000,,
 Viettel,iPhone 17 512GB,Xanh Lam Khói,30490000,,
 Viettel,iPhone 17 512GB,Xanh Lá Xô Thơm,30490000,,
 Viettel,iPhone 17 512GB,Đen,30490000,,
-Viettel,iPhone 17 Pro 1TB,Bạc,46490000,,
-Viettel,iPhone 17 Pro 1TB,Cam Vũ Trụ,46490000,,
-Viettel,iPhone 17 Pro 1TB,Xanh Đậm,46490000,,
-Viettel,iPhone 17 Pro 256GB,Bạc,33990000,,
-Viettel,iPhone 17 Pro 256GB,Cam Vũ Trụ,33990000,,
-Viettel,iPhone 17 Pro 256GB,Xanh Đậm,33990000,,
-Viettel,iPhone 17 Pro 512GB,Cam Vũ Trụ,40190000,,
-Viettel,iPhone 17 Pro 512GB,Xanh Đậm,40190000,,
-Viettel,iPhone 13 128GB,BLUE,12090000,12090000,0
-Viettel,iPhone 13 128GB,GREEN,12090000,12090000,0
-Viettel,iPhone 13 128GB,MIDNIGHT,12090000,12090000,0
-Viettel,iPhone 13 128GB,RED,12090000,12090000,0
-Viettel,iPhone 13 128GB,STARLIGHT,12090000,12090000,0
-Viettel,iPhone 15 128GB,Hồng,16890000,,
-Viettel,iPhone 15 128GB,Vàng,16890000,,
-Viettel,iPhone 15 128GB,Xanh Dương,16890000,,
-Viettel,iPhone 15 128GB,Xanh Lá,16890000,,
-Viettel,iPhone 15 128GB,Đen,16890000,,
 Viettel,Apple Watch SE 2 Cellular 40mm Sport Band S/M,Bạc,5190000,,
 Viettel,Apple Watch SE 2 Cellular 40mm Sport Band S/M,Xanh Đen,5190000,,
 Viettel,Apple Watch SE 2 Cellular 40mm Sport Band S/M,Ánh Sao,5190000,,
@@ -1775,13 +1948,3 @@ Viettel,iPad Pro M5 13 inch WIFI 5G 256GB,Bạc,44990000,,
 Viettel,iPad Pro M5 13 inch WIFI 5G 256GB,Đen Không Gian,44990000,,
 Viettel,iPad Pro M5 13 inch WIFI 5G 512GB,Bạc,49990000,,
 Viettel,iPad Pro M5 13 inch WIFI 5G 512GB,Đen Không Gian,49990000,,
-Viettel,iPhone 13 256GB,BLUE,18490000,18490000,0
-Viettel,iPhone 13 256GB,MIDNIGHT,18490000,18490000,0
-Viettel,iPhone 13 256GB,RED,18490000,18490000,0
-Viettel,iPhone 16 Plus 128GB,Hồng,23990000,,
-Viettel,iPhone 16 Plus 128GB,Trắng,23990000,,
-Viettel,iPhone 16 Plus 128GB,Xanh Lưu Ly,23990000,,
-Viettel,iPhone 16 Plus 128GB,Xanh Mòng Két,23990000,,
-Viettel,iPhone 16 Plus 128GB,Đen,23990000,,
-Viettel,iPhone 16e 256GB,Trắng,15490000,,
-Viettel,iPhone 16e 256GB,Đen,15490000,,
