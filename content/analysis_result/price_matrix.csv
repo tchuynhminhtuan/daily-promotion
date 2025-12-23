@@ -1927,12 +1927,12 @@ Viettel,iPhone 13 128GB,GREEN,12090000,12090000,0
 Viettel,iPhone 13 128GB,MIDNIGHT,12090000,12090000,0
 Viettel,iPhone 13 128GB,RED,12090000,12090000,0
 Viettel,iPhone 13 128GB,STARLIGHT,12090000,12090000,0
-Viettel,iPhone 14 128GB,BLUE,13390000,13390000,0
-Viettel,iPhone 14 128GB,MIDNIGHT,13390000,13390000,0
-Viettel,iPhone 14 128GB,PURPLE,13390000,13390000,0
-Viettel,iPhone 14 128GB,RED,13390000,13390000,0
-Viettel,iPhone 14 128GB,STARLIGHT,13390000,13390000,0
-Viettel,iPhone 14 128GB,YELLOW,13390000,13390000,0
+Viettel,iPhone 14 128GB,BLUE,13390000,,
+Viettel,iPhone 14 128GB,MIDNIGHT,13390000,,
+Viettel,iPhone 14 128GB,PURPLE,13390000,,
+Viettel,iPhone 14 128GB,RED,13390000,,
+Viettel,iPhone 14 128GB,STARLIGHT,13390000,,
+Viettel,iPhone 14 128GB,YELLOW,13390000,,
 Viettel,iPhone 14 256GB,BLUE,16190000,16190000,0
 Viettel,iPhone 14 256GB,MIDNIGHT,16190000,16190000,0
 Viettel,iPhone 14 256GB,STARLIGHT,16190000,16190000,0
@@ -1995,17 +1995,17 @@ Viettel,iPhone 17 Pro 256GB,Xanh Đậm,33990000,33990000,0
 Viettel,iPhone 17 Pro 512GB,Cam Vũ Trụ,40190000,40190000,0
 Viettel,iPhone 17 Pro 512GB,Xanh Đậm,40190000,40190000,0
 Viettel,iPhone 17 Pro Max 1TB,Bạc,50990000,50990000,0
-Viettel,iPhone 17 Pro Max 1TB,Cam Vũ Trụ,50990000,49490000,-1500000
-Viettel,iPhone 17 Pro Max 1TB,Xanh Đậm,50990000,49490000,-1500000
+Viettel,iPhone 17 Pro Max 1TB,Cam Vũ Trụ,50990000,50990000,0
+Viettel,iPhone 17 Pro Max 1TB,Xanh Đậm,50990000,50990000,0
 Viettel,iPhone 17 Pro Max 256GB,Bạc,37690000,37690000,0
-Viettel,iPhone 17 Pro Max 256GB,Cam Vũ Trụ,37190000,37190000,0
-Viettel,iPhone 17 Pro Max 256GB,Xanh Đậm,37190000,37190000,0
+Viettel,iPhone 17 Pro Max 256GB,Cam Vũ Trụ,37190000,37690000,500000
+Viettel,iPhone 17 Pro Max 256GB,Xanh Đậm,37190000,37690000,500000
 Viettel,iPhone 17 Pro Max 2TB,Bạc,63990000,63990000,0
-Viettel,iPhone 17 Pro Max 2TB,Cam Vũ Trụ,62990000,62990000,0
-Viettel,iPhone 17 Pro Max 2TB,Xanh Đậm,62990000,62990000,0
+Viettel,iPhone 17 Pro Max 2TB,Cam Vũ Trụ,62990000,63990000,1000000
+Viettel,iPhone 17 Pro Max 2TB,Xanh Đậm,62990000,63990000,1000000
 Viettel,iPhone 17 Pro Max 512GB,Bạc,43990000,43990000,0
-Viettel,iPhone 17 Pro Max 512GB,Cam Vũ Trụ,42990000,42990000,0
-Viettel,iPhone 17 Pro Max 512GB,Xanh Đậm,42990000,42990000,0
+Viettel,iPhone 17 Pro Max 512GB,Cam Vũ Trụ,42990000,43990000,1000000
+Viettel,iPhone 17 Pro Max 512GB,Xanh Đậm,42990000,43990000,1000000
 Viettel,iPhone Air 1TB,Trắng Mây,41790000,41790000,0
 Viettel,iPhone Air 1TB,Vàng Nhạt,41790000,41790000,0
 Viettel,iPhone Air 1TB,Xanh Da Trời,41790000,41790000,0
@@ -2085,7 +2085,7 @@ Viettel,Apple Watch Series 10 Viền Titan Cellular 42mm Dây Cao Su S/M,Tự Nh
 Viettel,Apple Watch Series 10 Viền Titan Cellular 42mm Dây Cao Su S/M,Vàng,15390000,15390000,0
 Viettel,Apple Watch Series 10 Viền Titan Cellular 42mm Dây Cao Su S/M,Xám Đá Phiến,15390000,15390000,0
 Viettel,Apple Watch Series 10 Viền Titan Cellular 46mm Dây Cao Su S/M,Tự Nhiên,16690000,16690000,0
-Viettel,Apple Watch Series 10 Viền Titan Cellular 46mm Dây Cao Su S/M,Vàng,16690000,16690000,0
+Viettel,Apple Watch Series 10 Viền Titan Cellular 46mm Dây Cao Su S/M,Vàng,16690000,0,-16690000
 Viettel,Apple Watch Series 10 Viền Titan Cellular 46mm Dây Cao Su S/M,Xám Đá Phiến,16690000,16690000,0
 Viettel,Apple Watch Series 10 Viền Titan Dây Milanese Loop Cellular 42mm,Tự Nhiên,16690000,16690000,0
 Viettel,Apple Watch Series 10 Viền Titan Dây Milanese Loop Cellular 42mm,Vàng,16690000,16690000,0
@@ -2152,41 +2152,53 @@ Viettel,Apple Watch Ultra 3 Viền Titan Cellular 49mm Dây quấn Trail M/L,Đ
 Viettel,Apple Watch Ultra 3 Viền Titan Cellular 49mm Dây quấn Trail S/M,Tự Nhiên,23490000,23490000,0
 Viettel,Apple Watch Ultra 3 Viền Titan Cellular 49mm Dây quấn Trail S/M,Đen,23490000,23490000,0
 Viettel,Chương trình trợ giá iPhone 16e khi mua kèm gói cước 5G Viettel,Unknown,0,0,0
+Viettel,Tai nghe AirPods 4,Error_State,,2990000,
 Viettel,Tai nghe AirPods 4,WHITE,2990000,2990000,0
+Viettel,Tai nghe AirPods 4 Khử ồn chủ động,Error_State,,4390000,
 Viettel,Tai nghe AirPods 4 Khử ồn chủ động,WHITE,4390000,4390000,0
+Viettel,Tai nghe AirPods Pro 3 USB-C,Error_State,,6490000,
 Viettel,Tai nghe AirPods Pro 3 USB-C,WHITE,6490000,6490000,0
+Viettel,Tai nghe AirPods Pro Gen 2 (USB-C),Error_State,,4290000,
 Viettel,Tai nghe AirPods Pro Gen 2 (USB-C),WHITE,4290000,4290000,0
 Viettel,iPad (A16) 11 inch WIFI 128GB,BLUE,8690000,8690000,0
+Viettel,iPad (A16) 11 inch WIFI 128GB,Error_State,,8690000,
 Viettel,iPad (A16) 11 inch WIFI 128GB,PINK,8690000,8690000,0
 Viettel,iPad (A16) 11 inch WIFI 128GB,SILVER,8690000,8690000,0
 Viettel,iPad (A16) 11 inch WIFI 128GB,YELLOW,8690000,8690000,0
 Viettel,iPad (A16) 11 inch WIFI 256GB,BLUE,11190000,11190000,0
+Viettel,iPad (A16) 11 inch WIFI 256GB,Error_State,,11190000,
 Viettel,iPad (A16) 11 inch WIFI 256GB,PINK,11190000,11190000,0
 Viettel,iPad (A16) 11 inch WIFI 256GB,SILVER,11190000,11190000,0
 Viettel,iPad (A16) 11 inch WIFI 256GB,YELLOW,11190000,11190000,0
 Viettel,iPad (A16) 11 inch WIFI 512GB,BLUE,15990000,15990000,0
+Viettel,iPad (A16) 11 inch WIFI 512GB,Error_State,,15990000,
 Viettel,iPad (A16) 11 inch WIFI 512GB,SILVER,15990000,15990000,0
 Viettel,iPad (A16) 11 inch WIFI 5G 128GB,BLUE,,12790000,
+Viettel,iPad (A16) 11 inch WIFI 5G 128GB,Error_State,,12790000,
 Viettel,iPad (A16) 11 inch WIFI 5G 128GB,PINK,,12790000,
 Viettel,iPad (A16) 11 inch WIFI 5G 128GB,SILVER,,12790000,
 Viettel,iPad (A16) 11 inch WIFI 5G 128GB,YELLOW,,12790000,
 Viettel,iPad (A16) 11 inch WIFI 5G 128GB - ViettelStore.vn,Unknown,12790000,,
-Viettel,iPad (A16) 11 inch WIFI 5G 256GB,BLUE,14990000,,
-Viettel,iPad (A16) 11 inch WIFI 5G 256GB,SILVER,14990000,,
-Viettel,iPad (A16) 11 inch WIFI 5G 256GB,Unknown,,14990000,
+Viettel,iPad (A16) 11 inch WIFI 5G 256GB,BLUE,14990000,14990000,0
+Viettel,iPad (A16) 11 inch WIFI 5G 256GB,Error_State,,14990000,
+Viettel,iPad (A16) 11 inch WIFI 5G 256GB,SILVER,14990000,14990000,0
 Viettel,iPad (A16) 11 inch WIFI 5G 512GB,BLUE,,19490000,
+Viettel,iPad (A16) 11 inch WIFI 5G 512GB,Error_State,,19490000,
 Viettel,iPad (A16) 11 inch WIFI 5G 512GB,SILVER,,19490000,
 Viettel,iPad Air (Gen 6) M2 11 inch WIFI 1TB,BLUE,,19990000,
+Viettel,iPad Air (Gen 6) M2 11 inch WIFI 1TB,Error_State,,0,
 Viettel,iPad Air (Gen 6) M2 11 inch WIFI 1TB,PURPLE,,19990000,
 Viettel,iPad Air (Gen 6) M2 11 inch WIFI 1TB,SPACE GREY,,19990000,
 Viettel,iPad Air (Gen 6) M2 11 inch WIFI 1TB,STARLIGHT,,19990000,
 Viettel,iPad Air (Gen 6) M2 11 inch WIFI 1TB,Unknown,19990000,,
 Viettel,iPad Air (Gen 6) M2 11 inch WIFI 512GB,BLUE,,16990000,
+Viettel,iPad Air (Gen 6) M2 11 inch WIFI 512GB,Error_State,,16990000,
 Viettel,iPad Air (Gen 6) M2 11 inch WIFI 512GB,PURPLE,,16990000,
 Viettel,iPad Air (Gen 6) M2 11 inch WIFI 512GB,SPACE GREY,,16990000,
 Viettel,iPad Air (Gen 6) M2 11 inch WIFI 512GB,STARLIGHT,,16990000,
 Viettel,iPad Air (Gen 6) M2 11 inch WIFI 512GB,Unknown,16990000,,
 Viettel,iPad Air (Gen 6) M2 11 inch WIFI 5G 128GB,BLUE,13990000,13990000,0
+Viettel,iPad Air (Gen 6) M2 11 inch WIFI 5G 128GB,Error_State,,13990000,
 Viettel,iPad Air (Gen 6) M2 11 inch WIFI 5G 128GB,PURPLE,13990000,13990000,0
 Viettel,iPad Air (Gen 6) M2 11 inch WIFI 5G 128GB,SPACE GREY,13990000,13990000,0
 Viettel,iPad Air (Gen 6) M2 11 inch WIFI 5G 128GB,STARLIGHT,13990000,13990000,0
@@ -2195,132 +2207,179 @@ Viettel,iPad Air (Gen 6) M2 11 inch WIFI 5G 1TB,PURPLE,22990000,22990000,0
 Viettel,iPad Air (Gen 6) M2 11 inch WIFI 5G 1TB,SPACE GREY,22990000,22990000,0
 Viettel,iPad Air (Gen 6) M2 11 inch WIFI 5G 1TB,STARLIGHT,22990000,22990000,0
 Viettel,iPad Air (Gen 6) M2 11 inch WIFI 5G 512GB,BLUE,19990000,19990000,0
+Viettel,iPad Air (Gen 6) M2 11 inch WIFI 5G 512GB,Error_State,,19990000,
 Viettel,iPad Air (Gen 6) M2 11 inch WIFI 5G 512GB,PURPLE,19990000,19990000,0
 Viettel,iPad Air (Gen 6) M2 11 inch WIFI 5G 512GB,SPACE GREY,19990000,19990000,0
 Viettel,iPad Air (Gen 6) M2 11 inch WIFI 5G 512GB,STARLIGHT,19990000,19990000,0
 Viettel,iPad Air (Gen 6) M2 13 inch WIFI 1TB,BLUE,23990000,23990000,0
+Viettel,iPad Air (Gen 6) M2 13 inch WIFI 1TB,Error_State,,23990000,
 Viettel,iPad Air (Gen 6) M2 13 inch WIFI 1TB,PURPLE,23990000,23990000,0
 Viettel,iPad Air (Gen 6) M2 13 inch WIFI 1TB,SPACE GREY,23990000,23990000,0
 Viettel,iPad Air (Gen 6) M2 13 inch WIFI 1TB,STARLIGHT,23990000,23990000,0
 Viettel,iPad Air (Gen 6) M2 13 inch WIFI 5G 128GB,BLUE,17990000,17990000,0
+Viettel,iPad Air (Gen 6) M2 13 inch WIFI 5G 128GB,Error_State,,17990000,
 Viettel,iPad Air (Gen 6) M2 13 inch WIFI 5G 128GB,PURPLE,17990000,17990000,0
 Viettel,iPad Air (Gen 6) M2 13 inch WIFI 5G 128GB,SPACE GREY,17990000,17990000,0
 Viettel,iPad Air (Gen 6) M2 13 inch WIFI 5G 128GB,STARLIGHT,17990000,17990000,0
 Viettel,iPad Air (Gen 6) M2 13 inch WIFI 5G 512GB,BLUE,22990000,22990000,0
+Viettel,iPad Air (Gen 6) M2 13 inch WIFI 5G 512GB,Error_State,,22990000,
 Viettel,iPad Air (Gen 6) M2 13 inch WIFI 5G 512GB,PURPLE,22990000,22990000,0
 Viettel,iPad Air (Gen 6) M2 13 inch WIFI 5G 512GB,SPACE GREY,22990000,22990000,0
 Viettel,iPad Air (Gen 6) M2 13 inch WIFI 5G 512GB,STARLIGHT,22990000,22990000,0
 Viettel,iPad Air (M3) 11 inch WIFI 128GB,BLUE,13190000,13190000,0
+Viettel,iPad Air (M3) 11 inch WIFI 128GB,Error_State,,13190000,
 Viettel,iPad Air (M3) 11 inch WIFI 128GB,PURPLE,,13190000,
 Viettel,iPad Air (M3) 11 inch WIFI 128GB,STARLIGHT,,13190000,
 Viettel,iPad Air (M3) 11 inch WIFI 128GB,Space Grey,,13190000,
 Viettel,iPad Air (M3) 11 inch WIFI 1TB,BLUE,,25390000,
+Viettel,iPad Air (M3) 11 inch WIFI 1TB,Error_State,,25390000,
 Viettel,iPad Air (M3) 11 inch WIFI 1TB,Space Grey,,25390000,
 Viettel,iPad Air (M3) 11 inch WIFI 1TB,Unknown,25390000,,
 Viettel,iPad Air (M3) 11 inch WIFI 256GB,BLUE,16990000,16990000,0
+Viettel,iPad Air (M3) 11 inch WIFI 256GB,Error_State,,16990000,
 Viettel,iPad Air (M3) 11 inch WIFI 256GB,PURPLE,16990000,16990000,0
 Viettel,iPad Air (M3) 11 inch WIFI 256GB,STARLIGHT,16990000,16990000,0
 Viettel,iPad Air (M3) 11 inch WIFI 256GB,Space Grey,16990000,16990000,0
 Viettel,iPad Air (M3) 11 inch WIFI 512GB,BLUE,,20990000,
+Viettel,iPad Air (M3) 11 inch WIFI 512GB,Error_State,,20990000,
 Viettel,iPad Air (M3) 11 inch WIFI 512GB,PURPLE,,20990000,
 Viettel,iPad Air (M3) 11 inch WIFI 512GB,STARLIGHT,,20990000,
 Viettel,iPad Air (M3) 11 inch WIFI 512GB,Space Grey,,20990000,
 Viettel,iPad Air (M3) 11 inch WIFI 5G 128GB,BLUE,,16990000,
+Viettel,iPad Air (M3) 11 inch WIFI 5G 128GB,Error_State,,16990000,
 Viettel,iPad Air (M3) 11 inch WIFI 5G 128GB,PURPLE,,16990000,
 Viettel,iPad Air (M3) 11 inch WIFI 5G 128GB,STARLIGHT,,16990000,
 Viettel,iPad Air (M3) 11 inch WIFI 5G 128GB,Space Grey,,16990000,
+Viettel,iPad Air (M3) 11 inch WIFI 5G 1TB,Error_State,,28990000,
 Viettel,iPad Air (M3) 11 inch WIFI 5G 1TB,PURPLE,,28990000,
 Viettel,iPad Air (M3) 11 inch WIFI 5G 1TB,STARLIGHT,,28990000,
 Viettel,iPad Air (M3) 11 inch WIFI 5G 256GB,BLUE,,21790000,
+Viettel,iPad Air (M3) 11 inch WIFI 5G 256GB,Error_State,,21790000,
 Viettel,iPad Air (M3) 11 inch WIFI 5G 256GB,PURPLE,,21790000,
 Viettel,iPad Air (M3) 11 inch WIFI 5G 256GB,STARLIGHT,,21790000,
 Viettel,iPad Air (M3) 11 inch WIFI 5G 256GB,Space Grey,,21790000,
 Viettel,iPad Air (M3) 11 inch WIFI 5G 512GB,BLUE,24490000,24490000,0
+Viettel,iPad Air (M3) 11 inch WIFI 5G 512GB,Error_State,,24490000,
 Viettel,iPad Air (M3) 11 inch WIFI 5G 512GB,PURPLE,,24490000,
 Viettel,iPad Air (M3) 11 inch WIFI 5G 512GB,STARLIGHT,,24490000,
 Viettel,iPad Air (M3) 11 inch WIFI 5G 512GB,Space Grey,,24490000,
 Viettel,iPad Air (M3) 13 inch WIFI 128GB,BLUE,20490000,20490000,0
+Viettel,iPad Air (M3) 13 inch WIFI 128GB,Error_State,,20490000,
 Viettel,iPad Air (M3) 13 inch WIFI 128GB,PURPLE,,20490000,
 Viettel,iPad Air (M3) 13 inch WIFI 128GB,STARLIGHT,,20490000,
 Viettel,iPad Air (M3) 13 inch WIFI 128GB,Space Grey,,20490000,
 Viettel,iPad Air (M3) 13 inch WIFI 256GB,BLUE,22990000,22990000,0
+Viettel,iPad Air (M3) 13 inch WIFI 256GB,Error_State,,22990000,
 Viettel,iPad Air (M3) 13 inch WIFI 256GB,PURPLE,,22990000,
 Viettel,iPad Air (M3) 13 inch WIFI 256GB,STARLIGHT,,22990000,
 Viettel,iPad Air (M3) 13 inch WIFI 256GB,Space Grey,,22990000,
 Viettel,iPad Air (M3) 13 inch WIFI 512GB,BLUE,28490000,28490000,0
+Viettel,iPad Air (M3) 13 inch WIFI 512GB,Error_State,,28490000,
 Viettel,iPad Air (M3) 13 inch WIFI 512GB,PURPLE,,28490000,
 Viettel,iPad Air (M3) 13 inch WIFI 5G 128GB,BLUE,24490000,24490000,0
+Viettel,iPad Air (M3) 13 inch WIFI 5G 128GB,Error_State,,24490000,
 Viettel,iPad Air (M3) 13 inch WIFI 5G 128GB,PURPLE,24490000,24490000,0
 Viettel,iPad Air (M3) 13 inch WIFI 5G 128GB,STARLIGHT,24490000,24490000,0
 Viettel,iPad Air (M3) 13 inch WIFI 5G 128GB,Space Grey,24490000,24490000,0
 Viettel,iPad Air (M3) 13 inch WIFI 5G 256GB,BLUE,28490000,28490000,0
+Viettel,iPad Air (M3) 13 inch WIFI 5G 256GB,Error_State,,28490000,
 Viettel,iPad Air (M3) 13 inch WIFI 5G 256GB,STARLIGHT,28490000,28490000,0
 Viettel,iPad Air (M3) 13 inch WIFI 5G 256GB,Space Grey,28490000,28490000,0
+Viettel,iPad Air (M3) 13 inch WIFI 5G 512GB,Error_State,,31490000,
 Viettel,iPad Air (M3) 13 inch WIFI 5G 512GB,PURPLE,31490000,31490000,0
 Viettel,iPad Air (M3) 13 inch WIFI 5G 512GB,Space Grey,31490000,31490000,0
 Viettel,iPad Mini 7 WIFI 128GB,BLUE,11490000,11490000,0
+Viettel,iPad Mini 7 WIFI 128GB,Error_State,,11490000,
 Viettel,iPad Mini 7 WIFI 128GB,PURPLE,11490000,11490000,0
 Viettel,iPad Mini 7 WIFI 128GB,SPACE GREY,11490000,11490000,0
 Viettel,iPad Mini 7 WIFI 128GB,STARLIGHT,11490000,11490000,0
+Viettel,iPad Mini 7 WIFI 256GB,Error_State,,13990000,
 Viettel,iPad Mini 7 WIFI 256GB,SPACE GREY,13990000,13990000,0
 Viettel,iPad Mini 7 WIFI 256GB,STARLIGHT,13990000,13990000,0
+Viettel,iPad Mini 7 WIFI 512GB,Error_State,,18790000,
 Viettel,iPad Mini 7 WIFI 512GB,SPACE GREY,18790000,18790000,0
 Viettel,iPad Mini 7 WIFI 512GB,STARLIGHT,18790000,18790000,0
 Viettel,iPad Mini 7 WIFI 5G 128GB,BLUE,15490000,15490000,0
+Viettel,iPad Mini 7 WIFI 5G 128GB,Error_State,,15490000,
 Viettel,iPad Mini 7 WIFI 5G 128GB,PURPLE,15490000,15490000,0
 Viettel,iPad Mini 7 WIFI 5G 128GB,SPACE GREY,15490000,15490000,0
 Viettel,iPad Mini 7 WIFI 5G 128GB,STARLIGHT,15490000,15490000,0
+Viettel,iPad Mini 7 WIFI 5G 256GB,Error_State,,18490000,
 Viettel,iPad Mini 7 WIFI 5G 256GB,SPACE GREY,18490000,18490000,0
 Viettel,iPad Mini 7 WIFI 5G 256GB,STARLIGHT,18490000,18490000,0
+Viettel,iPad Pro M4 11 inch Nano-texture Glass WIFI 1TB,Error_State,,40990000,
 Viettel,iPad Pro M4 11 inch Nano-texture Glass WIFI 1TB,SILVER,40990000,40990000,0
 Viettel,iPad Pro M4 11 inch Nano-texture Glass WIFI 1TB,SPACEBLACK,40990000,40990000,0
+Viettel,iPad Pro M4 11 inch Standard Glass WIFI 1TB,Error_State,,38990000,
 Viettel,iPad Pro M4 11 inch Standard Glass WIFI 1TB,SILVER,38990000,38990000,0
 Viettel,iPad Pro M4 11 inch Standard Glass WIFI 1TB,SPACEBLACK,38990000,38990000,0
+Viettel,iPad Pro M4 11 inch Standard Glass WIFI 512GB,Error_State,,28990000,
 Viettel,iPad Pro M4 11 inch Standard Glass WIFI 512GB,SILVER,28990000,28990000,0
 Viettel,iPad Pro M4 11 inch Standard Glass WIFI 512GB,SPACEBLACK,28990000,28990000,0
+Viettel,iPad Pro M4 13 inch Nano-texture Glass WIFI 1TB,Error_State,,49990000,
 Viettel,iPad Pro M4 13 inch Nano-texture Glass WIFI 1TB,SILVER,,49990000,
 Viettel,iPad Pro M4 13 inch Nano-texture Glass WIFI 1TB,SPACEBLACK,,49990000,
+Viettel,iPad Pro M4 13 inch Nano-texture Glass WIFI 5G 1TB,Error_State,,54590000,
 Viettel,iPad Pro M4 13 inch Nano-texture Glass WIFI 5G 1TB,SILVER,54590000,54590000,0
 Viettel,iPad Pro M4 13 inch Nano-texture Glass WIFI 5G 1TB,SPACEBLACK,54590000,54590000,0
+Viettel,iPad Pro M4 13 inch Standard Glass WIFI 1TB,Error_State,,46990000,
 Viettel,iPad Pro M4 13 inch Standard Glass WIFI 1TB,SILVER,46990000,46990000,0
 Viettel,iPad Pro M4 13 inch Standard Glass WIFI 1TB,SPACEBLACK,46990000,46990000,0
+Viettel,iPad Pro M4 13 inch Standard Glass WIFI 256GB,Error_State,,34290000,
 Viettel,iPad Pro M4 13 inch Standard Glass WIFI 256GB,SILVER,34290000,34290000,0
 Viettel,iPad Pro M4 13 inch Standard Glass WIFI 256GB,SPACEBLACK,34290000,34290000,0
+Viettel,iPad Pro M4 13 inch Standard Glass WIFI 5G 1TB,Error_State,,51990000,
 Viettel,iPad Pro M4 13 inch Standard Glass WIFI 5G 1TB,SILVER,51990000,51990000,0
 Viettel,iPad Pro M4 13 inch Standard Glass WIFI 5G 1TB,SPACEBLACK,,51990000,
+Viettel,iPad Pro M4 13 inch Standard Glass WIFI 5G 256GB,Error_State,,36990000,
 Viettel,iPad Pro M4 13 inch Standard Glass WIFI 5G 256GB,SILVER,36990000,36990000,0
 Viettel,iPad Pro M4 13 inch Standard Glass WIFI 5G 256GB,SPACEBLACK,,36990000,
 Viettel,iPad Pro M5 11 inch WIFI 1TB,Bạc,44990000,44990000,0
+Viettel,iPad Pro M5 11 inch WIFI 1TB,Error_State,,44990000,
 Viettel,iPad Pro M5 11 inch WIFI 1TB,Đen Không Gian,44990000,44990000,0
 Viettel,iPad Pro M5 11 inch WIFI 1TB Nano,Bạc,46990000,46990000,0
+Viettel,iPad Pro M5 11 inch WIFI 1TB Nano,Error_State,,46990000,
 Viettel,iPad Pro M5 11 inch WIFI 1TB Nano,Đen Không Gian,46990000,46990000,0
 Viettel,iPad Pro M5 11 inch WIFI 256GB,Bạc,28990000,28990000,0
+Viettel,iPad Pro M5 11 inch WIFI 256GB,Error_State,,28990000,
 Viettel,iPad Pro M5 11 inch WIFI 256GB,Đen Không Gian,28990000,28990000,0
 Viettel,iPad Pro M5 11 inch WIFI 512GB,Bạc,,34490000,
+Viettel,iPad Pro M5 11 inch WIFI 512GB,Error_State,,34490000,
 Viettel,iPad Pro M5 11 inch WIFI 512GB,Unknown,34490000,,
 Viettel,iPad Pro M5 11 inch WIFI 512GB,Đen Không Gian,,34490000,
 Viettel,iPad Pro M5 11 inch WIFI 5G 1TB,Bạc,50990000,50990000,0
+Viettel,iPad Pro M5 11 inch WIFI 5G 1TB,Error_State,,50990000,
 Viettel,iPad Pro M5 11 inch WIFI 5G 1TB,Đen Không Gian,50990000,50990000,0
 Viettel,iPad Pro M5 11 inch WIFI 5G 1TB Nano,Bạc,53990000,53990000,0
+Viettel,iPad Pro M5 11 inch WIFI 5G 1TB Nano,Error_State,,53990000,
 Viettel,iPad Pro M5 11 inch WIFI 5G 1TB Nano,Đen Không Gian,53990000,53990000,0
 Viettel,iPad Pro M5 11 inch WIFI 5G 256GB,Bạc,33990000,33990000,0
+Viettel,iPad Pro M5 11 inch WIFI 5G 256GB,Error_State,,33990000,
 Viettel,iPad Pro M5 11 inch WIFI 5G 256GB,Đen Không Gian,33990000,33990000,0
 Viettel,iPad Pro M5 11 inch WIFI 5G 512GB,Bạc,39990000,39990000,0
+Viettel,iPad Pro M5 11 inch WIFI 5G 512GB,Error_State,,39990000,
 Viettel,iPad Pro M5 11 inch WIFI 5G 512GB,Đen Không Gian,39990000,39990000,0
 Viettel,iPad Pro M5 13 inch WIFI 1TB,Bạc,55990000,55990000,0
+Viettel,iPad Pro M5 13 inch WIFI 1TB,Error_State,,55990000,
 Viettel,iPad Pro M5 13 inch WIFI 1TB,Đen Không Gian,55990000,55990000,0
 Viettel,iPad Pro M5 13 inch WIFI 1TB Nano-texture,Bạc,58990000,58990000,0
+Viettel,iPad Pro M5 13 inch WIFI 1TB Nano-texture,Error_State,,58990000,
 Viettel,iPad Pro M5 13 inch WIFI 1TB Nano-texture,Đen Không Gian,58990000,58990000,0
 Viettel,iPad Pro M5 13 inch WIFI 256GB,Bạc,38990000,38990000,0
+Viettel,iPad Pro M5 13 inch WIFI 256GB,Error_State,,38990000,
 Viettel,iPad Pro M5 13 inch WIFI 256GB,Đen Không Gian,38990000,38990000,0
 Viettel,iPad Pro M5 13 inch WIFI 512GB,Bạc,44990000,44990000,0
+Viettel,iPad Pro M5 13 inch WIFI 512GB,Error_State,,44990000,
 Viettel,iPad Pro M5 13 inch WIFI 512GB,Đen Không Gian,44990000,44990000,0
 Viettel,iPad Pro M5 13 inch WIFI 5G 1TB,Bạc,59990000,59990000,0
+Viettel,iPad Pro M5 13 inch WIFI 5G 1TB,Error_State,,59990000,
 Viettel,iPad Pro M5 13 inch WIFI 5G 1TB,Đen Không Gian,59990000,59990000,0
-Viettel,iPad Pro M5 13 inch WIFI 5G 1TB Nano-texture,Bạc,63990000,,
-Viettel,iPad Pro M5 13 inch WIFI 5G 1TB Nano-texture,Unknown,,63990000,
-Viettel,iPad Pro M5 13 inch WIFI 5G 1TB Nano-texture,Đen Không Gian,63990000,,
+Viettel,iPad Pro M5 13 inch WIFI 5G 1TB Nano-texture,Bạc,63990000,63990000,0
+Viettel,iPad Pro M5 13 inch WIFI 5G 1TB Nano-texture,Error_State,,63990000,
+Viettel,iPad Pro M5 13 inch WIFI 5G 1TB Nano-texture,Đen Không Gian,63990000,63990000,0
 Viettel,iPad Pro M5 13 inch WIFI 5G 256GB,Bạc,44990000,44990000,0
+Viettel,iPad Pro M5 13 inch WIFI 5G 256GB,Error_State,,44990000,
 Viettel,iPad Pro M5 13 inch WIFI 5G 256GB,Đen Không Gian,44990000,44990000,0
 Viettel,iPad Pro M5 13 inch WIFI 5G 512GB,Bạc,49990000,49990000,0
+Viettel,iPad Pro M5 13 inch WIFI 5G 512GB,Error_State,,49990000,
 Viettel,iPad Pro M5 13 inch WIFI 5G 512GB,Đen Không Gian,49990000,49990000,0
