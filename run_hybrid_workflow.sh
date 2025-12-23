@@ -13,7 +13,7 @@ git stash
 git pull origin main --rebase
 git stash pop || echo "⚠️ Auto-merge conflict or nothing to pop. Continuing..."
 
-# 3. Run Local Scrapers (ALL)
+# 3. Run Local Scrapers (FPT & MW Only)
 echo "🕷️ Running FPT Scraper..."
 python3 code/1-Apple_FPT_playwright.py
 

@@ -2,8 +2,8 @@ name: Daily Scraping Job
 
 on:
   schedule:
-    # Runs at 1:00 UTC (8:00 AM Vietnam Time) every day
-    - cron: "0 1 * * *"
+    # Runs at 16:00 UTC (11:00 PM Vietnam Time) every day
+    - cron: "0 16 * * *"
   workflow_dispatch: # Allows manual trigger from GitHub UI
 
 permissions:
@@ -35,22 +35,23 @@ jobs:
           TAKE_SCREENSHOT: "False"
           BLOCK_IMAGES: "True"
           PROXY_SERVER: ${{ secrets.PROXY_SERVER }}
-          ENABLE_PROXY_FPT: "True"
-          ENABLE_PROXY_MW: "True"
+          # Proxy Toggles (True/False)
+          ENABLE_PROXY_FPT: "False"
+          ENABLE_PROXY_MW: "False"
           ENABLE_PROXY_VIETTEL: "False"
           ENABLE_PROXY_HOANGHA: "False"
           ENABLE_PROXY_DDV: "False"
           ENABLE_PROXY_CPS: "False"
           # Test Mode (True/False) - Limits to 4 URLs
-          TEST_MODE: "True"
+          TEST_MODE: "False"
         run: |
           echo "Starting Daily Promotion Scraping..."
 
-          echo "1. Scraping FPT Shop..."
-          python3 code/1-Apple_FPT_playwright.py
+          # echo "1. Scraping FPT Shop..."
+          # python3 code/1-Apple_FPT_playwright.py
 
-          echo "2. Scraping Mobile World..."
-          python3 code/2-Apple_MW_playwright.py
+          # echo "2. Scraping Mobile World..."
+          # python3 code/2-Apple_MW_playwright.py
 
           echo "3. Scraping Viettel Store..."
           python3 code/3-Apple_Viettel_playwright.py
