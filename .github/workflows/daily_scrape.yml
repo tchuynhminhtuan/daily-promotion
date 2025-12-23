@@ -43,7 +43,7 @@ jobs:
           ENABLE_PROXY_DDV: "False"
           ENABLE_PROXY_CPS: "False"
           # Test Mode (True/False) - Limits to 4 URLs
-          TEST_MODE: "True"
+          TEST_MODE: "False"
         run: |
           echo "Starting Daily Promotion Scraping..."
 
