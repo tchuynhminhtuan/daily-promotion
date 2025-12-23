@@ -163,7 +163,7 @@ async def process_url(context, url, semaphore, csv_path, date_str):
             max_retries = 3
             for attempt in range(max_retries):
                 try:
-                    await page.goto(url, timeout=120000, wait_until="domcontentloaded")
+                    await page.goto(url, timeout=60000, wait_until="domcontentloaded")
                     break
                 except Exception as e:
                     print(f"⚠️ Navigation attempt {attempt+1}/{max_retries} failed: {e}")
@@ -336,7 +336,8 @@ async def main():
                 "--disable-setuid-sandbox",
                 "--disable-dev-shm-usage",
                 "--disable-gpu",
-                "--window-size=1280,720"
+                "--window-size=1280,720",
+                "--ignore-certificate-errors"
             ],
             "ignore_default_args": ["--enable-automation"]
         }
@@ -348,7 +349,8 @@ async def main():
         browser = await p.chromium.launch(**launch_options)
         context = await browser.new_context(
             user_agent=USER_AGENT,
-            viewport={"width": 1280, "height": 720}
+            viewport={"width": 1280, "height": 720},
+            ignore_https_errors=True
         )
         
         while urls_to_process:

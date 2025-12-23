@@ -153,7 +153,8 @@ async def process_url(semaphore, browser, url, csv_path, csv_lock):
                 "sec-ch-ua": '"Google Chrome";v="123", "Not:A-Brand";v="8", "Chromium";v="123"',
                 "sec-ch-ua-mobile": "?0",
                 "sec-ch-ua-platform": '"macOS"',
-            }
+            },
+            ignore_https_errors=True
         )
         
         # Anti-detection: Remove webdriver property
@@ -179,7 +180,7 @@ async def process_url(semaphore, browser, url, csv_path, csv_lock):
             max_retries = 3
             for attempt in range(max_retries):
                 try:
-                    await page.goto(url, timeout=120000, wait_until="domcontentloaded")
+                    await page.goto(url, timeout=60000, wait_until="domcontentloaded")
                     break
                 except Exception as e:
                     print(f"⚠️ Navigation attempt {attempt+1}/{max_retries} failed: {e}")
@@ -476,7 +477,8 @@ async def main():
                 "--disable-setuid-sandbox",
                 "--disable-dev-shm-usage",
                 "--disable-gpu",
-                "--window-size=1920,1080"
+                "--window-size=1920,1080",
+                "--ignore-certificate-errors"
             ],
             "ignore_default_args": ["--enable-automation"]
         }
