@@ -9,16 +9,27 @@ python3 -m playwright install chromium
 
 # 2. Pull latest data from GitHub (The other 4 scrapers)
 echo "⬇️ Pulling latest data from GitHub..."
+
+# SAFETY: Auto-backup local Cloud files (3,4,5,6) to prevent Merge Conflicts if accidentally run locally
+DATE=$(date +%Y-%m-%d)
+for i in 3-viettel 4-hoangha 5-ddv 6-cps; do
+    FILE="content/$DATE/$i-$DATE.csv"
+    if [ -f "$FILE" ] && git status --porcelain | grep -q "$FILE"; then
+        mv "$FILE" "$FILE.local_backup"
+        echo "⚠️  Backed up $FILE to $FILE.local_backup (Preventing Conflict)"
+    fi
+done
+
 git stash
 git pull origin main --rebase
 git stash pop || echo "⚠️ Auto-merge conflict or nothing to pop. Continuing..."
 
 # 3. Run Local Scrapers (FPT & MW Only)
-echo "🕷️ Running FPT Scraper..."
-python3 code/1-Apple_FPT_playwright.py
+# echo "🕷️ Running FPT Scraper..."
+# python3 code/1-Apple_FPT_playwright.py
 
-echo "🕷️ Running Mobile World Scraper..."
-python3 code/2-Apple_MW_playwright.py
+# echo "🕷️ Running Mobile World Scraper..."
+# python3 code/2-Apple_MW_playwright.py
 
 # echo "🕷️ Running Viettel Store Scraper..."
 # python3 code/3-Apple_Viettel_playwright.py

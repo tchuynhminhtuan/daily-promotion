@@ -125,6 +125,27 @@ class DataLoader:
                         df = df.rename(columns=COLUMN_MAPPING)
                         df['Channel'] = channel_name
                         
+                        # Merge "Other Promo" into "Payment Promo" if it exists (User Request)
+                        if "Other Promo" in df.columns:
+                            if "Payment Promo" not in df.columns:
+                                df["Payment Promo"] = ""
+                            
+                            # Vectorized combination with separator handling
+                            df["Payment Promo"] = df["Payment Promo"].fillna("").astype(str)
+                            df["Other Promo"] = df["Other Promo"].fillna("").astype(str)
+                            
+                            mask_both = (df["Payment Promo"] != "") & (df["Other Promo"] != "")
+                            mask_other_only = (df["Payment Promo"] == "") & (df["Other Promo"] != "")
+                            
+                            # 1. Both exist: join with " | "
+                            df.loc[mask_both, "Payment Promo"] = df.loc[mask_both, "Payment Promo"] + " | " + df.loc[mask_both, "Other Promo"]
+                            
+                            # 2. Only Other exists: move it to Payment
+                            df.loc[mask_other_only, "Payment Promo"] = df.loc[mask_other_only, "Other Promo"]
+                            
+                            # Drop Other Promo to avoid confusion
+                            df = df.drop(columns=["Other Promo"])
+
                         # Date formatting
                         dt_obj = pd.to_datetime(date_str)
                         day_suffix = dt_obj.strftime('%a').upper()

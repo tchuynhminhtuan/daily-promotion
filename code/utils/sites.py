@@ -130,10 +130,10 @@ total_links={
     "hh_urls":
     [
     'https://hoanghamobile.com/bao-da/bao-chong-soc-gear4-cho-airpods-1-2-chinh-hang',
-    'https://hoanghamobile.com/kho-san-pham-cu/tai-nghe/airpods-4',
-    'https://hoanghamobile.com/kho-san-pham-cu/tai-nghe/airpods-4-ban-chu-dong-khu-tieng-on',
-    'https://hoanghamobile.com/kho-san-pham-cu/tai-nghe/airpods-pro-2-voi-hop-sac-usb-c-chinh-hang-apple-viet-nam',
-    'https://hoanghamobile.com/kho-san-pham-cu/tai-nghe/tai-nghe-airpods-pro-3-chinh-hang-apple-viet-nam',
+    'https://hoanghamobile.com/tai-nghe/airpods-4',
+    'https://hoanghamobile.com/tai-nghe/airpods-pro-2-voi-hop-sac-usb-c-chinh-hang-apple-viet-nam',
+    'https://hoanghamobile.com/tai-nghe/airpods-4-ban-chu-dong-khu-tieng-on',
+    'https://hoanghamobile.com/tai-nghe/tai-nghe-airpods-pro-3-chinh-hang-apple-viet-nam',
 
     'https://hoanghamobile.com/dien-thoai-di-dong/apple-iphone-13-128gb-chinh-hang-vn-a',
     'https://hoanghamobile.com/dien-thoai-di-dong/apple-iphone-14-128gb-chinh-hang-vn-a',

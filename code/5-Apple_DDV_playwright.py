@@ -193,8 +193,8 @@ async def scrape_product(page, url, csv_path, csv_lock, forced_color="Unknown", 
             # Clean up newlines for CSV (User requested line-by-line)
             khuyen_mai = khuyen_mai.strip()
 
-        # Extract Thanh Toan: //div[@class='flex w-full flex-col items-start justify-start bg-white p-2']
-        tt_loc = page.locator("//div[@class='flex w-full flex-col items-start justify-start bg-white p-2']")
+        # Extract Thanh Toan: //div[@class='block__promo']/following-sibling::div[contains(@class, 'campaign')]
+        tt_loc = page.locator("//div[@class='block__promo']/following-sibling::div[contains(@class, 'campaign')]")
         if await tt_loc.count() > 0:
             thanh_toan = await tt_loc.first.inner_text()
             thanh_toan = thanh_toan.strip()
