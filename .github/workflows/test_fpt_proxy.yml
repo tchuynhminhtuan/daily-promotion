@@ -1,0 +1,58 @@
+name: Test FPT Proxy
+
+on:
+    workflow_dispatch:
+        inputs:
+            test_mode:
+                description: "Run in Test Mode (4 URLs)"
+                required: false
+                default: "True"
+                type: boolean
+            headless:
+                description: "Run Headless"
+                required: false
+                default: "True"
+                type: boolean
+
+permissions:
+    contents: write
+
+jobs:
+    test_fpt_proxy:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v4
+
+            - name: Set up Python
+              uses: actions/setup-python@v5
+              with:
+                  python-version: "3.10"
+
+            - name: Install dependencies
+              run: |
+                  python -m pip install --upgrade pip
+                  if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+                  python -m playwright install chromium
+                  python -m playwright install-deps
+
+            - name: Run FPT Scraper with Proxy
+              env:
+                  MAX_CONCURRENT_TABS: 5
+                  TAKE_SCREENSHOT: "False"
+                  BLOCK_IMAGES: "True"
+                  PROXY_SERVER: ${{ secrets.PROXY_SERVER }}
+                  ENABLE_PROXY_FPT: "True"
+                  TEST_MODE: ${{ inputs.test_mode }}
+                  HEADLESS: ${{ inputs.headless }}
+              run: |
+                  echo "Starting FPT Scraping Test with PROXY..."
+                  python3 code/1-Apple_FPT_playwright.py
+
+            - name: Upload Artifacts (Data)
+              uses: actions/upload-artifact@v4
+              with:
+                  name: fpt-data
+                  path: content/
+                  retention-days: 5
