@@ -14,7 +14,7 @@ BASE_DIR = os.path.join(PROJECT_ROOT, "content")
 # --- Date Selection Options ---
 # Option 1: Auto-select the two most recent dates (Default)
 # Option 2: Hardcoded specific dates (Set AUTO_SELECT_DATES = False)
-AUTO_SELECT_DATES = False
+AUTO_SELECT_DATES = True
 
 def get_available_dates(base_dir):
     """Scans content directory for date-like folders (YYYY-MM-DD) and returns them sorted."""
@@ -461,7 +461,7 @@ class HTMLGenerator:
         </head>
         <body>
             <h1>Báo cáo So sánh Khuyến mãi</h1>
-            <p style="color: grey;">Generated: {pd.Timestamp.now().strftime('%Y-%m-%d %H:%M')}</p>
+            <p style="color: grey;">Generated: {pd.Timestamp.now(tz='Asia/Ho_Chi_Minh').strftime('%Y-%m-%d %H:%M')}</p>
             
             <div class="controls">
                  <div class="control-group">
