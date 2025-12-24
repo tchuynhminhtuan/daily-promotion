@@ -4,6 +4,7 @@ import json
 import re
 import os
 import sys
+import time
 import random
 from datetime import datetime
 import pytz
@@ -20,7 +21,10 @@ TAKE_SCREENSHOT = os.environ.get("TAKE_SCREENSHOT", "False").lower() == "true"
 BLOCK_IMAGES = os.environ.get("BLOCK_IMAGES", "True").lower() == "true"
 HEADLESS = True
 # Only use first 4 URLs for testing if TEST_MODE is True
+# Only use first 4 URLs for testing if TEST_MODE is True
 TEST_MODE = os.environ.get("TEST_MODE", "False").lower() == "true"
+# Enable Gap Filling (recursive discovery of missing variants)
+ENABLE_GAP_FILLING = os.environ.get("ENABLE_GAP_FILLING", "False").lower() == "true"
 
 USER_AGENT_LIST = [
     "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36",
@@ -32,19 +36,20 @@ USER_AGENT_LIST = [
 # Product Name: h1 inside .box-product-name
 PRODUCT_NAME_SELECTOR = "div.box-product-name h1" 
 # Price Sale: p.sale-price (Updated 2024-12-24)
-PRICE_MAIN_SELECTOR = "p.sale-price"
-# Price Original: p.product__price--through (Updated 2024-12-24)
-PRICE_SUB_SELECTOR = "p.product__price--through"
+# Price Sale: p.sale-price or div.sale-price (Updated 2024-12-24)
+PRICE_MAIN_SELECTOR = ".sale-price"
+# Price Original: del.base-price or p.product__price--through (Updated 2024-12-24)
+PRICE_SUB_SELECTOR = "del.base-price"
 # Promo: div.box-product-promotion
 PROMO_SELECTOR = "div.box-product-promotion"
 # Payment Promo: div.box-more-promotion (often inside .box-more-promotion)
 PAYMENT_PROMO_SELECTOR = "div.box-more-promotion"
 # Color Options: a.button__change-color (or li.button__change-color depending on structure)
-COLOR_OPTIONS_SELECTOR = ".button__change-color"
-# Stock Button: .button-desktop-order
-STOCK_INDICATOR_SELECTOR = ".button-desktop-order"
+COLOR_OPTIONS_SELECTOR = "//ul[contains(@class, 'list-variants')]/li"
+# Stock Button: .button-desktop-order or .button-desktop-order-now
+STOCK_INDICATOR_SELECTOR = ".button-desktop-order-now, .button-desktop-order"
 # Storage Options: a.item-linked
-STORAGE_OPTIONS_SELECTOR = "a.item-linked"
+STORAGE_OPTIONS_SELECTOR = "//div[contains(@class, 'list-linked')]/a"
 
 # --- Helper Functions ---
 def setup_csv(base_path, date_str):
@@ -107,6 +112,8 @@ class CPSInteractor:
         # 2. Prices
         gia_khuyen_mai_raw = await get_text_safe(self.page, PRICE_MAIN_SELECTOR)
         gia_niem_yet_raw = await get_text_safe(self.page, PRICE_SUB_SELECTOR)
+        if not gia_niem_yet_raw:
+             gia_niem_yet_raw = await get_text_safe(self.page, ".product__price--through")
         
         def clean_price(p):
             if not p: return "0"
@@ -189,6 +196,11 @@ class CPSInteractor:
         # 1. Find all color options
         # Selector: .button__change-color
         try:
+            # Wait for colors to load (robustness fix)
+            try:
+                 await self.page.wait_for_selector(COLOR_OPTIONS_SELECTOR, timeout=3000)
+            except: pass
+
             candidates = self.page.locator(COLOR_OPTIONS_SELECTOR)
             count = await candidates.count()
             
@@ -207,13 +219,18 @@ class CPSInteractor:
                     if not await btn.is_visible(): continue
                     
                     # Extract Color Name
-                    # Usually: <strong>Name</strong> inside div inside a
+                    # Structure: li > a > div > strong
                     color_name = ""
                     strong = btn.locator("strong")
                     if await strong.count() > 0:
                         color_name = await strong.first.inner_text()
                     else:
-                        color_name = await btn.get_attribute("title")
+                        # Fallback: Check title on the <a> tag inside <li>
+                        a_tag = btn.locator("a")
+                        if await a_tag.count() > 0:
+                            color_name = await a_tag.get_attribute("title")
+                        else:
+                            color_name = await btn.get_attribute("title")
                     
                     if not color_name: color_name = f"Color_{i}"
                     
@@ -227,7 +244,7 @@ class CPSInteractor:
                     # Wait for SPA update
                     # 1. URL change?
                     # 2. Or Price element update?
-                    await self.page.wait_for_timeout(1500) 
+                    await self.page.wait_for_timeout(500) # Reduced from 1500 for speed 
                     
                     await self.extract_data(color_name=color_name, screenshot=True)
                     
@@ -253,59 +270,62 @@ async def process_url(semaphore, browser, url, csv_path, csv_lock):
         print(f"Processing: {url}")
         try:
             try:
+                t0_load = time.time()
                 await page.goto(url, timeout=60000, wait_until="domcontentloaded")
+                print(f"  -> Page load took {time.time()-t0_load:.2f}s")
             except:
                 print(f"Retry loading {url}")
                 await page.goto(url, timeout=60000, wait_until="domcontentloaded")
             
-            # --- 1. Discover Storage Variants (Full Navigation) ---
-            # Selector: a.item-linked
-            # We must gather all unique storage URLs first to avoid navigating away and losing context.
-            
-            storage_urls = set()
-            storage_urls.add(url.split('?')[0])
-            
-            try:
-                await page.wait_for_selector(STORAGE_OPTIONS_SELECTOR, timeout=5000)
-                links = page.locator(STORAGE_OPTIONS_SELECTOR)
-                count = await links.count()
-                
-                found_storages = []
-                for i in range(count):
-                    try:
-                        href = await links.nth(i).get_attribute("href")
-                        if href:
-                            # Resolve full URL
-                            full = href if href.startswith("http") else "https://cellphones.com.vn" + href if href.startswith("/") else "https://cellphones.com.vn/" + href
-                            full = full.split('?')[0]
-                            # Only add if it looks like a product page
-                            if ".html" in full:
-                                found_storages.append(full)
-                    except: pass
-                
-                storage_urls.update(found_storages)
-                print(f"Found {len(storage_urls)} storage variants for {url}")
-                
-            except: 
-                print(f"No explicit storage options found for {url}")
-            
-            target_urls = list(storage_urls)
-            
-            # --- 2. Iterate Storage Variants ---
-            for s_url in target_urls:
+            # Use Interactor directly on the provided URL
+            t0_proc = time.time()
+            interactor = CPSInteractor(page, url, csv_path, csv_lock)
+            await interactor.process_colors()
+            print(f"  -> Main Processing took {time.time()-t0_proc:.2f}s")
+
+            # --- Storage Variant Discovery (Gap Filling) ---
+            # Only process variants that are NOT in the main input list.
+            if ENABLE_GAP_FILLING:
                 try:
-                    # Navigate if needed
-                    # Note: We rely on the SAME page to preserve stealth/session? 
-                    # Or just convenience.
-                    if s_url != page.url.split('?')[0]:
-                         await page.goto(s_url, timeout=60000, wait_until="domcontentloaded")
-                         await page.wait_for_timeout(2000) # Settling time
+                    # Use user provided selector
+                    links = page.locator(STORAGE_OPTIONS_SELECTOR)
+                    count = await links.count()
                     
-                    interactor = CPSInteractor(page, s_url, csv_path, csv_lock)
-                    await interactor.process_colors()
+                    discovered_urls = []
+                    for i in range(count):
+                        try:
+                            href = await links.nth(i).get_attribute("href")
+                            if href:
+                                full = href if href.startswith("http") else "https://cellphones.com.vn" + href if href.startswith("/") else "https://cellphones.com.vn/" + href
+                                full = full.split('?')[0] # Remove query params
+                                if ".html" in full:
+                                    discovered_urls.append(full)
+                        except: pass
                     
+                    # Filter: Process ONLY if not in main list and not current
+                    cps_set = set(sites.total_links['cps_urls'])
+                    
+                    for s_url in set(discovered_urls):
+                        if s_url == url.split('?')[0]: continue
+                        if s_url in cps_set:
+                            # present in main list, skip to avoid double work
+                            continue
+                            
+                        print(f"  Gap Filling: Found new variant {s_url}")
+                        # Process this new variant
+                        try:
+                            if s_url != page.url.split('?')[0]:
+                                t_nav = time.time()
+                                await page.goto(s_url, timeout=60000, wait_until="domcontentloaded")
+                                print(f"    -> Gap Nav took {time.time()-t_nav:.2f}s")
+                            
+                            sub_interactor = CPSInteractor(page, s_url, csv_path, csv_lock)
+                            await sub_interactor.process_colors()
+                        except Exception as e:
+                            print(f"    Error filling gap {s_url}: {e}")
+
                 except Exception as e:
-                    print(f"Error processing storage variant {s_url}: {e}")
+                    print(f"  Storage discovery error: {e}")
 
         except Exception as e:
             print(f"Error processing {url}: {e}")
@@ -322,9 +342,13 @@ async def main():
     csv_lock = asyncio.Lock()
     
     urls_to_process = sites.total_links['cps_urls']
-    if TEST_MODE:
-        print("⚠️ TEST MODE: Processing first 4 URLs only.")
-        urls_to_process = urls_to_process[:4]
+    specific_url = os.environ.get("SPECIFIC_URL")
+    if specific_url:
+        print(f"⚠️ PROCESSING SPECIFIC URL: {specific_url}")
+        urls_to_process = [specific_url]
+    elif TEST_MODE:
+        print("⚠️ TEST MODE: Processing first 6 URLs only.")
+        urls_to_process = urls_to_process[:6]
 
     print(f"Processing {len(urls_to_process)} URLs with {MAX_CONCURRENT_TABS} concurrent tabs.")
     semaphore = asyncio.Semaphore(MAX_CONCURRENT_TABS)
