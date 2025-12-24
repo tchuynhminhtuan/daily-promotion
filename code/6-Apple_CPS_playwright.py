@@ -197,7 +197,7 @@ class CPSInteractor:
         try:
             # Wait for colors to load (robustness fix)
             try:
-                 await self.page.wait_for_selector(COLOR_OPTIONS_SELECTOR, timeout=3000)
+                 await self.page.wait_for_selector(COLOR_OPTIONS_SELECTOR, timeout=10000)
             except: pass
 
             candidates = self.page.locator(COLOR_OPTIONS_SELECTOR)
