@@ -31,7 +31,7 @@ jobs:
 
       - name: Run Scrapers
         env:
-          MAX_CONCURRENT_TABS: 5
+          MAX_CONCURRENT_TABS: 3
           TAKE_SCREENSHOT: "False"
           BLOCK_IMAGES: "True"
           PROXY_SERVER: ${{ secrets.PROXY_SERVER }}
@@ -53,17 +53,25 @@ jobs:
           # echo "2. Scraping Mobile World..."
           # python3 code/2-Apple_MW_playwright.py
 
-          echo "3. Scraping Viettel Store..."
-          python3 code/3-Apple_Viettel_playwright.py
+          # echo "3. Scraping Viettel Store..."
+          # python3 code/3-Apple_Viettel_playwright.py
 
-          echo "4. Scraping Hoang Ha Mobile..."
-          python3 code/4-Apple_HoangHa_playwright.py
+          # echo "4. Scraping Hoang Ha Mobile..."
+          # python3 code/4-Apple_HoangHa_playwright.py
 
-          echo "5. Scraping Di Dong Viet..."
-          python3 code/5-Apple_DDV_playwright.py
+          # echo "5. Scraping Di Dong Viet..."
+          # python3 code/5-Apple_DDV_playwright.py
 
-          echo "6. Scraping CellphoneS..."
-          python3 code/6-Apple_CPS_playwright.py
+          # echo "6. Scraping CellphoneS..."
+          # python3 code/6-Apple_CPS_playwright.py
+
+          echo "3-6. Scraping Viettel, HoangHa, DDV, CPS (Parallel)..."
+          python3 code/3-Apple_Viettel_playwright.py &
+          python3 code/4-Apple_HoangHa_playwright.py &
+          python3 code/5-Apple_DDV_playwright.py &
+          python3 code/6-Apple_CPS_playwright.py &
+          wait
+          echo "All scrapers completed."
 
       - name: Generate Report
         run: |

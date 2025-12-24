@@ -36,15 +36,13 @@ PAYMENT_PROMO_SELECTOR = ".promotion-slide-item"
 
 def setup_csv(base_path, date_str):
     output_dir = os.path.join(base_path, date_str)
-    if not os.path.exists(output_dir):
-        os.makedirs(output_dir)
+    os.makedirs(output_dir, exist_ok=True)
     
     file_path = os.path.join(output_dir, f"4-hoangha-{date_str}.csv")
     
     # Create img_hoangha directory
     img_dir = os.path.join(output_dir, 'img_hoangha')
-    if not os.path.exists(img_dir):
-        os.makedirs(img_dir)
+    os.makedirs(img_dir, exist_ok=True)
 
     if not os.path.exists(file_path):
         with open(file_path, "w", newline="", encoding="utf-8") as file:

@@ -31,15 +31,13 @@ PAYMENT_PROMO_SELECTOR = ".payment-promo .description"
 # --- Helper Functions ---
 def setup_csv(base_path, date_str):
     output_dir = os.path.join(base_path, date_str)
-    if not os.path.exists(output_dir):
-        os.makedirs(output_dir)
+    os.makedirs(output_dir, exist_ok=True)
     
     file_path = os.path.join(output_dir, f"3-viettel-{date_str}.csv")
     
     # Create img_viettel directory
     img_dir = os.path.join(output_dir, 'img_viettel')
-    if not os.path.exists(img_dir):
-        os.makedirs(img_dir)
+    os.makedirs(img_dir, exist_ok=True)
 
     # Always overwrite or append logic? FPT/MW overwrite.
     if os.path.exists(file_path):

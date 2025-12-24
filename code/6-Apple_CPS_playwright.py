@@ -50,13 +50,13 @@ STORAGE_OPTIONS_SELECTOR = "a.item-linked"
 def setup_csv(base_path, date_str):
     output_dir = os.path.join(base_path, date_str)
     if not os.path.exists(output_dir):
-        os.makedirs(output_dir)
+        os.makedirs(output_dir, exist_ok=True)
     
     file_path = os.path.join(output_dir, f"6-cps-{date_str}.csv")
     
     img_dir = os.path.join(output_dir, 'img_cps')
     if not os.path.exists(img_dir):
-        os.makedirs(img_dir)
+        os.makedirs(img_dir, exist_ok=True)
 
     # Overwrite if exists
     with open(file_path, "w", newline="", encoding="utf-8") as file:
