@@ -255,11 +255,12 @@ class PriceMatrixGenerator:
 class PromoDiffGenerator:
     """Generates the Promotion Difference CSV and HTML Report."""
     
-    def __init__(self, df, price_generator, output_file=None, skip_csv=False):
+    def __init__(self, df, price_generator, output_file=None, skip_csv=False, include_all=False):
         self.df = df
         self.price_gen = price_generator
         self.output_file = output_file or PROMO_DIFF_CSV # Default if not provided
         self.skip_csv = skip_csv
+        self.include_all = include_all
 
     def run(self):
         print("🔍 Đang phân tích thay đổi khuyến mãi...")
@@ -280,10 +281,6 @@ class PromoDiffGenerator:
                 print("🌐 Đang tạo báo cáo HTML (Bỏ qua lưu file CSV)...")
             
             # 4. Save HTML
-            # If output_file is a CSV path, derive HTML path or use default
-            # But usually for interactive we might pass a specific HTML path
-            # Let's standardize: If skip_csv is True, output_file might be HTML
-            
             html_path = PROMO_DIFF_HTML
             if self.skip_csv and self.output_file.endswith('.html'):
                 html_path = self.output_file
@@ -328,7 +325,23 @@ class PromoDiffGenerator:
         return " | ".join(clean_lines)
 
     def _identify_changes(self, df):
+        # Ensure correct date order for comparison
+        # We want to identify T (Current) vs T-1 (Previous)
+        # Sort by Channel -> Product -> Color -> Date (Oldest to Newest)
         df = df.sort_values(by=['Channel', 'Product Name', 'Color', '_RawDate'])
+        
+        dates_sorted = sorted(df['_RawDate'].unique())
+        if len(dates_sorted) < 2:
+            print("⚠️ Not enough dates to compare.")
+            if self.include_all:
+                 # If only 1 date exists, return everything as NEW
+                 target_date = dates_sorted[0]
+                 # Reuse logic below or just dump all
+                 pass
+        
+        # We generally care about the transition from T-1 to T (Latest pair)
+        # Even if df has 10 dates, we usually only care about the latest 2 passed to this class.
+        # Let's assume df contains exactly the dates we want to compare.
         
         cols_to_compare = ['Promotion Details', 'Payment Promo']
         valid_cols = [c for c in cols_to_compare if c in df.columns]
@@ -336,26 +349,34 @@ class PromoDiffGenerator:
         changes = []
         grouped = df.groupby(['Channel', 'Product Name', 'Color'])
         
+        # Logic: 
+        # For each group:
+        # 1. If we have > 1 row: Compare the Last (Newest) vs Second Last (Previous).
+        # 2. If we have 1 row: 
+        #    - If it's the NEWEST date -> It's a NEW LISTING (Previous missing).
+        #    - If it's the OLDER date -> It's REMOVED (Current missing).
+        
+        # We need to know what is "Newest" and "Previous" globally to tag properly.
+        global_dates = sorted(list(df['Date'].unique()))
+        if not global_dates: return pd.DataFrame()
+        
+        # Assume last one is "New" (target), second last is "Old" (reference)
+        # Wait, sorted by string might be tricky with "Mon", "Tue". 
+        # We should rely on _RawDate sorting in the loop.
+        
         for _, group in grouped:
-            if len(group) < 2: continue
+            # Sort group by _RawDate just to be safe
+            group = group.sort_values('_RawDate')
             
-            for i in range(1, len(group)):
-                curr_row = group.iloc[i]
-                prev_row = group.iloc[i-1]
+            # Case 1: At least 2 records (Comparision possible)
+            if len(group) >= 2:
+                # Compare the last two records
+                curr_row = group.iloc[-1]
+                prev_row = group.iloc[-2]
                 
-                # Fetch Prices directly from row since we grouped by price
+                # Fetch Prices
                 curr_price = curr_row.get('Promo Price')
                 prev_price = prev_row.get('Promo Price')
-                
-                # Fallback: If grouping separated them, it's possible we are comparing T1(PriceA) vs T2(PriceB) 
-                # ONLY if Text + Channel also match.
-                # If prices differ but everything else matches, they are in the SAME group in `grouped` iteration?
-                # WAIT. Grouped iteration is by `['Channel', 'Product Name', 'Color']`.
-                # If `_collapse_for_promo` produced "Black" (Price 120) and "Silver" (Price 100).
-                # Then `grouped` will see Group "Black" and Group "Silver".
-                # Loop compares T1 vs T2 for "Black". 
-                # So `curr_row` and `prev_row` are correct.
-                # Price is just a value in the row now.
                 
                 has_change = False
                 change_record = {
@@ -366,7 +387,8 @@ class PromoDiffGenerator:
                     "Prev_Date": prev_row['Date'],
                     "New_Price": curr_price,
                     "Old_Price": prev_price,
-                    "Link": curr_row.get('Link', '')
+                    "Link": curr_row.get('Link', ''),
+                    "Status": "UNCHANGED" # Default
                 }
                 
                 # Compare Text
@@ -384,19 +406,52 @@ class PromoDiffGenerator:
                         change_record[f"Old_{col}"] = prev_text 
                         change_record[f"New_{col}"] = curr_text
                 
-                # Compare Price (Force inclusion if price changed)
-                # Convert to float for comparison safety
+                # Compare Price
                 try:
                     p1 = float(curr_price) if pd.notna(curr_price) else 0
                     p2 = float(prev_price) if pd.notna(prev_price) else 0
                     if p1 != p2 and p1 > 0 and p2 > 0:
                         has_change = True
-                except:
-                    pass
+                except: pass
 
                 if has_change:
-                    changes.append(change_record)
-        
+                     change_record["Status"] = "CHANGED"
+                     changes.append(change_record)
+                elif self.include_all:
+                     # Add unchanged record
+                     changes.append(change_record)
+
+            # Case 2: Only 1 record (New or Removed)
+            elif self.include_all and len(group) == 1:
+                 # Check if this single record is from the LATEST date
+                 row = group.iloc[0]
+                 # Is this the latest date in our dataset?
+                 # We can check if it matches the *global* latest date.
+                 # But we can simpler check: 
+                 # If row['_RawDate'] is the last in dates_sorted -> NEW
+                 # If row['_RawDate'] is NOT the last -> REMOVED (Old data, no new counterpart)
+                 
+                 if row['_RawDate'] == dates_sorted[-1]:
+                     # It's a NEW Item
+                     record = {
+                        "Channel": row['Channel'],
+                        "Product Name": row['Product Name'],
+                        "Color": row['Color'],
+                        "Date": row['Date'],
+                        "Prev_Date": "N/A", # No prev
+                        "New_Price": row.get('Promo Price'),
+                        "Old_Price": 0, # Was not there
+                        "Link": row.get('Link', ''),
+                        "Status": "NEW"
+                     }
+                     # Fill text cols
+                     for col in valid_cols:
+                         record[f"Changed_{col}"] = "YES" # Technically new content
+                         record[f"Old_{col}"] = ""
+                         record[f"New_{col}"] = row[col]
+                     
+                     changes.append(record)
+
         return pd.DataFrame(changes)
 
     def _find_fallback_price(self, channel, product, date):
@@ -471,9 +526,10 @@ class HTMLGenerator:
                 <div class="control-group">
                     <label for="promoFilter">Thay đổi KM:</label>
                     <select id="promoFilter">
-                        <option value="ALL">Tất cả</option>
-                        <option value="YES">Có thay đổi</option>
-                        <option value="NO">Không</option>
+                        <option value="YES" selected>Có thay đổi (Mặc định)</option>
+                        <option value="ALL">Tất cả (Bao gồm không đổi)</option>
+                        <option value="NO">Không thay đổi</option>
+                        <option value="NEW">Mới xuất hiện</option>
                     </select>
                 </div>
                 <div class="control-group">
@@ -527,7 +583,7 @@ class HTMLGenerator:
                     function updateView() {
                         const selectedDate = dateSelect.value;
                         const selectedChannel = channelSelect.value;
-                        const selectedPromo = promoSelect.value;
+                        const selectedPromo = promoSelect.value; // YES (Default), ALL, NO, NEW
                         const selectedPrice = priceSelect.value;
                         const sortMode = sortSelect.value;
                         const searchTerm = searchInput.value.toLowerCase().trim();
@@ -538,13 +594,28 @@ class HTMLGenerator:
                         productBlocks.forEach(block => {
                             const blockDate = block.getAttribute('data-date');
                             const blockChannel = block.getAttribute('data-channel');
-                            const blockPromoChange = block.getAttribute('data-promo-change');
+                            const blockPromoChange = block.getAttribute('data-promo-change'); // YES, NO
+                            const blockStatus = block.getAttribute('data-status'); // CHANGED, UNCHANGED, NEW
                             const blockPriceChange = block.getAttribute('data-price-change');
                             const blockProduct = block.getAttribute('data-product'); 
                             
                             const matchesDate = (selectedDate === 'ALL' || blockDate === selectedDate);
                             const matchesChannel = (selectedChannel === 'ALL' || blockChannel === selectedChannel);
-                            const matchesPromo = (selectedPromo === 'ALL' || blockPromoChange === selectedPromo);
+                            
+                            // Promo Filter Logic
+                            let matchesPromo = false;
+                            if (selectedPromo === 'ALL') matchesPromo = true;
+                            else if (selectedPromo === 'YES') {
+                                // YES means Changed OR New (Anything interesting)
+                                if (blockStatus === 'CHANGED' || blockStatus === 'NEW') matchesPromo = true;
+                            }
+                            else if (selectedPromo === 'NO') {
+                                if (blockStatus === 'UNCHANGED') matchesPromo = true;
+                            }
+                            else if (selectedPromo === 'NEW') {
+                                if (blockStatus === 'NEW') matchesPromo = true;
+                            }
+
                             const matchesPrice = (selectedPrice === 'ALL' || blockPriceChange === selectedPrice);
                             const matchesSearch = (blockProduct.includes(searchTerm));
 
@@ -556,9 +627,7 @@ class HTMLGenerator:
                             }
                         });
                         
-                        // 2. Sort visible blocks (and hidden ones too to keep structure, or just append all in new order)
-                        // It is easier to sort the whole list and re-append.
-                        
+                        // 2. Sort visible blocks
                         productBlocks.sort((a, b) => {
                             if (sortMode === 'DEFAULT') {
                                 return parseInt(a.getAttribute('data-index')) - parseInt(b.getAttribute('data-index'));
@@ -607,10 +676,11 @@ class HTMLGenerator:
         color = row.get('Color', 'Unknown')
         date = row.get('Date', '')
         prev_date = row.get('Prev_Date', '')
+        status = row.get('Status', 'UNCHANGED')
         
         # Calculate Change Statuses for Filter
         promo_changed = 'NO'
-        if row.get('Changed_Promotion Details') == 'YES' or row.get('Changed_Payment Promo') == 'YES':
+        if status == 'CHANGED' or status == 'NEW':
             promo_changed = 'YES'
         
         price_changed = 'NO'
@@ -619,7 +689,7 @@ class HTMLGenerator:
              p1 = float(row.get('New_Price', 0)) if pd.notna(row.get('New_Price')) else 0
              p2 = float(row.get('Old_Price', 0)) if pd.notna(row.get('Old_Price')) else 0
              current_price = p1
-             if p1 > 0 and p2 > 0:
+             if status != 'NEW' and p1 > 0 and p2 > 0:
                  if p1 > p2:
                      price_changed = 'UP'
                  elif p1 < p2:
@@ -635,21 +705,32 @@ class HTMLGenerator:
         if pd.notna(link_url) and link_url != "":
             link_html = f'<div style="margin-bottom: 5px;"><a href="{link_url}" target="_blank" style="font-size: 0.9em; color: #007bff; text-decoration: none;">Xem sản phẩm &rarr;</a></div>'
 
+        # Styling based on Status
+        border_style = "border: 1px solid #dee2e6;"
+        badge_html = ""
+        if status == "NEW":
+            border_style = "border: 1px solid #28a745; background-color: #f0fff4;"
+            badge_html = '<span style="background: #28a745; color: white; font-size: 0.7em; padding: 2px 5px; border-radius: 3px; margin-left: 5px;">MỚI</span>'
+        elif status == "CHANGED":
+             border_style = "border: 1px solid #ffc107;" # Warning/Yellow usually for changes
+        
         safe_channel = html.escape(str(channel))
         safe_product = html.escape(str(product)).lower()
         safe_date = html.escape(str(date))
         
         block = f"""
         <div class="product-block" 
+             style="{border_style}"
              data-index="{index}"
              data-channel="{safe_channel}" 
              data-product="{safe_product}" 
              data-date="{safe_date}" 
              data-promo-change="{promo_changed}" 
              data-price-change="{price_changed}"
+             data-status="{status}"
              data-price="{current_price}">
             <div class="product-header">
-                <span>{channel} - {product} - {color}</span>
+                <span>{channel} - {product} - {color} {badge_html}</span>
                 {price_html}
             </div>
             {link_html}
@@ -853,7 +934,8 @@ def main():
     # 3. Promo Diff
     # If interactive, skip CSV and maybe use specific HTML output?
     # For now, we overwrite docs/index.html as requested.
-    promo_gen = PromoDiffGenerator(df, price_gen, output_file=output_html_path, skip_csv=is_interactive)
+    # Enable include_all=True to allow "Show All" in HTML
+    promo_gen = PromoDiffGenerator(df, price_gen, output_file=output_html_path, skip_csv=is_interactive, include_all=True)
     promo_gen.run()
     
     print("\n" + "✨"*20)
