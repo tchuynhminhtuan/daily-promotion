@@ -41,8 +41,8 @@ PROMO_SELECTOR = "div.box-product-promotion"
 PAYMENT_PROMO_SELECTOR = "div.box-more-promotion"
 # Color Options: a.button__change-color (or li.button__change-color depending on structure)
 COLOR_OPTIONS_SELECTOR = ".button__change-color"
-# Stock Button: .button-desktop-order-now
-STOCK_INDICATOR_SELECTOR = ".button-desktop-order-now"
+# Stock Button: .button-desktop-order
+STOCK_INDICATOR_SELECTOR = ".button-desktop-order"
 # Storage Options: a.item-linked
 STORAGE_OPTIONS_SELECTOR = "a.item-linked"
 
@@ -122,11 +122,23 @@ class CPSInteractor:
         ton_kho = "No"
         try:
             # Check Buy Button Text
+            # Priority 1: Sticky Button (.button-desktop-order)
             btn_loc = self.page.locator(STOCK_INDICATOR_SELECTOR).first
             if await btn_loc.count() > 0 and await btn_loc.is_visible():
                  btn_text = await btn_loc.inner_text()
                  if "MUA NGAY" in btn_text.upper():
                      ton_kho = "Yes"
+            else:
+                 # Priority 2: Inline CTA Button (class "btn-cta")
+                 # Must check text because "Tra Gop" also uses btn-cta
+                 cta_btns = self.page.locator("//button[contains(@class, 'btn-cta')]")
+                 count = await cta_btns.count()
+                 for i in range(count):
+                     if await cta_btns.nth(i).is_visible():
+                         txt = await cta_btns.nth(i).inner_text()
+                         if "MUA NGAY" in txt.strip().upper():
+                             ton_kho = "Yes"
+                             break
         except: pass
 
         # 4. Promotions
