@@ -23,6 +23,7 @@ BLOCK_IMAGES = os.environ.get("BLOCK_IMAGES", "True").lower() == "true"
 MAX_CONCURRENT_TABS = int(os.environ.get("MAX_CONCURRENT_TABS", 10))
 HEADLESS = os.environ.get("HEADLESS", "True").lower() == "true"
 TEST_MODE = os.environ.get("TEST_MODE", "False").lower() == "true"
+SPECIFIC_URL = os.environ.get("SPECIFIC_URL")
 
 USER_AGENT_LIST = [
     "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36",
@@ -137,7 +138,30 @@ class DDVInteractor:
         # 3. Stock
         ton_kho = await self.extract_stock_status()
 
+        # 3.1 Store Count
+        store_count = "0"
+        try:
+             count_loc = self.page.locator("//div[@class='py-2']/p/span")
+             if await count_loc.count() > 0:
+                 count_text = await count_loc.inner_text()
+                 # Expected: "Còn 3 cửa hàng" or just "3"
+                 if count_text:
+                     store_count = re.sub(r'[^\d]', '', count_text)
+        except: pass
+
         # 4. Promotions
+        # Click "View More" if exists to reveal full content
+        try:
+            view_more_btn = self.page.locator("//button[contains(@class, 'w-full')]/p[contains(text(),'Xem thêm')] | //button[contains(@class, 'w-full')]/p[contains(text(),'Xem tất cả')]").first
+            # Or generic path suggested: //button[contains(@class, 'w-full')]/p
+            if await view_more_btn.count() == 0:
+                 view_more_btn = self.page.locator("//button[contains(@class, 'w-full')]/p").first
+            
+            if await view_more_btn.count() > 0 and await view_more_btn.is_visible():
+                await view_more_btn.click(force=True)
+                await self.page.wait_for_timeout(500)
+        except: pass
+
         khuyen_mai = ""
         try:
              # Common promo area: div.border.rounded-lg.overflow-hidden.w-full
@@ -148,6 +172,20 @@ class DDVInteractor:
         except: pass
 
         thanh_toan = "" 
+        try:
+            # Selector: //div[@class='flex w-full flex-col items-start justify-start bg-white p-2']
+            tt_loc = self.page.locator("//div[@class='flex w-full flex-col items-start justify-start bg-white p-2']")
+            count = await tt_loc.count()
+            tt_texts = []
+            for i in range(count):
+                if await tt_loc.nth(i).is_visible():
+                     text = await tt_loc.nth(i).inner_text()
+                     if text:
+                         tt_texts.append(text.strip())
+            
+            if tt_texts:
+                thanh_toan = "\n".join(tt_texts)
+        except: pass 
 
         # 5. Screenshot
         screenshot_name = ""
@@ -166,7 +204,7 @@ class DDVInteractor:
             "Product_Name": product_name,
             "Color": variant_color,
             "Ton_Kho": ton_kho,
-            "Store_Count": "0", 
+            "Store_Count": store_count, 
             "Gia_Niem_Yet": gia_niem_yet,
             "Gia_Khuyen_Mai": gia_khuyen_mai,
             "Date": self.date_str,
@@ -248,7 +286,8 @@ class DDVInteractor:
                 
                 # Click
                 await el.click(force=True)
-                await self.page.wait_for_timeout(800) # Wait for SPA update
+                # Optimize: Reduced wait from 800ms to 300ms
+                await self.page.wait_for_timeout(300) # Wait for SPA update
                 
                 # Extract Color Name from the text (remove price if needed)
                 # Usually text is "Màu X \n 10.000.000". We want "Màu X".
@@ -284,60 +323,9 @@ async def process_url(semaphore, browser, url, csv_path, csv_lock):
                 print(f"Retry loading {url}")
                 await page.goto(url, timeout=60000, wait_until="domcontentloaded")
 
-            # 1. Discover Storage URLs (PAGE LEVEL ITERATION)
-            # Find all available storage links to process them sequentially.
-            # Strategy: Find all elements that look like storage options:
-            # <a> tags containing "GB" or "TB" text.
-            
-            seen_urls = set()
-            base_url_clean = url.split('?')[0]
-            seen_urls.add(base_url_clean)
-            
-            storage_urls = [url]
-            
-            try:
-                await page.wait_for_selector("a[href]", timeout=10000)
-                
-                # Find all <a> tags
-                candidates = page.locator("a[href]")
-                count = await candidates.count()
-                
-                found_storages = []
-                for i in range(count):
-                    try:
-                        acc = candidates.nth(i)
-                        
-                        # Heuristic: Link text contains 'GB' or 'TB'
-                        # Get text content (fast check)
-                        txt = await acc.text_content()
-                        txt = txt.strip() if txt else ""
-                        
-                        if ('GB' in txt or 'TB' in txt) and len(txt) < 30:
-                            # It is likely a storage option.
-                            # Get href
-                            href = await acc.get_attribute('href')
-                            if not href: continue
-                            
-                            # Resolve relative URL
-                            full_url = href if href.startswith('http') else f"https://didongviet.vn{href}" if href.startswith('/') else f"https://didongviet.vn/{href}"
-                            full_url = full_url.split('?')[0]
-                            
-                            # Filter out irrelevant links? 
-                            # DDV product links map to specific storage variants
-                            if '.html' in full_url:
-                                if full_url not in seen_urls:
-                                    found_storages.append(full_url)
-                                    seen_urls.add(full_url)
-                    except: pass
-                
-                print(f"Found {len(found_storages)} storage variants for {url}")
-                storage_urls.extend(found_storages)
-
-            except Exception as e:
-                print(f"Error finding storage variants: {e}")
-            
-            # Use a Set to ensure uniqueness again just in case
-            target_urls = list(dict.fromkeys(storage_urls))
+            # OPTIMIZATION: Removed recursive storage discovery loop.
+            # We strictly process the URL provided in the input list.
+            target_urls = [url]
 
             for s_url in target_urls:
                 try:
@@ -367,7 +355,11 @@ async def main():
     csv_lock = asyncio.Lock()
     
     urls_to_process = DDV_URLS
-    if TEST_MODE:
+    
+    if SPECIFIC_URL:
+        print(f"⚠️ PROCESSING SPECIFIC URL: {SPECIFIC_URL}")
+        urls_to_process = [SPECIFIC_URL]
+    elif TEST_MODE:
         print("⚠️ TEST MODE: Processing first 4 URLs only.")
         urls_to_process = DDV_URLS[:4]
 
