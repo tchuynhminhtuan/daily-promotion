@@ -486,6 +486,14 @@ class HTMLGenerator:
                     </select>
                 </div>
                 <div class="control-group">
+                    <label for="sortPrice">Sắp xếp Giá:</label>
+                    <select id="sortPrice">
+                        <option value="DEFAULT">Mặc định</option>
+                        <option value="ASC">Thấp - Cao</option>
+                        <option value="DESC">Cao - Thấp</option>
+                    </select>
+                </div>
+                <div class="control-group">
                     <label for="searchInput">Tìm kiếm:</label>
                     <input type="text" id="searchInput" placeholder="Ví dụ: iPhone 15...">
                 </div>
@@ -499,7 +507,7 @@ class HTMLGenerator:
         
         container_content = ""
         for index, row in self.df.iterrows():
-            container_content += self._render_block(row)
+            container_content += self._render_block(row, index)
             
         html_foot = """
             </div>
@@ -510,18 +518,23 @@ class HTMLGenerator:
                     const channelSelect = document.getElementById('channelFilter');
                     const promoSelect = document.getElementById('promoFilter');
                     const priceSelect = document.getElementById('priceFilter');
+                    const sortSelect = document.getElementById('sortPrice');
                     const searchInput = document.getElementById('searchInput');
-                    const productBlocks = document.querySelectorAll('.product-block');
+                    const reportContainer = document.getElementById('report-container');
+                    let productBlocks = Array.from(document.querySelectorAll('.product-block'));
                     const matchCountDisplay = document.getElementById('matchCount');
 
-                    function filterItems() {
+                    function updateView() {
                         const selectedDate = dateSelect.value;
                         const selectedChannel = channelSelect.value;
                         const selectedPromo = promoSelect.value;
                         const selectedPrice = priceSelect.value;
+                        const sortMode = sortSelect.value;
                         const searchTerm = searchInput.value.toLowerCase().trim();
-                        let visibleCount = 0;
+                        
+                        let visibleBlocks = [];
 
+                        // 1. Filter
                         productBlocks.forEach(block => {
                             const blockDate = block.getAttribute('data-date');
                             const blockChannel = block.getAttribute('data-channel');
@@ -537,22 +550,44 @@ class HTMLGenerator:
 
                             if (matchesDate && matchesChannel && matchesPromo && matchesSearch && matchesPrice) {
                                 block.classList.remove('hidden');
-                                visibleCount++;
+                                visibleBlocks.push(block);
                             } else {
                                 block.classList.add('hidden');
                             }
                         });
                         
-                        matchCountDisplay.textContent = `Hiển thị ${visibleCount} mục`;
+                        // 2. Sort visible blocks (and hidden ones too to keep structure, or just append all in new order)
+                        // It is easier to sort the whole list and re-append.
+                        
+                        productBlocks.sort((a, b) => {
+                            if (sortMode === 'DEFAULT') {
+                                return parseInt(a.getAttribute('data-index')) - parseInt(b.getAttribute('data-index'));
+                            }
+                            
+                            const priceA = parseFloat(a.getAttribute('data-price')) || 0;
+                            const priceB = parseFloat(b.getAttribute('data-price')) || 0;
+                            
+                            if (sortMode === 'ASC') {
+                                return priceA - priceB;
+                            } else { // DESC
+                                return priceB - priceA;
+                            }
+                        });
+                        
+                        // Re-append to container
+                        productBlocks.forEach(block => reportContainer.appendChild(block));
+                        
+                        matchCountDisplay.textContent = `Hiển thị ${visibleBlocks.length} mục`;
                     }
 
-                    dateSelect.addEventListener('change', filterItems);
-                    channelSelect.addEventListener('change', filterItems);
-                    promoSelect.addEventListener('change', filterItems);
-                    priceSelect.addEventListener('change', filterItems);
-                    searchInput.addEventListener('input', filterItems);
+                    dateSelect.addEventListener('change', updateView);
+                    channelSelect.addEventListener('change', updateView);
+                    promoSelect.addEventListener('change', updateView);
+                    priceSelect.addEventListener('change', updateView);
+                    sortSelect.addEventListener('change', updateView);
+                    searchInput.addEventListener('input', updateView);
                     
-                    filterItems();
+                    updateView();
                 });
             </script>
         </body>
@@ -566,7 +601,7 @@ class HTMLGenerator:
         except Exception as e:
             print(f"Error saving HTML: {e}")
 
-    def _render_block(self, row):
+    def _render_block(self, row, index):
         channel = row.get('Channel', 'Unknown')
         product = row.get('Product Name', 'Unknown')
         color = row.get('Color', 'Unknown')
@@ -579,9 +614,11 @@ class HTMLGenerator:
             promo_changed = 'YES'
         
         price_changed = 'NO'
+        current_price = 0
         try:
              p1 = float(row.get('New_Price', 0)) if pd.notna(row.get('New_Price')) else 0
              p2 = float(row.get('Old_Price', 0)) if pd.notna(row.get('Old_Price')) else 0
+             current_price = p1
              if p1 > 0 and p2 > 0:
                  if p1 > p2:
                      price_changed = 'UP'
@@ -604,11 +641,13 @@ class HTMLGenerator:
         
         block = f"""
         <div class="product-block" 
+             data-index="{index}"
              data-channel="{safe_channel}" 
              data-product="{safe_product}" 
              data-date="{safe_date}" 
              data-promo-change="{promo_changed}" 
-             data-price-change="{price_changed}">
+             data-price-change="{price_changed}"
+             data-price="{current_price}">
             <div class="product-header">
                 <span>{channel} - {product} - {color}</span>
                 {price_html}
@@ -635,7 +674,7 @@ class HTMLGenerator:
             if pd.isna(p) or str(p).strip() == "" or str(p).lower() == "nan": return None, None
             try: 
                 val = float(p)
-                if val == 0: return None, "0" 
+                if val == 0: return None, "Liên hệ" 
                 return val, "{:,.0f}".format(val)
             except: return None, str(p)
 
@@ -654,13 +693,15 @@ class HTMLGenerator:
                 return f'<span class="price-tag">{new_str} <span class="price-change-down">({diff_str})</span></span>'
             elif diff > 0:
                 return f'<span class="price-tag">{new_str} <span class="price-change-up">({diff_str})</span></span>'
-            else:
-                return f'<span class="price-tag">{new_str}</span>'
-                
-        if new_str and (not old_str or old_str == "0"):
+            
+        # Fallback / No Diff / One is Missing / One is "Liên hệ"
+        if new_str:
+             if hasattr(self, 'price_gen') and new_str == "Liên hệ":
+                  # Optional style for Contact
+                  return f'<span class="price-tag" style="font-size:0.9em; color:#666;">{new_str}</span>'
              return f'<span class="price-tag">{new_str}</span>'
 
-        if old_str and not new_str:
+        if old_str:
             return f'<span class="price-tag" style="text-decoration: line-through; color: #999;">{old_str}</span>'
             
         return ""
