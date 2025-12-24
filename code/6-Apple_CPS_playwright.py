@@ -31,10 +31,10 @@ USER_AGENT_LIST = [
 # --- Selectors ---
 # Product Name: h1 inside .box-product-name
 PRODUCT_NAME_SELECTOR = "div.box-product-name h1" 
-# Price Sale: p.tpt---sale-price
-PRICE_MAIN_SELECTOR = "p.tpt---sale-price"
-# Price Original: p.tpt---price
-PRICE_SUB_SELECTOR = "p.tpt---price"
+# Price Sale: p.sale-price (Updated 2024-12-24)
+PRICE_MAIN_SELECTOR = "p.sale-price"
+# Price Original: p.product__price--through (Updated 2024-12-24)
+PRICE_SUB_SELECTOR = "p.product__price--through"
 # Promo: div.box-product-promotion
 PROMO_SELECTOR = "div.box-product-promotion"
 # Payment Promo: div.box-more-promotion (often inside .box-more-promotion)
