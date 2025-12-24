@@ -31,7 +31,7 @@ COLOR_CONTAINER_SELECTOR = ".box03.color"
 def setup_csv(base_path, date_str):
     output_dir = os.path.join(base_path, date_str)
     if not os.path.exists(output_dir):
-        os.makedirs(output_dir)
+        os.makedirs(output_dir, exist_ok=True)
     file_path = os.path.join(output_dir, f"2-mw-{date_str}.csv")
     
     # Always create fresh or append? FPT logic overwrites to avoid duplicates in single run

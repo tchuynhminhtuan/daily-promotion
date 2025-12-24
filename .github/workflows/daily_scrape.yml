@@ -2,8 +2,8 @@ name: Daily Scraping Job
 
 on:
   schedule:
-    # Runs at 16:00 UTC (11:00 PM Vietnam Time) every day
-    - cron: "0 16 * * *"
+    # Runs at 15:00 UTC (12:00 PM Vietnam Time) every day
+    - cron: "0 15 * * *"
   workflow_dispatch: # Allows manual trigger from GitHub UI
 
 permissions:

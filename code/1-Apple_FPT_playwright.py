@@ -45,14 +45,13 @@ NOTI_SELECTOR = ".st-stt__noti"
 def setup_csv(base_path, date_str):
     output_dir = os.path.join(base_path, date_str)
     if not os.path.exists(output_dir):
-        os.makedirs(output_dir)
+        os.makedirs(output_dir, exist_ok=True)
     
     file_path = os.path.join(output_dir, f"1-fpt-{date_str}.csv")
     
     # Create img_fpt directory
     img_dir = os.path.join(output_dir, 'img_fpt')
-    if not os.path.exists(img_dir):
-        os.makedirs(img_dir)
+    os.makedirs(img_dir, exist_ok=True)
 
     # Remove file if it exists to avoid corruption/appending to bad data
     if os.path.exists(file_path):
