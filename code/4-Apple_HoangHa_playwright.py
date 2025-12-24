@@ -147,6 +147,7 @@ class HoangHaInteractor:
         gia_niem_yet = clean_price(gia_niem_yet_raw)
         
         # 4. Promo (Khuyen_Mai)
+        khuyen_mai = ""
         try:
             # Get text from promo content box
             # Correct structure: #product-promotion-content > .promotion-item
