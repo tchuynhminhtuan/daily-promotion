@@ -13,7 +13,7 @@ sys.path.append(current_dir)
 from utils import sites
 
 # --- Configuration ---
-MAX_CONCURRENT_TABS = int(os.environ.get("MAX_CONCURRENT_TABS", 8))
+MAX_CONCURRENT_TABS = int(os.environ.get("MAX_CONCURRENT_TABS", 10))
 TAKE_SCREENSHOT = os.environ.get("TAKE_SCREENSHOT", "False").lower() == "true"
 BLOCK_IMAGES = os.environ.get("BLOCK_IMAGES", "True").lower() == "true"
 HEADLESS = True
