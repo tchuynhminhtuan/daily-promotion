@@ -34,7 +34,8 @@ COLOR_OPTIONS_SELECTOR = f"{COLOR_WRAPPER_SELECTOR}//div[contains(@class, 'item'
 STOCK_INDICATOR_SELECTOR = "a.btnQuickOrder" # Check for class 'disabled'
 PROMO_SELECTOR = "#product-promotion-content"
 PAYMENT_PROMO_SELECTOR = ".promotion-slide-item"
-STORE_COUNT_SELECTOR = "//div[@class='box-stores-count']/p/strong"
+STORE_COUNT_SELECTOR = ".box-stores-count p strong, .inventory-total, .inventory-label, h4:has-text('Cửa hàng còn hàng')"
+
 
 
 def setup_csv(base_path, date_str):
@@ -86,7 +87,7 @@ class HoangHaInteractor:
         except:
             return ""
             
-    async def scrape_variant(self, color_name):
+    async def scrape_variant(self, color_name, forced_price=None):
         # 1. Product Name
         product_name = await self.get_text_safe(PRODUCT_NAME_SELECTOR)
         if not product_name:
@@ -132,19 +133,28 @@ class HoangHaInteractor:
             ton_kho = "No"
 
         # 3. Prices
-        gia_khuyen_mai_raw = await self.get_text_safe(PRICE_CURRENT_SELECTOR)
-        gia_niem_yet_raw = await self.get_text_safe(PRICE_OLD_SELECTOR)
-        
-        if not gia_niem_yet_raw and gia_khuyen_mai_raw:
-            gia_niem_yet_raw = gia_khuyen_mai_raw
-
         def clean_price(p):
             if not p: return 0
             # Remove dots, 'đ', '₫', whitespace
             return re.sub(r'[^\d]', '', str(p))
 
-        gia_khuyen_mai = clean_price(gia_khuyen_mai_raw)
+        gia_niem_yet_raw = await self.get_text_safe(PRICE_OLD_SELECTOR)
+        
+        if forced_price:
+             gia_khuyen_mai = clean_price(forced_price)
+        else:
+             gia_khuyen_mai_raw = await self.get_text_safe(PRICE_CURRENT_SELECTOR)
+             gia_khuyen_mai = clean_price(gia_khuyen_mai_raw)
+        
+        # If no listed price found, assume same as promo (or if forced_price provided but old price missing)
+        # Note: If we use forced_price, we rely on PRICE_OLD_SELECTOR for old price.
+        # Sometimes old price is in data-lastprice but that requires passing another arg.
+        # Let's keep it simple: PRICE_OLD_SELECTOR is usually static or updates correctly?
+        # Actually in browser test: Gia_Niem_Yet (9.990) was static.
+        
         gia_niem_yet = clean_price(gia_niem_yet_raw)
+        if gia_niem_yet == 0 and gia_khuyen_mai != 0:
+             gia_niem_yet = gia_khuyen_mai
         
         # 4. Promo (Khuyen_Mai)
         khuyen_mai = ""
@@ -202,10 +212,38 @@ class HoangHaInteractor:
         # 6. Store Count
         store_count = "0"
         try:
-            count_text = await self.get_text_safe(STORE_COUNT_SELECTOR)
-            if count_text:
-                store_count = re.sub(r'[^\d]', '', count_text)
-        except: pass
+            # Try to find a visible element with text
+            store_locs = self.page.locator(STORE_COUNT_SELECTOR)
+            count = await store_locs.count()
+            found_text = ""
+            for i in range(count):
+                try:
+                    el = store_locs.nth(i)
+                    if await el.is_visible():
+                        txt = await el.text_content()
+                        if txt and re.search(r'\d+', txt):
+                            found_text = txt.strip()
+                            break
+                        # Fallback: maybe just text without digits?
+                        if txt and "Cửa hàng" in txt:
+                            found_text = txt.strip()
+                except: pass
+            
+            # If nothing found, try scrolling to the selector?
+            if not found_text and count > 0:
+                 try:
+                    await store_locs.first.scroll_into_view_if_needed(timeout=1000)
+                    # Retry extraction
+                    count_text = await self.get_text_safe(STORE_COUNT_SELECTOR)
+                    if count_text: found_text = count_text
+                 except: pass
+
+            # print(f"    [DEBUG] Found Store Count Text: '{found_text}'") 
+            if found_text:
+                store_count = re.sub(r'[^\d]', '', found_text)
+        except Exception as e:
+             # print(f"    [DEBUG] Store Count Error: {e}") 
+             pass
 
         # Screenshot if configured
         screenshot_name = ""
@@ -241,7 +279,7 @@ class HoangHaInteractor:
         }
         
         await write_to_csv(self.csv_path, data, self.csv_lock)
-        print(f"Saved: {product_name} - {color_name} | Stock: {ton_kho} | Price: {gia_khuyen_mai}")
+        print(f"Saved: {product_name} - {color_name} | Stock: {ton_kho} | Price: {gia_khuyen_mai} | Stores: {store_count}")
 
     async def process_colors(self):
         """Iterate through all color options."""
@@ -317,28 +355,52 @@ class HoangHaInteractor:
                 
                 if not color_name: 
                     color_name = f"Option {i+1}"
+                
+                # PRICE OPTIMIZATION: Check for data-bestprice (or similar)
+                # This avoids race conditions where click doesn't update the main DOM fast enough
+                forced_price = None
+                try:
+                    best_price = await btn.get_attribute("data-bestprice")
+                    if best_price:
+                        forced_price = best_price
+                except: pass
 
-                print(f"  Clicking: {color_name}")
+                print(f"  Clicking: {color_name} (Price Override: {forced_price})")
                 t_click_start = time.time()
 
                 # Click
                 # Check if it's already active? .item.active
-                is_active = await btn.get_attribute("class")
-                if is_active and "active" in is_active:
-                     print("    (Already active)")
+                # Note: HoangHa uses 'item-option btn-active' for ALL items (meaning clickable).
+                # The SELECTED item has 'selected' or 'actived'.
+                is_active_attr = await btn.get_attribute("class") or ""
+                is_selected = "selected" in is_active_attr or "actived" in is_active_attr
+                
+                if is_selected:
+                     print("    (Already selected)")
+                     # Even if selected, we might want to ensure Store Count is loaded?
+                     # But usually initial load has it? 
+                     # Actually, for iPad Gen 11, the initial state had NO store count loaded (it shows "Vàng" not cached?).
+                     # Let's Force Click even if selected? Or just wait?
+                     # Safest: Just click. It doesn't hurt.
+                     await btn.click(force=True)
+                     try:
+                        await self.page.wait_for_timeout(1000) 
+                     except: pass
                 else:
                     await btn.click(force=True)
-                    # Optimize: Wait for price update instead of fixed sleep
-                    # Or at least reduce sleep
+                    # Optimize: Wait a bit if we don't have forced price, 
+                    # but if we do, we can proceed faster?
+                    # Update: Store_Count relies on Click+Wait. Even if price is override, store count needs DOM.
+                    # Restoring wait to 1.5s to ensure Store Count loads.
                     try:
-                        await self.page.wait_for_timeout(500) # Reduced from 1500
+                        await self.page.wait_for_timeout(1500) 
                     except: pass
                 
                 print(f"    -> Click & Wait took: {time.time() - t_click_start:.2f}s")
                 
                 # Scrape
                 t_scrape_start = time.time()
-                await self.scrape_variant(color_name)
+                await self.scrape_variant(color_name, forced_price=forced_price)
                 print(f"    -> Scrape took: {time.time() - t_scrape_start:.2f}s")
                 
             except Exception as e:
@@ -392,7 +454,6 @@ async def main():
     csv_lock = asyncio.Lock()
     
     urls = total_links['hh_urls']
-    
     specific_url = os.environ.get("SPECIFIC_URL")
     if specific_url:
         print(f"⚠️ PROCESSING SPECIFIC URL: {specific_url}")

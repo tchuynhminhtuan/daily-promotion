@@ -39,4 +39,19 @@ Inside each storage variant page, the scraper:
 
 ## Key Code Artifacts
 *   `new_cps_scraper.py`: Optimized code handling hybrid navigation.
-*   `compare_cps_results.py`: Verification script.
+
+## Recent Optimization Fixes (Dec 24, 2025)
+
+### 1. Zero Price Issue Fix
+- **Problem**: Some products returned '0' for prices because the site structure varied (`div.sale-price` vs `p.sale-price`).
+- **Solution**: Updated selectors to be more inclusive:
+    - `PRICE_MAIN_SELECTOR`: `.sale-price` (matches both `p` and `div`).
+    - `PRICE_SUB_SELECTOR`: Added fallback to `del.base-price` and `.product__price--through`.
+
+### 2. Stock Status Accuracy
+- **Problem**: The scraper relied on a specific button class (`.button-desktop-order-now`) which was often associated with "Register" or "Out of Stock" states, leading to incorrect "No" stock status for some available items.
+- **Solution**: implemented a multi-factor check:
+    - Check for sticky "Buy Now" button (`.button-desktop-order`).
+    - Check for inline CTA buttons (`.btn-cta`) specifically containing the text "MUA NGAY".
+    - This ensures that only items with an explicit actionable "Buy" button are marked as `Ton_Kho: Yes`.
+

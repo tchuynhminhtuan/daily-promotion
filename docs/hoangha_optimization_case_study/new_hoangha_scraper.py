@@ -36,15 +36,13 @@ PAYMENT_PROMO_SELECTOR = ".promotion-slide-item"
 
 def setup_csv(base_path, date_str):
     output_dir = os.path.join(base_path, date_str)
-    if not os.path.exists(output_dir):
-        os.makedirs(output_dir)
+    os.makedirs(output_dir, exist_ok=True)
     
     file_path = os.path.join(output_dir, f"4-hoangha-{date_str}.csv")
     
     # Create img_hoangha directory
     img_dir = os.path.join(output_dir, 'img_hoangha')
-    if not os.path.exists(img_dir):
-        os.makedirs(img_dir)
+    os.makedirs(img_dir, exist_ok=True)
 
     if not os.path.exists(file_path):
         with open(file_path, "w", newline="", encoding="utf-8") as file:
@@ -146,17 +144,29 @@ class HoangHaInteractor:
         gia_niem_yet = clean_price(gia_niem_yet_raw)
         
         # 4. Promo (Khuyen_Mai)
-        khuyen_mai = ""
         try:
             # Get text from promo content box
+            # Correct structure: #product-promotion-content > .promotion-item
             promo_box = self.page.locator(PROMO_SELECTOR)
             if await promo_box.count() > 0:
-                # Get all text, preserving newlines
-                text = await promo_box.innerText()
-                if text:
-                     # Sanitize quotes for CSV
-                    cleaned = re.sub(r'\n+', '\n', text.strip()).replace('"', "'")
-                    khuyen_mai = cleaned
+                # Iterate items for cleaner text
+                items = promo_box.locator(".promotion-item")
+                count = await items.count()
+                texts = []
+                if count > 0:
+                    for i in range(count):
+                        text = await items.nth(i).inner_text()
+                        if text:
+                             texts.append(text.strip())
+                    khuyen_mai = "\n".join(texts)
+                else:
+                     # Fallback to full text if items not found
+                     text = await promo_box.inner_text()
+                     if text:
+                         khuyen_mai = re.sub(r'\n+', '\n', text.strip())
+                
+                # Sanitize quotes
+                khuyen_mai = khuyen_mai.replace('"', "'")
         except: pass
         
         # 5. Payment Promo (Thanh Toan)

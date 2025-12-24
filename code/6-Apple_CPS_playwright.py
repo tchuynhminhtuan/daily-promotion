@@ -21,7 +21,6 @@ TAKE_SCREENSHOT = os.environ.get("TAKE_SCREENSHOT", "False").lower() == "true"
 BLOCK_IMAGES = os.environ.get("BLOCK_IMAGES", "True").lower() == "true"
 HEADLESS = True
 # Only use first 4 URLs for testing if TEST_MODE is True
-# Only use first 4 URLs for testing if TEST_MODE is True
 TEST_MODE = os.environ.get("TEST_MODE", "False").lower() == "true"
 # Enable Gap Filling (recursive discovery of missing variants)
 ENABLE_GAP_FILLING = os.environ.get("ENABLE_GAP_FILLING", "False").lower() == "true"

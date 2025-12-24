@@ -31,18 +31,18 @@ USER_AGENT_LIST = [
 # --- Selectors ---
 # Product Name: h1 inside .box-product-name
 PRODUCT_NAME_SELECTOR = "div.box-product-name h1" 
-# Price Sale: p.tpt---sale-price
-PRICE_MAIN_SELECTOR = "p.tpt---sale-price"
-# Price Original: p.tpt---price
-PRICE_SUB_SELECTOR = "p.tpt---price"
+# Price Sale: p.sale-price or div.sale-price (Updated 2024-12-24)
+PRICE_MAIN_SELECTOR = ".sale-price"
+# Price Original: del.base-price or p.product__price--through (Updated 2024-12-24)
+PRICE_SUB_SELECTOR = "del.base-price"
 # Promo: div.box-product-promotion
 PROMO_SELECTOR = "div.box-product-promotion"
 # Payment Promo: div.box-more-promotion (often inside .box-more-promotion)
 PAYMENT_PROMO_SELECTOR = "div.box-more-promotion"
 # Color Options: a.button__change-color (or li.button__change-color depending on structure)
 COLOR_OPTIONS_SELECTOR = ".button__change-color"
-# Stock Button: .button-desktop-order-now
-STOCK_INDICATOR_SELECTOR = ".button-desktop-order-now"
+# Stock Button: .button-desktop-order or .button-desktop-order-now
+STOCK_INDICATOR_SELECTOR = ".button-desktop-order-now, .button-desktop-order"
 # Storage Options: a.item-linked
 STORAGE_OPTIONS_SELECTOR = "a.item-linked"
 
@@ -50,13 +50,13 @@ STORAGE_OPTIONS_SELECTOR = "a.item-linked"
 def setup_csv(base_path, date_str):
     output_dir = os.path.join(base_path, date_str)
     if not os.path.exists(output_dir):
-        os.makedirs(output_dir)
+        os.makedirs(output_dir, exist_ok=True)
     
     file_path = os.path.join(output_dir, f"6-cps-{date_str}.csv")
     
     img_dir = os.path.join(output_dir, 'img_cps')
     if not os.path.exists(img_dir):
-        os.makedirs(img_dir)
+        os.makedirs(img_dir, exist_ok=True)
 
     # Overwrite if exists
     with open(file_path, "w", newline="", encoding="utf-8") as file:
@@ -107,6 +107,8 @@ class CPSInteractor:
         # 2. Prices
         gia_khuyen_mai_raw = await get_text_safe(self.page, PRICE_MAIN_SELECTOR)
         gia_niem_yet_raw = await get_text_safe(self.page, PRICE_SUB_SELECTOR)
+        if not gia_niem_yet_raw:
+             gia_niem_yet_raw = await get_text_safe(self.page, ".product__price--through")
         
         def clean_price(p):
             if not p: return "0"
@@ -122,11 +124,23 @@ class CPSInteractor:
         ton_kho = "No"
         try:
             # Check Buy Button Text
+            # Priority 1: Sticky Button (.button-desktop-order)
             btn_loc = self.page.locator(STOCK_INDICATOR_SELECTOR).first
             if await btn_loc.count() > 0 and await btn_loc.is_visible():
                  btn_text = await btn_loc.inner_text()
                  if "MUA NGAY" in btn_text.upper():
                      ton_kho = "Yes"
+            else:
+                 # Priority 2: Inline CTA Button (class "btn-cta")
+                 # Must check text because "Tra Gop" also uses btn-cta
+                 cta_btns = self.page.locator("//button[contains(@class, 'btn-cta')]")
+                 count = await cta_btns.count()
+                 for i in range(count):
+                     if await cta_btns.nth(i).is_visible():
+                         txt = await cta_btns.nth(i).inner_text()
+                         if "MUA NGAY" in txt.strip().upper():
+                             ton_kho = "Yes"
+                             break
         except: pass
 
         # 4. Promotions
@@ -140,9 +154,9 @@ class CPSInteractor:
         # 5. Payment Promo
         thanh_toan = ""
         try:
-             tt_text = await get_text_safe(self.page, PAYMENT_PROMO_SELECTOR)
-             if tt_text:
-                 thanh_toan = re.sub(r'\n+', '\n', tt_text.strip())
+            tt_text = await get_text_safe(self.page, PAYMENT_PROMO_SELECTOR)
+            if tt_text:
+                thanh_toan = re.sub(r'\n+', '\n', tt_text.strip())
         except: pass
 
         # 6. Screenshot
@@ -311,8 +325,8 @@ async def main():
     
     urls_to_process = sites.total_links['cps_urls']
     if TEST_MODE:
-        print("⚠️ TEST MODE: Processing first 4 URLs only.")
-        urls_to_process = urls_to_process[:4]
+        print("⚠️ TEST MODE: Processing first 6 URLs only.")
+        urls_to_process = urls_to_process[:6]
 
     print(f"Processing {len(urls_to_process)} URLs with {MAX_CONCURRENT_TABS} concurrent tabs.")
     semaphore = asyncio.Semaphore(MAX_CONCURRENT_TABS)
@@ -347,4 +361,3 @@ if __name__ == "__main__":
     asyncio.run(main())
     duration = datetime.now() - start_time
     print(f"Total execution time: {duration}")
-
