@@ -4,13 +4,14 @@ import json
 import re
 import os
 import sys
+import time
 from datetime import datetime
 import pytz
 from playwright.async_api import async_playwright, Page, Locator
 from utils.sites import total_links
 
 # Constants
-MAX_CONCURRENT_TABS = int(os.environ.get("MAX_CONCURRENT_TABS", 3)) # Reduced for stability
+MAX_CONCURRENT_TABS = int(os.environ.get("MAX_CONCURRENT_TABS", 10)) # Increased default for speed
 TAKE_SCREENSHOT = os.environ.get("TAKE_SCREENSHOT", "False").lower() == "true"
 BLOCK_IMAGES = os.environ.get("BLOCK_IMAGES", "True").lower() == "true"
 HEADLESS = os.environ.get("HEADLESS", "True").lower() == "true"
@@ -33,6 +34,8 @@ COLOR_OPTIONS_SELECTOR = f"{COLOR_WRAPPER_SELECTOR}//div[contains(@class, 'item'
 STOCK_INDICATOR_SELECTOR = "a.btnQuickOrder" # Check for class 'disabled'
 PROMO_SELECTOR = "#product-promotion-content"
 PAYMENT_PROMO_SELECTOR = ".promotion-slide-item"
+STORE_COUNT_SELECTOR = "//div[@class='box-stores-count']/p/strong"
+
 
 def setup_csv(base_path, date_str):
     output_dir = os.path.join(base_path, date_str)
@@ -48,7 +51,7 @@ def setup_csv(base_path, date_str):
         with open(file_path, "w", newline="", encoding="utf-8") as file:
             writer = csv.DictWriter(file, fieldnames=[
                 "Product_Name", "Color", "Ton_Kho", "Gia_Niem_Yet", "Gia_Khuyen_Mai",
-                 "Date", "Khuyen_Mai", "Thanh_Toan", "Link", "screenshot_name"
+                 "Date", "Khuyen_Mai", "Thanh_Toan", "Store_Count", "Link", "screenshot_name"
             ], delimiter=";")
             writer.writeheader()
     return file_path
@@ -58,7 +61,7 @@ async def write_to_csv(file_path, data, lock):
         with open(file_path, "a", newline="", encoding="utf-8") as file:
             writer = csv.DictWriter(file, fieldnames=[
                 "Product_Name", "Color", "Ton_Kho", "Gia_Niem_Yet", "Gia_Khuyen_Mai",
-                 "Date", "Khuyen_Mai", "Thanh_Toan", "Link", "screenshot_name"
+                 "Date", "Khuyen_Mai", "Thanh_Toan", "Store_Count", "Link", "screenshot_name"
             ], delimiter=";")
             writer.writerow(data)
 
@@ -144,17 +147,29 @@ class HoangHaInteractor:
         gia_niem_yet = clean_price(gia_niem_yet_raw)
         
         # 4. Promo (Khuyen_Mai)
-        khuyen_mai = ""
         try:
             # Get text from promo content box
+            # Correct structure: #product-promotion-content > .promotion-item
             promo_box = self.page.locator(PROMO_SELECTOR)
             if await promo_box.count() > 0:
-                # Get all text, preserving newlines
-                text = await promo_box.innerText()
-                if text:
-                     # Sanitize quotes for CSV
-                    cleaned = re.sub(r'\n+', '\n', text.strip()).replace('"', "'")
-                    khuyen_mai = cleaned
+                # Iterate items for cleaner text
+                items = promo_box.locator(".promotion-item")
+                count = await items.count()
+                texts = []
+                if count > 0:
+                    for i in range(count):
+                        text = await items.nth(i).inner_text()
+                        if text:
+                             texts.append(text.strip())
+                    khuyen_mai = "\n".join(texts)
+                else:
+                     # Fallback to full text if items not found
+                     text = await promo_box.inner_text()
+                     if text:
+                         khuyen_mai = re.sub(r'\n+', '\n', text.strip())
+                
+                # Sanitize quotes
+                khuyen_mai = khuyen_mai.replace('"', "'")
         except: pass
         
         # 5. Payment Promo (Thanh Toan)
@@ -181,6 +196,14 @@ class HoangHaInteractor:
             
             if payment_promos:
                 thanh_toan = "\n".join(payment_promos)
+        except: pass
+
+        # 6. Store Count
+        store_count = "0"
+        try:
+            count_text = await self.get_text_safe(STORE_COUNT_SELECTOR)
+            if count_text:
+                store_count = re.sub(r'[^\d]', '', count_text)
         except: pass
 
         # Screenshot if configured
@@ -211,6 +234,7 @@ class HoangHaInteractor:
             "Date": date_str,
             "Khuyen_Mai": khuyen_mai,
             "Thanh_Toan": thanh_toan,
+            "Store_Count": store_count,
             "Link": self.url,
             "screenshot_name": screenshot_name
         }
@@ -294,6 +318,7 @@ class HoangHaInteractor:
                     color_name = f"Option {i+1}"
 
                 print(f"  Clicking: {color_name}")
+                t_click_start = time.time()
 
                 # Click
                 # Check if it's already active? .item.active
@@ -302,10 +327,18 @@ class HoangHaInteractor:
                      print("    (Already active)")
                 else:
                     await btn.click(force=True)
-                    await self.page.wait_for_timeout(1500)
+                    # Optimize: Wait for price update instead of fixed sleep
+                    # Or at least reduce sleep
+                    try:
+                        await self.page.wait_for_timeout(500) # Reduced from 1500
+                    except: pass
+                
+                print(f"    -> Click & Wait took: {time.time() - t_click_start:.2f}s")
                 
                 # Scrape
+                t_scrape_start = time.time()
                 await self.scrape_variant(color_name)
+                print(f"    -> Scrape took: {time.time() - t_scrape_start:.2f}s")
                 
             except Exception as e:
                 print(f"  Failed to process color [{i}]: {e}")
@@ -325,11 +358,18 @@ async def process_url(semaphore, browser, url, csv_path, csv_lock):
 
         try:
             print(f"Processing: {url}")
-            await page.goto(url, timeout=60000, wait_until="domcontentloaded")
-            await page.wait_for_timeout(5000) # Increased initial load wait
+            t0 = time.time()
+            await page.goto(url, timeout=20000, wait_until="domcontentloaded")
+            t_load = time.time()
+            print(f"  -> Page Load took: {t_load - t0:.2f}s")
+
+            # Optimize: Removed fixed 5s wait. 'domcontentloaded' should be enough, 
+            # or wait for specific element inside interactor if needed.
+            # await page.wait_for_timeout(5000) 
 
             interactor = HoangHaInteractor(page, url, csv_path, csv_lock)
             await interactor.process_colors()
+            print(f"  -> Total Processing took: {time.time() - t0:.2f}s")
 
         except Exception as e:
             print(f"Error processing {url}: {e}")
@@ -351,7 +391,12 @@ async def main():
     csv_lock = asyncio.Lock()
     
     urls = total_links['hh_urls']
-    if TEST_MODE:
+    
+    specific_url = os.environ.get("SPECIFIC_URL")
+    if specific_url:
+        print(f"⚠️ PROCESSING SPECIFIC URL: {specific_url}")
+        urls = [specific_url]
+    elif TEST_MODE:
         print("⚠️ TEST MODE ENABLED: Processing only 4 URLs")
         urls = urls[:4]
     
