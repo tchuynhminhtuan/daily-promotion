@@ -532,6 +532,7 @@ CPS,Điện thoại iPhone 16 Pro Max 256GB,Titan Tự Nhiên,,31590000,
 CPS,Điện thoại iPhone 16 Pro Max 256GB,Titan Đen,,31590000,
 DDV,Apple Watch SE 2 (2024) 40mm (GPS) Viền nhôm - Dây cao su S/M,Trắng,4990000,4990000,0
 DDV,Apple Watch SE 2 (2024) 40mm (LTE) Viền nhôm - Dây cao su S/M,Default,6890000,6890000,0
+DDV,Apple Watch SE 2 (2024) 44mm (GPS) Viền nhôm - Dây cao su size S/M,44mm,,0,
 DDV,Apple Watch SE 2 (2024) 44mm (GPS) Viền nhôm - Dây cao su size S/M,Đen,5690000,5690000,0
 DDV,Apple Watch SE 2 (2024) 44mm (LTE) Viền nhôm - Dây cao su size S/M,Default,7590000,7590000,0
 DDV,Apple Watch SE 3 (2025) 40mm (GPS) Viền nhôm - Dây cao su S/M,Ánh sao,5890000,5890000,0
@@ -569,26 +570,35 @@ DDV,Tai nghe Apple AirPods Pro 2 2023 (USB-C) Chính Hãng,Default,5390000,53900
 DDV,Tai nghe Apple AirPods Pro 3 Chính Hãng,Default,6390000,6390000,0
 DDV,Unknown 512GB,Cam Vũ Trụ,43490000,,
 DDV,iPad A16 11 inch (2025) | 128GB Wifi & 5G Chính Hãng,Xanh dương,12490000,12490000,0
-DDV,iPad A16 11 inch (2025) | 512GB Wifi & 5G Chính Hãng,Bạc,19790000,,
-DDV,iPad A16 11 inch (2025) | 512GB Wifi & 5G Chính Hãng,Hồng,19790000,,
-DDV,iPad A16 11 inch (2025) | 512GB Wifi & 5G Chính Hãng,Vàng,19790000,,
-DDV,iPad A16 11 inch (2025) | 512GB Wifi & 5G Chính Hãng,Xanh dương,19790000,12490000,-7300000
-DDV,iPad A16 11 inch (2025) | A16 Wifi 128GB Wifi Chính Hãng,Bạc,8490000,8490000,0
-DDV,iPad A16 11 inch (2025) | A16 Wifi 128GB Wifi Chính Hãng,Hồng,8490000,8490000,0
-DDV,iPad A16 11 inch (2025) | A16 Wifi 128GB Wifi Chính Hãng,Vàng,,8490000,
-DDV,iPad A16 11 inch (2025) | A16 Wifi 128GB Wifi Chính Hãng,Xanh dương,8490000,8490000,0
-DDV,iPad A16 11 inch (2025) | A16 Wifi 512GB Wifi Chính Hãng,Bạc,15990000,15990000,0
-DDV,iPad A16 11 inch (2025) | A16 Wifi 512GB Wifi Chính Hãng,Hồng,15990000,15990000,0
-DDV,iPad A16 11 inch (2025) | A16 Wifi 512GB Wifi Chính Hãng,Vàng,15990000,15990000,0
-DDV,iPad A16 11 inch (2025) | A16 Wifi 512GB Wifi Chính Hãng,Xanh dương,15990000,15990000,0
-DDV,iPad A16 11 inch 2025 A16 Wifi 256GB Wifi Chính hãng,Bạc,11111000,11111000,0
-DDV,iPad A16 11 inch 2025 A16 Wifi 256GB Wifi Chính hãng,Xanh dương,11111000,11111000,0
+DDV,iPad A16 11 inch (2025) | 128GB Wifi Chính Hãng,Bạc,,8490000,
+DDV,iPad A16 11 inch (2025) | 128GB Wifi Chính Hãng,Hồng,,8490000,
+DDV,iPad A16 11 inch (2025) | 128GB Wifi Chính Hãng,Vàng,,8490000,
+DDV,iPad A16 11 inch (2025) | 128GB Wifi Chính Hãng,Xanh dương,,8490000,
+DDV,iPad A16 11 inch (2025) | 512GB Wifi & 5G Chính Hãng,Bạc,19790000,19790000,0
+DDV,iPad A16 11 inch (2025) | 512GB Wifi & 5G Chính Hãng,Hồng,19790000,19790000,0
+DDV,iPad A16 11 inch (2025) | 512GB Wifi & 5G Chính Hãng,Vàng,19790000,19790000,0
+DDV,iPad A16 11 inch (2025) | 512GB Wifi & 5G Chính Hãng,Xanh dương,19790000,19790000,0
+DDV,iPad A16 11 inch (2025) | 512GB Wifi Chính Hãng,Bạc,,15990000,
+DDV,iPad A16 11 inch (2025) | 512GB Wifi Chính Hãng,Hồng,,15990000,
+DDV,iPad A16 11 inch (2025) | 512GB Wifi Chính Hãng,Vàng,,15990000,
+DDV,iPad A16 11 inch (2025) | 512GB Wifi Chính Hãng,Xanh dương,,15990000,
+DDV,iPad A16 11 inch (2025) | A16 Wifi 128GB Wifi Chính Hãng,Bạc,8490000,,
+DDV,iPad A16 11 inch (2025) | A16 Wifi 128GB Wifi Chính Hãng,Hồng,8490000,,
+DDV,iPad A16 11 inch (2025) | A16 Wifi 128GB Wifi Chính Hãng,Xanh dương,8490000,,
+DDV,iPad A16 11 inch (2025) | A16 Wifi 512GB Wifi Chính Hãng,Bạc,15990000,,
+DDV,iPad A16 11 inch (2025) | A16 Wifi 512GB Wifi Chính Hãng,Hồng,15990000,,
+DDV,iPad A16 11 inch (2025) | A16 Wifi 512GB Wifi Chính Hãng,Vàng,15990000,,
+DDV,iPad A16 11 inch (2025) | A16 Wifi 512GB Wifi Chính Hãng,Xanh dương,15990000,,
+DDV,iPad A16 11 inch 2025 256GB Wifi Chính hãng,Bạc,,11111000,
+DDV,iPad A16 11 inch 2025 256GB Wifi Chính hãng,Xanh dương,,11111000,
+DDV,iPad A16 11 inch 2025 A16 Wifi 256GB Wifi Chính hãng,Bạc,11111000,,
+DDV,iPad A16 11 inch 2025 A16 Wifi 256GB Wifi Chính hãng,Xanh dương,11111000,,
 DDV,iPad Air M3 11 inch | 128GB Wifi Chính Hãng,Tím,13190000,13190000,0
 DDV,iPad Air M3 11 inch | 128GB Wifi Chính Hãng,Vàng trắng,13190000,13190000,0
 DDV,iPad Air M3 11 inch | 128GB Wifi Chính Hãng,Xanh,12990000,12990000,0
 DDV,iPad Air M3 11 inch | 128GB Wifi Chính Hãng,Xám,13190000,13190000,0
 DDV,iPad Air M3 11 inch | 1TB Wifi Chính Hãng,Tím,,27690000,
-DDV,iPad Air M3 11 inch | 1TB Wifi Chính Hãng,Vàng trắng,,20990000,
+DDV,iPad Air M3 11 inch | 1TB Wifi Chính Hãng,Vàng trắng,,27690000,
 DDV,iPad Air M3 11 inch | 1TB Wifi Chính Hãng,Xanh,,27690000,
 DDV,iPad Air M3 11 inch | 1TB Wifi Chính Hãng,Xám,,27690000,
 DDV,iPad Air M3 11 inch | 256GB Wifi Chính Hãng,Tím,15990000,15990000,0
@@ -614,14 +624,13 @@ DDV,iPhone 13 128GB Chính Hãng (VN/A),Đen,12190000,12190000,0
 DDV,iPhone 14 128GB Chính hãng (VN/A),Trắng,13490000,13490000,0
 DDV,iPhone 14 128GB Chính hãng (VN/A),Xanh dương,13490000,13490000,0
 DDV,iPhone 14 128GB Chính hãng (VN/A),Đen,13490000,13490000,0
-DDV,iPhone 14 256GB Chính Hãng (VN/A),Xanh dương,16990000,,
-DDV,iPhone 14 256GB Chính Hãng (VN/A),Đen,,16990000,
-DDV,iPhone 14 512GB Chính Hãng (VN/A),Trắng,21290000,,
-DDV,iPhone 14 512GB Chính Hãng (VN/A),Tím,21290000,,
-DDV,iPhone 14 512GB Chính Hãng (VN/A),Vàng,21290000,,
+DDV,iPhone 14 256GB Chính Hãng (VN/A),Xanh dương,16990000,16990000,0
+DDV,iPhone 14 512GB Chính Hãng (VN/A),Trắng,21290000,21290000,0
+DDV,iPhone 14 512GB Chính Hãng (VN/A),Tím,21290000,21290000,0
+DDV,iPhone 14 512GB Chính Hãng (VN/A),Vàng,21290000,21290000,0
 DDV,iPhone 14 512GB Chính Hãng (VN/A),Xanh dương,21290000,21290000,0
-DDV,iPhone 14 512GB Chính Hãng (VN/A),Đen,21290000,,
-DDV,iPhone 14 512GB Chính Hãng (VN/A),Đỏ,21290000,,
+DDV,iPhone 14 512GB Chính Hãng (VN/A),Đen,21290000,21290000,0
+DDV,iPhone 14 512GB Chính Hãng (VN/A),Đỏ,21290000,21290000,0
 DDV,iPhone 15 128GB Chính hãng (VN/A),Hồng,16690000,16690000,0
 DDV,iPhone 15 128GB Chính hãng (VN/A),Xanh dương,16690000,16690000,0
 DDV,iPhone 15 128GB Chính hãng (VN/A),Đen,16690000,16690000,0
@@ -638,6 +647,7 @@ DDV,iPhone 16 128GB Chính Hãng (VN/A),Trắng,,20490000,
 DDV,iPhone 16 128GB Chính Hãng (VN/A),Xanh dương,,20490000,
 DDV,iPhone 16 128GB Chính Hãng (VN/A),Xanh lá,,20490000,
 DDV,iPhone 16 128GB Chính Hãng (VN/A),Đen,,20490000,
+DDV,iPhone 16 256GB Chính Hãng (VN/A),Default,,21790000,
 DDV,iPhone 16 512GB Chính Hãng (VN/A),Hồng,27290000,27290000,0
 DDV,iPhone 16 512GB Chính Hãng (VN/A),Trắng,27290000,27290000,0
 DDV,iPhone 16 512GB Chính Hãng (VN/A),Xanh dương,27290000,27290000,0
@@ -647,22 +657,22 @@ DDV,iPhone 16 Plus 128GB Chính hãng (VN/A),Hồng,,24390000,
 DDV,iPhone 16 Plus 128GB Chính hãng (VN/A),Trắng,,24190000,
 DDV,iPhone 16 Plus 128GB Chính hãng (VN/A),Xanh lá,,24390000,
 DDV,iPhone 16 Plus 128GB Chính hãng (VN/A),Đen,,23990000,
-DDV,iPhone 16 Plus 256GB Chính hãng (VN/A),Hồng,27190000,,
-DDV,iPhone 16 Plus 256GB Chính hãng (VN/A),Đen,,27190000,
+DDV,iPhone 16 Plus 256GB Chính hãng (VN/A),Hồng,27190000,27190000,0
 DDV,iPhone 16 Plus 512GB Chính hãng (VN/A),Hồng,29290000,29290000,0
-DDV,iPhone 16 Plus 512GB Chính hãng (VN/A),Trắng,29290000,,
-DDV,iPhone 16 Plus 512GB Chính hãng (VN/A),Xanh dương,29290000,,
-DDV,iPhone 16 Plus 512GB Chính hãng (VN/A),Xanh lá,29290000,,
-DDV,iPhone 16 Plus 512GB Chính hãng (VN/A),Đen,29290000,,
+DDV,iPhone 16 Plus 512GB Chính hãng (VN/A),Trắng,29290000,29290000,0
+DDV,iPhone 16 Plus 512GB Chính hãng (VN/A),Xanh dương,29290000,29290000,0
+DDV,iPhone 16 Plus 512GB Chính hãng (VN/A),Xanh lá,29290000,29290000,0
+DDV,iPhone 16 Plus 512GB Chính hãng (VN/A),Đen,29290000,29290000,0
 DDV,iPhone 16 Pro Max 1TB Chính Hãng (VN/A),Titan Sa Mạc,41990000,41990000,0
 DDV,iPhone 16 Pro Max 1TB Chính Hãng (VN/A),Titan Trắng,41990000,,
 DDV,iPhone 16 Pro Max 1TB Chính Hãng (VN/A),Titan Đen,41990000,41990000,0
 DDV,iPhone 16 Pro Max 256GB Chính Hãng (VN/A),Titan Sa Mạc,30190000,30390000,200000
 DDV,iPhone 16 Pro Max 256GB Chính Hãng (VN/A),Titan Đen,30590000,30590000,0
+DDV,iPhone 16 Pro Max 512GB Chính Hãng (VN/A),Default,,36490000,
+DDV,iPhone 16e 128GB Chính Hãng (VN/A),Default,,15190000,
 DDV,iPhone 16e 128GB Chính Hãng (VN/A),Trắng,15190000,,
-DDV,iPhone 16e 512GB Chính Hãng (VN/A),Default,,0,
-DDV,iPhone 16e 512GB Chính Hãng (VN/A),Trắng,23990000,,
-DDV,iPhone 16e 512GB Chính Hãng (VN/A),Đen,23990000,,
+DDV,iPhone 16e 512GB Chính Hãng (VN/A),Trắng,23990000,23990000,0
+DDV,iPhone 16e 512GB Chính Hãng (VN/A),Đen,23990000,23990000,0
 DDV,iPhone 17 256GB Chính Hãng,Trắng,,24990000,
 DDV,iPhone 17 256GB Chính Hãng,Tím Oải Hương,24590000,24590000,0
 DDV,iPhone 17 256GB Chính Hãng,Xanh Lam Khói,24790000,24790000,0
@@ -670,18 +680,17 @@ DDV,iPhone 17 256GB Chính Hãng,Xanh Lá Xô Thơm,24990000,,
 DDV,iPhone 17 512GB Chính Hãng,Trắng,30490000,30490000,0
 DDV,iPhone 17 512GB Chính Hãng,Tím Oải Hương,30490000,30490000,0
 DDV,iPhone 17 512GB Chính Hãng,Xanh Lam Khói,30490000,30490000,0
-DDV,iPhone 17 512GB Chính Hãng,Xanh Lá Xô Thơm,30490000,,
-DDV,iPhone 17 512GB Chính Hãng,Đen,30490000,,
-DDV,iPhone 17 Pro 1TB Chính Hãng,Bạc,,46790000,
+DDV,iPhone 17 512GB Chính Hãng,Xanh Lá Xô Thơm,30490000,30490000,0
+DDV,iPhone 17 512GB Chính Hãng,Đen,30490000,30490000,0
 DDV,iPhone 17 Pro 1TB Chính Hãng,Cam Vũ Trụ,46490000,46490000,0
 DDV,iPhone 17 Pro 1TB Chính Hãng,Xanh Đậm,46790000,46790000,0
 DDV,iPhone 17 Pro 256GB Chính Hãng,Bạc,34590000,34590000,0
 DDV,iPhone 17 Pro 256GB Chính Hãng,Cam Vũ Trụ,33790000,33790000,0
 DDV,iPhone 17 Pro 256GB Chính Hãng,Xanh Đậm,33990000,33990000,0
 DDV,iPhone 17 Pro 512GB Chính Hãng,Bạc,41390000,41390000,0
-DDV,iPhone 17 Pro 512GB Chính Hãng,Cam Vũ Trụ,40390000,33790000,-6600000
-DDV,iPhone 17 Pro 512GB Chính Hãng,Xanh Đậm,40490000,41390000,900000
-DDV,iPhone 17 Pro Max 1TB Chính Hãng,Cam Vũ Trụ,50790000,43490000,-7300000
+DDV,iPhone 17 Pro 512GB Chính Hãng,Cam Vũ Trụ,40390000,40390000,0
+DDV,iPhone 17 Pro 512GB Chính Hãng,Xanh Đậm,40490000,,
+DDV,iPhone 17 Pro Max 1TB Chính Hãng,Cam Vũ Trụ,50790000,50790000,0
 DDV,iPhone 17 Pro Max 256GB Chính Hãng,Bạc,37990000,37790000,-200000
 DDV,iPhone 17 Pro Max 256GB Chính Hãng,Cam Vũ Trụ,37290000,37290000,0
 DDV,iPhone 17 Pro Max 256GB Chính Hãng,Xanh Đậm,37290000,37290000,0
@@ -1153,7 +1162,7 @@ HoangHa,iPhone 17 512GB,Đen,30490000,30490000,0
 HoangHa,iPhone 17 Pro 1TB,Bạc,46990000,46990000,0
 HoangHa,iPhone 17 Pro 1TB,Cam vũ trụ,46990000,46990000,0
 HoangHa,iPhone 17 Pro 1TB,Xanh đậm,46990000,46990000,0
-HoangHa,iPhone 17 Pro 256GB,Bạc,34790000,34790000,0
+HoangHa,iPhone 17 Pro 256GB,Bạc,34790000,33990000,-800000
 HoangHa,iPhone 17 Pro 256GB,Cam vũ trụ,33990000,33990000,0
 HoangHa,iPhone 17 Pro 256GB,Xanh đậm,33990000,33990000,0
 HoangHa,iPhone 17 Pro 512GB,Bạc,40490000,40490000,0
@@ -1162,13 +1171,13 @@ HoangHa,iPhone 17 Pro 512GB,Xanh đậm,40490000,40490000,0
 HoangHa,iPhone 17 Pro Max 1TB,Bạc,49990000,49990000,0
 HoangHa,iPhone 17 Pro Max 1TB,Cam vũ trụ,49990000,49990000,0
 HoangHa,iPhone 17 Pro Max 1TB,Xanh đậm,49990000,49990000,0
-HoangHa,iPhone 17 Pro Max 256GB,Bạc,37690000,37490000,-200000
+HoangHa,iPhone 17 Pro Max 256GB,Bạc,37690000,37190000,-500000
 HoangHa,iPhone 17 Pro Max 256GB,Cam vũ trụ,37390000,37190000,-200000
 HoangHa,iPhone 17 Pro Max 256GB,Xanh đậm,37390000,37190000,-200000
 HoangHa,iPhone 17 Pro Max 2TB,Bạc,62990000,62990000,0
 HoangHa,iPhone 17 Pro Max 2TB,Cam vũ trụ,62990000,62990000,0
 HoangHa,iPhone 17 Pro Max 2TB,Xanh đậm,62990000,62990000,0
-HoangHa,iPhone 17 Pro Max 512GB,Bạc,43990000,43690000,-300000
+HoangHa,iPhone 17 Pro Max 512GB,Bạc,43990000,42990000,-1000000
 HoangHa,iPhone 17 Pro Max 512GB,Cam vũ trụ,43490000,42990000,-500000
 HoangHa,iPhone 17 Pro Max 512GB,Xanh đậm,43490000,42990000,-500000
 HoangHa,iPhone Air 1TB,Trắng Mây,39990000,39990000,0
@@ -1191,17 +1200,20 @@ HoangHa,Apple Watch SE 2024,Đen,6250000,5290000,-960000
 HoangHa,Apple Watch SE 3,Ánh Sao,5990000,7190000,1200000
 HoangHa,Apple Watch SE 3,Đêm Xanh Thẳm,7190000,7190000,0
 HoangHa,Apple Watch Series 10,Bạc,12890000,10190000,-2700000
+HoangHa,Apple Watch Series 10,Viền Titan Tự Nhiên Dây M/L,,18990000,
 HoangHa,Apple Watch Series 10,Viền Titan Vàng,18990000,18990000,0
 HoangHa,Apple Watch Series 10,Viền Titan Xám,18990000,18990000,0
+HoangHa,Apple Watch Series 10,Viền Titan Xám Dây M/L,,20990000,
+HoangHa,Apple Watch Series 10,Viền Titan Xám Dây S/M,,20990000,
 HoangHa,Apple Watch Series 10,Vàng Hồng,10190000,10190000,0
 HoangHa,Apple Watch Series 10,Đen Bóng,12890000,10190000,-2700000
 HoangHa,Apple Watch Series 11,Bạc,9390000,9390000,0
 HoangHa,Apple Watch Series 11,Gold,21590000,19490000,-2100000
 HoangHa,Apple Watch Series 11,Tự Nhiên,19490000,19490000,0
 HoangHa,Apple Watch Series 11,Vàng Hồng,9390000,9390000,0
-HoangHa,Apple Watch Series 11,Xám Không Gian,10290000,10290000,0
+HoangHa,Apple Watch Series 11,Xám Không Gian,10290000,9390000,-900000
 HoangHa,Apple Watch Series 11,Xám Đá Phiến,19490000,19490000,0
-HoangHa,Apple Watch Series 11,Đen Bóng,10290000,10290000,0
+HoangHa,Apple Watch Series 11,Đen Bóng,10290000,9390000,-900000
 HoangHa,Apple Watch Series 7,Blue,8590000,8590000,0
 HoangHa,Apple Watch Series 7,Gold,11990000,11990000,0
 HoangHa,Apple Watch Series 7,Graphite,11990000,11990000,0
@@ -1216,6 +1228,8 @@ HoangHa,Apple Watch Series 8,Silver,13990000,13990000,0
 HoangHa,Apple Watch Series 9,Bạc,8990000,8990000,0
 HoangHa,Apple Watch Series 9,Màu Đen,9990000,9990000,0
 HoangHa,Apple Watch Series 9,Ánh Sao,9990000,9990000,0
+HoangHa,Apple Watch Ultra 2 (2024),Viền Titan Tự Nhiên Dây M/L,,21990000,
+HoangHa,Apple Watch Ultra 2 (2024),Viền Titan Tự Nhiên Dây S/M,,21990000,
 HoangHa,Apple Watch Ultra 2 (2024),Viền Titan Đen,21990000,21990000,0
 HoangHa,Apple Watch Ultra 3,Tự Nhiên,26490000,23490000,-3000000
 HoangHa,Apple Watch Ultra 3,Đen,23490000,23490000,0
@@ -1261,7 +1275,7 @@ HoangHa,MacBook Air M4 13.6 inch 10CPU 10GPU 16GB/512GB,Xanh Da Trời,30590000,
 HoangHa,MacBook Air M4 13.6 inch 10CPU 10GPU 16GB/512GB,Ánh Sao,30590000,30590000,0
 HoangHa,MacBook Air M4 13.6 inch 10CPU 10GPU 16GB/512GB,Đêm Xanh Thẳm,30590000,30590000,0
 HoangHa,MacBook Air M4 13.6 inch 10CPU 10GPU 24GB/512GB,Bạc,34690000,34690000,0
-HoangHa,MacBook Air M4 13.6 inch 10CPU 10GPU 24GB/512GB,Xanh Da Trời,34990000,34990000,0
+HoangHa,MacBook Air M4 13.6 inch 10CPU 10GPU 24GB/512GB,Xanh Da Trời,34990000,34690000,-300000
 HoangHa,MacBook Air M4 13.6 inch 10CPU 10GPU 24GB/512GB,Ánh Sao,34690000,34690000,0
 HoangHa,MacBook Air M4 13.6 inch 10CPU 10GPU 24GB/512GB,Đêm Xanh Thẳm,34690000,34690000,0
 HoangHa,MacBook Air M4 13.6 inch 10CPU 8GPU 16GB/256GB,Bạc,24690000,24690000,0
@@ -1317,13 +1331,12 @@ HoangHa,Máy tính bảng iPad Pro M5 13 inch Wi-Fi (256GB),Đen Không Gian,389
 HoangHa,Máy tính bảng iPad Pro M5 13 inch Wi-Fi (512GB),Bạc,44990000,44990000,0
 HoangHa,Máy tính bảng iPad Pro M5 13 inch Wi-Fi (512GB),Đen Không Gian,44990000,44990000,0
 HoangHa,Tai nghe AirPods 4,Trắng,,2990000,
-HoangHa,"Tai nghe AirPods 4 ANC sản phẩm cũ, trôi bảo hành",Unknown,0,0,0
+HoangHa,"Tai nghe AirPods 4 ANC sản phẩm cũ, trôi bảo hành",Unknown,0,,
 HoangHa,Tai nghe AirPods 4 bản Chủ Động Khử Tiếng Ồn,Trắng,,4290000,
-HoangHa,"Tai nghe AirPods 4 sản phẩm cũ, trôi bảo hành",Unknown,,0,
 HoangHa,Tai nghe AirPods Pro 2 (USB-C),Trắng,,5390000,
-HoangHa,"Tai nghe AirPods Pro 2 sản phẩm cũ, trôi bảo hành",Unknown,0,0,0
+HoangHa,"Tai nghe AirPods Pro 2 sản phẩm cũ, trôi bảo hành",Unknown,0,,
 HoangHa,Tai nghe AirPods Pro 3,Trắng,,6490000,
-HoangHa,Tai nghe AirPods Pro 3,Unknown,0,0,0
+HoangHa,Tai nghe AirPods Pro 3,Unknown,0,,
 HoangHa,iMac M1 2021 24 inch (8GB/512GB),Green,26990000,26990000,0
 HoangHa,iMac M1 2021 24 inch (8GB/512GB),Pink,26990000,26990000,0
 HoangHa,iMac M4 24 inch 2024 8CPU 8GPU 16GB/256GB,Bạc,33590000,33590000,0
@@ -1342,10 +1355,10 @@ HoangHa,iPad A16 11 inch 5G (512GB),Bạc,20790000,20790000,0
 HoangHa,iPad A16 11 inch 5G (512GB),Hồng,20790000,20790000,0
 HoangHa,iPad A16 11 inch 5G (512GB),Vàng,20790000,20790000,0
 HoangHa,iPad A16 11 inch 5G (512GB),Xanh Dương,20790000,20790000,0
-HoangHa,iPad A16 11 inch Wifi (128GB),Bạc,8690000,8690000,0
-HoangHa,iPad A16 11 inch Wifi (128GB),Hồng,8690000,8690000,0
+HoangHa,iPad A16 11 inch Wifi (128GB),Bạc,8690000,8490000,-200000
+HoangHa,iPad A16 11 inch Wifi (128GB),Hồng,8690000,8490000,-200000
 HoangHa,iPad A16 11 inch Wifi (128GB),Vàng,8490000,8490000,0
-HoangHa,iPad A16 11 inch Wifi (128GB),Xanh Dương,8690000,8690000,0
+HoangHa,iPad A16 11 inch Wifi (128GB),Xanh Dương,8690000,8490000,-200000
 HoangHa,iPad A16 11 inch Wifi (256GB),Bạc,10990000,10990000,0
 HoangHa,iPad A16 11 inch Wifi (256GB),Hồng,10990000,10990000,0
 HoangHa,iPad A16 11 inch Wifi (256GB),Vàng,10990000,10990000,0
@@ -1494,11 +1507,11 @@ HoangHa,iPhone 14 Plus (128GB),Trắng,,17390000,
 HoangHa,iPhone 14 Plus (128GB),Tím,,17390000,
 HoangHa,iPhone 14 Plus (128GB),Xanh,,17390000,
 HoangHa,iPhone 14 Plus (128GB),Đen,,17390000,
-HoangHa,iPhone 15 (128GB),Hồng,,17090000,
+HoangHa,iPhone 15 (128GB),Hồng,,16690000,
 HoangHa,iPhone 15 (128GB),Vàng,,16690000,
-HoangHa,iPhone 15 (128GB),Xanh Dương,,17090000,
-HoangHa,iPhone 15 (128GB),Xanh Lá,,17090000,
-HoangHa,iPhone 15 (128GB),Đen,,17090000,
+HoangHa,iPhone 15 (128GB),Xanh Dương,,16690000,
+HoangHa,iPhone 15 (128GB),Xanh Lá,,16690000,
+HoangHa,iPhone 15 (128GB),Đen,,16690000,
 HoangHa,iPhone 15 (256GB),Hồng,18490000,18490000,0
 HoangHa,iPhone 15 (256GB),Vàng,18490000,18490000,0
 HoangHa,iPhone 15 (256GB),Xanh Dương,18490000,18490000,0
@@ -1539,12 +1552,12 @@ HoangHa,iPhone 15 Pro Max (1TB),Titan Trắng,39390000,39390000,0
 HoangHa,iPhone 15 Pro Max (1TB),Titan Tự Nhiên,39390000,39390000,0
 HoangHa,iPhone 15 Pro Max (1TB),Titan Xanh,39390000,39390000,0
 HoangHa,iPhone 15 Pro Max (1TB),Titan Đen,39390000,39390000,0
-HoangHa,iPhone 15 Pro Max (256GB),Titan Trắng,,28990000,
-HoangHa,iPhone 15 Pro Max (256GB),Titan Tự Nhiên,,28990000,
+HoangHa,iPhone 15 Pro Max (256GB),Titan Trắng,,28790000,
+HoangHa,iPhone 15 Pro Max (256GB),Titan Tự Nhiên,,28790000,
 HoangHa,iPhone 15 Pro Max (256GB),Titan Xanh,,28790000,
-HoangHa,iPhone 15 Pro Max (256GB),Titan Đen,,28990000,
-HoangHa,iPhone 15 Pro Max (512GB),Titan Trắng,31990000,31990000,0
-HoangHa,iPhone 15 Pro Max (512GB),Titan Tự Nhiên,31990000,31990000,0
+HoangHa,iPhone 15 Pro Max (256GB),Titan Đen,,28790000,
+HoangHa,iPhone 15 Pro Max (512GB),Titan Trắng,31990000,31690000,-300000
+HoangHa,iPhone 15 Pro Max (512GB),Titan Tự Nhiên,31990000,31690000,-300000
 HoangHa,iPhone 15 Pro Max (512GB),Titan Xanh,31690000,31690000,0
 HoangHa,iPhone 15 Pro Max (512GB),Titan Đen,31690000,31690000,0
 HoangHa,iPhone 16 (128GB),Hồng,20790000,20790000,0
@@ -1611,6 +1624,9 @@ HoangHa,iPhone 16e (256GB),Trắng,18350000,18350000,0
 HoangHa,iPhone 16e (256GB),Đen,18350000,18350000,0
 HoangHa,Điện thoại iPhone 16e (512GB),Trắng,23690000,23690000,0
 HoangHa,Điện thoại iPhone 16e (512GB),Đen,23690000,23690000,0
+HoangHa,Đồng hồ thông minh Apple Watch Ultra 2,Cam/Be,,19990000,
+HoangHa,Đồng hồ thông minh Apple Watch Ultra 2,Xanh Dương/Đen,,19990000,
+HoangHa,Đồng hồ thông minh Apple Watch Ultra 2,Xanh Lá/Xám,,19990000,
 MW,iPad Pro M4 13 inch 5G 256GB,Bạc,,38990000,
 MW,iPad Pro M4 13 inch 5G 256GB,Đen,39990000,39990000,0
 MW,iPhone 13 128GB,Trắng,12490000,12390000,-100000
