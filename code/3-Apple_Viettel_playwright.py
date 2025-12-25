@@ -114,6 +114,17 @@ class ViettelInteractor:
         if not gia_niem_yet_raw and gia_khuyen_mai_raw:
             gia_niem_yet_raw = gia_khuyen_mai_raw
             
+        # JSON-LD Fallback (Ported from Old Scraper)
+        if not gia_khuyen_mai_raw:
+             try:
+                 json_ld = await self.page.evaluate("""() => {
+                    const script = document.querySelector('script[type="application/ld+json"]');
+                    return script ? JSON.parse(script.innerText) : null;
+                 }""")
+                 if json_ld and "offers" in json_ld:
+                     gia_khuyen_mai_raw = str(json_ld["offers"].get("price", ""))
+             except: pass
+            
         def clean_price(p):
             if not p: return "0"
             return str(p).replace("đ", "").replace("₫", "").replace(".", "").replace(",", "").strip()
@@ -248,6 +259,16 @@ class ViettelInteractor:
                 is_disabled = False
                 class_attr = await btn.get_attribute("class")
                 if class_attr and "disabled" in class_attr: is_disabled = True
+                
+                # Robust check (Ported from Old Scraper)
+                # Viettel uses disabled attribute or pointer-events on the LABEL, not always class on LI
+                label = btn.locator("label")
+                if await label.count() > 0:
+                     if await label.get_attribute("disabled"):
+                         is_disabled = True
+                     style = await label.get_attribute("style")
+                     if style and "pointer-events: none" in style:
+                         is_disabled = True
                 
                 # Click if not active? 
                 # Viettel doesn't always have 'active' class on LI, maybe on Label label.checked?
