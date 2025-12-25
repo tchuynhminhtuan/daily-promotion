@@ -103,10 +103,6 @@ class ViettelInteractor:
         # Avoid duplicate data for same color? 
         # (Assuming the main loop controls iterations, we scrape what we are asked)
 
-        # 1. Product Name
-        product_name = await get_text_safe(self.page, PRODUCT_NAME_SELECTOR)
-        if not product_name: product_name = await self.page.title()
-        
         # 2. Prices
         gia_khuyen_mai_raw = await get_text_safe(self.page, PRICE_MAIN_SELECTOR)
         gia_niem_yet_raw = await get_text_safe(self.page, PRICE_SUB_SELECTOR)
@@ -143,6 +139,13 @@ class ViettelInteractor:
                     ton_kho = "Yes"
              except: pass
         if gia_khuyen_mai == "0": ton_kho = "No"
+
+        # 1. Product Name (Clean Suffix)
+        product_name = await get_text_safe(self.page, PRODUCT_NAME_SELECTOR)
+        if not product_name: product_name = await self.page.title()
+        
+        # Clean potential site suffixes
+        product_name = product_name.replace(" - ViettelStore.vn", "").strip()
 
         # 4. Promo (Khuyen Mai)
         khuyen_mai = ""
@@ -201,7 +204,6 @@ class ViettelInteractor:
         
         await write_to_csv(self.csv_path, data, self.csv_lock)
         print(f"Saved: {product_name} - {color_name} | Price: {gia_khuyen_mai}")
-
     async def process_colors(self):
         """Iterate through all color options."""
         try:
@@ -209,13 +211,18 @@ class ViettelInteractor:
             
             # STABILITY FIX: Wait for color options explicitly
             try:
-                await self.page.locator("ul.option-color-product").wait_for(state="visible", timeout=5000)
+                await self.page.locator("ul.option-color-product").first.wait_for(state="visible", timeout=5000)
                 # Scroll into view to ensure elements are rendered/interactable
-                await self.page.locator("ul.option-color-product").scroll_into_view_if_needed()
+                await self.page.locator("ul.option-color-product").first.scroll_into_view_if_needed()
             except: pass
 
-            # Get count with retry
-            color_btns = self.page.locator(COLOR_OPTIONS_SELECTOR)
+            # SCOPED SELECTOR: Only target the FIRST ul for colors (User Request)
+            # User XPath: (//ul[contains(@class, 'option-color-product')])[1]/li
+            # Playwright equivalent: locator("ul.option-color-product").nth(0).locator("li")
+            
+            color_ul = self.page.locator("ul.option-color-product").first
+            color_btns = color_ul.locator("li")
+            
             count = await color_btns.count()
             
             if count == 0:
@@ -233,8 +240,8 @@ class ViettelInteractor:
             for i in range(count):
                 await self.remove_overlays()
                 
-                # Re-locate
-                btn = self.page.locator(COLOR_OPTIONS_SELECTOR).nth(i)
+                # Re-locate scoped
+                btn = color_ul.locator("li").nth(i)
                 
                 # Check visibility without forcing scroll on every item (parent scroll should cover it)
                 if not await btn.is_visible(): 
@@ -331,7 +338,11 @@ async def main():
     csv_lock = asyncio.Lock()
     
     initial_urls = sites.total_links['vt_urls']
-    if os.environ.get("TEST_MODE") == "True":
+    specific_url = os.environ.get("SPECIFIC_URL")
+    if specific_url:
+        print(f"⚠️ PROCESSING SPECIFIC URL: {specific_url}")
+        initial_urls = [specific_url]
+    elif os.environ.get("TEST_MODE") == "True":
         print("⚠️ TEST MODE ENABLED: Processing 4 URLs")
         initial_urls = initial_urls[:4]
     

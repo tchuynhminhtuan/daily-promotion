@@ -129,7 +129,6 @@ total_links={
     ,
     "hh_urls":
     [
-    'https://hoanghamobile.com/bao-da/bao-chong-soc-gear4-cho-airpods-1-2-chinh-hang',
     'https://hoanghamobile.com/tai-nghe/airpods-4',
     'https://hoanghamobile.com/tai-nghe/airpods-pro-2-voi-hop-sac-usb-c-chinh-hang-apple-viet-nam',
     'https://hoanghamobile.com/tai-nghe/airpods-4-ban-chu-dong-khu-tieng-on',

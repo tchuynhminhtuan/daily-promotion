@@ -79,8 +79,10 @@ COLUMN_MAPPING = {
     "Uu_Dai_Them": "Payment Promo", # MW uses this
     "Voucher_Image": "Voucher",
     "Other_promotion": "Other Promo",
-    "Link": "Link"
+    "Link": "Link",
+    "Ton_Kho": "Stock"
 }
+
 
 class DataLoader:
     """Handles loading and normalizing data from multiple CSV sources."""
@@ -385,9 +387,10 @@ class PromoDiffGenerator:
                     "Color": curr_row['Color'],
                     "Date": curr_row['Date'],
                     "Prev_Date": prev_row['Date'],
-                    "New_Price": curr_price,
-                    "Old_Price": prev_price,
+                    "New_Price": curr_row.get('Promo Price'),
+                    "Old_Price": prev_row.get('Promo Price'),
                     "Link": curr_row.get('Link', ''),
+                    "Stock": curr_row.get('Stock', 'Unknown'), # Pass Stock
                     "Status": "UNCHANGED" # Default
                 }
                 
@@ -442,6 +445,7 @@ class PromoDiffGenerator:
                         "New_Price": row.get('Promo Price'),
                         "Old_Price": 0, # Was not there
                         "Link": row.get('Link', ''),
+                        "Stock": row.get('Stock', 'Unknown'), # Pass Stock
                         "Status": "NEW"
                      }
                      # Fill text cols
@@ -500,6 +504,9 @@ class HTMLGenerator:
                 .diff-table th, .diff-table td {{ border: 1px solid #eee; padding: 10px; text-align: left; vertical-align: top; width: 50%; }}
                 .added {{ background: #d4edda; color: #155724; padding: 2px 4px; border-radius: 2px; }}
                 .removed {{ background: #f8d7da; color: #721c24; text-decoration: line-through; padding: 2px 4px; border-radius: 2px; }}
+                .stock-tag {{ font-size: 0.75em; padding: 2px 6px; border-radius: 4px; font-weight: bold; margin-left: 8px; vertical-align: middle; }}
+                .stock-yes {{ background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }}
+                .stock-no {{ background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }}
                 .hidden {{ display: none !important; }}
                 @media (max-width: 600px) {{ .controls {{ position: static; flex-direction: column; align-items: stretch; }} .diff-table th, .diff-table td {{ padding: 5px; }} }}
             </style>
@@ -521,6 +528,15 @@ class HTMLGenerator:
                     <select id="channelFilter">
                         <option value="ALL">Tất cả</option>
                         {channel_opts}
+                    </select>
+                </div>
+                <!-- Stock Filter -->
+                <div class="control-group">
+                    <label for="stockFilter">Kho hàng:</label>
+                    <select id="stockFilter">
+                        <option value="ALL">Tất cả</option>
+                        <option value="YES">Còn hàng</option>
+                        <option value="NO">Hết hàng</option>
                     </select>
                 </div>
                 <div class="control-group">
@@ -572,6 +588,7 @@ class HTMLGenerator:
                 document.addEventListener('DOMContentLoaded', function() {
                     const dateSelect = document.getElementById('dateFilter');
                     const channelSelect = document.getElementById('channelFilter');
+                    const stockSelect = document.getElementById('stockFilter');
                     const promoSelect = document.getElementById('promoFilter');
                     const priceSelect = document.getElementById('priceFilter');
                     const sortSelect = document.getElementById('sortPrice');
@@ -583,6 +600,7 @@ class HTMLGenerator:
                     function updateView() {
                         const selectedDate = dateSelect.value;
                         const selectedChannel = channelSelect.value;
+                        const selectedStock = stockSelect.value;
                         const selectedPromo = promoSelect.value; // YES (Default), ALL, NO, NEW
                         const selectedPrice = priceSelect.value;
                         const sortMode = sortSelect.value;
@@ -594,6 +612,7 @@ class HTMLGenerator:
                         productBlocks.forEach(block => {
                             const blockDate = block.getAttribute('data-date');
                             const blockChannel = block.getAttribute('data-channel');
+                            const blockStock = block.getAttribute('data-stock');
                             const blockPromoChange = block.getAttribute('data-promo-change'); // YES, NO
                             const blockStatus = block.getAttribute('data-status'); // CHANGED, UNCHANGED, NEW
                             const blockPriceChange = block.getAttribute('data-price-change');
@@ -601,6 +620,14 @@ class HTMLGenerator:
                             
                             const matchesDate = (selectedDate === 'ALL' || blockDate === selectedDate);
                             const matchesChannel = (selectedChannel === 'ALL' || blockChannel === selectedChannel);
+                            
+                            // Stock Filter
+                            let matchesStock = true;
+                            if (selectedStock === 'YES') {
+                                matchesStock = (blockStock && blockStock.toLowerCase().includes('yes'));
+                            } else if (selectedStock === 'NO') {
+                                matchesStock = (!blockStock || !blockStock.toLowerCase().includes('yes'));
+                            }
                             
                             // Promo Filter Logic
                             let matchesPromo = false;
@@ -619,7 +646,7 @@ class HTMLGenerator:
                             const matchesPrice = (selectedPrice === 'ALL' || blockPriceChange === selectedPrice);
                             const matchesSearch = (blockProduct.includes(searchTerm));
 
-                            if (matchesDate && matchesChannel && matchesPromo && matchesSearch && matchesPrice) {
+                            if (matchesDate && matchesChannel && matchesPromo && matchesSearch && matchesPrice && matchesStock) {
                                 block.classList.remove('hidden');
                                 visibleBlocks.push(block);
                             } else {
@@ -651,6 +678,7 @@ class HTMLGenerator:
 
                     dateSelect.addEventListener('change', updateView);
                     channelSelect.addEventListener('change', updateView);
+                    stockSelect.addEventListener('change', updateView);
                     promoSelect.addEventListener('change', updateView);
                     priceSelect.addEventListener('change', updateView);
                     sortSelect.addEventListener('change', updateView);
@@ -678,6 +706,10 @@ class HTMLGenerator:
         prev_date = row.get('Prev_Date', '')
         status = row.get('Status', 'UNCHANGED')
         
+        # Normalize Stock for HTML Attribute
+        raw_stock = str(row.get('Stock', 'Unknown')).lower()
+        stock_val = "YES" if "yes" in raw_stock else "NO"
+
         # Calculate Change Statuses for Filter
         promo_changed = 'NO'
         if status == 'CHANGED' or status == 'NEW':
@@ -714,6 +746,13 @@ class HTMLGenerator:
         elif status == "CHANGED":
              border_style = "border: 1px solid #ffc107;" # Warning/Yellow usually for changes
         
+        # Stock Badge
+        stock_badge = ""
+        if stock_val == "YES":
+             stock_badge = '<span class="stock-tag stock-yes">Còn hàng</span>'
+        else:
+             stock_badge = '<span class="stock-tag stock-no">Hết hàng</span>'
+
         safe_channel = html.escape(str(channel))
         safe_product = html.escape(str(product)).lower()
         safe_date = html.escape(str(date))
@@ -725,12 +764,13 @@ class HTMLGenerator:
              data-channel="{safe_channel}" 
              data-product="{safe_product}" 
              data-date="{safe_date}" 
+             data-stock="{stock_val}"
              data-promo-change="{promo_changed}" 
              data-price-change="{price_changed}"
              data-status="{status}"
              data-price="{current_price}">
             <div class="product-header">
-                <span>{channel} - {product} - {color} {badge_html}</span>
+                <span>{channel} - {product} - {color} {badge_html} {stock_badge}</span>
                 {price_html}
             </div>
             {link_html}
