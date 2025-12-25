@@ -10,7 +10,7 @@ from playwright.async_api import async_playwright, Page
 from utils.sites import total_links
 
 # Constants
-MAX_CONCURRENT_TABS = int(os.environ.get("MAX_CONCURRENT_TABS", 10))
+MAX_CONCURRENT_TABS = 10
 # Default: Take screenshots = False, Block Images = True
 # For GitHub Actions/Proxies: These defaults are now optimized for speed/cost.
 TAKE_SCREENSHOT = os.environ.get("TAKE_SCREENSHOT", "False").lower() == "true"
@@ -238,34 +238,15 @@ async def main():
     # Use the specific URL requested by user for testing
     # urls = ["https://cellphones.com.vn/iphone-air-256gb.html"]
     urls = total_links['cps_urls'] # Uncomment for full run
-    if os.environ.get("TEST_MODE") == "True":
-        print("⚠️ TEST MODE ENABLED: Processing only 4 URLs")
-        urls = urls[:4]
     print(f"Processing {len(urls)} URL(s).")
     
     semaphore = asyncio.Semaphore(MAX_CONCURRENT_TABS)
     
     async with async_playwright() as p:
-        # Proxy Configuration
-        proxy_server = os.environ.get("PROXY_SERVER")
-        launch_options = {
-            "headless": HEADLESS,
-            "args": [
-                "--disable-blink-features=AutomationControlled",
-                "--no-sandbox",
-                "--disable-setuid-sandbox",
-                "--disable-dev-shm-usage",
-                "--disable-gpu",
-                "--window-size=1920,1080"
-            ],
-            "ignore_default_args": ["--enable-automation"]
-        }
-        
-        if proxy_server and os.environ.get("ENABLE_PROXY_CPS", "False").lower() == "true":
-            print(f"🌐 Using Proxy (CPS): {proxy_server}")
-            launch_options["proxy"] = {"server": proxy_server}
-
-        browser = await p.chromium.launch(**launch_options)
+        browser = await p.chromium.launch(
+            headless=HEADLESS,
+            args=["--disable-blink-features=AutomationControlled"]
+        )
         
         tasks = [process_url(semaphore, browser, url, csv_path) for url in urls]
         await asyncio.gather(*tasks)

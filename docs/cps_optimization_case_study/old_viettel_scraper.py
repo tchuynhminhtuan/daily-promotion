@@ -33,7 +33,7 @@ def setup_csv(base_path, date_str):
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
     
-    file_path = os.path.join(output_dir, f"3-viettel-{date_str}_v2_old.csv")
+    file_path = os.path.join(output_dir, f"3-viettel-{date_str}.csv")
     
     # Create img_viettel directory
     img_dir = os.path.join(output_dir, 'img_viettel')
