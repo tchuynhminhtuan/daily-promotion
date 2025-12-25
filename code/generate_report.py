@@ -482,6 +482,24 @@ class HTMLGenerator:
         channel_opts = "".join([f'<option value="{c}">{c}</option>' for c in channels])
         date_opts = "".join([f'<option value="{d}">{d}</option>' for d in dates])
         
+        # Determine Comparison Dates for Header
+        try:
+            # Most freq current date
+            curr_date = self.df['Date'].mode()[0]
+            # Most freq prev date (excluding N/A)
+            prev_dates = self.df[self.df['Prev_Date'] != 'N/A']['Prev_Date']
+            if not prev_dates.empty:
+                prev_date = prev_dates.mode()[0]
+            else:
+                prev_date = "N/A"
+            
+            # Translate
+            curr_date_vn = self._translate_date(curr_date)
+            prev_date_vn = self._translate_date(prev_date)
+            comparison_line = f'<p class="comparison-info">So sánh: <strong>{prev_date_vn}</strong> vs <strong>{curr_date_vn}</strong></p>'
+        except:
+            comparison_line = ""
+
         html_head = f"""
         <!DOCTYPE html>
         <html lang="en">
@@ -491,7 +509,8 @@ class HTMLGenerator:
             <title>Báo cáo So sánh Khuyến mãi</title>
             <style>
                 body {{ font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 20px; line-height: 1.5; color: #333; }}
-                h1 {{ color: #2c3e50; font-size: 1.5rem; }}
+                h1 {{ color: #2c3e50; font-size: 1.5rem; margin-bottom: 5px; }}
+                .comparison-info {{ font-size: 1.1em; color: #555; margin-top: 0; margin-bottom: 20px; }}
                 .controls {{ background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 25px; display: flex; gap: 15px; align-items: center; flex-wrap: wrap; border: 1px solid #e9ecef; position: sticky; top: 0; z-index: 1000; }}
                 .control-group {{ display: flex; align-items: center; gap: 8px; flex: 1 1 auto; }}
                 label {{ font-weight: 600; font-size: 0.9em; white-space: nowrap; }}
@@ -513,7 +532,8 @@ class HTMLGenerator:
         </head>
         <body>
             <h1>Báo cáo So sánh Khuyến mãi</h1>
-            <p style="color: grey;">Generated: {pd.Timestamp.now(tz='Asia/Ho_Chi_Minh').strftime('%Y-%m-%d %H:%M')}</p>
+            <p style="color: grey; margin-bottom: 5px;">Generated: {pd.Timestamp.now(tz='Asia/Ho_Chi_Minh').strftime('%Y-%m-%d %H:%M')}</p>
+            {comparison_line}
             
             <div class="controls">
                  <div class="control-group">
@@ -698,6 +718,28 @@ class HTMLGenerator:
         except Exception as e:
             print(f"Error saving HTML: {e}")
 
+    def _translate_date(self, date_str):
+        if not isinstance(date_str, str) or len(date_str) < 3:
+            return date_str
+        
+        # Mapping for day suffix
+        # Inputs like '2025-12-25-WED' or '2025-12-25-THU'
+        suffix = date_str[-3:].upper()
+        mapping = {
+            'MON': 'T2',
+            'TUE': 'T3',
+            'WED': 'T4',
+            'THU': 'T5',
+            'FRI': 'T6',
+            'SAT': 'T7',
+            'SUN': 'CN'
+        }
+        
+        if suffix in mapping:
+            return date_str[:-3] + mapping[suffix]
+        
+        return date_str
+
     def _render_block(self, row, index):
         channel = row.get('Channel', 'Unknown')
         product = row.get('Product Name', 'Unknown')
@@ -774,7 +816,6 @@ class HTMLGenerator:
                 {price_html}
             </div>
             {link_html}
-            <div class="meta-info">So sánh: {prev_date} vs {date}</div>
         """
         
         if 'Changed_Promotion Details' in row:
@@ -840,10 +881,21 @@ class HTMLGenerator:
             """
             
         if change_status == 'NO':
+             # Render Toggleable Section
+             # It contains both Old and New (which are same) or just one of them.
+             # Let's show "Prev" content as it represents the static state.
+             
+             content_html = self._render_static_content(row, old_col)
+             unique_id = f"toggle-{title}-{row.get('Channel')}-{row.get('Product Name')}-{row.get('Color')}".replace(" ", "_").replace(".", "") + str(id(row))
+             
              return f"""
             <div class="section-title {css_class}">{title}</div>
             <div style="color: #6c757d; font-style: italic; margin-left:15px; margin-top:5px; font-size: 0.95em;">
-                Không có thay đổi
+                Không có thay đổi 
+                <a href="javascript:void(0)" onclick="document.getElementById('{unique_id}').classList.toggle('hidden');" style="font-size: 0.9em; text-decoration: underline; margin-left: 5px;">(Xem chi tiết)</a>
+            </div>
+            <div id="{unique_id}" class="hidden" style="margin-top: 10px; border-left: 3px solid #eee; padding-left: 10px;">
+                {content_html}
             </div>
             """
 
@@ -882,6 +934,14 @@ class HTMLGenerator:
             </tbody>
         </table>
         """
+
+    def _render_static_content(self, row, col_name):
+        raw_text = row.get(col_name, "")
+        items = self._parse_items(raw_text)
+        if not items: return "<em>Không có dữ liệu chi tiết</em>"
+        
+        lis = "".join([f"<li>{html.escape(i)}</li>" for i in sorted(list(items))])
+        return f"<ul class='diff-list' style='color: #666;'>{lis}</ul>"
 
     def _parse_items(self, text):
         if pd.isna(text) or str(text).strip() == "":
