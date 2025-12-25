@@ -24,8 +24,8 @@ USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36
 PRODUCT_NAME_SELECTOR = "h1"
 PROMO_SELECTOR = ".promotions, .block__promo"
 # MW Colors/Storage are often in 'box03' class
-STORAGE_CONTAINER_SELECTOR = ".box03:not(.color)" 
-COLOR_CONTAINER_SELECTOR = ".box03.color"
+STORAGE_CONTAINER_SELECTOR = ".box03:not(.color), .group-box03:not(.color)" 
+COLOR_CONTAINER_SELECTOR = ".box03.color, .group-box03.color, .scrolling_inner"
 
 # --- Helper Functions ---
 def setup_csv(base_path, date_str):
@@ -127,33 +127,47 @@ async def scrape_product_data(page, url, csv_path, csv_lock, forced_color=None):
                     return num
             return "0"
 
-        # 1. Shock Price
-        shock_price = await get_text_safe(page, ".bs_price strong, .price-present")
+        # 1. Shock Price / Specific Box Price
+        shock_price = await get_text_safe(page, ".box-price-present, .bs_price strong, .price-present")
         if shock_price:
             data["Gia_Khuyen_Mai"] = clean_price(shock_price)
         
         # 2. Old Price
-        old_price = await get_text_safe(page, ".bs_price em, .price-old, .box-price-old")
+        old_price = await get_text_safe(page, ".box-price-old, .bs_price em, .price-old")
         if old_price:
             data["Gia_Niem_Yet"] = clean_price(old_price)
             
         # 3. Fallback
         if data["Gia_Khuyen_Mai"] == "0" or data["Gia_Khuyen_Mai"] == "":
              # Try other selectors
-             reg = await get_text_safe(page, ".giamsoc-ol-price, .box-price-present, .center b, .prods-price li span, .box-price")
+             reg = await get_text_safe(page, ".giamsoc-ol-price, .center b, .prods-price li span, .box-price")
              if reg: data["Gia_Khuyen_Mai"] = clean_price(reg)
              
         if data["Gia_Khuyen_Mai"] == "0":
              data["Gia_Khuyen_Mai"] = data["Gia_Niem_Yet"]
         
-        if data["Gia_Khuyen_Mai"] != "0":
-            data["Ton_Kho"] = "Yes"
-        else:
-            # Force Screenshot for debugging Price=0
+        # Status Logic
+        # Check for stock based on "Mua ngay" button existence (Robust text check)
+        # Previous class selectors (.btn-buy) failed in diagnostic.
+        try:
+            buy_btn_count = await page.locator("a, button, div").filter(has_text="Mua ngay").count()
+            # Also check specific "Hết hàng" indicator if needed, but Buy Button is safer positive signal.
+            
+            if data["Gia_Khuyen_Mai"] != "0" and buy_btn_count > 0:
+                 data["Ton_Kho"] = "Yes"
+            else:
+                 data["Ton_Kho"] = "No"
+                 
+        except Exception as e:
+            print(f"Stock check error: {e}")
+            if data["Gia_Khuyen_Mai"] != "0": data["Ton_Kho"] = "Yes" # Fallback
+            
+        if data["Ton_Kho"] == "No":
+            # Force Screenshot for debugging Price=0 or OOS
             try:
                 img_dir = os.path.join(os.path.dirname(csv_path), 'img_mw')
                 if not os.path.exists(img_dir): os.makedirs(img_dir)
-                filename = f"DEBUG_PRICE0_{product_name}_{datetime.now().strftime('%H%M%S')}.png"
+                filename = f"DEBUG_OOS_{product_name}_{data['Color']}_{datetime.now().strftime('%H%M%S')}.png"
                 await page.screenshot(path=os.path.join(img_dir, filename), full_page=True)
                 data['screenshot_name'] = filename
             except: pass
@@ -186,9 +200,10 @@ async def scrape_product_data(page, url, csv_path, csv_lock, forced_color=None):
 async def process_color_options(page, url, csv_path, csv_lock):
     """Iterate through colors for the CURRENT storage option."""
     # Find active color container
-    # MW usually has .box03.color
     try:
-        color_btns = page.locator(".box03.color .item")
+        # Robust selector for color items
+        robust_sel = ".box03.color .item, .group-box03 .item, .scrolling_inner .item, .box03__item.item"
+        color_btns = page.locator(robust_sel)
         count = await color_btns.count()
         
         if count == 0:
@@ -202,12 +217,17 @@ async def process_color_options(page, url, csv_path, csv_lock):
 
         for i in range(count):
             await remove_overlays(page)
-            # Re-locate
-            btn = page.locator(".box03.color .item").nth(i)
+            # Re-locate using SAME selector
+            btn = page.locator(robust_sel).nth(i)
             if await btn.is_visible():
                 color_name = await btn.text_content()
                 color_name = color_name.strip()
                 
+                # Filter out Storage options (e.g. 128GB, 1TB) that might be picked up by generic selector
+                if re.match(r'^\d+\s*(GB|TB)$', color_name, re.IGNORECASE):
+                    # print(f"Skipping storage item in color loop: {color_name}")
+                    continue
+
                 # Check directly if active?
                 is_active = await btn.get_attribute("class")
                 if "act" in is_active or "check" in is_active:
@@ -241,9 +261,9 @@ async def process_storage_options(page, url, csv_path, csv_lock):
     # print(f"DEBUG: Extended Search found {len(all_divs)} items") 
 
 
-    containers = page.locator(".box03, .group.desk") # Try adding .group.desk
+    containers = page.locator(".box03, .group.desk, .group-box03") # Try adding .group.desk
     count = await containers.count()
-    print(f"DEBUG: Found {count} containers with .box03 OR .group.desk")
+    print(f"DEBUG: Found {count} containers with .box03 OR .group.desk OR .group-box03")
     
     found_storage = False
     
@@ -366,7 +386,11 @@ async def main():
     csv_lock = asyncio.Lock()
     
     initial_urls = sites.total_links['mw_urls']
-    if os.environ.get("TEST_MODE") == "False":
+    specific_url = os.environ.get("SPECIFIC_URL")
+    if specific_url:
+        print(f"⚠️ PROCESSING SPECIFIC URL: {specific_url}")
+        initial_urls = [specific_url]
+    elif os.environ.get("TEST_MODE") == "False":
         # Macbook Debug URL
         initial_urls = ["https://www.thegioididong.com/laptop/macbook-air-13-inch-m4-16gb-256gb"]
         print("⚠️ TEST MODE ENABLED: Debugging Macbook Storage")
