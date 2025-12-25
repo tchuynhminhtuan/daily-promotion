@@ -328,18 +328,52 @@ async def scrape_product_data(page, url, csv_path, csv_lock, forced_color=None, 
     except: pass
 
     # Prices
-    gia_khuyen_mai_raw = await get_text_safe(page, PRICE_MAIN_SELECTOR)
-    gia_niem_yet_raw = await get_text_safe(page, PRICE_SUB_SELECTOR)
+    # Robust Selector Scoping
+    gia_khuyen_mai_raw = await get_text_safe(page, "//div[@id='price-product']//span[contains(@class, 'h4-bold')]")
+    gia_niem_yet_raw = await get_text_safe(page, "//div[@id='price-product']//span[contains(@class, 'line-through')]")
+    
+    # Fallback to old global selector if scoped failed (Optional, but safe)
+    if not gia_khuyen_mai_raw:
+        gia_khuyen_mai_raw = await get_text_safe(page, PRICE_MAIN_SELECTOR)
     
     if not gia_niem_yet_raw and gia_khuyen_mai_raw:
         gia_niem_yet_raw = gia_khuyen_mai_raw
     
     def clean_price(p):
         if not p: return 0
-        return p.replace("đ", "").replace("₫", "").replace(".", "").strip()
+        return int(re.sub(r'[^\d]', '', p)) if re.search(r'\d', p) else 0
 
     gia_khuyen_mai = clean_price(gia_khuyen_mai_raw)
     gia_niem_yet = clean_price(gia_niem_yet_raw)
+
+    # JSON-LD Fallback (High Reliability)
+    if gia_khuyen_mai == 0:
+        try:
+            json_ld = await page.evaluate("""() => {
+                const scripts = document.querySelectorAll('script[type="application/ld+json"]');
+                for (const script of scripts) {
+                    try {
+                        const data = JSON.parse(script.innerText);
+                        // Handle single product or graph
+                        const product = data['@type'] === 'Product' ? data : 
+                                      (data['@graph'] ? data['@graph'].find(g => g['@type'] === 'Product') : null);
+                        
+                        if (product && product.offers) {
+                            const offer = Array.isArray(product.offers) ? product.offers[0] : product.offers;
+                             // FPT uses 'price' (number or string)
+                            return offer.price || offer.highPrice || offer.lowPrice;
+                        }
+                    } catch(e){}
+                }
+                return null;
+            }""")
+            if json_ld:
+                gia_khuyen_mai = int(float(str(json_ld)))
+        except: pass
+
+    # Ensure Niem Yet is at least equal to Khuyen Mai
+    if gia_niem_yet == 0 and gia_khuyen_mai > 0:
+         gia_niem_yet = gia_khuyen_mai
 
     # Color
     color = forced_color if forced_color else "Unknown"
@@ -408,9 +442,15 @@ async def main():
     csv_lock = asyncio.Lock()
     
     urls = total_links['fpt_urls']
-    if os.environ.get("TEST_MODE") == "True":
+    
+    specific_url = os.environ.get("SPECIFIC_URL")
+    if specific_url:
+        print(f"⚠️ PROCESSING SPECIFIC URL: {specific_url}")
+        urls = [specific_url]
+    elif os.environ.get("TEST_MODE") == "True":
         print("⚠️ TEST MODE ENABLED: Processing only 4 URLs")
         urls = urls[:4]
+    
     print(f"Found {len(urls)} URLs to process.")
     
     semaphore = asyncio.Semaphore(MAX_CONCURRENT_TABS)
