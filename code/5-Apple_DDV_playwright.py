@@ -119,12 +119,12 @@ class DDVInteractor:
         product_name = self.base_product_name
 
         # 2. Prices
-        # Sale Price: p.text-24.font-bold.text-red-500 OR div.text-24.font-bold.text-red-500
-        # Listed Price: p.line-through OR div.line-through
+        # Sale Price: Generic robust selector for size 24 bold (covers red-500, yellow-200, etc)
+        # Selector: *[class*='text-24'][class*='font-bold']
         gia_khuyen_mai = 0
         gia_niem_yet = 0
 
-        gkm_str = await self.get_text_safe(".text-24.font-bold.text-red-500")
+        gkm_str = await self.get_text_safe(":is(p, div, span)[class*='text-24'][class*='font-bold']")
         if gkm_str:
              gia_khuyen_mai = int(re.sub(r'[^\d]', '', gkm_str)) if re.search(r'\d', gkm_str) else 0
 
@@ -132,6 +132,31 @@ class DDVInteractor:
         if gny_str:
              gia_niem_yet = int(re.sub(r'[^\d]', '', gny_str)) if re.search(r'\d', gny_str) else 0
         
+        # JSON-LD Fallback if CSS failed
+        if gia_khuyen_mai == 0:
+            try:
+                json_ld = await self.page.evaluate("""() => {
+                    const scripts = document.querySelectorAll('script[type="application/ld+json"]');
+                    for (const script of scripts) {
+                        try {
+                            const data = JSON.parse(script.innerText);
+                            // Handle single product or graph
+                            const product = data['@type'] === 'Product' ? data : 
+                                          (data['@graph'] ? data['@graph'].find(g => g['@type'] === 'Product') : null);
+                            
+                            if (product && product.offers) {
+                                // offer can be list or object
+                                const offer = Array.isArray(product.offers) ? product.offers[0] : product.offers;
+                                return offer.price || offer.highPrice || offer.lowPrice;
+                            }
+                        } catch(e){}
+                    }
+                    return null;
+                }""")
+                if json_ld:
+                    gia_khuyen_mai = int(float(str(json_ld)))
+            except: pass
+
         if gia_niem_yet == 0 and gia_khuyen_mai > 0:
             gia_niem_yet = gia_khuyen_mai
 
