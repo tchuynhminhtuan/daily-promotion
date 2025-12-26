@@ -178,7 +178,7 @@ class PriceMatrixGenerator:
         if not self.skip_csv:
              self._generate_csv(df_collapsed)
         else:
-             print("💡 Đang xử lý Ma trận Giá (Bỏ qua lưu file CSV)...")
+             print("💡 Đang xử lý Ma trận Giá (Bỏ qua lưu file CSV matrix)...")
         
         # 3. Build Lookup (Use the collapsed DF or original? Original is safer for specific lookups, 
         #    but we often compare on the "collapsed" entity in Diff Report. 
@@ -617,14 +617,26 @@ class HTMLGenerator:
                     let productBlocks = Array.from(document.querySelectorAll('.product-block'));
                     const matchCountDisplay = document.getElementById('matchCount');
 
+                    // Debounce function to improve performance
+                    function debounce(func, wait) {
+                        let timeout;
+                        return function(...args) {
+                            clearTimeout(timeout);
+                            timeout = setTimeout(() => func.apply(this, args), wait);
+                        };
+                    }
+
                     function updateView() {
                         const selectedDate = dateSelect.value;
                         const selectedChannel = channelSelect.value;
                         const selectedStock = stockSelect.value;
-                        const selectedPromo = promoSelect.value; // YES (Default), ALL, NO, NEW
+                        const selectedPromo = promoSelect.value;
                         const selectedPrice = priceSelect.value;
                         const sortMode = sortSelect.value;
-                        const searchTerm = searchInput.value.toLowerCase().trim();
+                        
+                        // Tokenize search terms (AND logic)
+                        const rawSearch = searchInput.value.toLowerCase().trim();
+                        const searchTokens = rawSearch.split(/\s+/).filter(t => t.length > 0);
                         
                         let visibleBlocks = [];
 
@@ -633,8 +645,8 @@ class HTMLGenerator:
                             const blockDate = block.getAttribute('data-date');
                             const blockChannel = block.getAttribute('data-channel');
                             const blockStock = block.getAttribute('data-stock');
-                            const blockPromoChange = block.getAttribute('data-promo-change'); // YES, NO
-                            const blockStatus = block.getAttribute('data-status'); // CHANGED, UNCHANGED, NEW
+                            const blockPromoChange = block.getAttribute('data-promo-change');
+                            const blockStatus = block.getAttribute('data-status');
                             const blockPriceChange = block.getAttribute('data-price-change');
                             const blockProduct = block.getAttribute('data-product'); 
                             
@@ -653,7 +665,6 @@ class HTMLGenerator:
                             let matchesPromo = false;
                             if (selectedPromo === 'ALL') matchesPromo = true;
                             else if (selectedPromo === 'YES') {
-                                // YES means Changed OR New (Anything interesting)
                                 if (blockStatus === 'CHANGED' || blockStatus === 'NEW') matchesPromo = true;
                             }
                             else if (selectedPromo === 'NO') {
@@ -664,7 +675,23 @@ class HTMLGenerator:
                             }
 
                             const matchesPrice = (selectedPrice === 'ALL' || blockPriceChange === selectedPrice);
-                            const matchesSearch = (blockProduct.includes(searchTerm));
+                            
+                            // Advanced Search: Check if ALL tokens exist in product name
+                            let matchesSearch = true;
+                            if (searchTokens.length > 0) {
+                                // Optimization: Check first token first as fast fail
+                                if (!blockProduct.includes(searchTokens[0])) {
+                                    matchesSearch = false;
+                                } else {
+                                    // Check remaining
+                                    for (let i = 1; i < searchTokens.length; i++) {
+                                        if (!blockProduct.includes(searchTokens[i])) {
+                                            matchesSearch = false;
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
 
                             if (matchesDate && matchesChannel && matchesPromo && matchesSearch && matchesPrice && matchesStock) {
                                 block.classList.remove('hidden');
@@ -675,7 +702,7 @@ class HTMLGenerator:
                         });
                         
                         // 2. Sort visible blocks
-                        productBlocks.sort((a, b) => {
+                        visibleBlocks.sort((a, b) => {
                             if (sortMode === 'DEFAULT') {
                                 return parseInt(a.getAttribute('data-index')) - parseInt(b.getAttribute('data-index'));
                             }
@@ -690,19 +717,62 @@ class HTMLGenerator:
                             }
                         });
                         
-                        // Re-append to container
-                        productBlocks.forEach(block => reportContainer.appendChild(block));
+                        // Re-append sorted visible blocks (Optimization: use DocumentFragment if extremely large, but simple append is usually fine for < 5000)
+                        // Actually, re-appending EVERYTHING can be slow. 
+                        // Better: just toggle hidden class above. Sorting requires re-order though.
+                        // If sort is default, we don't need to re-append if we didn't mess up order.
+                        // But we want to support sort. 
+                        
+                        // Optimization: Detach -> Sort -> Append is faster than appending one by one live.
+                        const fragment = document.createDocumentFragment();
+                        visibleBlocks.forEach(block => fragment.appendChild(block));
+                        
+                        // We also need to keep the hidden ones? No, they are hidden. 
+                        // But if we re-append visible ones, they move to bottom. 
+                        // The hidden ones stay at top?
+                        // To clear and re-render correctly:
+                        reportContainer.innerHTML = '';
+                        visibleBlocks.forEach(block => fragment.appendChild(block));
+                        // Append hidden ones too to keep them in DOM? 
+                        // Actually, filter logic relies on `productBlocks` array which preserves references.
+                        // If we wipe container, we lose hidden blocks if we don't add them back.
+                        // But efficient filtering usually just toggles classes.
+                        // Sorting requires DOM reordering.
+                        
+                        // Let's Stick to standard Re-append of ALL blocks (Sorted visible + Hidden).
+                        // Or just Re-append Visible. Hidden ones can be gathered or just let them stay? 
+                        // If we append visible ones to end, hidden ones stay at top. 
+                        // Let's just re-append everything in correct order.
+                        
+                        // To Support sorting of ALL blocks (even hidden ones? No, usually sort visible).
+                        // Let's simplified: If Sort is changed, we re-append. 
+                        // If only filter changed, we just toggle (if layout is preserved).
+                        
+                        // Current approach: clear and re-append simplified
+                        reportContainer.innerHTML = ''; 
+                        visibleBlocks.forEach(b => fragment.appendChild(b));
+                        // Also append hidden blocks? 
+                        // If we don't append hidden blocks, `querySelectorAll` in next run won't find them if we re-query?
+                        // BUT: `productBlocks` is cached at start! So they are in memory. 
+                        // So correct: `reportContainer.innerHTML = ''` removes them from DOM, but `productBlocks` keeps them.
+                        // So next time we append from `productBlocks` (which still holds references).
+                        
+                        reportContainer.appendChild(fragment);
                         
                         matchCountDisplay.textContent = `Hiển thị ${visibleBlocks.length} mục`;
                     }
+                    
+                    const debouncedUpdate = debounce(updateView, 300);
 
-                    dateSelect.addEventListener('change', updateView);
+                    dateSelect.addEventListener('change', updateView); // Instant for selects
                     channelSelect.addEventListener('change', updateView);
                     stockSelect.addEventListener('change', updateView);
                     promoSelect.addEventListener('change', updateView);
                     priceSelect.addEventListener('change', updateView);
                     sortSelect.addEventListener('change', updateView);
-                    searchInput.addEventListener('input', updateView);
+                    
+                    // Debounce input
+                    searchInput.addEventListener('input', debouncedUpdate);
                     
                     updateView();
                 });
@@ -1028,7 +1098,8 @@ def main():
         return
     
     # 2. Price Matrix
-    price_gen = PriceMatrixGenerator(df, skip_csv=is_interactive)
+    # Use skip_csv=True to avoid generating the matrix CSV file as requested
+    price_gen = PriceMatrixGenerator(df, skip_csv=True)
     price_gen.run()
     
     # 3. Promo Diff
