@@ -123,7 +123,9 @@ class ViettelInteractor:
             
         def clean_price(p):
             if not p: return "0"
-            return str(p).replace("đ", "").replace("₫", "").replace(".", "").replace(",", "").strip()
+            # Remove non-digits
+            cleaned = re.sub(r'[^\d]', '', str(p).strip())
+            return cleaned if cleaned else "0"
 
         gia_khuyen_mai = clean_price(gia_khuyen_mai_raw)
         gia_niem_yet = clean_price(gia_niem_yet_raw)
@@ -165,13 +167,28 @@ class ViettelInteractor:
         thanh_toan = ""
         try:
             payment_promos = []
+            # Strategy 1: Specific Description Items (Preferred)
             payment_elements = self.page.locator(PAYMENT_PROMO_SELECTOR)
             p_count = await payment_elements.count()
-            for i in range(p_count):
-                text = await payment_elements.nth(i).text_content() # Use text_content for hidden descriptions
-                if text and text.strip():
-                     cleaned = re.sub(r'\n+', '\n', text.strip()).replace('"', "'")
-                     payment_promos.append(cleaned)
+            
+            if p_count == 0:
+                # Strategy 2: User Suggested Fallback (Container Text)
+                # Selector: #payment-promotion .box-promo-boder
+                # Or just #payment-promotion text
+                fallback = self.page.locator("#payment-promotion")
+                if await fallback.count() > 0:
+                     text = await fallback.inner_text()
+                     if text.strip():
+                         # Basic clean: split by newlines and filter
+                         lines = [l.strip() for l in text.split('\n') if l.strip() and "Khuyến mãi" not in l]
+                         payment_promos.extend(lines)
+            else:
+                for i in range(p_count):
+                    text = await payment_elements.nth(i).text_content()
+                    if text and text.strip():
+                         cleaned = re.sub(r'\n+', '\n', text.strip()).replace('"', "'")
+                         payment_promos.append(cleaned)
+            
             thanh_toan = "\n".join(payment_promos)
         except: pass
 

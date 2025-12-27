@@ -2,17 +2,23 @@
 
 echo "🚀 Starting Hybrid Scraper Workflow..."
 
+# Ensure we are in the script's directory
+cd "$(dirname "$0")" || exit
+
+
 # 1. Install Dependencies (Just in case)
 echo "📦 Checking dependencies..."
 pip3 install -r requirements.txt || echo "⚠️ Warning: Pip install failed. Assuming packages are present or handled by another python."
 python3 -m playwright install chromium
 
 echo "3. Run Local Scrapers (FPT & MW Only - Parallel)..."
-# echo "🕷️ Running FPT & MW Scrapers..."
-# python3 code/1-Apple_FPT_playwright.py &
-# python3 code/2-Apple_MW_playwright.py &
-# wait
-# echo "✅ FPT & MW Scrapers Completed."
+osascript -e 'display notification "Scrapers Running: FPT & MW" with title "Daily Promotion"'
+echo "🕷️ Running FPT & MW Scrapers..."
+python3 code/1-Apple_FPT_playwright.py &
+python3 code/2-Apple_MW_playwright.py &
+wait
+osascript -e 'display notification "Scrapers Completed: FPT & MW" with title "Daily Promotion"'
+echo "✅ FPT & MW Scrapers Completed."
 
 # 4. Generate Final Report
 # echo "📊 Generating Final Report..."

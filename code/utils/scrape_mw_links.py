@@ -3,10 +3,11 @@ from playwright.async_api import async_playwright
 import time
 
 URLS = [
-    "https://www.thegioididong.com/dtdd-apple-iphone",
-    'https://www.thegioididong.com/may-tinh-bang-apple-ipad',
-    'https://www.thegioididong.com/laptop-apple-macbook',
-    'https://www.thegioididong.com/dong-ho-thong-minh-apple',
+    # "https://www.thegioididong.com/dtdd-apple-iphone",
+    # 'https://www.thegioididong.com/may-tinh-bang-apple-ipad',
+    # 'https://www.thegioididong.com/laptop-apple-macbook',
+    # 'https://www.thegioididong.com/dong-ho-thong-minh-apple',
+    'https://www.thegioididong.com/phu-kien/marshall?key=marshall&sc=new#curl=marshall&mGenius=Marshall&o=9&pi=0'
 
 ]
 
