@@ -14,15 +14,10 @@ python3 -m playwright install chromium
 echo "3. Run Local Scrapers (FPT & MW Only - Parallel)..."
 osascript -e 'display notification "Scrapers Running: FPT & MW" with title "Daily Promotion"'
 echo "🕷️ Running FPT & MW Scrapers..."
-python3 code/1-Apple_FPT_playwright.py &
-python3 code/2-Apple_MW_playwright.py &
-wait
+python3 code/1-Apple_FPT_playwright.py
+python3 code/2-Apple_MW_playwright.py
 osascript -e 'display notification "Scrapers Completed: FPT & MW" with title "Daily Promotion"'
 echo "✅ FPT & MW Scrapers Completed."
-
-# 4. Generate Final Report
-# echo "📊 Generating Final Report..."
-# python3 code/generate_report.py
 
 echo "✅ Hybrid Workflow Complete!"
 
