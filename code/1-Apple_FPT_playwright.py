@@ -230,7 +230,7 @@ async def process_url(semaphore, browser, url, csv_path, csv_lock):
                     # HEURISTIC 2: Check Label (Robust)
                     try:
                         # Attempt to find preceding sibling 'span' via XPath relative to the container
-                        label_handle = await all_containers.nth(real_idx).locator("xpath=preceding-sibling::span").first
+                        label_handle = all_containers.nth(real_idx).locator("xpath=preceding-sibling::span").first
                         if await label_handle.count() > 0:
                             label_txt = (await label_handle.text_content()).lower().strip()
                             print(f"    Container {real_idx} Label: {label_txt}")
@@ -486,6 +486,27 @@ async def scrape_product_data(page, url, csv_path, csv_lock, forced_color=None, 
 
     # Color
     color = forced_color if forced_color else "Unknown"
+    
+    # Fallback: Extract Color from Name if Unknown (For Single Variant/Hidden Option pages)
+    if color == "Unknown" and product_name:
+         # Strategy 1: " - " Suffix (Standard FPT naming)
+         if " - " in product_name:
+             color = product_name.split(" - ")[-1].strip()
+         
+         # Strategy 2: Macbook "Nano" or specific suffixes unique to variant
+         elif "Nano" in product_name:
+             color = "Nano Texture" # Or imply from context? Or just "Nano"
+         
+         # Strategy 3: Apple Watch SE "Viền ... Dây ..."
+         elif "Apple Watch" in product_name and "Viền" in product_name:
+             # Try to extract the "Viền..." part
+             # e.g. "Apple Watch SE 2024 GPS 40mm Viền Nhôm Dây Vải"
+             # Look for start of "Viền"
+             match = re.search(r'(Viền.*)', product_name, re.IGNORECASE)
+             if match:
+                 color = match.group(1).strip()
+    
+    # Promo & Payment
     
     # Promo & Payment
     khuyen_mai = await get_text_safe(page, PROMO_SELECTOR)
