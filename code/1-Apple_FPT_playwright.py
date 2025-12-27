@@ -156,9 +156,40 @@ async def process_url(semaphore, browser, url, csv_path, csv_lock):
                 print(f"⚠️ H1 not found within 10s: {url}")
 
             # 1. Dynamic Option Container Identification
-            container_xpath = "//div[contains(@class, 'flex flex-wrap gap-2')]"
-            all_containers = page.locator(container_xpath)
-            total_count = await all_containers.count()
+            # Strategy: Try multiple selectors. prefer the one that finds > 1 container (Storage + Color).
+            candidate_xpaths = [
+                "//div[contains(@class, 'flex flex-col gap-1.5')]/span/following-sibling::div",    # New Structure (Containers/Rows)
+                "//div[contains(@class, 'flex flex-col gap-1.5')]/div/div",                       # Fallback Generic (Might be buttons? careful)
+                "//div[contains(@class, 'flex flex-wrap gap-2')]"                                 # Old Structure
+            ]
+            
+            all_containers = None
+            total_count = 0
+            best_xpath = candidate_xpaths[1] # Default to old
+            
+            for xpath in candidate_xpaths:
+                ct = page.locator(xpath)
+                c = await ct.count()
+                if c >= 2:
+                    # Ideal case: Found multiple options
+                    all_containers = ct
+                    total_count = c
+                    best_xpath = xpath
+                    print(f"  -> Used Selector: {xpath} (Count: {c})")
+                    break
+                elif c == 1 and total_count == 0:
+                     # Keep as fallback if nothing better found
+                     all_containers = ct
+                     total_count = c
+                     best_xpath = xpath
+            
+            if total_count == 0 and candidate_xpaths:
+                 # Default to first if absolutely nothing found (will likely fail downstream but prevents crash here)
+                 best_xpath = candidate_xpaths[0]
+                 all_containers = page.locator(best_xpath)
+            
+            if total_count > 0:
+                 print(f"  -> Identified {total_count} option containers.")
             
             # Filter out "Review" containers (containing "Hài lòng")
             valid_indices = []
@@ -169,23 +200,87 @@ async def process_url(semaphore, browser, url, csv_path, csv_lock):
             
             container_count = len(valid_indices)
             
-            storage_idx = -1
-            color_idx = -1
+            # Identify Indices by Label if possible
+            # Wrapper is the "Buttons Container". Label is preceding-sibling span.
+            # However, for old selector, label logic might differ.
+            # We try to guess based on label text.
             
-            if container_count == 1:
-                # Ambiguous: Is it Storage or Color?
+            # Default "Standard" map
+            storage_idx = 0 if container_count >= 1 else -1
+            color_idx = -1 if container_count < 2 else container_count - 1
+            
+            # Smarter Mapping
+            detected_storage = -1
+            detected_color = -1
+            
+            for i in range(container_count):
+                # Use valid_indices to map back to nth(i)
+                real_idx = valid_indices[i] 
+                
+                try:
+                    # HEURISTIC 1: Check Button Text
+                    try:
+                        first_btn_text = await all_containers.nth(real_idx).locator("button").first.text_content()
+                        first_btn_text = first_btn_text.lower() if first_btn_text else ""
+                        
+                        if any(x in first_btn_text for x in ["gb", "tb", "ssd"]):
+                             if detected_storage == -1: detected_storage = real_idx
+                    except: pass
+                    
+                    # HEURISTIC 2: Check Label (Robust)
+                    try:
+                        # Attempt to find preceding sibling 'span' via XPath relative to the container
+                        label_handle = await all_containers.nth(real_idx).locator("xpath=preceding-sibling::span").first
+                        if await label_handle.count() > 0:
+                            label_txt = (await label_handle.text_content()).lower().strip()
+                            print(f"    Container {real_idx} Label: {label_txt}")
+                            
+                            # Storage / Primary Variant (Triggers Navigation)
+                            if any(x in label_txt for x in ["dung lượng", "ssd", "kích thước màn hình", "kích cỡ dây", "cấu hình"]):
+                                if detected_storage == -1: detected_storage = real_idx
+                            elif "viền" in label_txt or "case" in label_txt:
+                                # "Màu viền" seems to be primary variant for watches (triggers nav)
+                                if detected_storage == -1: detected_storage = real_idx
+                            
+                            # Color / Secondary Variant
+                            elif any(x in label_txt for x in ["màu", "color"]):
+                                if detected_color == -1: detected_color = real_idx
+                    except:
+                        pass
+                except Exception as e:
+                    print(f"    Error checking container {real_idx}: {e}")
+            
+
+            # Apply Logic
+            if detected_storage != -1:
+                storage_idx = detected_storage
+            
+            if detected_color != -1:
+                color_idx = detected_color
+            
+            # Conflict resolution: If same index detected for both (rare), prefer Storage logic if it causes navigation
+            if storage_idx == color_idx and storage_idx != -1:
+                # If we have another container, assign color to it?
+                # Assume standard behavior: Primary is Storage loop.
+                color_idx = -1 
+                
+            print(f"  -> Decided Indices: Storage={storage_idx}, Color={color_idx}")
+
+            if container_count == 1 and storage_idx == -1 and color_idx == -1:
                 real_idx = valid_indices[0]
                 try:
                     first_text = await all_containers.nth(real_idx).locator("button").first.text_content()
                     if "GB" in first_text or "TB" in first_text:
                         storage_idx = real_idx
+                        color_idx = -1
                     else:
+                        storage_idx = -1
                         color_idx = real_idx
                 except:
                      color_idx = real_idx 
             
-            elif container_count >= 2:
-                # Standard: First is Storage, Last is Color
+            elif container_count >= 2 and storage_idx == -1 and color_idx == -1:
+                # Standard Fallback: First is Storage, Last is Color
                 storage_idx = valid_indices[0]
                 color_idx = valid_indices[-1]
             
@@ -196,7 +291,7 @@ async def process_url(semaphore, browser, url, csv_path, csv_lock):
                 
                 for i in range(storage_count):
                     # Re-locate container and buttons to avoid stale handles
-                    all_containers = page.locator(container_xpath)
+                    all_containers = page.locator(best_xpath)
                     storage_btns = all_containers.nth(storage_idx).locator("button")
                     btn = storage_btns.nth(i)
                     
@@ -221,33 +316,47 @@ async def process_url(semaphore, browser, url, csv_path, csv_lock):
                                 pass
 
                             # Recurse: Colors (Pass index explicitly)
-                            await process_color_options_optimized(page, url, csv_path, csv_lock, color_idx=color_idx)
+                            await process_color_options_optimized(page, url, csv_path, csv_lock, color_idx=color_idx, container_xpath_arg=best_xpath)
 
                         except Exception as e:
                             print(f"Error clicking storage {name}: {e}")
             else:
                 # No storage loop, just colors
-                await process_color_options_optimized(page, url, csv_path, csv_lock, color_idx=color_idx)
+                await process_color_options_optimized(page, url, csv_path, csv_lock, color_idx=color_idx, container_xpath_arg=best_xpath)
 
         except Exception as e:
             print(f"Error processing {url}: {e}")
         finally:
             await page.close()
 
-async def process_color_options_optimized(page, url, csv_path, csv_lock, color_idx=-1):
+async def process_color_options_optimized(page, url, csv_path, csv_lock, color_idx=-1, container_xpath_arg=None):
     await remove_overlays(page)
     
+    # Use passed xpath or fallback to detection list
+    current_container_xpath = container_xpath_arg
+    if not current_container_xpath:
+        # Fallback detection logic (copied from main)
+        candidate_xpaths = [
+            "//div[contains(@class, 'flex flex-col gap-1.5')]/span/following-sibling::div", 
+            "//div[contains(@class, 'flex flex-col gap-1.5')]/div/div", 
+            "//div[contains(@class, 'flex flex-wrap gap-2')]"
+        ]
+        current_container_xpath = candidate_xpaths[1]
+        for xpath in candidate_xpaths:
+            if await page.locator(xpath).count() >= 1:
+                current_container_xpath = xpath
+                break
+
     if color_idx == -1:
         # Should not happen with new logic, but fallback to "Last Found"?
-        container_xpath = "//div[contains(@class, 'flex flex-wrap gap-2')]"
-        count = await page.locator(container_xpath).count()
+        count = await page.locator(current_container_xpath).count()
         if count > 0:
             color_idx = count - 1
         else:
             await scrape_product_data(page, url, csv_path, csv_lock)
             return
 
-    container_xpath = "//div[contains(@class, 'flex flex-wrap gap-2')]"
+    container_xpath = current_container_xpath
     # Note: nth(i) is 0-indexed.
     color_container = page.locator(container_xpath).nth(color_idx)
     color_btns = color_container.locator("button")
