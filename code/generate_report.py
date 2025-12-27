@@ -399,7 +399,16 @@ class PromoDiffGenerator:
                     curr_text = curr_row[col]
                     prev_text = prev_row[col]
                     
-                    if curr_text != prev_text:
+                    # Helper for set comparison
+                    def get_items(t):
+                         if pd.isna(t) or str(t).strip() == "": return set()
+                         return {x.strip() for x in str(t).split('|') if x.strip()}
+
+                    curr_set = get_items(curr_text)
+                    prev_set = get_items(prev_text)
+
+                    # Compare Sets instead of Raw Strings
+                    if curr_set != prev_set:
                         has_change = True
                         change_record[f"Changed_{col}"] = "YES"
                         change_record[f"Old_{col}"] = prev_text
@@ -408,6 +417,7 @@ class PromoDiffGenerator:
                         change_record[f"Changed_{col}"] = "NO"
                         change_record[f"Old_{col}"] = prev_text 
                         change_record[f"New_{col}"] = curr_text
+
                 
                 # Compare Price
                 try:
@@ -526,6 +536,9 @@ class HTMLGenerator:
                 .stock-tag {{ font-size: 0.75em; padding: 2px 6px; border-radius: 4px; font-weight: bold; margin-left: 8px; vertical-align: middle; }}
                 .stock-yes {{ background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }}
                 .stock-no {{ background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }}
+                .section-title {{ font-weight: bold; margin-top: 10px; font-size: 0.95em; }}
+                .text-promo {{ color: #d63384; }} /* Pink/Red for Promo */
+                .text-payment {{ color: #0d6efd; }} /* Blue for Payment */
                 .hidden {{ display: none !important; }}
                 @media (max-width: 600px) {{ .controls {{ position: static; flex-direction: column; align-items: stretch; }} .diff-table th, .diff-table td {{ padding: 5px; }} }}
             </style>
@@ -956,7 +969,9 @@ class HTMLGenerator:
              # Let's show "Prev" content as it represents the static state.
              
              content_html = self._render_static_content(row, old_col)
-             unique_id = f"toggle-{title}-{row.get('Channel')}-{row.get('Product Name')}-{row.get('Color')}".replace(" ", "_").replace(".", "") + str(id(row))
+             # Sanitize ID to be safe for JS (alphanumeric only)
+             raw_id = f"toggle-{title}-{row.get('Channel')}-{row.get('Product Name')}-{row.get('Color')}" + str(id(row))
+             unique_id = re.sub(r'[^a-zA-Z0-9]', '_', raw_id)
              
              return f"""
             <div class="section-title {css_class}">{title}</div>
