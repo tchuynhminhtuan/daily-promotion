@@ -80,6 +80,7 @@ class BaseScraper:
 
     async def get_text_safe(self, page, selector, timeout=1000):
         try:
+            if not selector: return ""
             if await page.locator(selector).count() > 0:
                 # Try innerText first, fallback to textContent
                 try:
@@ -88,6 +89,41 @@ class BaseScraper:
                      return await page.locator(selector).first.text_content(timeout=timeout)
         except: pass
         return ""
+
+    async def get_element_text_with_fallbacks(self, page, selectors: list, timeout=1000) -> str:
+        """
+        Iterates through a list of selectors/XPaths.
+        Returns the first non-empty text found.
+        """
+        if not selectors:
+            return ""
+
+        for selector in selectors:
+            try:
+                text = await self.get_text_safe(page, selector, timeout)
+                if text and text.strip():
+                    return text.strip()
+            except:
+                continue
+        return ""
+
+    def extract_price(self, text: str) -> int:
+        """
+        Standardizes price cleaning.
+        Removes non-digit characters.
+        Handles 'Price on request' or empty strings by returning 0.
+        """
+        if not text:
+            return 0
+
+        # Check for "Price on request" patterns (Vietnamese)
+        text_lower = text.lower()
+        if "liên hệ" in text_lower or "price on request" in text_lower:
+            return 0
+
+        # Remove non-digits
+        clean = re.sub(r'[^\d]', '', text)
+        return int(clean) if clean else 0
 
     async def remove_overlays(self, page):
         """Common overlay removal, can be extended by child."""

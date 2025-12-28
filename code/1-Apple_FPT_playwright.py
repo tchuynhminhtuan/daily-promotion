@@ -15,9 +15,23 @@ USE_SMART_WAIT = True
 SCREENSHOT_STRATEGY = "FIRST_ONLY" 
 
 # Selectors
-PRODUCT_NAME_SELECTOR = "//h1[contains(@class, 'text-textOnWhitePrimary')]"
-PRICE_MAIN_SELECTOR = "//span[contains(@class, 'text-black-opacity-100 h4-bold')]"
-PRICE_SUB_SELECTOR = "//span[contains(@class, 'text-neutral-gray-5 line-through')]"
+PRODUCT_NAME_SELECTORS = [
+    "//h1[contains(@class, 'text-textOnWhitePrimary')]",
+    "h1",
+    "title",
+    "[property='og:title']"
+]
+PRICE_MAIN_SELECTORS = [
+    "//div[@id='price-product']//span[contains(@class, 'h4-bold')]",
+    "//span[contains(@class, 'text-black-opacity-100 h4-bold')]",
+    "[itemprop='price']",
+    ".price",
+    ".current-price"
+]
+PRICE_SUB_SELECTORS = [
+    "//div[@id='price-product']//span[contains(@class, 'line-through')]",
+    "//span[contains(@class, 'text-neutral-gray-5 line-through')]"
+]
 PROMO_SELECTOR = "//div[contains(@class, 'mt-2 flex flex-col gap-2')]"
 THANH_TOAN_SELECTOR = "//div[@class='flex h-max w-full flex-col gap-3 p-4']"
 THANH_TOAN_BTN_SELECTOR = "(//div[contains(@class, 'flex flex-col overflow-hidden bg-white')])[2]/div/button"
@@ -72,30 +86,17 @@ class FPTScraper(BaseScraper):
 
     async def get_product_name(self, page, url):
         """Robust name retrieval with fallbacks."""
-        name = "Error getting name: " + url
+        # 1. Use the new robust selector list
+        name = await self.get_element_text_with_fallbacks(page, PRODUCT_NAME_SELECTORS)
 
-        # 1. Try Primary Selector
-        try:
-            if await page.locator(PRODUCT_NAME_SELECTOR).count() > 0:
-                name = (await page.locator(PRODUCT_NAME_SELECTOR).first.text_content()).strip()
-                if name: return name
-        except: pass
-
-        # 2. Try Generic H1
-        try:
-            if await page.locator("h1").count() > 0:
-                name = (await page.locator("h1").first.text_content()).strip()
-                if name: return name
-        except: pass
-
-        # 3. Try Page Title (Most robust fallback)
-        try:
-            title = await page.title()
-            # Clean title: "iPhone 15 128GB | Fptshop.com.vn" -> "iPhone 15 128GB"
-            if title:
-                 clean_title = title.split("|")[0].split("- Fptshop")[0].strip()
-                 return clean_title
-        except: pass
+        if not name:
+            # Last resort fallback: Page Title cleaning
+            try:
+                title = await page.title()
+                if title:
+                    return title.split("|")[0].split("- Fptshop")[0].strip()
+            except: pass
+            return "Error getting name: " + url
 
         return name
 
@@ -104,7 +105,7 @@ class FPTScraper(BaseScraper):
         now_utc = datetime.now(pytz.utc)
         date_str = now_utc.astimezone(self.local_tz).strftime('%Y-%m-%d')
 
-        # Get Name using robust function
+        # Get Name
         product_name = await self.get_product_name(page, url)
         
         product_name = product_name.strip().replace("Mini", "mini").replace("Wi-Fi", "WiFi")
@@ -120,23 +121,14 @@ class FPTScraper(BaseScraper):
         except: pass
 
         # Prices
-        # Robust Selector Scoping
-        gia_khuyen_mai_raw = await self.get_text_safe(page, "//div[@id='price-product']//span[contains(@class, 'h4-bold')]")
-        gia_niem_yet_raw = await self.get_text_safe(page, "//div[@id='price-product']//span[contains(@class, 'line-through')]")
-
-        # Fallback to old global selector if scoped failed (Optional, but safe)
-        if not gia_khuyen_mai_raw:
-            gia_khuyen_mai_raw = await self.get_text_safe(page, PRICE_MAIN_SELECTOR)
+        gia_khuyen_mai_raw = await self.get_element_text_with_fallbacks(page, PRICE_MAIN_SELECTORS)
+        gia_niem_yet_raw = await self.get_element_text_with_fallbacks(page, PRICE_SUB_SELECTORS)
 
         if not gia_niem_yet_raw and gia_khuyen_mai_raw:
             gia_niem_yet_raw = gia_khuyen_mai_raw
 
-        def clean_price(p):
-            if not p: return 0
-            return int(re.sub(r'[^\d]', '', p)) if re.search(r'\d', p) else 0
-
-        gia_khuyen_mai = clean_price(gia_khuyen_mai_raw)
-        gia_niem_yet = clean_price(gia_niem_yet_raw)
+        gia_khuyen_mai = self.extract_price(gia_khuyen_mai_raw)
+        gia_niem_yet = self.extract_price(gia_niem_yet_raw)
 
         # JSON-LD Fallback (High Reliability)
         if gia_khuyen_mai == 0:
@@ -208,9 +200,9 @@ class FPTScraper(BaseScraper):
             screenshot_name = "Skipped"
 
         # Validation: If we scraped a "0" price, it might be loading. Retry once?
-        if gia_khuyen_mai == 0 or gia_khuyen_mai == "0":
+        if gia_khuyen_mai == 0:
             await page.wait_for_timeout(1000)
-            gia_khuyen_mai = clean_price(await self.get_text_safe(page, PRICE_MAIN_SELECTOR))
+            gia_khuyen_mai = self.extract_price(await self.get_element_text_with_fallbacks(page, PRICE_MAIN_SELECTORS))
 
         # Prepare Data
         data = {
@@ -288,7 +280,8 @@ class FPTScraper(BaseScraper):
 
         # Ensure Name is visible before doing anything
         try:
-            await page.locator(PRODUCT_NAME_SELECTOR).wait_for(state="visible", timeout=10000)
+            # Wait for the primary selector
+            await page.locator(PRODUCT_NAME_SELECTORS[0]).wait_for(state="visible", timeout=10000)
         except:
             print(f"⚠️ H1 not found within 10s: {url}")
 

@@ -10,9 +10,21 @@ from utils.base_scraper import BaseScraper
 
 # Constants
 # Selectors
-PRODUCT_NAME_SELECTOR = "h1.name-product"
-PRICE_MAIN_SELECTOR = ".price-product .new-price"
-PRICE_SUB_SELECTOR = ".price-product .old-price" 
+PRODUCT_NAME_SELECTORS = [
+    "h1.name-product",
+    "h1",
+    "title",
+    "[property='og:title']"
+]
+PRICE_MAIN_SELECTORS = [
+    ".price-product .new-price",
+    "[itemprop='price']",
+    ".price",
+    ".current-price"
+]
+PRICE_SUB_SELECTORS = [
+    ".price-product .old-price"
+]
 PROMO_SELECTOR = ".box-promotion ol li"
 COLOR_OPTIONS_SELECTOR = "ul.option-color-product li"
 STOCK_INDICATOR_SELECTOR = "#btn-buy-now" 
@@ -45,8 +57,8 @@ class ViettelScraper(BaseScraper):
         color_name = color_name.strip()
         
         # 2. Prices
-        gia_khuyen_mai_raw = await self.get_text_safe(page, PRICE_MAIN_SELECTOR)
-        gia_niem_yet_raw = await self.get_text_safe(page, PRICE_SUB_SELECTOR)
+        gia_khuyen_mai_raw = await self.get_element_text_with_fallbacks(page, PRICE_MAIN_SELECTORS)
+        gia_niem_yet_raw = await self.get_element_text_with_fallbacks(page, PRICE_SUB_SELECTORS)
         
         if not gia_niem_yet_raw and gia_khuyen_mai_raw:
             gia_niem_yet_raw = gia_khuyen_mai_raw
@@ -61,14 +73,9 @@ class ViettelScraper(BaseScraper):
                  if json_ld and "offers" in json_ld:
                      gia_khuyen_mai_raw = str(json_ld["offers"].get("price", ""))
              except: pass
-            
-        def clean_price(p):
-            if not p: return "0"
-            cleaned = re.sub(r'[^\d]', '', str(p).strip())
-            return cleaned if cleaned else "0"
 
-        gia_khuyen_mai = clean_price(gia_khuyen_mai_raw)
-        gia_niem_yet = clean_price(gia_niem_yet_raw)
+        gia_khuyen_mai = self.extract_price(gia_khuyen_mai_raw)
+        gia_niem_yet = self.extract_price(gia_niem_yet_raw)
         
         # 3. Stock
         ton_kho = "No"
@@ -80,10 +87,10 @@ class ViettelScraper(BaseScraper):
                 if "MUA NGAY" in content:
                     ton_kho = "Yes"
              except: pass
-        if gia_khuyen_mai == "0": ton_kho = "No"
+        if gia_khuyen_mai == 0: ton_kho = "No"
 
         # 1. Product Name
-        product_name = await self.get_text_safe(page, PRODUCT_NAME_SELECTOR)
+        product_name = await self.get_element_text_with_fallbacks(page, PRODUCT_NAME_SELECTORS)
         if not product_name: product_name = await page.title()
         
         product_name = product_name.replace(" - ViettelStore.vn", "").strip()

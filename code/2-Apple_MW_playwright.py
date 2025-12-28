@@ -10,8 +10,30 @@ from utils.base_scraper import BaseScraper
 
 # Constants
 # Selectors
-PRODUCT_NAME_SELECTOR = "h1"
+PRODUCT_NAME_SELECTORS = [
+    "h1",
+    ".product-name",
+    "title",
+    "[property='og:title']"
+]
 PROMO_SELECTOR = ".promotions, .block__promo"
+PRICE_MAIN_SELECTORS = [
+    ".box-price-present",
+    ".bs_price strong",
+    ".price-present",
+    ".giamsoc-ol-price",
+    ".center b",
+    ".prods-price li span",
+    ".box-price",
+    "[itemprop='price']",
+    ".price"
+]
+PRICE_SUB_SELECTORS = [
+    ".box-price-old",
+    ".bs_price em",
+    ".price-old",
+    ".old-price"
+]
 STORAGE_CONTAINER_SELECTOR = ".box03:not(.color), .group-box03:not(.color)" 
 COLOR_CONTAINER_SELECTOR = ".box03.color, .group-box03.color, .scrolling_inner"
 
@@ -34,15 +56,8 @@ class MWScraper(BaseScraper):
         except: pass
 
     async def get_product_name(self, page, url):
-        try:
-            name = await page.locator(PRODUCT_NAME_SELECTOR).first.text_content()
-            if name: return name.strip()
-        except: pass
-
-        try:
-            title = await page.title()
-            if title: return title.split("|")[0].strip()
-        except: pass
+        name = await self.get_element_text_with_fallbacks(page, PRODUCT_NAME_SELECTORS)
+        if name: return name.strip()
 
         return "Error getting name"
 
@@ -54,8 +69,8 @@ class MWScraper(BaseScraper):
             "Product_Name": product_name,
             "Color": forced_color if forced_color else "Unknown",
             "Ton_Kho": "No",
-            "Gia_Niem_Yet": "0",
-            "Gia_Khuyen_Mai": "0",
+            "Gia_Niem_Yet": 0,
+            "Gia_Khuyen_Mai": 0,
             "Date": self.date_str,
             "Khuyen_Mai": "",
             "Thanh_Toan": "",
@@ -69,40 +84,24 @@ class MWScraper(BaseScraper):
                  await page.wait_for_selector(".bs_price strong, .price-present, .box-price-present", timeout=3000)
             except: pass
 
-            def clean_price(p_str):
-                if not p_str: return "0"
-                clean = re.sub(r'[^\d\.\n]', '', p_str)
-                parts = clean.split('\n')
-                for part in parts:
-                    num = part.replace('.', '')
-                    if num.isdigit() and len(num) > 4:
-                        return num
-                return "0"
-
-            shock_price = await self.get_text_safe(page, ".box-price-present, .bs_price strong, .price-present")
-            if shock_price:
-                data["Gia_Khuyen_Mai"] = clean_price(shock_price)
+            shock_price = await self.get_element_text_with_fallbacks(page, PRICE_MAIN_SELECTORS)
+            data["Gia_Khuyen_Mai"] = self.extract_price(shock_price)
             
-            old_price = await self.get_text_safe(page, ".box-price-old, .bs_price em, .price-old")
-            if old_price:
-                data["Gia_Niem_Yet"] = clean_price(old_price)
+            old_price = await self.get_element_text_with_fallbacks(page, PRICE_SUB_SELECTORS)
+            data["Gia_Niem_Yet"] = self.extract_price(old_price)
 
-            if data["Gia_Khuyen_Mai"] == "0" or data["Gia_Khuyen_Mai"] == "":
-                 reg = await self.get_text_safe(page, ".giamsoc-ol-price, .center b, .prods-price li span, .box-price")
-                 if reg: data["Gia_Khuyen_Mai"] = clean_price(reg)
-                 
-            if data["Gia_Khuyen_Mai"] == "0":
+            if data["Gia_Khuyen_Mai"] == 0:
                  data["Gia_Khuyen_Mai"] = data["Gia_Niem_Yet"]
             
             # Status Logic
             try:
                 buy_btn_count = await page.locator("a, button, div").filter(has_text="Mua ngay").count()
-                if data["Gia_Khuyen_Mai"] != "0" and buy_btn_count > 0:
+                if data["Gia_Khuyen_Mai"] != 0 and buy_btn_count > 0:
                      data["Ton_Kho"] = "Yes"
                 else:
                      data["Ton_Kho"] = "No"
             except Exception as e:
-                if data["Gia_Khuyen_Mai"] != "0": data["Ton_Kho"] = "Yes"
+                if data["Gia_Khuyen_Mai"] != 0: data["Ton_Kho"] = "Yes"
 
             if data["Ton_Kho"] == "No":
                 # Force Screenshot for debugging Price=0 or OOS

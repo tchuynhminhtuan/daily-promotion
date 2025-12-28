@@ -12,9 +12,23 @@ from utils.base_scraper import BaseScraper
 
 # Constants
 # Selectors
-PRODUCT_NAME_SELECTOR = "h1"
-PRICE_CURRENT_SELECTOR = ".box-price strong" 
-PRICE_OLD_SELECTOR = ".box-price span"
+PRODUCT_NAME_SELECTORS = [
+    "h1",
+    ".top-product h1",
+    "strong.name",
+    "title",
+    "[property='og:title']"
+]
+PRICE_CURRENT_SELECTORS = [
+    ".box-price strong",
+    ".current-price",
+    ".price",
+    "[itemprop='price']"
+]
+PRICE_OLD_SELECTORS = [
+    ".box-price span",
+    ".old-price"
+]
 COLOR_WRAPPER_SELECTOR = "//div[contains(@class, 'order-product')]//strong[contains(text(), 'Lựa chọn màu')]/parent::div/following-sibling::div"
 STOCK_INDICATOR_SELECTOR = "a.btnQuickOrder"
 PROMO_SELECTOR = "#product-promotion-content"
@@ -33,11 +47,7 @@ class HoangHaScraper(BaseScraper):
 
     async def scrape_variant(self, page, url, color_name, forced_price=None):
         # 1. Product Name
-        product_name = await self.get_text_safe(page, PRODUCT_NAME_SELECTOR)
-        if not product_name:
-             product_name = await self.get_text_safe(page, ".top-product h1")
-        if not product_name:
-             product_name = await self.get_text_safe(page, "strong.name")
+        product_name = await self.get_element_text_with_fallbacks(page, PRODUCT_NAME_SELECTORS)
         
         if product_name:
             product_name = product_name.strip().split(" - ")[0]
@@ -62,19 +72,15 @@ class HoangHaScraper(BaseScraper):
             ton_kho = "No"
 
         # 3. Prices
-        def clean_price(p):
-            if not p: return 0
-            return re.sub(r'[^\d]', '', str(p))
-
-        gia_niem_yet_raw = await self.get_text_safe(page, PRICE_OLD_SELECTOR)
+        gia_niem_yet_raw = await self.get_element_text_with_fallbacks(page, PRICE_OLD_SELECTORS)
         
         if forced_price:
-             gia_khuyen_mai = clean_price(forced_price)
+             gia_khuyen_mai = self.extract_price(forced_price)
         else:
-             gia_khuyen_mai_raw = await self.get_text_safe(page, PRICE_CURRENT_SELECTOR)
-             gia_khuyen_mai = clean_price(gia_khuyen_mai_raw)
+             gia_khuyen_mai_raw = await self.get_element_text_with_fallbacks(page, PRICE_CURRENT_SELECTORS)
+             gia_khuyen_mai = self.extract_price(gia_khuyen_mai_raw)
         
-        gia_niem_yet = clean_price(gia_niem_yet_raw)
+        gia_niem_yet = self.extract_price(gia_niem_yet_raw)
         if gia_niem_yet == 0 and gia_khuyen_mai != 0:
              gia_niem_yet = gia_khuyen_mai
         

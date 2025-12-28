@@ -9,6 +9,18 @@ from utils.sites import total_links
 from utils.base_scraper import BaseScraper
 
 class DDVScraper(BaseScraper):
+    # Selectors
+    PRODUCT_NAME_SELECTORS = ["h1", "title", "[property='og:title']"]
+    PRICE_MAIN_SELECTORS = [
+        ":is(p, div, span)[class*='text-24'][class*='font-bold']",
+        "[itemprop='price']",
+        ".price",
+        ".current-price"
+    ]
+    PRICE_SUB_SELECTORS = [
+        ".line-through"
+    ]
+
     def get_filename_prefix(self):
         return "5-ddv"
 
@@ -44,20 +56,18 @@ class DDVScraper(BaseScraper):
 
     async def scrape_variant(self, page, url, variant_color="Unknown", screenshot=False):
         # 1. Product Name
-        product_name = await self.get_text_safe(page, "h1")
+        product_name = await self.get_element_text_with_fallbacks(page, self.PRODUCT_NAME_SELECTORS)
         if not product_name: product_name = "Unknown"
 
         # 2. Prices
         gia_khuyen_mai = 0
         gia_niem_yet = 0
 
-        gkm_str = await self.get_text_safe(page, ":is(p, div, span)[class*='text-24'][class*='font-bold']")
-        if gkm_str:
-             gia_khuyen_mai = int(re.sub(r'[^\d]', '', gkm_str)) if re.search(r'\d', gkm_str) else 0
+        gkm_str = await self.get_element_text_with_fallbacks(page, self.PRICE_MAIN_SELECTORS)
+        gia_khuyen_mai = self.extract_price(gkm_str)
 
-        gny_str = await self.get_text_safe(page, ".line-through")
-        if gny_str:
-             gia_niem_yet = int(re.sub(r'[^\d]', '', gny_str)) if re.search(r'\d', gny_str) else 0
+        gny_str = await self.get_element_text_with_fallbacks(page, self.PRICE_SUB_SELECTORS)
+        gia_niem_yet = self.extract_price(gny_str)
         
         # JSON-LD Fallback
         if gia_khuyen_mai == 0:

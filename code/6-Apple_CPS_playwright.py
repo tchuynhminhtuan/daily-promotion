@@ -12,9 +12,24 @@ from utils.base_scraper import BaseScraper
 
 # Constants
 # Selectors
-PRODUCT_NAME_SELECTOR = "div.box-product-name h1" 
-PRICE_MAIN_SELECTOR = ".sale-price"
-PRICE_SUB_SELECTOR = "del.base-price"
+PRODUCT_NAME_SELECTORS = [
+    "div.box-product-name h1",
+    "h1",
+    "title",
+    "[property='og:title']"
+]
+PRICE_MAIN_SELECTORS = [
+    ".sale-price",
+    ".tpt---sale-price",
+    ".price",
+    "[itemprop='price']",
+    ".special-price"
+]
+PRICE_SUB_SELECTORS = [
+    "del.base-price",
+    ".product__price--through",
+    ".old-price"
+]
 PROMO_SELECTOR = "div.box-product-promotion"
 PAYMENT_PROMO_SELECTOR = "div.box-more-promotion"
 COLOR_OPTIONS_SELECTOR = "//ul[contains(@class, 'list-variants')]/li"
@@ -30,7 +45,7 @@ class CPSScraper(BaseScraper):
 
     async def scrape_variant(self, page, url, color_name="Unknown", screenshot=False):
         # 1. Product Name
-        product_name = await self.get_text_safe(page, PRODUCT_NAME_SELECTOR)
+        product_name = await self.get_element_text_with_fallbacks(page, PRODUCT_NAME_SELECTORS)
         if not product_name: 
             product_name = await page.title()
         
@@ -39,19 +54,13 @@ class CPSScraper(BaseScraper):
         product_name = product_name.strip()
 
         # 2. Prices
-        gia_khuyen_mai_raw = await self.get_text_safe(page, PRICE_MAIN_SELECTOR)
-        gia_niem_yet_raw = await self.get_text_safe(page, PRICE_SUB_SELECTOR)
-        if not gia_niem_yet_raw:
-             gia_niem_yet_raw = await self.get_text_safe(page, ".product__price--through")
-        
-        def clean_price(p):
-            if not p: return "0"
-            return str(p).replace("đ", "").replace("₫", "").replace(".", "").replace(",", "").strip()
+        gia_khuyen_mai_raw = await self.get_element_text_with_fallbacks(page, PRICE_MAIN_SELECTORS)
+        gia_niem_yet_raw = await self.get_element_text_with_fallbacks(page, PRICE_SUB_SELECTORS)
 
-        gia_khuyen_mai = clean_price(gia_khuyen_mai_raw)
-        gia_niem_yet = clean_price(gia_niem_yet_raw)
+        gia_khuyen_mai = self.extract_price(gia_khuyen_mai_raw)
+        gia_niem_yet = self.extract_price(gia_niem_yet_raw)
         
-        if gia_niem_yet == "0" and gia_khuyen_mai != "0":
+        if gia_niem_yet == 0 and gia_khuyen_mai != 0:
             gia_niem_yet = gia_khuyen_mai
 
         # 3. Stock
@@ -92,7 +101,7 @@ class CPSScraper(BaseScraper):
 
         # 6. Screenshot
         screenshot_name = ""
-        if (self.take_screenshot or gia_khuyen_mai == "0") and screenshot:
+        if (self.take_screenshot or gia_khuyen_mai == 0) and screenshot:
             try:
                 safe_name = re.sub(r'[^\w\-\.]', '_', product_name)[:30]
                 safe_color = re.sub(r'[^\w\-\.]', '_', color_name)[:10]
