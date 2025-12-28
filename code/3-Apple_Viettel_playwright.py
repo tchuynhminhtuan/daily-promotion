@@ -1,25 +1,15 @@
 import asyncio
-import csv
 import os
 import sys
 import re
 from datetime import datetime
 import pytz
-from playwright.async_api import async_playwright
+from playwright.async_api import Page
+from utils.sites import total_links
+from utils.base_scraper import BaseScraper
 
-# Add the current directory to sys.path to import sites
-current_dir = os.path.dirname(os.path.abspath(__file__))
-sys.path.append(current_dir)
-from utils import sites
-
-# --- Configuration ---
-MAX_CONCURRENT_TABS = int(os.environ.get("MAX_CONCURRENT_TABS", 10))
-TAKE_SCREENSHOT = os.environ.get("TAKE_SCREENSHOT", "False").lower() == "true"
-BLOCK_IMAGES = os.environ.get("BLOCK_IMAGES", "True").lower() == "true"
-HEADLESS = True
-USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36"
-
-# --- Selectors ---
+# Constants
+# Selectors
 PRODUCT_NAME_SELECTOR = "h1.name-product"
 PRICE_MAIN_SELECTOR = ".price-product .new-price"
 PRICE_SUB_SELECTOR = ".price-product .old-price" 
@@ -28,92 +18,43 @@ COLOR_OPTIONS_SELECTOR = "ul.option-color-product li"
 STOCK_INDICATOR_SELECTOR = "#btn-buy-now" 
 PAYMENT_PROMO_SELECTOR = ".payment-promo .description" 
 
-# --- Helper Functions ---
-def setup_csv(base_path, date_str):
-    output_dir = os.path.join(base_path, date_str)
-    os.makedirs(output_dir, exist_ok=True)
-    
-    file_path = os.path.join(output_dir, f"3-viettel-{date_str}.csv")
-    
-    # Create img_viettel directory
-    img_dir = os.path.join(output_dir, 'img_viettel')
-    os.makedirs(img_dir, exist_ok=True)
+class ViettelScraper(BaseScraper):
+    def get_filename_prefix(self):
+        return "3-viettel"
 
-    # Always overwrite or append logic? FPT/MW overwrite.
-    if os.path.exists(file_path):
-        try: os.remove(file_path)
-        except: pass
-
-    with open(file_path, "w", newline="", encoding="utf-8") as file:
-        writer = csv.DictWriter(file, fieldnames=[
-            "Product_Name", "Color", "Ton_Kho", "Gia_Niem_Yet", "Gia_Khuyen_Mai",
-             "Date", "Khuyen_Mai", "Thanh_Toan", "Link", "screenshot_name"
-        ], delimiter=";")
-        writer.writeheader()
-    return file_path
-
-async def write_to_csv(file_path, data, lock):
-    async with lock:
-        with open(file_path, "a", newline="", encoding="utf-8") as file:
-            writer = csv.DictWriter(file, fieldnames=[
-                "Product_Name", "Color", "Ton_Kho", "Gia_Niem_Yet", "Gia_Khuyen_Mai",
-                 "Date", "Khuyen_Mai", "Thanh_Toan", "Link", "screenshot_name"
-            ], delimiter=";")
-            writer.writerow(data)
-
-async def get_text_safe(page, selector, timeout=1000):
-    try:
-        if await page.locator(selector).count() > 0:
-            return await page.locator(selector).first.inner_text()
-    except: pass
-    return ""
-
-class ViettelInteractor:
-    def __init__(self, page, url, csv_path, csv_lock):
-        self.page = page
-        self.url = url
-        self.csv_path = csv_path
-        self.csv_lock = csv_lock
-        self.processed_states = set() # Track unique states if needed
-
-    async def remove_overlays(self):
+    async def remove_overlays(self, page):
         """Aggressively remove overlays and handle cookie consent."""
         try:
             # 1. Generic removal
-            await self.page.evaluate("""
+            await page.evaluate("""() => {
                 document.querySelectorAll('.popup-modal, .overlay, .loading-cover').forEach(e => e.remove());
-            """)
+            }""")
             
             # 2. Click "ĐỒNG Ý" or "Chấp nhận" button if present
-            # Strategy: Find button with text
-            await self.page.evaluate("""(() => {
+            await page.evaluate("""(() => {
                 const buttons = Array.from(document.querySelectorAll('button, a, span, div'));
                 const acceptButton = buttons.find(el => el.textContent.trim() === 'ĐỒNG Ý' || el.textContent.trim() === 'Chấp nhận');
-                if (acceptButton && acceptButton.offsetParent !== null) { # Check visibility
+                if (acceptButton && acceptButton.offsetParent !== null) {
                     acceptButton.click();
                 }
             })()""")
         except: pass
 
-    async def scrape_variant(self, color_name, forced_ton_kho=None):
+    async def scrape_variant(self, page, url, color_name, forced_ton_kho=None):
         """Extract data for the CURRENT page state."""
-        # Clean color name
         color_name = color_name.strip()
         
-        # Avoid duplicate data for same color? 
-        # (Assuming the main loop controls iterations, we scrape what we are asked)
-
         # 2. Prices
-        gia_khuyen_mai_raw = await get_text_safe(self.page, PRICE_MAIN_SELECTOR)
-        gia_niem_yet_raw = await get_text_safe(self.page, PRICE_SUB_SELECTOR)
+        gia_khuyen_mai_raw = await self.get_text_safe(page, PRICE_MAIN_SELECTOR)
+        gia_niem_yet_raw = await self.get_text_safe(page, PRICE_SUB_SELECTOR)
         
         if not gia_niem_yet_raw and gia_khuyen_mai_raw:
             gia_niem_yet_raw = gia_khuyen_mai_raw
             
-        # JSON-LD Fallback (Ported from Old Scraper)
+        # JSON-LD Fallback
         if not gia_khuyen_mai_raw:
              try:
-                 json_ld = await self.page.evaluate("""() => {
+                 json_ld = await page.evaluate("""() => {
                     const script = document.querySelector('script[type="application/ld+json"]');
                     return script ? JSON.parse(script.innerText) : null;
                  }""")
@@ -123,7 +64,6 @@ class ViettelInteractor:
             
         def clean_price(p):
             if not p: return "0"
-            # Remove non-digits
             cleaned = re.sub(r'[^\d]', '', str(p).strip())
             return cleaned if cleaned else "0"
 
@@ -136,24 +76,23 @@ class ViettelInteractor:
             ton_kho = forced_ton_kho
         else:
              try:
-                content = await self.page.content()
+                content = await page.content()
                 if "MUA NGAY" in content:
                     ton_kho = "Yes"
              except: pass
         if gia_khuyen_mai == "0": ton_kho = "No"
 
-        # 1. Product Name (Clean Suffix)
-        product_name = await get_text_safe(self.page, PRODUCT_NAME_SELECTOR)
-        if not product_name: product_name = await self.page.title()
+        # 1. Product Name
+        product_name = await self.get_text_safe(page, PRODUCT_NAME_SELECTOR)
+        if not product_name: product_name = await page.title()
         
-        # Clean potential site suffixes
         product_name = product_name.replace(" - ViettelStore.vn", "").strip()
 
-        # 4. Promo (Khuyen Mai)
+        # 4. Promo
         khuyen_mai = ""
         try:
             promos = []
-            promo_elements = self.page.locator(PROMO_SELECTOR)
+            promo_elements = page.locator(PROMO_SELECTOR)
             count = await promo_elements.count()
             for i in range(count):
                 text = await promo_elements.nth(i).inner_text()
@@ -163,23 +102,18 @@ class ViettelInteractor:
             khuyen_mai = "\n".join(promos)
         except: pass
         
-        # 5. Payment Promo (Thanh Toan)
+        # 5. Payment Promo
         thanh_toan = ""
         try:
             payment_promos = []
-            # Strategy 1: Specific Description Items (Preferred)
-            payment_elements = self.page.locator(PAYMENT_PROMO_SELECTOR)
+            payment_elements = page.locator(PAYMENT_PROMO_SELECTOR)
             p_count = await payment_elements.count()
             
             if p_count == 0:
-                # Strategy 2: User Suggested Fallback (Container Text)
-                # Selector: #payment-promotion .box-promo-boder
-                # Or just #payment-promotion text
-                fallback = self.page.locator("#payment-promotion")
+                fallback = page.locator("#payment-promotion")
                 if await fallback.count() > 0:
                      text = await fallback.inner_text()
                      if text.strip():
-                         # Basic clean: split by newlines and filter
                          lines = [l.strip() for l in text.split('\n') if l.strip() and "Khuyến mãi" not in l]
                          payment_promos.extend(lines)
             else:
@@ -194,14 +128,12 @@ class ViettelInteractor:
 
         # 6. Screenshot
         screenshot_name = "Skipped"
-        # Only take screenshot if Price is 0 OR Config requested
-        if TAKE_SCREENSHOT or gia_khuyen_mai == "0":
+        if self.take_screenshot or gia_khuyen_mai == "0":
              try:
-                img_dir = os.path.join(os.path.dirname(self.csv_path), 'img_viettel')
                 t_str = datetime.now().strftime("%H%M%S")
                 safe_name = re.sub(r'[^\w]', '_', color_name)
                 filename = f"VT_{t_str}_{safe_name}.png"
-                await self.page.screenshot(path=os.path.join(img_dir, filename), full_page=True)
+                await page.screenshot(path=os.path.join(self.img_dir, filename), full_page=True)
                 screenshot_name = filename
              except: pass
 
@@ -212,80 +144,65 @@ class ViettelInteractor:
             "Ton_Kho": ton_kho,
             "Gia_Niem_Yet": gia_niem_yet,
             "Gia_Khuyen_Mai": gia_khuyen_mai,
-            "Date": datetime.now(pytz.timezone('Asia/Ho_Chi_Minh')).strftime("%Y-%m-%d"),
+            "Date": self.date_str,
             "Khuyen_Mai": khuyen_mai,
             "Thanh_Toan": thanh_toan,
-            "Link": self.url,
+            "Link": url,
             "screenshot_name": screenshot_name
         }
         
-        await write_to_csv(self.csv_path, data, self.csv_lock)
+        await self.write_to_csv(data)
         print(f"Saved: {product_name} - {color_name} | Price: {gia_khuyen_mai}")
-    async def process_colors(self):
-        """Iterate through all color options."""
+
+    async def scrape(self, page, url):
+        await page.wait_for_timeout(5000) # Init wait
+
         try:
-            await self.remove_overlays()
+            await self.remove_overlays(page)
             
-            # STABILITY FIX: Wait for color options explicitly
             try:
-                await self.page.locator("ul.option-color-product").first.wait_for(state="visible", timeout=5000)
-                # Scroll into view to ensure elements are rendered/interactable
-                await self.page.locator("ul.option-color-product").first.scroll_into_view_if_needed()
+                await page.locator("ul.option-color-product").first.wait_for(state="visible", timeout=5000)
+                await page.locator("ul.option-color-product").first.scroll_into_view_if_needed()
             except: pass
 
-            # SCOPED SELECTOR: Only target the FIRST ul for colors (User Request)
-            # User XPath: (//ul[contains(@class, 'option-color-product')])[1]/li
-            # Playwright equivalent: locator("ul.option-color-product").nth(0).locator("li")
-            
-            color_ul = self.page.locator("ul.option-color-product").first
+            color_ul = page.locator("ul.option-color-product").first
             color_btns = color_ul.locator("li")
             
             count = await color_btns.count()
             
             if count == 0:
                 print("  Retry finding colors...")
-                await self.page.wait_for_timeout(2000)
+                await page.wait_for_timeout(2000)
                 count = await color_btns.count()
             
             if count == 0:
                 print("No color options found, scraping current state.")
-                await self.scrape_variant("Unknown")
+                await self.scrape_variant(page, url, "Unknown")
                 return
 
             print(f"Found {count} color options.")
             
             for i in range(count):
-                await self.remove_overlays()
+                await self.remove_overlays(page)
                 
-                # Re-locate scoped
                 btn = color_ul.locator("li").nth(i)
                 
-                # Check visibility without forcing scroll on every item (parent scroll should cover it)
                 if not await btn.is_visible(): 
-                     # Only try to scroll parent again if item not visible
                      try:
-                        await self.page.locator("ul.option-color-product").scroll_into_view_if_needed(timeout=2000)
+                        await page.locator("ul.option-color-product").scroll_into_view_if_needed(timeout=2000)
                      except: pass
                 
-                # If still not visible, skip or try JS click? 
-                # Let's try to proceed even if is_visible is false, as we force click anyway
-                
-                # Get Name
                 color_name = await btn.inner_text()
                 if not color_name:
-                    # Try label title
                     label = btn.locator("label")
                     if await label.count() > 0:
                         color_name = await label.get_attribute("title")
                 if not color_name: color_name = f"Color_{i}"
                 
-                # Check status
                 is_disabled = False
                 class_attr = await btn.get_attribute("class")
                 if class_attr and "disabled" in class_attr: is_disabled = True
                 
-                # Robust check (Ported from Old Scraper)
-                # Viettel uses disabled attribute or pointer-events on the LABEL, not always class on LI
                 label = btn.locator("label")
                 if await label.count() > 0:
                      if await label.get_attribute("disabled"):
@@ -294,104 +211,40 @@ class ViettelInteractor:
                      if style and "pointer-events: none" in style:
                          is_disabled = True
                 
-                # Click if not active? 
-                # Viettel doesn't always have 'active' class on LI, maybe on Label label.checked?
-                # Just click to be safe.
-                
                 if not is_disabled:
                     print(f"  Clicking: {color_name}")
                     try:
-                        # Click the label inside if possible
                         targets = btn.locator("label")
                         if await targets.count() > 0:
                             await targets.first.click(force=True)
                         else:
                             await btn.click(force=True)
                         
-                        # Wait for update
-                        await self.page.wait_for_timeout(1000) # Wait for JS update
-                        await self.remove_overlays()
+                        await page.wait_for_timeout(1000)
+                        await self.remove_overlays(page)
                     except Exception as e:
                         print(f"    Click error: {e}")
                 
-                # Scrape
-                await self.scrape_variant(color_name, forced_ton_kho="No" if is_disabled else None)
+                await self.scrape_variant(page, url, color_name, forced_ton_kho="No" if is_disabled else None)
                 
         except Exception as e:
             print(f"Error in process_colors: {e}")
-            # Fallback
-            await self.scrape_variant("Error_State")
+            await self.scrape_variant(page, url, "Error_State")
 
-
-async def process_url(semaphore, browser, url, csv_path, csv_lock):
-    async with semaphore:
-        page = await browser.new_page(
-            user_agent=USER_AGENT,
-            viewport={"width": 1920, "height": 1080}
-        )
-        
-        if BLOCK_IMAGES:
-            await page.route("**/*", lambda route: route.abort() 
-                if route.request.resource_type in ["image", "media", "font"] 
-                else route.continue_())
-
-        try:
-            print(f"Processing: {url}")
-            await page.goto(url, timeout=60000, wait_until="domcontentloaded")
-            await page.wait_for_timeout(5000) # Init wait (Increased for stability)
-            
-            interactor = ViettelInteractor(page, url, csv_path, csv_lock)
-            await interactor.process_colors()
-
-        except Exception as e:
-            print(f"Error processing {url}: {e}")
-        finally:
-            await page.close()
-
-async def main():
-    date_str = datetime.now(pytz.timezone('Asia/Ho_Chi_Minh')).strftime("%Y-%m-%d")
-    base_path = os.path.join(current_dir, '../content')
-    csv_path = setup_csv(base_path, date_str)
-    csv_lock = asyncio.Lock()
-    
-    initial_urls = sites.total_links['vt_urls']
+def main():
+    urls = total_links['vt_urls']
     specific_url = os.environ.get("SPECIFIC_URL")
     if specific_url:
-        print(f"⚠️ PROCESSING SPECIFIC URL: {specific_url}")
-        initial_urls = [specific_url]
+        urls = [specific_url]
     elif os.environ.get("TEST_MODE") == "True":
-        print("⚠️ TEST MODE ENABLED: Processing 4 URLs")
-        initial_urls = initial_urls[:4]
+        urls = urls[:4]
     
-    print(f"Found {len(initial_urls)} URLs to process.")
-    semaphore = asyncio.Semaphore(MAX_CONCURRENT_TABS)
-    
-    async with async_playwright() as p:
-        # Proxy Setup (Standard)
-        proxy_server = os.environ.get("PROXY_SERVER", "").strip()
-        launch_options = {
-            "headless": HEADLESS,
-            "args": ["--disable-blink-features=AutomationControlled", "--window-size=1920,1080"],
-            "ignore_default_args": ["--enable-automation"]
-        }
-        if proxy_server:
-             # Basic parsing logic
-            if "@" not in proxy_server and len(proxy_server.split(':')) == 4:
-                 ip, port, user, pw = proxy_server.split(':')
-                 proxy_server = f"http://{user}:{pw}@{ip}:{port}"
-            if not proxy_server.startswith("http"): proxy_server = f"http://{proxy_server}"
-            
-            if os.environ.get("ENABLE_PROXY_VIETTEL", "False").lower() == "true":
-                launch_options["proxy"] = {"server": proxy_server}
-
-        browser = await p.chromium.launch(**launch_options)
-        tasks = [process_url(semaphore, browser, url, csv_path, csv_lock) for url in initial_urls]
-        await asyncio.gather(*tasks)
-        await browser.close()
+    max_tabs = int(os.environ.get("MAX_CONCURRENT_TABS", 10))
+    scraper = ViettelScraper(urls=urls, max_concurrent=max_tabs)
+    asyncio.run(scraper.run())
 
 if __name__ == "__main__":
     start = datetime.now()
-    asyncio.run(main())
+    main()
     duration = datetime.now() - start
-    seconds = duration.total_seconds()
-    print(f"Total execution time: {int(seconds // 3600)} hours {int((seconds % 3600) // 60)} minutes {int(seconds % 60)} seconds")
+    print(f"Total execution time: {duration}")
