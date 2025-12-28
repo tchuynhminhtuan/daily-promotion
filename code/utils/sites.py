@@ -700,7 +700,75 @@ total_links={
     'https://cellphones.com.vn/macbook-pro-m4-pro-14-inch-14cpu-20gpu-24gb-512gb-nano.html',
 
 
-        ]
+        ],
+
+    "fpt_marshall_urls": [
+    'https://fptshop.com.vn/phu-kien/loa-bluetooth-marshall-acton-ii',
+    'https://fptshop.com.vn/phu-kien/loa-bluetooth-marshall-acton-iii',
+    'https://fptshop.com.vn/phu-kien/loa-bluetooth-marshall-bromley-750',
+    'https://fptshop.com.vn/phu-kien/loa-bluetooth-marshall-emberton-ii',
+    'https://fptshop.com.vn/phu-kien/loa-bluetooth-marshall-emberton-iii',
+    'https://fptshop.com.vn/phu-kien/loa-bluetooth-marshall-kilburn-ii',
+    'https://fptshop.com.vn/phu-kien/loa-bluetooth-marshall-kilburn-iii',
+    'https://fptshop.com.vn/phu-kien/loa-bluetooth-marshall-middleton',
+    'https://fptshop.com.vn/phu-kien/loa-bluetooth-marshall-middleton-ii',
+    'https://fptshop.com.vn/phu-kien/loa-bluetooth-marshall-stanmore-iii',
+    'https://fptshop.com.vn/phu-kien/loa-bluetooth-marshall-stockwell-2',
+    'https://fptshop.com.vn/phu-kien/loa-bluetooth-marshall-willen',
+    'https://fptshop.com.vn/phu-kien/loa-bluetooth-marshall-willen-ii',
+    'https://fptshop.com.vn/phu-kien/loa-bluetooth-marshall-woburn-ii',
+    'https://fptshop.com.vn/phu-kien/loa-bluetooth-marshall-woburn-iii',
+    'https://fptshop.com.vn/phu-kien/loa-sieu-tram-marshall-heston-sub-200',
+    'https://fptshop.com.vn/phu-kien/loa-thanh-marshall-heston-120',
+    'https://fptshop.com.vn/phu-kien/loa-thanh-marshall-heston-60',
+    'https://fptshop.com.vn/phu-kien/tai-nghe-bluetooth-choang-dau-marshall-major-iv',
+    'https://fptshop.com.vn/phu-kien/tai-nghe-bluetooth-choang-dau-marshall-major-v',
+    'https://fptshop.com.vn/phu-kien/tai-nghe-bluetooth-nhet-tai-marshall-minor-iii',
+    'https://fptshop.com.vn/phu-kien/tai-nghe-bluetooth-nhet-tai-marshall-minor-iv',
+    'https://fptshop.com.vn/phu-kien/tai-nghe-bluetooth-nhet-tai-marshall-motif-ii-anc',
+],
+
+"mw_marshall_urls" : [
+    'https://www.thegioididong.com/loa-laptop/loa-bluetooth-marshall-acton-iii?utm_flashsale=1',
+    'https://www.thegioididong.com/loa-laptop/loa-bluetooth-marshall-emberton-iii-xanh-bong-dem?utm_flashsale=1',
+    'https://www.thegioididong.com/loa-laptop/loa-bluetooth-marshall-emberton-iii?utm_flashsale=1',
+    'https://www.thegioididong.com/loa-laptop/loa-bluetooth-marshall-kilburn-ii?utm_flashsale=1',
+    'https://www.thegioididong.com/loa-laptop/loa-bluetooth-marshall-kilburn-iii',
+    'https://www.thegioididong.com/loa-laptop/loa-bluetooth-marshall-middleton-ii?utm_flashsale=1',
+    'https://www.thegioididong.com/loa-laptop/loa-bluetooth-marshall-party-bromley-750',
+    'https://www.thegioididong.com/loa-laptop/loa-bluetooth-marshall-stanmore-iii?utm_flashsale=1',
+    'https://www.thegioididong.com/loa-laptop/loa-bluetooth-marshall-stockwell-ii',
+    'https://www.thegioididong.com/loa-laptop/loa-bluetooth-marshall-tufton?utm_flashsale=1',
+    'https://www.thegioididong.com/loa-laptop/loa-bluetooth-marshall-willen-ii?utm_flashsale=1',
+    'https://www.thegioididong.com/loa-laptop/loa-bluetooth-marshall-woburn-iii?utm_flashsale=1',
+    'https://www.thegioididong.com/tai-nghe/tai-nghe-bluetooth-chup-tai-marshall-major-v',
+    'https://www.thegioididong.com/tai-nghe/tai-nghe-bluetooth-chup-tai-marshall-major-v-xanh-bong-dem',
+    'https://www.thegioididong.com/tai-nghe/tai-nghe-bluetooth-true-wireless-marshall-minor-iv',
+    'https://www.thegioididong.com/tai-nghe/tai-nghe-bluetooth-true-wireless-marshall-motif-ii-a-n-c',
+    'https://www.thegioididong.com/tai-nghe/tai-nghe-chup-tai-marshall-monitor-iii-a-n-c',
+],
+
+"cps_marshall_urls" : [
+    'https://cellphones.com.vn/loa-bluetooth-marshall-acton-iii.html',
+    'https://cellphones.com.vn/loa-bluetooth-marshall-emberton-ii.html',
+    'https://cellphones.com.vn/loa-bluetooth-marshall-emberton-iii.html',
+    'https://cellphones.com.vn/loa-bluetooth-marshall-kilburn-iii.html',
+    'https://cellphones.com.vn/loa-bluetooth-marshall-middleton-ii.html',
+    'https://cellphones.com.vn/loa-bluetooth-marshall-middleton.html',
+    'https://cellphones.com.vn/loa-bluetooth-marshall-stanmore-iii.html',
+    'https://cellphones.com.vn/loa-bluetooth-marshall-stockwell-2.html',
+    'https://cellphones.com.vn/loa-bluetooth-marshall-willen-ii.html',
+    'https://cellphones.com.vn/loa-bluetooth-marshall-woburn-iii.html',
+    'https://cellphones.com.vn/loa-keo-party-marshall-bromley-750.html',
+    'https://cellphones.com.vn/loa-soundbar-marshall-heston-60.html',
+    'https://cellphones.com.vn/tai-nghe-bluetooth-ch-p-tai-marshall-major-5-nau.html',
+    'https://cellphones.com.vn/tai-nghe-bluetooth-marshall-minor-4.html',
+    'https://cellphones.com.vn/tai-nghe-bluetooth-marshall-monitor-2-anc.html',
+    'https://cellphones.com.vn/tai-nghe-chup-tai-marshall-major-5.html',
+    'https://cellphones.com.vn/tai-nghe-chup-tai-marshall-monitor-iii-anc.html',
+    'https://cellphones.com.vn/tai-nghe-khong-day-marshall-motif-ii-anc.html',
+]
+
     
 
     

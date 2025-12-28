@@ -5,11 +5,16 @@ URLS = [
     "https://fptshop.com.vn/apple/iphone",
     "https://fptshop.com.vn/apple/ipad",
     "https://fptshop.com.vn/apple/macbook",
-    "https://fptshop.com.vn/apple/watch"
+    "https://fptshop.com.vn/apple/watch",
+    'https://fptshop.com.vn/tim-kiem?s=marshall&sort=noi-bat&hang-san-xuat=marshall'
 ]
 
 # User provided XPath
-SELECTOR = "//h3[@class='h2-semibold mb:-mx-4 mb:px-4 mb:pt-4']/parent::div/following-sibling::div[@class='grid grid-cols-2 gap-2 pc:grid-cols-4 pc:gap-4']/div/div/div/a[@href]"
+# Specific selector for structured Category pages (Apple iPhone, iPad, etc)
+CATEGORY_SELECTOR = "//h3[@class='h2-semibold mb:-mx-4 mb:px-4 mb:pt-4']/parent::div/following-sibling::div[@class='grid grid-cols-2 gap-2 pc:grid-cols-4 pc:gap-4']/div/div/div/a[@href]"
+
+# Broad selector for Search/Filter pages (e.g. Marshall search)
+SEARCH_SELECTOR = "//div[contains(@class, 'grid') and (contains(@class, 'grid-cols-2') or contains(@class, 'grid-cols-3') or contains(@class, 'grid-cols-4'))]//a[@href]"
 
 async def scrape_fpt_links():
     async with async_playwright() as p:
@@ -23,12 +28,22 @@ async def scrape_fpt_links():
 
         for url in URLS:
             print(f"Navigating to {url}...")
+            
+            # Determine which selector to use
+            if "tim-kiem" in url or "?s=" in url:
+                current_selector = SEARCH_SELECTOR
+                is_search = True
+            else:
+                current_selector = CATEGORY_SELECTOR
+                is_search = False
+
             try:
                 await page.goto(url, timeout=60000, wait_until="domcontentloaded")
                 await page.wait_for_timeout(3000)
 
                 # Load More Loop (Generic "Xem thêm" button)
-                while True:
+                # SKIP for Search Pages (handled better by default load, scrolling might break grid)
+                while not is_search:
                     try:
                         # Scroll to bottom
                         await page.evaluate("window.scrollTo(0, document.body.scrollHeight)")
@@ -55,15 +70,40 @@ async def scrape_fpt_links():
                         break
 
                 # Extract Links
-                elements = page.locator(SELECTOR)
+                elements = page.locator(current_selector)
                 count = await elements.count()
                 print(f"Found {count} potential link elements on {url}.")
                 
                 for i in range(count):
                     href = await elements.nth(i).get_attribute("href")
                     if href:
+                        href = href.strip()
                         if not href.startswith("http"):
+                            if not href.startswith("/"):
+                                href = "/" + href
                             href = "https://fptshop.com.vn" + href
+                        
+                        # Filter out noise for search selector
+                        if is_search:
+                            lower_href = href.lower()
+                            
+                            # Forced Includes (Priority) - Keep valid product paths high, 
+                            # BUT ensure they aren't actually news articles disguised (unlikely for FPT but good practice)
+                            # Actually, it's safer to just run the exclusion list FIRST.
+                            
+                            # Rejection Logic (Strict)
+                            # Filter out news, support, policies, etc.
+                            if any(x in lower_href for x in ["/ho-tro/", "/tin-tuc", "/collection/", "/tos", "tel:", "zalo.me", "facebook.com", "youtube.com", "tiktok.com", "/gio-hang", "/kiem-tra-ho-so", "/danh-gia/"]):
+                                continue
+                            if href == "https://fptshop.com.vn" or href == "https://fptshop.com.vn/":
+                                continue
+                            if "google.com" in lower_href:
+                                continue
+
+                            # If it passed rejection, we accept it.
+                            # Optional: We could check if it looks like a product (has 3 components or specific keywords), 
+                            # but keeping it broad (allow list) is safer to not miss items.
+
                         all_links.add(href)
 
             except Exception as e:

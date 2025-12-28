@@ -1,0 +1,2 @@
+# This file tells GitHub Pages to disable Jekyll processing.
+# It ensures that directories starting with an underscore (like _static) are explicitly tied to the site and not ignored.

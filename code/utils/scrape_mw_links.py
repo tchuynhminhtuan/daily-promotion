@@ -3,11 +3,11 @@ from playwright.async_api import async_playwright
 import time
 
 URLS = [
-    # "https://www.thegioididong.com/dtdd-apple-iphone",
-    # 'https://www.thegioididong.com/may-tinh-bang-apple-ipad',
-    # 'https://www.thegioididong.com/laptop-apple-macbook',
-    # 'https://www.thegioididong.com/dong-ho-thong-minh-apple',
-    'https://www.thegioididong.com/phu-kien/marshall?key=marshall&sc=new#curl=marshall&mGenius=Marshall&o=9&pi=0'
+    "https://www.thegioididong.com/dtdd-apple-iphone",
+    'https://www.thegioididong.com/may-tinh-bang-apple-ipad',
+    'https://www.thegioididong.com/laptop-apple-macbook',
+    'https://www.thegioididong.com/dong-ho-thong-minh-apple',
+    'https://www.thegioididong.com/phu-kien/marshall?key=marshall&sc=new'
 
 ]
 
@@ -52,14 +52,69 @@ async def scrape_links():
                     print(f"Navigation Loop Error: {e}")
                     break
 
-            # Extract Links using USER SPECIFIED selector
-            # Selector: //li[contains(@class, 'item')]/a[@href]
+# User provided XPath
+# 1. Standard Category Selector (original)
+CATEGORY_SELECTOR = "//li[contains(@class, 'item')]/a[@href]"
+# 2. Search Page Selector (User Specific for Marshall)
+SEARCH_SELECTOR = "//ul[@class='listproduct']/li/a[@href]"
+
+async def scrape_links():
+    async with async_playwright() as p:
+        # Launch browser
+        browser = await p.chromium.launch(headless=True)
+        page = await browser.new_page()
+        
+        # Stealth / Anti-bot
+        await page.add_init_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
+        
+        all_links = set()
+
+        for url in URLS:
+            print(f"Navigating to {url}...")
+            
+            # Determine Selector
+            if "marshall" in url or "key=" in url:
+                current_selector = SEARCH_SELECTOR
+                is_search = True
+            else:
+                current_selector = CATEGORY_SELECTOR
+                is_search = False
+                
+            try:
+                await page.goto(url, timeout=60000, wait_until="domcontentloaded")
+            except Exception as e:
+                print(f"Error loading {url}: {e}")
+                continue
+            
+            # Handle "Xem thêm" (Show more) button loop
+            while True:
+                try:
+                    # Scroll to bottom
+                    await page.evaluate("window.scrollTo(0, document.body.scrollHeight)")
+                    await page.wait_for_timeout(2000)
+                    
+                    # Check for "Xem thêm" button using USER SPECIFIED selector
+                    show_more_btn = page.locator("//strong[contains(@class, 'see-more-btn')]")
+                    
+                    count = await show_more_btn.count()
+                    if count > 0 and await show_more_btn.first.is_visible():
+                        print("Found 'Xem thêm' button, clicking...")
+                        await show_more_btn.first.click(force=True)
+                        await page.wait_for_timeout(3000) # Wait for content to load
+                    else:
+                        print("No more 'Xem thêm' buttons found or reached end.")
+                        break
+                except Exception as e:
+                    print(f"Navigation Loop Error: {e}")
+                    break
+
+            # Extract Links using determined selector
             try:
                 # Wait for at least some items to be present
-                await page.wait_for_selector("//li[contains(@class, 'item')]/a[@href]", timeout=5000)
+                await page.wait_for_selector(current_selector, timeout=5000)
             except: pass
 
-            product_links = page.locator("//li[contains(@class, 'item')]/a[@href]")
+            product_links = page.locator(current_selector)
             count = await product_links.count()
             
             print(f"Found {count} product matches on {url}.")
@@ -73,8 +128,8 @@ async def scrape_links():
                         href = "https://www.thegioididong.com" + href
                     
                     # Optional: Filtering to ensure it's a product link not something else
-                    # Update: Expanded to include iPad, Mac, Watch
-                    if any(x in href for x in ["/dtdd/", "/laptop/", "/may-tinh-bang/", "/dong-ho-thong-minh/", ".html"]): 
+                    # Update: Expanded to include iPad, Mac, Watch, and Accessories (Marshall)
+                    if any(x in href for x in ["/dtdd/", "/laptop/", "/may-tinh-bang/", "/dong-ho-thong-minh/", "/phu-kien/", "/loa-laptop/", "/tai-nghe/", ".html"]): 
                          all_links.add(href)
         
         # Deduplicate and sort

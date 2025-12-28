@@ -1079,8 +1079,7 @@ def main():
     args = parser.parse_args()
 
     # Determine Base Directory
-    # Priority: Env Var -> Global Config
-    base_dir = os.getenv("DAILY_PROMOTION_BASE_DIR", BASE_DIR)
+    base_dir = BASE_DIR
     
     target_dates = DATES
     is_interactive = args.interactive
