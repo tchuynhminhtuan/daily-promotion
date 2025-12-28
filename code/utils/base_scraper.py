@@ -53,7 +53,9 @@ class BaseScraper:
             os.makedirs(output_dir, exist_ok=True)
 
         prefix = self.get_filename_prefix()
-        file_path = os.path.join(output_dir, f"{prefix}-{self.date_str}.csv")
+        # Append _test if in test mode
+        suffix = "_test" if os.environ.get("TEST_MODE") == "True" else ""
+        file_path = os.path.join(output_dir, f"{prefix}-{self.date_str}{suffix}.csv")
 
         # Create image directory based on prefix
         # Convention: if prefix is '1-fpt', img dir is 'img_fpt'
