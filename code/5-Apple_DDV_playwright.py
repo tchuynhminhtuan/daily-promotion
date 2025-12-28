@@ -217,7 +217,7 @@ class DDVScraper(BaseScraper):
             except Exception as e:
                 print(f"Error processing color {color_text}: {e}")
 
-def main():
+async def main():
     urls = total_links['ddv_urls']
     specific_url = os.environ.get("SPECIFIC_URL")
     if specific_url:
@@ -227,10 +227,10 @@ def main():
     
     max_tabs = int(os.environ.get("MAX_CONCURRENT_TABS", 10))
     scraper = DDVScraper(urls=urls, max_concurrent=max_tabs)
-    asyncio.run(scraper.run())
+    await scraper.run()
 
 if __name__ == "__main__":
     start = datetime.now()
-    main()
+    asyncio.run(main())
     duration = datetime.now() - start
     print(f"Total execution time: {duration}")

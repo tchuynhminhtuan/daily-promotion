@@ -231,7 +231,7 @@ class ViettelScraper(BaseScraper):
             print(f"Error in process_colors: {e}")
             await self.scrape_variant(page, url, "Error_State")
 
-def main():
+async def main():
     urls = total_links['vt_urls']
     specific_url = os.environ.get("SPECIFIC_URL")
     if specific_url:
@@ -241,10 +241,10 @@ def main():
     
     max_tabs = int(os.environ.get("MAX_CONCURRENT_TABS", 10))
     scraper = ViettelScraper(urls=urls, max_concurrent=max_tabs)
-    asyncio.run(scraper.run())
+    await scraper.run()
 
 if __name__ == "__main__":
     start = datetime.now()
-    main()
+    asyncio.run(main())
     duration = datetime.now() - start
     print(f"Total execution time: {duration}")

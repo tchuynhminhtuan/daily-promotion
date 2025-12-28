@@ -214,7 +214,7 @@ class MWScraper(BaseScraper):
         await self.remove_overlays(page)
         await self.process_storage_options(page, url)
 
-def main():
+async def main():
     urls = total_links['mw_urls']
     specific_url = os.environ.get("SPECIFIC_URL")
     if specific_url:
@@ -236,10 +236,10 @@ def main():
 
     max_tabs = int(os.environ.get("MAX_CONCURRENT_TABS", 8))
     scraper = MWScraper(urls=urls, max_concurrent=max_tabs)
-    asyncio.run(scraper.run())
+    await scraper.run()
 
 if __name__ == "__main__":
     start = datetime.now()
-    main()
+    asyncio.run(main())
     duration = datetime.now() - start
     print(f"Total execution time: {duration}")
