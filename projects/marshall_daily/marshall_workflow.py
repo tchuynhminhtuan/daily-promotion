@@ -15,6 +15,9 @@ PROJECT_CONTENT_DIR = os.path.join(os.path.dirname(__file__), "content")
 if CODE_DIR not in sys.path:
     sys.path.insert(0, CODE_DIR)
 
+# Set the output path for core scrapers to the local project content directory
+os.environ["BASE_OUTPUT_PATH"] = PROJECT_CONTENT_DIR
+
 from utils.sites import total_links
 
 def get_date_str():
@@ -56,26 +59,6 @@ async def run_core_scraper(script_name, marshall_key, core_key):
 
     # 4. Restore
     total_links[core_key] = original_urls
-
-    # 5. Tidy Data (Copy to local projects/marshall_daily/content/YYYY-MM-DD/)
-    date_str = get_date_str()
-    root_date_dir = os.path.join(ROOT_DIR, "content", date_str)
-    local_date_dir = os.path.join(PROJECT_CONTENT_DIR, date_str)
-    os.makedirs(local_date_dir, exist_ok=True)
-    
-    prefix_map = {
-        "1-Apple_FPT_playwright.py": "1-fpt",
-        "2-Apple_MW_playwright.py": "2-mw",
-        "6-Apple_CPS_playwright.py": "6-cps"
-    }
-    prefix = prefix_map.get(script_name)
-    if prefix:
-        filename = f"{prefix}-{date_str}.csv"
-        src = os.path.join(root_date_dir, filename)
-        if os.path.exists(src):
-            dst = os.path.join(local_date_dir, filename)
-            print(f"📂 Tidying: Copying {filename} to sub-project...")
-            shutil.copy2(src, dst)
 
 async def workflow():
     await run_core_scraper("1-Apple_FPT_playwright.py", "fpt_marshall_urls", "fpt_urls")
