@@ -19,9 +19,6 @@ python3 projects/marshall_daily/generate_marshall_report.py
 # Record for local project
 cp docs/marshall.html projects/marshall_daily/index.html
 
-# Clean up temporary analysis data
-rm -rf projects/marshall_daily/content/analysis_result
-
 # 3. Update Integrated Main Dashboard
 echo "📊 Updating main dashboard (Integrated)..."
 python3 code/generate_report.py
