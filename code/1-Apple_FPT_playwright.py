@@ -417,7 +417,7 @@ class FPTScraper(BaseScraper):
         else:
             await self.process_color_options_optimized(page, url, color_idx=color_idx, container_xpath_arg=best_xpath)
 
-def main():
+async def main():
     urls = total_links['fpt_urls']
     specific_url = os.environ.get("SPECIFIC_URL")
     if specific_url:
@@ -427,10 +427,10 @@ def main():
     
     max_tabs = int(os.environ.get("MAX_CONCURRENT_TABS", 8))
     scraper = FPTScraper(urls=urls, max_concurrent=max_tabs)
-    asyncio.run(scraper.run())
+    await scraper.run()
 
 if __name__ == "__main__":
     start_time = datetime.now()
-    main()
+    asyncio.run(main())
     duration = datetime.now() - start_time
     print(f"Total execution time: {duration}")

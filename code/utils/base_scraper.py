@@ -23,7 +23,12 @@ class BaseScraper:
 
         # Setup paths
         self.current_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-        self.base_output_path = os.path.join(self.current_dir, '../content')
+        # Allow override for sub-projects (like Marshall) to avoid overwriting main data
+        env_output_path = os.environ.get("BASE_OUTPUT_PATH")
+        if env_output_path:
+            self.base_output_path = os.path.abspath(env_output_path)
+        else:
+            self.base_output_path = os.path.join(self.current_dir, '../content')
         self.local_tz = pytz.timezone('Asia/Ho_Chi_Minh')
         self.date_str = datetime.now(self.local_tz).strftime('%Y-%m-%d')
 

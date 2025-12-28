@@ -223,7 +223,7 @@ class CPSScraper(BaseScraper):
             except Exception as e:
                 print(f"  Storage discovery error: {e}")
 
-def main():
+async def main():
     urls = total_links['cps_urls']
     specific_url = os.environ.get("SPECIFIC_URL")
     if specific_url:
@@ -233,10 +233,10 @@ def main():
 
     max_tabs = int(os.environ.get("MAX_CONCURRENT_TABS", 10))
     scraper = CPSScraper(urls=urls, max_concurrent=max_tabs)
-    asyncio.run(scraper.run())
+    await scraper.run()
 
 if __name__ == "__main__":
     start_time = datetime.now()
-    main()
+    asyncio.run(main())
     duration = datetime.now() - start_time
     print(f"Total execution time: {duration}")
