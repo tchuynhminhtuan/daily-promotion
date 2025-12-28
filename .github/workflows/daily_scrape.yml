@@ -35,29 +35,30 @@ jobs:
           TAKE_SCREENSHOT: "False"
           BLOCK_IMAGES: "True"
           PROXY_SERVER: ${{ secrets.PROXY_SERVER }}
-          # Proxy Toggles (True/False)
           ENABLE_PROXY_FPT: "False"
           ENABLE_PROXY_MW: "False"
           ENABLE_PROXY_VIETTEL: "False"
           ENABLE_PROXY_HOANGHA: "False"
           ENABLE_PROXY_DDV: "False"
           ENABLE_PROXY_CPS: "False"
-          # Test Mode (True/False) - Limits to 4 URLs
           TEST_MODE: "False"
         run: |
           echo "Starting Daily Promotion Scraping..."
 
           echo "3. Scraping Viettel Store..."
-          python3 code/3-Apple_Viettel_playwright.py
+          python3 code/3-Apple_Viettel_playwright.py || echo "⚠️ Viettel Scraper Failed"
 
           echo "4. Scraping Hoang Ha Mobile..."
-          python3 code/4-Apple_HoangHa_playwright.py
+          python3 code/4-Apple_HoangHa_playwright.py || echo "⚠️ HoangHa Scraper Failed"
 
           echo "5. Scraping Di Dong Viet..."
-          python3 code/5-Apple_DDV_playwright.py
+          python3 code/5-Apple_DDV_playwright.py || echo "⚠️ DDV Scraper Failed"
 
           echo "6. Scraping CellphoneS..."
-          python3 code/6-Apple_CPS_playwright.py
+          python3 code/6-Apple_CPS_playwright.py || echo "⚠️ CPS Scraper Failed"
+
+          echo "Marshall. Scraping Marshall Products..."
+          python3 projects/marshall_daily/marshall_workflow.py || echo "⚠️ Marshall Workflow Failed"
 
           echo "All scrapers completed."
 
@@ -74,12 +75,15 @@ jobs:
 
           # Add new content files (data)
           git add content/
+          git add projects/marshall_daily/content/
 
-          # Add the updated report
+          # Add updated reports
           git add docs/index.html
+          git add docs/marshall.html
+          git add projects/marshall_daily/index.html
 
           # Commit if there are changes
-          git commit -m "Auto: Update Daily Promotion Data & Report [skip ci]" || echo "No changes to commit"
+          git commit -m "Auto: Update Daily Promotion Data & Reports [skip ci]" || echo "No changes to commit"
 
           # Pull latest changes to avoid conflicts (Fix for concurrent runs/edits)
           git pull --rebase origin main
