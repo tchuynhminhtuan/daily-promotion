@@ -57,9 +57,6 @@ jobs:
           echo "6. Scraping CellphoneS..."
           python3 code/6-Apple_CPS_playwright.py || echo "⚠️ CPS Scraper Failed"
 
-          echo "Marshall. Scraping Marshall Products..."
-          python3 projects/marshall_daily/marshall_workflow.py || echo "⚠️ Marshall Workflow Failed"
-
           echo "All scrapers completed."
 
       - name: Generate Report
@@ -75,15 +72,12 @@ jobs:
 
           # Add new content files (data)
           git add content/
-          git add projects/marshall_daily/content/
 
           # Add updated reports
           git add docs/index.html
-          git add docs/marshall.html
-          git add projects/marshall_daily/index.html
 
           # Commit if there are changes
-          git commit -m "Auto: Update Daily Promotion Data & Reports [skip ci]" || echo "No changes to commit"
+          git commit -m "Auto: Update Daily Promotion Data & Report [skip ci]" || echo "No changes to commit"
 
           # Pull latest changes to avoid conflicts (Fix for concurrent runs/edits)
           git pull --rebase origin main

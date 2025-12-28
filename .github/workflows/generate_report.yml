@@ -39,15 +39,12 @@ jobs:
 
           # Add new content files (data)
           git add content/
-          git add projects/marshall_daily/content/
 
-          # Add updated reports
+          # Add the updated report
           git add docs/index.html
-          git add docs/marshall.html
-          git add projects/marshall_daily/index.html
 
           # Commit if there are changes
-          git commit -m "Manual: Update Reports [skip ci]" || echo "No changes to commit"
+          git commit -m "Manual: Update Report [skip ci]" || echo "No changes to commit"
 
           # Pull latest changes to avoid conflicts
           git pull --rebase origin main
