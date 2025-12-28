@@ -1,44 +1,86 @@
 import os
 import sys
-import subprocess
+import asyncio
+import shutil
 from datetime import datetime
 import pytz
+import importlib.util
 
-# Add root directory to sys.path to import utils.sites
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../')))
-from code.utils.sites import total_links
+# Paths
+ROOT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../"))
+CODE_DIR = os.path.join(ROOT_DIR, "code")
+PROJECT_CONTENT_DIR = os.path.join(os.path.dirname(__file__), "content")
 
-def run_scraper(script_path, url_key):
-    urls = total_links.get(url_key, [])
-    if not urls:
-        print(f"No URLs found for {url_key}")
+# Add CODE_DIR to sys.path so we can import utils.sites
+if CODE_DIR not in sys.path:
+    sys.path.insert(0, CODE_DIR)
+
+from utils.sites import total_links
+
+def get_date_str():
+    local_tz = pytz.timezone('Asia/Ho_Chi_Minh')
+    return datetime.now(local_tz).strftime('%Y-%m-%d')
+
+async def run_core_scraper(script_name, marshall_key, core_key):
+    print(f"\n🚀 Running {script_name} for {marshall_key}...")
+    
+    # 1. Monkeypatch total_links to point Marshall URLs to the expected core key
+    original_urls = total_links.get(core_key)
+    marshall_urls = total_links.get(marshall_key, [])
+    
+    if not marshall_urls:
+        print(f"⚠️ No URLs found for {marshall_key}")
         return
 
-    print(f"--- Running {os.path.basename(script_path)} for {len(urls)} URLs ---")
-    for url in urls:
-        print(f"Scraping: {url}")
-        # Use env variable to pass specific URL to core scrapers
-        env = os.environ.copy()
-        env["SPECIFIC_URL"] = url
-        # Optional: Disable screenshots per implementation plan for speed
-        env["TAKE_SCREENSHOT"] = "False"
-        
+    # Temporarily override
+    total_links[core_key] = marshall_urls
+    
+    # 2. Dynamic Import
+    script_path = os.path.join(CODE_DIR, script_name)
+    spec = importlib.util.spec_from_file_location("scraper_module", script_path)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    
+    # 3. Run main()
+    if hasattr(module, 'main'):
         try:
-            subprocess.run(["python3", script_path], env=env, check=True)
-        except subprocess.CalledProcessError as e:
-            print(f"Error scraping {url}: {e}")
+            # Check if it's async
+            if asyncio.iscoroutinefunction(module.main):
+                await module.main()
+            else:
+                module.main()
+        except Exception as e:
+            print(f"❌ Error running {script_name}: {e}")
+    else:
+        print(f"❌ No main() found in {script_name}")
 
-def main():
-    base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../code"))
+    # 4. Restore
+    total_links[core_key] = original_urls
+
+    # 5. Tidy Data (Copy to local projects/marshall_daily/content/YYYY-MM-DD/)
+    date_str = get_date_str()
+    root_date_dir = os.path.join(ROOT_DIR, "content", date_str)
+    local_date_dir = os.path.join(PROJECT_CONTENT_DIR, date_str)
+    os.makedirs(local_date_dir, exist_ok=True)
     
-    # 1. FPT Marshall
-    run_scraper(os.path.join(base_dir, "1-Apple_FPT_playwright.py"), "fpt_marshall_urls")
-    
-    # 2. MW Marshall
-    run_scraper(os.path.join(base_dir, "2-Apple_MW_playwright.py"), "mw_marshall_urls")
-    
-    # 3. CPS Marshall
-    run_scraper(os.path.join(base_dir, "6-Apple_CPS_playwright.py"), "cps_marshall_urls")
+    prefix_map = {
+        "1-Apple_FPT_playwright.py": "1-fpt",
+        "2-Apple_MW_playwright.py": "2-mw",
+        "6-Apple_CPS_playwright.py": "6-cps"
+    }
+    prefix = prefix_map.get(script_name)
+    if prefix:
+        filename = f"{prefix}-{date_str}.csv"
+        src = os.path.join(root_date_dir, filename)
+        if os.path.exists(src):
+            dst = os.path.join(local_date_dir, filename)
+            print(f"📂 Tidying: Copying {filename} to sub-project...")
+            shutil.copy2(src, dst)
+
+async def workflow():
+    await run_core_scraper("1-Apple_FPT_playwright.py", "fpt_marshall_urls", "fpt_urls")
+    await run_core_scraper("2-Apple_MW_playwright.py", "mw_marshall_urls", "mw_urls")
+    await run_core_scraper("6-Apple_CPS_playwright.py", "cps_marshall_urls", "cps_urls")
 
 if __name__ == "__main__":
-    main()
+    asyncio.run(workflow())
