@@ -1,33 +1,22 @@
 #!/bin/bash
 
-# Navigate to the project directory
-cd "$(dirname "$0")"
+# Navigate to the root directory
+cd "$(dirname "$0")/../.."
 
 echo "------------------------------------------"
-echo "🚀 Starting Marshall Daily Workflow"
+echo "🚀 Starting Marshall Daily Workflow (Core Logic)"
 echo "📅 Date: $(date)"
 echo "------------------------------------------"
 
-# 1. Run Scraper
-echo "🔎 Scraping Marshall prices..."
-python3 scraper.py
+# 1. Run Scraper Bridge
+echo "🔎 Scraping Marshall prices via Core Scrapers..."
+python3 projects/marshall_daily/marshall_workflow.py
 
-# Check if scraper succeeded
-if [ $? -ne 0 ]; then
-    echo "❌ Scraper failed. Aborting."
-    exit 1
-fi
-
-# 2. Generate Dashboard
-echo "📊 Generating dashboard..."
-python3 dashboard_generator.py
-
-# 3. Git Push
-echo "⬆️ Pushing to GitHub..."
-git add content/ index.html
-git commit -m "update: daily marshall data $(date +'%Y-%m-%d')"
-git push
+# 2. Generate Dashboard using Core Report Generator
+echo "📊 Generating dashboard via Core Report Generator..."
+python3 code/generate_report.py
 
 echo "------------------------------------------"
 echo "✅ Marshall Daily Workflow Complete!"
+echo "Check docs/index.html for results."
 echo "------------------------------------------"
