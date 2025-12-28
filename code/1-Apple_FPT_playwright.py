@@ -157,21 +157,25 @@ async def process_url(semaphore, browser, url, csv_path, csv_lock):
 
             # 1. Dynamic Option Container Identification
             # Strategy: Try multiple selectors. prefer the one that finds > 1 container (Storage + Color).
+            # REORDERED: Prioritize the 'flex flex-wrap gap-2' because generic 'flex-col gap-1.5' can match too many items (4+).
             candidate_xpaths = [
-                "//div[contains(@class, 'flex flex-col gap-1.5')]/span/following-sibling::div",    # New Structure (Containers/Rows)
-                "//div[contains(@class, 'flex flex-col gap-1.5')]/div/div",                       # Fallback Generic (Might be buttons? careful)
-                "//div[contains(@class, 'flex flex-wrap gap-2')]"                                 # Old Structure
+                 "//div[contains(@class, 'flex flex-wrap gap-2')]/div",                            # Old/Clean Structure (Targeting Items)
+                 "//div[contains(@class, 'pc:flex-row pc:items-center pc:gap-3')]/div/div",        # Pro 16 M4 Max Specific Structure
+                 "//div[contains(@class, 'flex flex-col gap-1.5')]/span/following-sibling::div",    # New Structure (Containers/Rows with Labels)
+                 "//div[contains(@class, 'flex flex-col gap-1.5')]/div/div"                        # Fallback Generic (Often matches too many items)
             ]
             
             all_containers = None
             total_count = 0
-            best_xpath = candidate_xpaths[1] # Default to old
+            best_xpath = candidate_xpaths[0] # Default to prioritized
             
             for xpath in candidate_xpaths:
                 ct = page.locator(xpath)
                 c = await ct.count()
-                if c >= 2:
-                    # Ideal case: Found multiple options
+                # Heuristic: Truly distinct containers usually number 2-5 (Storage, Color, etc.)
+                # If we find > 5, we are likely counting individual buttons, which breaks the logic.
+                if c >= 2 and c <= 5:
+                    # Ideal case: Found multiple options groupings
                     all_containers = ct
                     total_count = c
                     best_xpath = xpath
@@ -258,7 +262,18 @@ async def process_url(semaphore, browser, url, csv_path, csv_lock):
             if detected_color != -1:
                 color_idx = detected_color
             
-            # Conflict resolution: If same index detected for both (rare), prefer Storage logic if it causes navigation
+            # Conflict resolution & Validation
+            # VALIDATION: Ensure color_idx does NOT point to a storage container (contains "GB" or "TB")
+            if color_idx != -1:
+                try:
+                    first_btn = all_containers.nth(color_idx).locator("button").first
+                    if await first_btn.count() > 0:
+                        txt = (await first_btn.text_content() or "").upper()
+                        if "GB" in txt or "TB" in txt:
+                            print(f"  -> Rejected Color Index {color_idx} (It is Storage: {txt})")
+                            color_idx = -1
+                except: pass
+
             if storage_idx == color_idx and storage_idx != -1:
                 # If we have another container, assign color to it?
                 # Assume standard behavior: Primary is Storage loop.
