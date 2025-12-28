@@ -1,0 +1,641 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marshall Daily Tracker</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg: #0f172a;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --accent: #f59e0b;
+            --text: #f8fafc;
+            --muted: #94a3b8;
+        }
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .container {
+            max-width: 1200px;
+            width: 100%;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            background: linear-gradient(to right, #f59e0b, #fbbf24);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+        }
+        .table-container {
+            overflow-x: auto;
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 20px;
+             border: 1px solid rgba(255,255,255,0.1);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        th {
+            color: var(--muted);
+            font-weight: 500;
+        }
+        .price {
+            color: var(--accent);
+            font-weight: 700;
+        }
+        .stock-yes { color: #10b981; }
+        .stock-no { color: #ef4444; }
+        a { color: inherit; text-decoration: none; border-bottom: 1px solid var(--accent); }
+        .badge {
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        .site-fpt { background: #ea580c22; color: #ea580c; border: 1px solid #ea580c; }
+        .site-mw { background: #fbbf2422; color: #fbbf24; border: 1px solid #fbbf24; }
+        .site-cps { background: #dc262622; color: #dc2626; border: 1px solid #dc2626; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Marshall Daily Price Tracker</h1>
+            <p style="color: var(--muted)">Updated: 2025-12-28 13:26</p>
+        </header>
+
+        <div class="grid">
+            <div class="card">
+                <h3>Price Trends</h3>
+                <canvas id="trendChart"></canvas>
+            </div>
+            <div class="card">
+                <h3>Market Summary</h3>
+                <div style="font-size: 2rem; font-weight: 700; color: var(--accent)">58</div>
+                <p style="color: var(--muted)">Live Products Tracked Today</p>
+                <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 20px 0;">
+                <div style="display: flex; justify-content: space-between;">
+                    <span>FPT: 23</span>
+                    <span>MW: 17</span>
+                    <span>CPS: 18</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <h3>Live Price List (Best Prices First)</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Site</th>
+                        <th>Product</th>
+                        <th>Price</th>
+                        <th>Stock</th>
+                        <th>Links</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td><span class="badge site-mw">MW</span></td>
+                        <td>nan</td>
+                        <td><span class="price">0 ₫</span></td>
+                        <td><span class="stock-no">No</span></td>
+                        <td><a href="https://www.thegioididong.com/loa-laptop/loa-bluetooth-marshall-emberton-iii-xanh-bong-dem?utm_flashsale=1" target="_blank">View</a></td>
+                    </tr>
+        
+                    <tr>
+                        <td><span class="badge site-mw">MW</span></td>
+                        <td>nan</td>
+                        <td><span class="price">0 ₫</span></td>
+                        <td><span class="stock-no">No</span></td>
+                        <td><a href="https://www.thegioididong.com/loa-laptop/loa-bluetooth-marshall-willen-ii?utm_flashsale=1" target="_blank">View</a></td>
+                    </tr>
+        
+                    <tr>
+                        <td><span class="badge site-fpt">FPT</span></td>
+                        <td>nan</td>
+                        <td><span class="price">0 ₫</span></td>
+                        <td><span class="stock-yes">Yes</span></td>
+                        <td><a href="https://fptshop.com.vn/phu-kien/loa-bluetooth-marshall-woburn-ii" target="_blank">View</a></td>
+                    </tr>
+        
+                    <tr>
+                        <td><span class="badge site-mw">MW</span></td>
+                        <td>nan</td>
+                        <td><span class="price">0 ₫</span></td>
+                        <td><span class="stock-no">No</span></td>
+                        <td><a href="https://www.thegioididong.com/tai-nghe/tai-nghe-bluetooth-chup-tai-marshall-major-v" target="_blank">View</a></td>
+                    </tr>
+        
+                    <tr>
+                        <td><span class="badge site-mw">MW</span></td>
+                        <td>nan</td>
+                        <td><span class="price">0 ₫</span></td>
+                        <td><span class="stock-no">No</span></td>
+                        <td><a href="https://www.thegioididong.com/tai-nghe/tai-nghe-bluetooth-true-wireless-marshall-minor-iv" target="_blank">View</a></td>
+                    </tr>
+        
+                    <tr>
+                        <td><span class="badge site-mw">MW</span></td>
+                        <td>nan</td>
+                        <td><span class="price">0 ₫</span></td>
+                        <td><span class="stock-no">No</span></td>
+                        <td><a href="https://www.thegioididong.com/loa-laptop/loa-bluetooth-marshall-woburn-iii?utm_flashsale=1" target="_blank">View</a></td>
+                    </tr>
+        
+                    <tr>
+                        <td><span class="badge site-fpt">FPT</span></td>
+                        <td>nan</td>
+                        <td><span class="price">0 ₫</span></td>
+                        <td><span class="stock-yes">Yes</span></td>
+                        <td><a href="https://fptshop.com.vn/phu-kien/loa-bluetooth-marshall-stockwell-2" target="_blank">View</a></td>
+                    </tr>
+        
+                    <tr>
+                        <td><span class="badge site-fpt">FPT</span></td>
+                        <td>nan</td>
+                        <td><span class="price">0 ₫</span></td>
+                        <td><span class="stock-yes">Yes</span></td>
+                        <td><a href="https://fptshop.com.vn/phu-kien/loa-bluetooth-marshall-willen-ii" target="_blank">View</a></td>
+                    </tr>
+        
+                    <tr>
+                        <td><span class="badge site-fpt">FPT</span></td>
+                        <td>nan</td>
+                        <td><span class="price">0 ₫</span></td>
+                        <td><span class="stock-yes">Yes</span></td>
+                        <td><a href="https://fptshop.com.vn/phu-kien/loa-bluetooth-marshall-willen" target="_blank">View</a></td>
+                    </tr>
+        
+                    <tr>
+                        <td><span class="badge site-fpt">FPT</span></td>
+                        <td>nan</td>
+                        <td><span class="price">0 ₫</span></td>
+                        <td><span class="stock-yes">Yes</span></td>
+                        <td><a href="https://fptshop.com.vn/phu-kien/loa-bluetooth-marshall-woburn-iii" target="_blank">View</a></td>
+                    </tr>
+        
+                    <tr>
+                        <td><span class="badge site-mw">MW</span></td>
+                        <td>nan</td>
+                        <td><span class="price">0 ₫</span></td>
+                        <td><span class="stock-no">No</span></td>
+                        <td><a href="https://www.thegioididong.com/tai-nghe/tai-nghe-bluetooth-chup-tai-marshall-major-v-xanh-bong-dem" target="_blank">View</a></td>
+                    </tr>
+        
+                    <tr>
+                        <td><span class="badge site-cps">CPS</span></td>
+                        <td>nan</td>
+                        <td><span class="price">0 ₫</span></td>
+                        <td><span class="stock-no">No</span></td>
+                        <td><a href="https://cellphones.com.vn/tai-nghe-bluetooth-marshall-monitor-2-anc.html" target="_blank">View</a></td>
+                    </tr>
+        
+                    <tr>
+                        <td><span class="badge site-cps">CPS</span></td>
+                        <td>nan</td>
+                        <td><span class="price">0 ₫</span></td>
+                        <td><span class="stock-no">No</span></td>
+                        <td><a href="https://cellphones.com.vn/loa-keo-party-marshall-bromley-750.html" target="_blank">View</a></td>
+                    </tr>
+        
+                    <tr>
+                        <td><span class="badge site-cps">CPS</span></td>
+                        <td>nan</td>
+                        <td><span class="price">0 ₫</span></td>
+                        <td><span class="stock-no">No</span></td>
+                        <td><a href="https://cellphones.com.vn/tai-nghe-bluetooth-marshall-minor-4.html" target="_blank">View</a></td>
+                    </tr>
+        
+                    <tr>
+                        <td><span class="badge site-cps">CPS</span></td>
+                        <td>nan</td>
+                        <td><span class="price">0 ₫</span></td>
+                        <td><span class="stock-no">No</span></td>
+                        <td><a href="https://cellphones.com.vn/loa-soundbar-marshall-heston-60.html" target="_blank">View</a></td>
+                    </tr>
+        
+                    <tr>
+                        <td><span class="badge site-fpt">FPT</span></td>
+                        <td>nan</td>
+                        <td><span class="price">0 ₫</span></td>
+                        <td><span class="stock-yes">Yes</span></td>
+                        <td><a href="https://fptshop.com.vn/phu-kien/tai-nghe-bluetooth-choang-dau-marshall-major-v" target="_blank">View</a></td>
+                    </tr>
+        
+                    <tr>
+                        <td><span class="badge site-fpt">FPT</span></td>
+                        <td>nan</td>
+                        <td><span class="price">0 ₫</span></td>
+                        <td><span class="stock-yes">Yes</span></td>
+                        <td><a href="https://fptshop.com.vn/phu-kien/tai-nghe-bluetooth-choang-dau-marshall-major-iv" target="_blank">View</a></td>
+                    </tr>
+        
+                    <tr>
+                        <td><span class="badge site-mw">MW</span></td>
+                        <td>nan</td>
+                        <td><span class="price">0 ₫</span></td>
+                        <td><span class="stock-no">No</span></td>
+                        <td><a href="https://www.thegioididong.com/tai-nghe/tai-nghe-bluetooth-true-wireless-marshall-motif-ii-a-n-c" target="_blank">View</a></td>
+                    </tr>
+        
+                    <tr>
+                        <td><span class="badge site-fpt">FPT</span></td>
+                        <td>nan</td>
+                        <td><span class="price">0 ₫</span></td>
+                        <td><span class="stock-yes">Yes</span></td>
+                        <td><a href="https://fptshop.com.vn/phu-kien/loa-thanh-marshall-heston-120" target="_blank">View</a></td>
+                    </tr>
+        
+                    <tr>
+                        <td><span class="badge site-fpt">FPT</span></td>
+                        <td>nan</td>
+                        <td><span class="price">0 ₫</span></td>
+                        <td><span class="stock-yes">Yes</span></td>
+                        <td><a href="https://fptshop.com.vn/phu-kien/loa-thanh-marshall-heston-60" target="_blank">View</a></td>
+                    </tr>
+        
+                    <tr>
+                        <td><span class="badge site-fpt">FPT</span></td>
+                        <td>nan</td>
+                        <td><span class="price">0 ₫</span></td>
+                        <td><span class="stock-yes">Yes</span></td>
+                        <td><a href="https://fptshop.com.vn/phu-kien/loa-sieu-tram-marshall-heston-sub-200" target="_blank">View</a></td>
+                    </tr>
+        
+                    <tr>
+                        <td><span class="badge site-cps">CPS</span></td>
+                        <td>nan</td>
+                        <td><span class="price">0 ₫</span></td>
+                        <td><span class="stock-no">No</span></td>
+                        <td><a href="https://cellphones.com.vn/tai-nghe-chup-tai-marshall-monitor-iii-anc.html" target="_blank">View</a></td>
+                    </tr>
+        
+                    <tr>
+                        <td><span class="badge site-mw">MW</span></td>
+                        <td>nan</td>
+                        <td><span class="price">0 ₫</span></td>
+                        <td><span class="stock-no">No</span></td>
+                        <td><a href="https://www.thegioididong.com/tai-nghe/tai-nghe-chup-tai-marshall-monitor-iii-a-n-c" target="_blank">View</a></td>
+                    </tr>
+        
+                    <tr>
+                        <td><span class="badge site-cps">CPS</span></td>
+                        <td>nan</td>
+                        <td><span class="price">0 ₫</span></td>
+                        <td><span class="stock-no">No</span></td>
+                        <td><a href="https://cellphones.com.vn/tai-nghe-chup-tai-marshall-major-5.html" target="_blank">View</a></td>
+                    </tr>
+        
+                    <tr>
+                        <td><span class="badge site-cps">CPS</span></td>
+                        <td>nan</td>
+                        <td><span class="price">0 ₫</span></td>
+                        <td><span class="stock-no">No</span></td>
+                        <td><a href="https://cellphones.com.vn/tai-nghe-khong-day-marshall-motif-ii-anc.html" target="_blank">View</a></td>
+                    </tr>
+        
+                    <tr>
+                        <td><span class="badge site-fpt">FPT</span></td>
+                        <td>nan</td>
+                        <td><span class="price">0 ₫</span></td>
+                        <td><span class="stock-yes">Yes</span></td>
+                        <td><a href="https://fptshop.com.vn/phu-kien/tai-nghe-bluetooth-nhet-tai-marshall-minor-iii" target="_blank">View</a></td>
+                    </tr>
+        
+                    <tr>
+                        <td><span class="badge site-cps">CPS</span></td>
+                        <td>nan</td>
+                        <td><span class="price">0 ₫</span></td>
+                        <td><span class="stock-no">No</span></td>
+                        <td><a href="https://cellphones.com.vn/tai-nghe-bluetooth-ch-p-tai-marshall-major-5-nau.html" target="_blank">View</a></td>
+                    </tr>
+        
+                    <tr>
+                        <td><span class="badge site-cps">CPS</span></td>
+                        <td>nan</td>
+                        <td><span class="price">0 ₫</span></td>
+                        <td><span class="stock-no">No</span></td>
+                        <td><a href="https://cellphones.com.vn/loa-bluetooth-marshall-stanmore-iii.html" target="_blank">View</a></td>
+                    </tr>
+        
+                    <tr>
+                        <td><span class="badge site-cps">CPS</span></td>
+                        <td>nan</td>
+                        <td><span class="price">0 ₫</span></td>
+                        <td><span class="stock-no">No</span></td>
+                        <td><a href="https://cellphones.com.vn/loa-bluetooth-marshall-middleton.html" target="_blank">View</a></td>
+                    </tr>
+        
+                    <tr>
+                        <td><span class="badge site-cps">CPS</span></td>
+                        <td>nan</td>
+                        <td><span class="price">0 ₫</span></td>
+                        <td><span class="stock-no">No</span></td>
+                        <td><a href="https://cellphones.com.vn/loa-bluetooth-marshall-willen-ii.html" target="_blank">View</a></td>
+                    </tr>
+        
+                    <tr>
+                        <td><span class="badge site-mw">MW</span></td>
+                        <td>nan</td>
+                        <td><span class="price">0 ₫</span></td>
+                        <td><span class="stock-no">No</span></td>
+                        <td><a href="https://www.thegioididong.com/loa-laptop/loa-bluetooth-marshall-acton-iii?utm_flashsale=1" target="_blank">View</a></td>
+                    </tr>
+        
+                    <tr>
+                        <td><span class="badge site-mw">MW</span></td>
+                        <td>nan</td>
+                        <td><span class="price">0 ₫</span></td>
+                        <td><span class="stock-no">No</span></td>
+                        <td><a href="https://www.thegioididong.com/loa-laptop/loa-bluetooth-marshall-kilburn-iii" target="_blank">View</a></td>
+                    </tr>
+        
+                    <tr>
+                        <td><span class="badge site-mw">MW</span></td>
+                        <td>nan</td>
+                        <td><span class="price">0 ₫</span></td>
+                        <td><span class="stock-no">No</span></td>
+                        <td><a href="https://www.thegioididong.com/loa-laptop/loa-bluetooth-marshall-kilburn-ii?utm_flashsale=1" target="_blank">View</a></td>
+                    </tr>
+        
+                    <tr>
+                        <td><span class="badge site-mw">MW</span></td>
+                        <td>nan</td>
+                        <td><span class="price">0 ₫</span></td>
+                        <td><span class="stock-no">No</span></td>
+                        <td><a href="https://www.thegioididong.com/loa-laptop/loa-bluetooth-marshall-emberton-iii?utm_flashsale=1" target="_blank">View</a></td>
+                    </tr>
+        
+                    <tr>
+                        <td><span class="badge site-fpt">FPT</span></td>
+                        <td>nan</td>
+                        <td><span class="price">0 ₫</span></td>
+                        <td><span class="stock-yes">Yes</span></td>
+                        <td><a href="https://fptshop.com.vn/phu-kien/loa-bluetooth-marshall-emberton-ii" target="_blank">View</a></td>
+                    </tr>
+        
+                    <tr>
+                        <td><span class="badge site-fpt">FPT</span></td>
+                        <td>nan</td>
+                        <td><span class="price">0 ₫</span></td>
+                        <td><span class="stock-yes">Yes</span></td>
+                        <td><a href="https://fptshop.com.vn/phu-kien/loa-bluetooth-marshall-acton-ii" target="_blank">View</a></td>
+                    </tr>
+        
+                    <tr>
+                        <td><span class="badge site-fpt">FPT</span></td>
+                        <td>nan</td>
+                        <td><span class="price">0 ₫</span></td>
+                        <td><span class="stock-yes">Yes</span></td>
+                        <td><a href="https://fptshop.com.vn/phu-kien/loa-bluetooth-marshall-emberton-iii" target="_blank">View</a></td>
+                    </tr>
+        
+                    <tr>
+                        <td><span class="badge site-fpt">FPT</span></td>
+                        <td>nan</td>
+                        <td><span class="price">0 ₫</span></td>
+                        <td><span class="stock-yes">Yes</span></td>
+                        <td><a href="https://fptshop.com.vn/phu-kien/loa-bluetooth-marshall-acton-iii" target="_blank">View</a></td>
+                    </tr>
+        
+                    <tr>
+                        <td><span class="badge site-cps">CPS</span></td>
+                        <td>nan</td>
+                        <td><span class="price">0 ₫</span></td>
+                        <td><span class="stock-no">No</span></td>
+                        <td><a href="https://cellphones.com.vn/loa-bluetooth-marshall-middleton-ii.html" target="_blank">View</a></td>
+                    </tr>
+        
+                    <tr>
+                        <td><span class="badge site-fpt">FPT</span></td>
+                        <td>nan</td>
+                        <td><span class="price">0 ₫</span></td>
+                        <td><span class="stock-yes">Yes</span></td>
+                        <td><a href="https://fptshop.com.vn/phu-kien/loa-bluetooth-marshall-bromley-750" target="_blank">View</a></td>
+                    </tr>
+        
+                    <tr>
+                        <td><span class="badge site-cps">CPS</span></td>
+                        <td>nan</td>
+                        <td><span class="price">0 ₫</span></td>
+                        <td><span class="stock-no">No</span></td>
+                        <td><a href="https://cellphones.com.vn/loa-bluetooth-marshall-emberton-iii.html" target="_blank">View</a></td>
+                    </tr>
+        
+                    <tr>
+                        <td><span class="badge site-cps">CPS</span></td>
+                        <td>nan</td>
+                        <td><span class="price">0 ₫</span></td>
+                        <td><span class="stock-no">No</span></td>
+                        <td><a href="https://cellphones.com.vn/loa-bluetooth-marshall-kilburn-iii.html" target="_blank">View</a></td>
+                    </tr>
+        
+                    <tr>
+                        <td><span class="badge site-fpt">FPT</span></td>
+                        <td>nan</td>
+                        <td><span class="price">0 ₫</span></td>
+                        <td><span class="stock-yes">Yes</span></td>
+                        <td><a href="https://fptshop.com.vn/phu-kien/tai-nghe-bluetooth-nhet-tai-marshall-minor-iv" target="_blank">View</a></td>
+                    </tr>
+        
+                    <tr>
+                        <td><span class="badge site-cps">CPS</span></td>
+                        <td>nan</td>
+                        <td><span class="price">0 ₫</span></td>
+                        <td><span class="stock-no">No</span></td>
+                        <td><a href="https://cellphones.com.vn/loa-bluetooth-marshall-emberton-ii.html" target="_blank">View</a></td>
+                    </tr>
+        
+                    <tr>
+                        <td><span class="badge site-mw">MW</span></td>
+                        <td>nan</td>
+                        <td><span class="price">0 ₫</span></td>
+                        <td><span class="stock-no">No</span></td>
+                        <td><a href="https://www.thegioididong.com/loa-laptop/loa-bluetooth-marshall-tufton?utm_flashsale=1" target="_blank">View</a></td>
+                    </tr>
+        
+                    <tr>
+                        <td><span class="badge site-mw">MW</span></td>
+                        <td>nan</td>
+                        <td><span class="price">0 ₫</span></td>
+                        <td><span class="stock-no">No</span></td>
+                        <td><a href="https://www.thegioididong.com/loa-laptop/loa-bluetooth-marshall-party-bromley-750" target="_blank">View</a></td>
+                    </tr>
+        
+                    <tr>
+                        <td><span class="badge site-mw">MW</span></td>
+                        <td>nan</td>
+                        <td><span class="price">0 ₫</span></td>
+                        <td><span class="stock-no">No</span></td>
+                        <td><a href="https://www.thegioididong.com/loa-laptop/loa-bluetooth-marshall-stanmore-iii?utm_flashsale=1" target="_blank">View</a></td>
+                    </tr>
+        
+                    <tr>
+                        <td><span class="badge site-mw">MW</span></td>
+                        <td>nan</td>
+                        <td><span class="price">0 ₫</span></td>
+                        <td><span class="stock-no">No</span></td>
+                        <td><a href="https://www.thegioididong.com/loa-laptop/loa-bluetooth-marshall-stockwell-ii" target="_blank">View</a></td>
+                    </tr>
+        
+                    <tr>
+                        <td><span class="badge site-mw">MW</span></td>
+                        <td>nan</td>
+                        <td><span class="price">0 ₫</span></td>
+                        <td><span class="stock-no">No</span></td>
+                        <td><a href="https://www.thegioididong.com/loa-laptop/loa-bluetooth-marshall-middleton-ii?utm_flashsale=1" target="_blank">View</a></td>
+                    </tr>
+        
+                    <tr>
+                        <td><span class="badge site-fpt">FPT</span></td>
+                        <td>nan</td>
+                        <td><span class="price">0 ₫</span></td>
+                        <td><span class="stock-yes">Yes</span></td>
+                        <td><a href="https://fptshop.com.vn/phu-kien/loa-bluetooth-marshall-kilburn-ii" target="_blank">View</a></td>
+                    </tr>
+        
+                    <tr>
+                        <td><span class="badge site-fpt">FPT</span></td>
+                        <td>nan</td>
+                        <td><span class="price">0 ₫</span></td>
+                        <td><span class="stock-yes">Yes</span></td>
+                        <td><a href="https://fptshop.com.vn/phu-kien/loa-bluetooth-marshall-middleton" target="_blank">View</a></td>
+                    </tr>
+        
+                    <tr>
+                        <td><span class="badge site-fpt">FPT</span></td>
+                        <td>nan</td>
+                        <td><span class="price">0 ₫</span></td>
+                        <td><span class="stock-yes">Yes</span></td>
+                        <td><a href="https://fptshop.com.vn/phu-kien/loa-bluetooth-marshall-kilburn-iii" target="_blank">View</a></td>
+                    </tr>
+        
+                    <tr>
+                        <td><span class="badge site-cps">CPS</span></td>
+                        <td>nan</td>
+                        <td><span class="price">0 ₫</span></td>
+                        <td><span class="stock-no">No</span></td>
+                        <td><a href="https://cellphones.com.vn/loa-bluetooth-marshall-stockwell-2.html" target="_blank">View</a></td>
+                    </tr>
+        
+                    <tr>
+                        <td><span class="badge site-fpt">FPT</span></td>
+                        <td>nan</td>
+                        <td><span class="price">0 ₫</span></td>
+                        <td><span class="stock-yes">Yes</span></td>
+                        <td><a href="https://fptshop.com.vn/phu-kien/loa-bluetooth-marshall-stanmore-iii" target="_blank">View</a></td>
+                    </tr>
+        
+                    <tr>
+                        <td><span class="badge site-cps">CPS</span></td>
+                        <td>nan</td>
+                        <td><span class="price">0 ₫</span></td>
+                        <td><span class="stock-no">No</span></td>
+                        <td><a href="https://cellphones.com.vn/loa-bluetooth-marshall-woburn-iii.html" target="_blank">View</a></td>
+                    </tr>
+        
+                    <tr>
+                        <td><span class="badge site-fpt">FPT</span></td>
+                        <td>nan</td>
+                        <td><span class="price">0 ₫</span></td>
+                        <td><span class="stock-yes">Yes</span></td>
+                        <td><a href="https://fptshop.com.vn/phu-kien/loa-bluetooth-marshall-middleton-ii" target="_blank">View</a></td>
+                    </tr>
+        
+                    <tr>
+                        <td><span class="badge site-cps">CPS</span></td>
+                        <td>nan</td>
+                        <td><span class="price">0 ₫</span></td>
+                        <td><span class="stock-no">No</span></td>
+                        <td><a href="https://cellphones.com.vn/loa-bluetooth-marshall-acton-iii.html" target="_blank">View</a></td>
+                    </tr>
+        
+                    <tr>
+                        <td><span class="badge site-fpt">FPT</span></td>
+                        <td>nan</td>
+                        <td><span class="price">0 ₫</span></td>
+                        <td><span class="stock-yes">Yes</span></td>
+                        <td><a href="https://fptshop.com.vn/phu-kien/tai-nghe-bluetooth-nhet-tai-marshall-motif-ii-anc" target="_blank">View</a></td>
+                    </tr>
+        
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        const ctx = document.getElementById('trendChart').getContext('2d');
+        const data = {};
+        
+        // Simplified trend chart for the first product
+        const firstProd = Object.keys(data)[0];
+        const prodData = data[firstProd];
+        const labels = Object.keys(prodData);
+        
+        // Flatten sites
+        const sites = ['FPT', 'MW', 'CPS'];
+        const datasets = sites.map(site => ({
+            label: site,
+            data: labels.map(date => prodData[date] ? prodData[date][site] || 0 : 0),
+            borderColor: site === 'FPT' ? '#ea580c' : (site === 'MW' ? '#fbbf24' : '#dc2626'),
+            fill: false,
+            tension: 0.1
+        })).filter(ds => ds.data.some(v => v > 0));
+
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: datasets
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { position: 'top', labels: { color: '#f8fafc' } },
+                    title: { display: true, text: 'Price Trend: ' + firstProd, color: '#f8fafc' }
+                },
+                scales: {
+                    y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8' } },
+                    x: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8' } }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
