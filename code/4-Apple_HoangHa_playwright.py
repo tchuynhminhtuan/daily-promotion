@@ -55,18 +55,38 @@ class HoangHaScraper(BaseScraper):
         # 2. Stock (Ton_Kho)
         ton_kho = "Yes"
         try:
-            btn = page.locator("a.btnQuickOrder, a.add-cart, .btn-buy").first
-            if await btn.count() > 0:
-                is_disabled = await btn.get_attribute("class")
-                if is_disabled and "disabled" in is_disabled.lower():
+            # Target buttons specifically related to inventory
+            # These are 'MUA NGAY' or 'THÊM GIỎ HÀNG' buttons that change state based on selection
+            buy_buttons = page.locator("a.btnQuickOrder, a.add-cart.inventory, .btn-buy.inventory")
+            
+            # If nothing found with 'inventory' class, fallback to broader but still scoped search
+            if await buy_buttons.count() == 0:
+                 buy_buttons = page.locator(".order-product a.btnQuickOrder, .order-product a.add-cart")
+
+            btn_count = await buy_buttons.count()
+            
+            if btn_count > 0:
+                is_any_enabled = False
+                for i in range(btn_count):
+                    btn = buy_buttons.nth(i)
+                    if await btn.is_visible():
+                        cls = await btn.get_attribute("class") or ""
+                        txt = await btn.text_content() or ""
+                        
+                        # Conditions for "In Stock"
+                        # 1. Must NOT have 'disabled' or 'out-of-stock' in class
+                        # 2. Must NOT have Vietnamese OOS phrases in text
+                        is_disabled = "disabled" in cls.lower() or "out-of-stock" in cls.lower()
+                        is_oos_text = any(phrase in txt.upper() for phrase in ["HẾT HÀNG", "LIÊN HỆ", "TẠM HẾT"])
+                        
+                        if not is_disabled and not is_oos_text:
+                            is_any_enabled = True
+                            break
+                
+                if not is_any_enabled:
                     ton_kho = "No"
-                try:
-                    text = await btn.text_content()
-                    text = text.upper() if text else ""
-                    if "HẾT HÀNG" in text or "LIÊN HỆ" in text or "TẠM HẾT" in text:
-                        ton_kho = "No"
-                except: pass
             else:
+                # If no buy button found in the order section, assume out of stock
                 ton_kho = "No"
         except:
             ton_kho = "No"
