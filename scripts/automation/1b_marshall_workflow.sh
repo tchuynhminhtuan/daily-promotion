@@ -16,9 +16,17 @@ echo "📍 Working Directory: $PROJECT_ROOT"
 # 1. Notify User
 osascript -e 'display notification "Scrapers Running: Marshall" with title "Daily Promotion (Marshall)"'
 
-# 2. Run Marshall Project Workflow
-# This project-level script already handles bridge-scraping and safe report generation
-bash "$PROJECT_ROOT/projects/marshall_daily/run_workflow.sh"
+# 2. Run Scraper Bridge
+echo "🔎 Scraping Marshall prices via Core Scrapers..."
+python3 projects/marshall_daily/marshall_workflow.py
+
+# 3. Generate Dedicated Marshall Dashboard
+echo "📊 Generating dedicated Marshall dashboard..."
+python3 projects/marshall_daily/generate_marshall_report.py
+
+# 4. Update Integrated Main Dashboard
+echo "📊 Updating main dashboard (Integrated)..."
+python3 code/generate_report.py
 
 if [ $? -eq 0 ]; then
     # 3. Handle Git Push
@@ -31,7 +39,6 @@ if [ $? -eq 0 ]; then
     git add "projects/marshall_daily/content/$DATE/*.csv" || echo "⚠️ No new Marshall CSV data found for $DATE"
     
     # Add Marshall Dashboards
-    git add "projects/marshall_daily/index.html"
     git add "docs/marshall.html"
     
     git commit -m "Auto (Local): Marshall Daily Update - $(date)" || echo "⚠️ No changes to commit"
