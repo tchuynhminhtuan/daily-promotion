@@ -3,129 +3,357 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Công Cụ & Colab - Daily Promotion</title>
+    <title>Automation Hub | Daily Promotion</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@400;700;800&display=swap" rel="stylesheet">
+    
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 20px; line-height: 1.5; color: #333; }
-        h1 { color: #2c3e50; font-size: 1.8rem; margin-bottom: 10px; }
-        .header-banner { 
-            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); 
-            color: white; padding: 30px; border-radius: 8px; text-align: center; margin-bottom: 30px; 
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        :root {
+            --bg-dark: #0f172a;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --card-border: rgba(255, 255, 255, 0.08);
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --accent-gradient: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+            --accent-glow: rgba(139, 92, 246, 0.5);
         }
-        .header-title { font-size: 2em; font-weight: bold; margin: 0; text-transform: uppercase; letter-spacing: 1px; }
-        .header-subtitle { font-size: 1.1em; opacity: 0.9; margin-top: 10px; }
         
-        .tool-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+        body { 
+            font-family: 'Inter', sans-serif; 
+            margin: 0; 
+            background-color: var(--bg-dark);
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(59, 130, 246, 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 0%, rgba(139, 92, 246, 0.15) 0px, transparent 50%);
+            color: var(--text-primary);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
         
+        /* Typography */
+        h1, h2, h3 { font-family: 'Outfit', sans-serif; }
+        
+        /* Layout */
+        .container { max-width: 1200px; margin: 0 auto; }
+        
+        /* Header Section */
+        .header-section { text-align: center; margin-bottom: 60px; position: relative; }
+        .header-title { 
+            font-size: 3.5em; 
+            font-weight: 800; 
+            background: linear-gradient(to right, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+            letter-spacing: -1px;
+        }
+        .header-subtitle { font-size: 1.25em; color: var(--text-secondary); max-width: 600px; margin: 0 auto; }
+        
+        /* Grid */
+        .tool-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); 
+            gap: 30px; 
+            perspective: 1000px;
+        }
+        
+        /* Card Styling */
         .tool-card { 
-            background: white; border: 1px solid #e0e0e0; border-radius: 8px; padding: 20px; 
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05); transition: transform 0.2s, box-shadow 0.2s; 
-            display: flex; flex-direction: column;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            backdrop-filter: blur(12px);
+            position: relative;
+            overflow: hidden;
+            group-hover:;
         }
-        .tool-card:hover { transform: translateY(-3px); box-shadow: 0 6px 12px rgba(0,0,0,0.1); }
         
-        .card-icon { font-size: 2em; margin-bottom: 10px; }
-        .card-title { font-weight: bold; font-size: 1.2em; margin-bottom: 5px; color: #2c3e50; }
-        .card-desc { font-size: 0.9em; color: #666; margin-bottom: 15px; flex-grow: 1; }
+        .tool-card:hover { 
+            transform: translateY(-8px) scale(1.02); 
+            box-shadow: 0 20px 40px -15px rgba(0,0,0,0.5); 
+            border-color: rgba(255,255,255,0.2);
+        }
         
+        .tool-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; height: 100px;
+            background: linear-gradient(180deg, rgba(255,255,255,0.03) 0%, transparent 100%);
+            pointer-events: none;
+        }
+        
+        /* Icon */
+        .icon-container {
+            width: 64px; height: 64px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 16px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 32px;
+            margin-bottom: 24px;
+            box-shadow: inset 0 0 0 1px rgba(255,255,255,0.1);
+        }
+        
+        /* Content */
+        .card-title { font-size: 1.5em; font-weight: 700; margin: 0 0 10px 0; color: white; }
+        .card-desc { color: var(--text-secondary); font-size: 0.95em; line-height: 1.6; flex-grow: 1; margin-bottom: 25px; }
+        
+        /* Buttons */
         .btn { 
-            display: inline-block; padding: 8px 16px; border-radius: 6px; text-decoration: none; 
-            font-weight: 600; text-align: center; transition: background 0.2s; 
+            display: inline-flex; align-items: center; justify-content: center;
+            padding: 12px 24px; border-radius: 12px; 
+            text-decoration: none; font-weight: 600; transition: all 0.3s ease;
+            width: 100%; box-sizing: border-box;
+            gap: 8px;
         }
-        .btn-colab { background-color: #f39c12; color: white; }
-        .btn-colab:hover { background-color: #d35400; }
-        .btn-view { background-color: #3498db; color: white; }
-        .btn-view:hover { background-color: #2980b9; }
         
-        .section-header { margin: 40px 0 20px 0; border-bottom: 2px solid #eee; padding-bottom: 10px; color: #2c3e50; }
+        .btn-colab { 
+            background: rgba(255,255,255,0.05); 
+            color: white; 
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .btn-colab:hover { 
+            background: rgba(255,255,255,0.1); 
+            border-color: rgba(255,255,255,0.3);
+        }
+        
+        .btn-primary { 
+            background: var(--accent-gradient); 
+            color: white; border: none;
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+        }
+        .btn-primary:hover { 
+            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.5);
+            transform: translateY(-1px);
+        }
+
+        /* Status Badges */
+        .badge {
+            position: absolute; top: 20px; right: 20px;
+            padding: 4px 10px; border-radius: 20px;
+            font-size: 0.75em; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .badge-new { background: rgba(59, 130, 246, 0.2); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.3); }
+
+        /* Footer */
+        .footer { margin-top: 80px; text-align: center; color: rgba(255,255,255,0.2); font-size: 0.85em; }
     </style>
 </head>
 <body>
     
-<div class="nav-bar">
-    <a href="index.html" class="nav-link">🏠 Home (Report)</a>
-    <a href="tools.html" class="nav-link ">🛠️ Tools</a>
-    <span class="nav-divider">|</span>
-    <span class="nav-info">Daily Promotion Dashboard</span>
+<div class="nav-container">
+    <div class="nav-bar">
+        <div class="nav-logo">🚀 Daily Promotion</div>
+        <div class="nav-links">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="tools.html" class="nav-link ">Tools</a>
+        </div>
+        <div class="nav-info">Dashboard v2.0</div>
+    </div>
 </div>
 <style>
-    .nav-bar { background: #2c3e50; padding: 10px 20px; border-radius: 8px 8px 0 0; margin-bottom: 20px; color: white; display: flex; align-items: center; gap: 15px; }
-    .nav-link { color: #ecf0f1; text-decoration: none; font-weight: bold; padding: 5px 10px; border-radius: 4px; transition: background 0.2s; }
-    .nav-link:hover { background: #34495e; color: white; }
-    .nav-link. { background: #27ae60; }
-    .nav-divider { color: #7f8c8d; }
-    .nav-info { margin-left: auto; font-size: 0.9em; color: #bdc3c7; }
+    /* Premium Nav Styling */
+    .nav-container {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 40px;
+    }
+    .nav-bar {
+        background: rgba(255, 255, 255, 0.03);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        padding: 12px 30px;
+        border-radius: 50px;
+        display: flex;
+        align-items: center;
+        gap: 40px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    }
+    .nav-logo {
+        color: white;
+        font-weight: 800;
+        font-family: 'Outfit', sans-serif;
+        font-size: 1.1em;
+        letter-spacing: 0.5px;
+    }
+    .nav-links {
+        display: flex;
+        gap: 8px;
+        background: rgba(0,0,0,0.2);
+        padding: 4px;
+        border-radius: 30px;
+    }
+    .nav-link {
+        color: #94a3b8;
+        text-decoration: none;
+        font-weight: 600;
+        padding: 8px 20px;
+        border-radius: 24px;
+        transition: all 0.3s ease;
+        font-size: 0.95em;
+    }
+    .nav-link:hover {
+        color: white;
+    }
+    .nav-link. {
+        background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+        color: white;
+        box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+    }
+    .nav-info {
+        color: #64748b;
+        font-size: 0.85em;
+        font-weight: 500;
+    }
 </style>
  <!-- Simple hack to reset active class for tools page -->
+    
+    <div class="container">
+        <div class="header-section">
+            <div class="header-title">Command Center</div>
+            <div class="header-subtitle">Centralized hub for scraper automation, pricing analysis, and Google Colab notebooks.</div>
+        </div>
+        
+        <div class="tool-grid">
 
-    <div class="header-banner">
-        <div class="header-title">Công Cụ Lấy Giá Các Chuỗi</div>
-        <div class="header-subtitle">Automation Tools & Google Colab Notebooks</div>
-    </div>
-    
-    <h1>📂 Available Tools</h1>
-    <div class="tool-grid">
-    
-        <div class="tool-card">
-            <div class="card-icon">📊</div>
-            <div class="card-title">Giá Đã Quét Sẵn</div>
-            <div class="card-desc">Xem báo cáo so sánh giá và khuyến mãi mới nhất đã được tự động hóa.</div>
-            <a href="index.html" class="btn btn-view">Xem Báo Cáo</a>
+        <div class="tool-card" style="border-color: rgba(139, 92, 246, 0.3);">
+            <div class="badge badge-new">Core</div>
+            <div class="icon-controller">
+                <div class="icon-container" style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(139, 92, 246, 0.2)); color: #a78bfa;">
+                    📊
+                </div>
+            </div>
+            <div class="card-title">Analysis Report</div>
+            <div class="card-desc">
+                Access the latest daily price comparison report. Visualizes stock status, promotions, and competitive pricing across all retailers.
+            </div>
+            <a href="index.html" class="btn btn-primary">
+                View Report <span>→</span>
+            </a>
         </div>
     
         <div class="tool-card">
-            <div class="card-icon">📓</div>
-            <div class="card-title">Cps</div>
-            <div class="card-desc">Open the <strong>CPS.ipynb</strong> notebook directly in Google Colab.</div>
-            <a href="https://colab.research.google.com/github/tchuynhminhtuan/daily-promotion/blob/main/CPS.ipynb" target="_blank" class="btn btn-colab">Open in Colab 🚀</a>
+            <div class="icon-container">💎</div>
+            <div class="card-title">CPS</div>
+            <div class="card-desc">
+                Direct access to <code>CPS.ipynb</code>. Run automation logic individually in the cloud.
+            </div>
+            <a href="https://colab.research.google.com/github/tchuynhminhtuan/daily-promotion/blob/main/CPS.ipynb" target="_blank" class="btn btn-colab">
+                <span>Open in Colab</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                    <polyline points="15 3 21 3 21 9"></polyline>
+                    <line x1="10" y1="14" x2="21" y2="3"></line>
+                </svg>
+            </a>
         </div>
         
         <div class="tool-card">
-            <div class="card-icon">📓</div>
-            <div class="card-title">Didongviet</div>
-            <div class="card-desc">Open the <strong>DiDongViet.ipynb</strong> notebook directly in Google Colab.</div>
-            <a href="https://colab.research.google.com/github/tchuynhminhtuan/daily-promotion/blob/main/DiDongViet.ipynb" target="_blank" class="btn btn-colab">Open in Colab 🚀</a>
+            <div class="icon-container">📱</div>
+            <div class="card-title">DiDongViet</div>
+            <div class="card-desc">
+                Direct access to <code>DiDongViet.ipynb</code>. Run automation logic individually in the cloud.
+            </div>
+            <a href="https://colab.research.google.com/github/tchuynhminhtuan/daily-promotion/blob/main/DiDongViet.ipynb" target="_blank" class="btn btn-colab">
+                <span>Open in Colab</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                    <polyline points="15 3 21 3 21 9"></polyline>
+                    <line x1="10" y1="14" x2="21" y2="3"></line>
+                </svg>
+            </a>
         </div>
         
         <div class="tool-card">
-            <div class="card-icon">⚙️</div>
+            <div class="icon-container">⚙️</div>
             <div class="card-title">Generate Report</div>
-            <div class="card-desc">Open the <strong>Generate_Report.ipynb</strong> notebook directly in Google Colab.</div>
-            <a href="https://colab.research.google.com/github/tchuynhminhtuan/daily-promotion/blob/main/Generate_Report.ipynb" target="_blank" class="btn btn-colab">Open in Colab 🚀</a>
+            <div class="card-desc">
+                Direct access to <code>Generate_Report.ipynb</code>. Run automation logic individually in the cloud.
+            </div>
+            <a href="https://colab.research.google.com/github/tchuynhminhtuan/daily-promotion/blob/main/Generate_Report.ipynb" target="_blank" class="btn btn-colab">
+                <span>Open in Colab</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                    <polyline points="15 3 21 3 21 9"></polyline>
+                    <line x1="10" y1="14" x2="21" y2="3"></line>
+                </svg>
+            </a>
         </div>
         
         <div class="tool-card">
-            <div class="card-icon">📓</div>
-            <div class="card-title">Hoanghamobile</div>
-            <div class="card-desc">Open the <strong>HoangHaMobile.ipynb</strong> notebook directly in Google Colab.</div>
-            <a href="https://colab.research.google.com/github/tchuynhminhtuan/daily-promotion/blob/main/HoangHaMobile.ipynb" target="_blank" class="btn btn-colab">Open in Colab 🚀</a>
+            <div class="icon-container">🟢</div>
+            <div class="card-title">HoangHaMobile</div>
+            <div class="card-desc">
+                Direct access to <code>HoangHaMobile.ipynb</code>. Run automation logic individually in the cloud.
+            </div>
+            <a href="https://colab.research.google.com/github/tchuynhminhtuan/daily-promotion/blob/main/HoangHaMobile.ipynb" target="_blank" class="btn btn-colab">
+                <span>Open in Colab</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                    <polyline points="15 3 21 3 21 9"></polyline>
+                    <line x1="10" y1="14" x2="21" y2="3"></line>
+                </svg>
+            </a>
         </div>
         
         <div class="tool-card">
-            <div class="card-icon">📓</div>
-            <div class="card-title">Thegioididong</div>
-            <div class="card-desc">Open the <strong>TheGioiDiDong.ipynb</strong> notebook directly in Google Colab.</div>
-            <a href="https://colab.research.google.com/github/tchuynhminhtuan/daily-promotion/blob/main/TheGioiDiDong.ipynb" target="_blank" class="btn btn-colab">Open in Colab 🚀</a>
+            <div class="icon-container">🟡</div>
+            <div class="card-title">TheGioiDiDong</div>
+            <div class="card-desc">
+                Direct access to <code>TheGioiDiDong.ipynb</code>. Run automation logic individually in the cloud.
+            </div>
+            <a href="https://colab.research.google.com/github/tchuynhminhtuan/daily-promotion/blob/main/TheGioiDiDong.ipynb" target="_blank" class="btn btn-colab">
+                <span>Open in Colab</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                    <polyline points="15 3 21 3 21 9"></polyline>
+                    <line x1="10" y1="14" x2="21" y2="3"></line>
+                </svg>
+            </a>
         </div>
         
         <div class="tool-card">
-            <div class="card-icon">🔴</div>
-            <div class="card-title">Viettelstore</div>
-            <div class="card-desc">Open the <strong>ViettelStore.ipynb</strong> notebook directly in Google Colab.</div>
-            <a href="https://colab.research.google.com/github/tchuynhminhtuan/daily-promotion/blob/main/ViettelStore.ipynb" target="_blank" class="btn btn-colab">Open in Colab 🚀</a>
+            <div class="icon-container">🔴</div>
+            <div class="card-title">ViettelStore</div>
+            <div class="card-desc">
+                Direct access to <code>ViettelStore.ipynb</code>. Run automation logic individually in the cloud.
+            </div>
+            <a href="https://colab.research.google.com/github/tchuynhminhtuan/daily-promotion/blob/main/ViettelStore.ipynb" target="_blank" class="btn btn-colab">
+                <span>Open in Colab</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                    <polyline points="15 3 21 3 21 9"></polyline>
+                    <line x1="10" y1="14" x2="21" y2="3"></line>
+                </svg>
+            </a>
         </div>
         
-    </div>
-    <div style="margin-top: 50px; text-align: center; color: #999; font-size: 0.9em;">
-        Generated by <code>code/utils/generate_tools_page.py</code> on 2025-12-30 08:36
-    </div>
+        </div> <!-- End Grid -->
+        
+        <div class="footer">
+            Generated automatically by <code>generate_tools_page.py</code> • Last updated: 2025-12-30 11:51
+        </div>
+    </div> <!-- End Container -->
+
     <script>
-        // Set Tools link to active
+        // Active Link Logic
         document.querySelectorAll('.nav-link').forEach(link => {
-            if(link.getAttribute('href') === 'tools.html') link.classList.add('active');
-            else link.classList.remove('active');
+            const current = link.getAttribute('href');
+            if(window.location.pathname.includes(current) || (current === 'tools.html' && window.location.pathname.includes('tools'))) {
+                link.classList.add('active');
+            } else {
+                link.classList.remove('active');
+            }
         });
     </script>
-    </body>
-    </html>
+</body>
+</html>
     

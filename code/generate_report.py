@@ -516,56 +516,177 @@ class HTMLGenerator:
         <head>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Báo cáo So sánh Khuyến mãi</title>
+            <title>Promotion Analysis | Daily Promotion</title>
+            <!-- Fonts -->
+            <link rel="preconnect" href="https://fonts.googleapis.com">
+            <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+            <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@400;700;800&display=swap" rel="stylesheet">
+            
             <style>
-                body {{ font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 20px; line-height: 1.5; color: #333; }}
-                h1 {{ color: #2c3e50; font-size: 1.5rem; margin-bottom: 5px; }}
-                .comparison-info {{ font-size: 1.1em; color: #555; margin-top: 0; margin-bottom: 20px; }}
-                .controls {{ background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 25px; display: flex; gap: 15px; align-items: center; flex-wrap: wrap; border: 1px solid #e9ecef; position: sticky; top: 0; z-index: 1000; }}
-                .control-group {{ display: flex; align-items: center; gap: 8px; flex: 1 1 auto; }}
-                label {{ font-weight: 600; font-size: 0.9em; white-space: nowrap; }}
-                select, input {{ padding: 8px; border-radius: 4px; border: 1px solid #ccc; }}
-                .product-block {{ background: #fff; border: 1px solid #dee2e6; margin-bottom: 20px; padding: 15px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }}
-                .product-header {{ font-weight: bold; border-bottom: 1px solid #eee; padding-bottom: 8px; margin-bottom: 10px; display: flex; justify-content: space-between; }}
-                .price-change-down {{ color: #28a745; font-weight: bold; }}
-                .price-change-up {{ color: #dc3545; font-weight: bold; }}
-                .diff-table {{ width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 0.9em; }}
-                .diff-table th, .diff-table td {{ border: 1px solid #eee; padding: 10px; text-align: left; vertical-align: top; width: 50%; }}
-                .added {{ background: #d4edda; color: #155724; padding: 2px 4px; border-radius: 2px; }}
-                .removed {{ background: #f8d7da; color: #721c24; text-decoration: line-through; padding: 2px 4px; border-radius: 2px; }}
-                .stock-tag {{ font-size: 0.75em; padding: 2px 6px; border-radius: 4px; font-weight: bold; margin-left: 8px; vertical-align: middle; }}
-                .stock-yes {{ background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }}
-                .stock-no {{ background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }}
-                .section-title {{ font-weight: bold; margin-top: 10px; font-size: 0.95em; }}
-                .text-promo {{ color: #d63384; }} /* Pink/Red for Promo */
-                .text-payment {{ color: #0d6efd; }} /* Blue for Payment */
+                :root {{
+                    --bg-dark: #0f172a;
+                    --card-bg: rgba(30, 41, 59, 0.7);
+                    --card-border: rgba(255, 255, 255, 0.08);
+                    --text-primary: #f8fafc;
+                    --text-secondary: #94a3b8;
+                    --accent-gradient: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+                    --danger: #ef4444;
+                    --success: #10b981;
+                }}
+                
+                body {{ 
+                    font-family: 'Inter', sans-serif; 
+                    margin: 0; 
+                    background-color: var(--bg-dark);
+                    background-image: 
+                        radial-gradient(at 0% 0%, rgba(59, 130, 246, 0.15) 0px, transparent 50%),
+                        radial-gradient(at 100% 0%, rgba(139, 92, 246, 0.15) 0px, transparent 50%);
+                    color: var(--text-primary);
+                    min-height: 100vh;
+                    padding: 20px;
+                }}
+
+                h1, h2, h3 {{ font-family: 'Outfit', sans-serif; }}
+                
+                /* Nav Bar */
+                .nav-container {{ display: flex; justify-content: center; margin-bottom: 30px; }}
+                .nav-bar {{
+                    background: rgba(255, 255, 255, 0.03);
+                    backdrop-filter: blur(16px);
+                    -webkit-backdrop-filter: blur(16px);
+                    border: 1px solid rgba(255, 255, 255, 0.05);
+                    padding: 8px 20px;
+                    border-radius: 50px;
+                    display: flex; align-items: center; gap: 30px;
+                    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+                }}
+                .nav-logo {{ color: white; font-weight: 800; font-family: 'Outfit', sans-serif; font-size: 1.1em; }}
+                .nav-links {{ display: flex; gap: 8px; background: rgba(0,0,0,0.2); padding: 4px; border-radius: 30px; }}
+                .nav-link {{
+                    color: #94a3b8; text-decoration: none; font-weight: 600; padding: 6px 16px; 
+                    border-radius: 20px; transition: all 0.3s ease; font-size: 0.9em;
+                }}
+                .nav-link:hover {{ color: white; }}
+                .nav-link.active {{
+                    background: var(--accent-gradient); color: white;
+                    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+                }}
+
+                /* Header Info */
+                .page-header {{ text-align: center; margin-bottom: 30px; }}
+                h1 {{ font-size: 2.5rem; margin-bottom: 5px; background: linear-gradient(to right, #fff, #94a3b8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }}
+                .meta-info {{ color: var(--text-secondary); font-size: 0.9em; }}
+                .comparison-info {{ 
+                    font-size: 1.1em; color: #cbd5e1; margin-top: 10px; margin-bottom: 20px; 
+                    background: rgba(255,255,255,0.05); display: inline-block; padding: 8px 16px; border-radius: 12px;
+                    border: 1px solid var(--card-border);
+                }}
+
+                /* Controls */
+                .controls {{ 
+                    background: var(--card-bg); 
+                    backdrop-filter: blur(12px);
+                    padding: 15px 25px; 
+                    border-radius: 16px; 
+                    margin-bottom: 25px; 
+                    display: flex; gap: 20px; align-items: center; flex-wrap: wrap; 
+                    border: 1px solid var(--card-border); 
+                    position: sticky; top: 20px; z-index: 100; 
+                    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+                }}
+                .control-group {{ display: flex; align-items: center; gap: 10px; }}
+                label {{ font-weight: 600; font-size: 0.85em; text-transform: uppercase; letter-spacing: 0.5px; color: #64748b; }}
+                
+                select, input {{ 
+                    background: rgba(0, 0, 0, 0.2); 
+                    color: white; 
+                    border: 1px solid var(--card-border); 
+                    padding: 8px 12px; border-radius: 8px; 
+                    outline: none; transition: border-color 0.2s;
+                }}
+                select:focus, input:focus {{ border-color: #8b5cf6; }}
+                
+                #matchCount {{ color: #94a3b8; font-size: 0.9em; font-weight: 600; }}
+
+                /* Product Blocks */
+                .product-block {{ 
+                    background: var(--card-bg); 
+                    border: 1px solid var(--card-border); 
+                    margin-bottom: 20px; padding: 20px; 
+                    border-radius: 16px; 
+                    /* box-shadow: 0 4px 6px rgba(0,0,0,0.05); */
+                }}
+                
+                .product-header {{ 
+                    display: flex; justify-content: space-between; align-items: flex-start;
+                    border-bottom: 1px solid var(--card-border); 
+                    padding-bottom: 12px; margin-bottom: 15px; 
+                }}
+                .product-title {{ font-size: 1.1em; font-weight: 700; color: white; display: flex; align-items: center; gap: 10px; }}
+
+                .diff-table {{ width: 100%; border-collapse: separate; border-spacing: 0; margin-top: 10px; font-size: 0.95em; }}
+                .diff-table th, .diff-table td {{ 
+                    border: 1px solid var(--card-border); 
+                    padding: 12px; text-align: left; vertical-align: top; width: 50%; color: #cbd5e1;
+                }}
+                .diff-table th {{ background: rgba(0,0,0,0.2); font-weight: 600; color: #94a3b8; font-size: 0.85em; text-transform: uppercase; }}
+                
+                /* Changes */
+                .price-change-down {{ color: var(--success); font-weight: 800; }}
+                .price-change-up {{ color: var(--danger); font-weight: 800; }}
+                
+                .added {{ background: rgba(16, 185, 129, 0.2); color: #6ee7b7; padding: 2px 6px; border-radius: 4px; }}
+                .removed {{ background: rgba(239, 68, 68, 0.2); color: #fca5a5; text-decoration: line-through; padding: 2px 6px; border-radius: 4px; opacity: 0.7; }}
+                
+                .stock-tag {{ font-size: 0.75em; padding: 3px 8px; border-radius: 6px; font-weight: 700; margin-left: 8px; vertical-align: middle; text-transform: uppercase; letter-spacing: 0.5px; }}
+                .stock-yes {{ background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); }}
+                .stock-no {{ background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3); }}
+                
+                .text-promo {{ color: #e879f9; }} /* Purple/Pink */
+                .text-payment {{ color: #60a5fa; }} /* Blue */
+                
                 .hidden {{ display: none !important; }}
-                @media (max-width: 600px) {{ .controls {{ position: static; flex-direction: column; align-items: stretch; }} .diff-table th, .diff-table td {{ padding: 5px; }} }}
+                
+                @media (max-width: 800px) {{ 
+                    .controls {{ position: static; flex-direction: column; align-items: stretch; gap: 10px; }} 
+                    .diff-table th, .diff-table td {{ padding: 8px; font-size: 0.9em; }} 
+                }}
             </style>
         </head>
         <body>
-            <h1>Báo cáo So sánh Khuyến mãi</h1>
-            <p style="color: grey; margin-bottom: 5px;">Generated: {pd.Timestamp.now(tz='Asia/Ho_Chi_Minh').strftime('%Y-%m-%d %H:%M')}</p>
-            {comparison_line}
+            <div class="nav-container">
+                <div class="nav-bar">
+                    <div class="nav-logo">🚀 Daily Promotion</div>
+                    <div class="nav-links">
+                        <a href="index.html" class="nav-link active">Home</a>
+                        <a href="tools.html" class="nav-link">Tools</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="page-header">
+                <h1>Promotion Analysis</h1>
+                <p class="meta-info">Generated: {pd.Timestamp.now(tz='Asia/Ho_Chi_Minh').strftime('%Y-%m-%d %H:%M')}</p>
+                {comparison_line}
+            </div>
             
             <div class="controls">
                  <div class="control-group">
-                    <label for="dateFilter">Ngày:</label>
+                    <label for="dateFilter">Ngày</label>
                     <select id="dateFilter">
-                        <option value="ALL">Tất cả</option>
+                        <option value="ALL">All Dates</option>
                         {date_opts}
                     </select>
                 </div>
                 <div class="control-group">
-                    <label for="channelFilter">Kênh:</label>
+                    <label for="channelFilter">Kênh</label>
                     <select id="channelFilter">
-                        <option value="ALL">Tất cả</option>
+                        <option value="ALL">All Channels</option>
                         {channel_opts}
                     </select>
                 </div>
-                <!-- Stock Filter -->
                 <div class="control-group">
-                    <label for="stockFilter">Kho hàng:</label>
+                    <label for="stockFilter">Kho hàng</label>
                     <select id="stockFilter">
                         <option value="ALL">Tất cả</option>
                         <option value="YES">Còn hàng</option>
@@ -573,16 +694,16 @@ class HTMLGenerator:
                     </select>
                 </div>
                 <div class="control-group">
-                    <label for="promoFilter">Thay đổi KM:</label>
+                    <label for="promoFilter">Thay đổi KM</label>
                     <select id="promoFilter">
-                        <option value="YES" selected>Có thay đổi (Mặc định)</option>
-                        <option value="ALL">Tất cả (Bao gồm không đổi)</option>
-                        <option value="NO">Không thay đổi</option>
-                        <option value="NEW">Mới xuất hiện</option>
+                        <option value="YES" selected>Có thay đổi</option>
+                        <option value="ALL">Tất cả</option>
+                        <option value="NO">Không đổi</option>
+                        <option value="NEW">Mới</option>
                     </select>
                 </div>
                 <div class="control-group">
-                    <label for="priceFilter">Thay đổi Giá:</label>
+                    <label for="priceFilter">Giá</label>
                     <select id="priceFilter">
                         <option value="ALL">Tất cả</option>
                         <option value="UP">Tăng Giá</option>
@@ -591,19 +712,18 @@ class HTMLGenerator:
                     </select>
                 </div>
                 <div class="control-group">
-                    <label for="sortPrice">Sắp xếp Giá:</label>
+                    <label for="sortPrice">Sắp xếp</label>
                     <select id="sortPrice">
                         <option value="DEFAULT">Mặc định</option>
-                        <option value="ASC">Thấp - Cao</option>
-                        <option value="DESC">Cao - Thấp</option>
+                        <option value="ASC">Giá: Thấp -> Cao</option>
+                        <option value="DESC">Giá: Cao -> Thấp</option>
                     </select>
                 </div>
-                <div class="control-group">
-                    <label for="searchInput">Tìm kiếm:</label>
-                    <input type="text" id="searchInput" placeholder="Ví dụ: iPhone 15...">
+                <div class="control-group" style="flex-grow: 1;">
+                    <input type="text" id="searchInput" placeholder="Search products..." style="width: 100%;">
                 </div>
-                 <div class="control-group" style="margin-left: auto;">
-                    <span id="matchCount"></span>
+                 <div class="control-group">
+                    <span id="matchCount">Loading...</span>
                 </div>
             </div>
             
@@ -860,28 +980,39 @@ class HTMLGenerator:
         link_url = row.get('Link', '')
         link_html = ""
         if pd.notna(link_url) and link_url != "":
-            link_html = f'<div style="margin-bottom: 5px;"><a href="{link_url}" target="_blank" style="font-size: 0.9em; color: #007bff; text-decoration: none;">Xem sản phẩm &rarr;</a></div>'
+            link_html = f'<div style="margin-bottom: 15px;"><a href="{link_url}" target="_blank" style="font-size: 0.9em; color: #60a5fa; text-decoration: none; font-weight: 500; display: inline-flex; align-items: center; gap: 4px;">View Product <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></a></div>'
 
         # Styling based on Status
-        border_style = "border: 1px solid #dee2e6;"
+        # Default Dark Mode Border
+        border_style = "border: 1px solid var(--card-border);" 
         badge_html = ""
+        
         if status == "NEW":
-            border_style = "border: 1px solid #28a745; background-color: #f0fff4;"
-            badge_html = '<span style="background: #28a745; color: white; font-size: 0.7em; padding: 2px 5px; border-radius: 3px; margin-left: 5px;">MỚI</span>'
+            border_style = "border: 1px solid rgba(16, 185, 129, 0.4); box-shadow: 0 0 15px rgba(16, 185, 129, 0.1);"
+            badge_html = '<span style="background: rgba(16, 185, 129, 0.2); color: #6ee7b7; font-size: 0.7em; padding: 2px 8px; border-radius: 12px; margin-left: 8px; font-weight: 700; border: 1px solid rgba(16, 185, 129, 0.3);">NEW</span>'
         elif status == "CHANGED":
-             border_style = "border: 1px solid #ffc107;" # Warning/Yellow usually for changes
+             border_style = "border: 1px solid rgba(245, 158, 11, 0.4);" # Warning/Amber
         
         # Stock Badge
         stock_badge = ""
         if stock_val == "YES":
-             stock_badge = '<span class="stock-tag stock-yes">Còn hàng</span>'
+             stock_badge = '<span class="stock-tag stock-yes">In Stock</span>'
         else:
-             stock_badge = '<span class="stock-tag stock-no">Hết hàng</span>'
+             stock_badge = '<span class="stock-tag stock-no">Out of Stock</span>'
 
         safe_channel = html.escape(str(channel))
         safe_product = html.escape(str(product)).lower()
         safe_date = html.escape(str(date))
         
+        # Determine Icon
+        icon = "📱"
+        if "Viettel" in channel: icon = "🔴"
+        elif "FPT" in channel: icon = "⚫"
+        elif "HoangHa" in channel: icon = "🟢"
+        elif "DDV" in channel or "DiDongViet" in channel: icon = "🟣"
+        elif "CPS" in channel: icon = "💎"
+        elif "MW" in channel or "TheGioi" in channel: icon = "🟡"
+
         block = f"""
         <div class="product-block" 
              style="{border_style}"
@@ -895,17 +1026,23 @@ class HTMLGenerator:
              data-status="{status}"
              data-price="{current_price}">
             <div class="product-header">
-                <span>{channel} - {product} - {color} {badge_html} {stock_badge}</span>
+                <div class="product-title">
+                    <span>{icon}</span>
+                    <span>{product}</span>
+                    <span style="opacity: 0.6; font-weight: 400; font-size: 0.9em;">({color})</span>
+                    {badge_html} 
+                    {stock_badge}
+                </div>
                 {price_html}
             </div>
             {link_html}
         """
         
         if 'Changed_Promotion Details' in row:
-             block += self._render_section(row, "Khuyến mãi", "Old_Promotion Details", "New_Promotion Details", "text-promo", row.get('Changed_Promotion Details'))
+             block += self._render_section(row, "Promotion Details", "Old_Promotion Details", "New_Promotion Details", "text-promo", row.get('Changed_Promotion Details'))
              
         if 'Changed_Payment Promo' in row:
-             block += self._render_section(row, "Thanh toán", "Old_Payment Promo", "New_Payment Promo", "text-payment", row.get('Changed_Payment Promo'))
+             block += self._render_section(row, "Payment Offers", "Old_Payment Promo", "New_Payment Promo", "text-payment", row.get('Changed_Payment Promo'))
 
         block += "</div>"
         return block
