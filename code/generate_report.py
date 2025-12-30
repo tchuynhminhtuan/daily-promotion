@@ -1015,14 +1015,29 @@ class HTMLGenerator:
         safe_product = html.escape(str(product)).lower()
         safe_date = html.escape(str(date))
         
-        # Determine Icon
-        icon = "📱"
-        if "Viettel" in channel: icon = "🔴"
-        elif "FPT" in channel: icon = "⚫"
-        elif "HoangHa" in channel: icon = "🟢"
-        elif "DDV" in channel or "DiDongViet" in channel: icon = "🟣"
-        elif "CPS" in channel: icon = "💎"
-        elif "MW" in channel or "TheGioi" in channel: icon = "🟡"
+        # Determine Label
+        # User requested channel NAME instead of ICON
+        channel_badges = {
+            "Viettel": ("ViettelStore", "#fee2e2", "#991b1b"), # Red
+            "FPT": ("FPT Shop", "#f1f5f9", "#0f172a"),       # Dark
+            "HoangHa": ("HoangHa", "#dcfce7", "#166534"),     # Green
+            "DDV": ("DiDongViet", "#fae8ff", "#86198f"),      # Purple
+            "CPS": ("CellphoneS", "#eff6ff", "#1e40af"),      # Blue
+            "MW": ("TheGioiDiDong", "#fef9c3", "#854d0e")     # Yellow
+        }
+        
+        display_name = safe_channel
+        bg_col = "#f1f5f9"
+        text_col = "#334155"
+        
+        for key, (name, bg, txt) in channel_badges.items():
+            if key in str(channel):
+                display_name = name
+                bg_col = bg
+                text_col = txt
+                break
+
+        icon_html = f'<span style="background: {bg_col}; color: {text_col}; padding: 4px 8px; border-radius: 6px; font-size: 0.8em; font-weight: 700; margin-right: 8px;">{display_name}</span>'
 
         block = f"""
         <div class="product-block" 
@@ -1038,7 +1053,7 @@ class HTMLGenerator:
              data-price="{current_price}">
             <div class="product-header">
                 <div class="product-title">
-                    <span>{icon}</span>
+                    {icon_html}
                     <span>{product}</span>
                     <span style="opacity: 0.6; font-weight: 400; font-size: 0.9em;">({color})</span>
                     {badge_html} 
