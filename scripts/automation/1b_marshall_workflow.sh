@@ -13,6 +13,12 @@ cd "$PROJECT_ROOT" || exit
 
 echo "📍 Working Directory: $PROJECT_ROOT"
 
+# 0. PRE-FLIGHT SYNC (Sandboxing) 🥪
+echo "🛡️ Executing Safety Sync (Stash -> Pull -> Pop)..."
+git stash push -m "Auto-Stash: Marshall Pre-Run"
+git pull origin main --rebase
+git stash pop || echo "⚠️ No local changes to restore."
+
 # 1. Notify User
 osascript -e 'display notification "Scrapers Running: Marshall" with title "Daily Promotion (Marshall)"'
 

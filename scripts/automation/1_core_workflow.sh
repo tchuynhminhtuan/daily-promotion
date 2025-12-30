@@ -13,6 +13,13 @@ cd "$PROJECT_ROOT" || exit
 
 echo "📍 Working Directory: $PROJECT_ROOT"
 
+# 0. PRE-FLIGHT SYNC (Sandboxing) 🥪
+# Isolates local changes to prevent conflicts during run
+echo "🛡️ Executing Safety Sync (Stash -> Pull -> Pop)..."
+git stash push -m "Auto-Stash: Pre-Run Safety"  # Save local changes
+git pull origin main --rebase                  # Sync with remote
+git stash pop || echo "⚠️ No local changes to restore (Clean state)."
+
 # 1. Install/Update Dependencies
 echo "📦 Checking dependencies..."
 pip3 install -r requirements.txt --quiet || echo "⚠️ Warning: Pip install failed. Continuing..."
@@ -32,19 +39,18 @@ echo "✅ FPT & MW Scrapers Completed."
 # 3. Handle Normalization & Data Versioning
 # (Add any additional normalization logic here if needed)
 
-# 4. Push Results to GitHub
+# 4. Push Results to GitHub (STRICT SCOPE)
 echo "🚀 Pushing results to GitHub..."
 
-git add code/
-git add .github/
-
 DATE=$(date +%Y-%m-%d)
+
+# Only commit DATA and REPORT (Ignore Code/Config changes)
 git add "content/$DATE/*.csv" || echo "⚠️ No new CSV data found for $DATE"
 
 git commit -m "Auto: Daily Scrape Update - $(date)" || echo "⚠️ No changes to commit"
-git stash
+
+# Post-Flight Sync (Just in case remote moved during run)
 git pull origin main --rebase
-git stash pop || echo "⚠️ No stash to pop."
 git push
 
 echo "🎉 Done! Data synced to GitHub."
