@@ -1083,10 +1083,10 @@ class HTMLGenerator:
         """
         
         if 'Changed_Promotion Details' in row:
-             block += self._render_section(row, "Promotion Details", "Old_Promotion Details", "New_Promotion Details", "text-promo", row.get('Changed_Promotion Details'))
+             block += self._render_section(row, "Khuyến Mãi", "Old_Promotion Details", "New_Promotion Details", "text-promo", row.get('Changed_Promotion Details'))
              
         if 'Changed_Payment Promo' in row:
-             block += self._render_section(row, "Payment Offers", "Old_Payment Promo", "New_Payment Promo", "text-payment", row.get('Changed_Payment Promo'))
+             block += self._render_section(row, "Ưu Đãi Thanh Toán", "Old_Payment Promo", "New_Payment Promo", "text-payment", row.get('Changed_Payment Promo'))
 
         block += "</div>"
         return block
