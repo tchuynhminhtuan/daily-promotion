@@ -51,7 +51,7 @@
         /* Grid */
         .tool-grid { 
             display: grid; 
-            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); 
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
             gap: 24px; 
         }
         
@@ -119,6 +119,13 @@
             box-shadow: 0 6px 8px -1px rgba(37, 99, 235, 0.3);
             filter: brightness(1.1);
         }
+        @media (max-width: 768px) {
+            body { padding: 20px 15px; }
+            .header-title { font-size: 2.2rem; }
+            .header-subtitle { font-size: 1rem; }
+            .tool-grid { grid-template-columns: 1fr; gap: 15px; }
+            .tool-card { padding: 20px; }
+        }
     </style>
 </head>
 <body>
@@ -160,6 +167,15 @@
         box-shadow: 0 2px 4px rgba(0,0,0,0.05);
     }
     .nav-info { color: #94a3b8; font-size: 0.85em; font-weight: 500; }
+    
+    @media (max-width: 768px) {
+        .nav-container { margin-bottom: 25px; }
+        .nav-bar { gap: 8px; padding: 6px 8px; width: 95%; justify-content: space-between; }
+        .nav-logo { font-size: 1em; padding-left: 5px; }
+        .nav-links { gap: 4px; }
+        .nav-link { padding: 6px 10px; font-size: 0.85em; }
+        .nav-info { display: none; } /* Hide version on mobile to save space */
+    }
 </style>
 
 
