@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Công Cụ & Colab - Daily Promotion</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 20px; line-height: 1.5; color: #333; }
+        h1 { color: #2c3e50; font-size: 1.8rem; margin-bottom: 10px; }
+        .header-banner { 
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); 
+            color: white; padding: 30px; border-radius: 8px; text-align: center; margin-bottom: 30px; 
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .header-title { font-size: 2em; font-weight: bold; margin: 0; text-transform: uppercase; letter-spacing: 1px; }
+        .header-subtitle { font-size: 1.1em; opacity: 0.9; margin-top: 10px; }
+        
+        .tool-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+        
+        .tool-card { 
+            background: white; border: 1px solid #e0e0e0; border-radius: 8px; padding: 20px; 
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05); transition: transform 0.2s, box-shadow 0.2s; 
+            display: flex; flex-direction: column;
+        }
+        .tool-card:hover { transform: translateY(-3px); box-shadow: 0 6px 12px rgba(0,0,0,0.1); }
+        
+        .card-icon { font-size: 2em; margin-bottom: 10px; }
+        .card-title { font-weight: bold; font-size: 1.2em; margin-bottom: 5px; color: #2c3e50; }
+        .card-desc { font-size: 0.9em; color: #666; margin-bottom: 15px; flex-grow: 1; }
+        
+        .btn { 
+            display: inline-block; padding: 8px 16px; border-radius: 6px; text-decoration: none; 
+            font-weight: 600; text-align: center; transition: background 0.2s; 
+        }
+        .btn-colab { background-color: #f39c12; color: white; }
+        .btn-colab:hover { background-color: #d35400; }
+        .btn-view { background-color: #3498db; color: white; }
+        .btn-view:hover { background-color: #2980b9; }
+        
+        .section-header { margin: 40px 0 20px 0; border-bottom: 2px solid #eee; padding-bottom: 10px; color: #2c3e50; }
+    </style>
+</head>
+<body>
+    
+<div class="nav-bar">
+    <a href="index.html" class="nav-link">🏠 Home (Report)</a>
+    <a href="tools.html" class="nav-link ">🛠️ Tools</a>
+    <span class="nav-divider">|</span>
+    <span class="nav-info">Daily Promotion Dashboard</span>
+</div>
+<style>
+    .nav-bar { background: #2c3e50; padding: 10px 20px; border-radius: 8px 8px 0 0; margin-bottom: 20px; color: white; display: flex; align-items: center; gap: 15px; }
+    .nav-link { color: #ecf0f1; text-decoration: none; font-weight: bold; padding: 5px 10px; border-radius: 4px; transition: background 0.2s; }
+    .nav-link:hover { background: #34495e; color: white; }
+    .nav-link. { background: #27ae60; }
+    .nav-divider { color: #7f8c8d; }
+    .nav-info { margin-left: auto; font-size: 0.9em; color: #bdc3c7; }
+</style>
+ <!-- Simple hack to reset active class for tools page -->
+
+    <div class="header-banner">
+        <div class="header-title">Công Cụ Lấy Giá Các Chuỗi</div>
+        <div class="header-subtitle">Automation Tools & Google Colab Notebooks</div>
+    </div>
+    
+    <h1>📂 Available Tools</h1>
+    <div class="tool-grid">
+    
+        <div class="tool-card">
+            <div class="card-icon">📊</div>
+            <div class="card-title">Giá Đã Quét Sẵn</div>
+            <div class="card-desc">Xem báo cáo so sánh giá và khuyến mãi mới nhất đã được tự động hóa.</div>
+            <a href="index.html" class="btn btn-view">Xem Báo Cáo</a>
+        </div>
+    
+        <div class="tool-card">
+            <div class="card-icon">📓</div>
+            <div class="card-title">Cps</div>
+            <div class="card-desc">Open the <strong>CPS.ipynb</strong> notebook directly in Google Colab.</div>
+            <a href="https://colab.research.google.com/github/tchuynhminhtuan/daily-promotion/blob/main/CPS.ipynb" target="_blank" class="btn btn-colab">Open in Colab 🚀</a>
+        </div>
+        
+        <div class="tool-card">
+            <div class="card-icon">📓</div>
+            <div class="card-title">Didongviet</div>
+            <div class="card-desc">Open the <strong>DiDongViet.ipynb</strong> notebook directly in Google Colab.</div>
+            <a href="https://colab.research.google.com/github/tchuynhminhtuan/daily-promotion/blob/main/DiDongViet.ipynb" target="_blank" class="btn btn-colab">Open in Colab 🚀</a>
+        </div>
+        
+        <div class="tool-card">
+            <div class="card-icon">⚙️</div>
+            <div class="card-title">Generate Report</div>
+            <div class="card-desc">Open the <strong>Generate_Report.ipynb</strong> notebook directly in Google Colab.</div>
+            <a href="https://colab.research.google.com/github/tchuynhminhtuan/daily-promotion/blob/main/Generate_Report.ipynb" target="_blank" class="btn btn-colab">Open in Colab 🚀</a>
+        </div>
+        
+        <div class="tool-card">
+            <div class="card-icon">📓</div>
+            <div class="card-title">Hoanghamobile</div>
+            <div class="card-desc">Open the <strong>HoangHaMobile.ipynb</strong> notebook directly in Google Colab.</div>
+            <a href="https://colab.research.google.com/github/tchuynhminhtuan/daily-promotion/blob/main/HoangHaMobile.ipynb" target="_blank" class="btn btn-colab">Open in Colab 🚀</a>
+        </div>
+        
+        <div class="tool-card">
+            <div class="card-icon">📓</div>
+            <div class="card-title">Thegioididong</div>
+            <div class="card-desc">Open the <strong>TheGioiDiDong.ipynb</strong> notebook directly in Google Colab.</div>
+            <a href="https://colab.research.google.com/github/tchuynhminhtuan/daily-promotion/blob/main/TheGioiDiDong.ipynb" target="_blank" class="btn btn-colab">Open in Colab 🚀</a>
+        </div>
+        
+        <div class="tool-card">
+            <div class="card-icon">🔴</div>
+            <div class="card-title">Viettelstore</div>
+            <div class="card-desc">Open the <strong>ViettelStore.ipynb</strong> notebook directly in Google Colab.</div>
+            <a href="https://colab.research.google.com/github/tchuynhminhtuan/daily-promotion/blob/main/ViettelStore.ipynb" target="_blank" class="btn btn-colab">Open in Colab 🚀</a>
+        </div>
+        
+    </div>
+    <div style="margin-top: 50px; text-align: center; color: #999; font-size: 0.9em;">
+        Generated by <code>code/utils/generate_tools_page.py</code> on 2025-12-30 08:36
+    </div>
+    <script>
+        // Set Tools link to active
+        document.querySelectorAll('.nav-link').forEach(link => {
+            if(link.getAttribute('href') === 'tools.html') link.classList.add('active');
+            else link.classList.remove('active');
+        });
+    </script>
+    </body>
+    </html>
+    
