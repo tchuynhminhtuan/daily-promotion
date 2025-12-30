@@ -196,7 +196,7 @@ HTML_HEAD = f"""<!DOCTYPE html>
         <div class="header-section">
             <div class="header-title">Bộ Công Cụ</div>
             <div class="header-subtitle">
-                Truy cập các kịch bản dọn dẹp, tạo báo cáo và công cụ tiện ích tự động.
+                Công cụ lấy dữ liệu từ các trang web.
             </div>
         </div>
         
@@ -231,22 +231,22 @@ def generate_tools_page():
         
         if "HoangHa" in name:
             icon = "📱"
-            desc = "Scraper và xử lý dữ liệu Hoàng Hà Mobile."
+            desc = "Công cụ quét dữ liệu từ Hoàng Hà Mobile."
         elif "DiDongViet" in name:
-            icon = "🏷️"
-            desc = "Scraper và xử lý dữ liệu Di Động Việt."
+            icon = "📱"
+            desc = "Công cụ quét dữ liệu từ Di Động Việt"
         elif "CPS" in name:
             icon = "📱"
-            desc = "Công cụ phân tích và lấy dữ liệu CellphoneS."
+            desc = "Công cụ quét dữ liệu từ CellPhoneS."
         elif "TheGioiDiDong" in name:
-            icon = "🌐"
-            desc = "Tự động hóa dữ liệu Thế Giới Di Động (MWG)."
+            icon = "📱"
+            desc = "Công cụ quét dữ liệu từ Thế Giới Di Động (MWG)."
         elif "Viettel" in name:
-            icon = "🔴"
-            desc = "Kịch bản tự động hóa Viettel Store."
+            icon = "📱"
+            desc = "Công cụ quét dữ liệu từ Viettel Store."
         elif "Generate" in name:
             icon = "⚡"
-            desc = "Tiện ích tạo báo cáo chính."
+            desc = "Tuỳ ý tạo báo cáo theo ngày mong muốn."
             
         colab_url = f"https://colab.research.google.com/github/{GITHUB_REPO}/blob/{BRANCH}/{filename}"
         
