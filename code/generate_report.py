@@ -516,7 +516,7 @@ class HTMLGenerator:
         <head>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Promotion Analysis | Daily Promotion</title>
+            <title>Tổng hợp khuyến mãi | Daily Promotion</title>
             <!-- Fonts -->
             <link rel="preconnect" href="https://fonts.googleapis.com">
             <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -586,6 +586,12 @@ class HTMLGenerator:
                     background: #ffffff; display: inline-block; padding: 8px 16px; border-radius: 12px;
                     border: 1px solid var(--card-border);
                     box-shadow: var(--shadow-sm);
+                }}
+                
+                @media (max-width: 768px) {{
+                    .page-header h1 {{ font-size: 2rem; }}
+                    .comparison-info {{ font-size: 0.95em; padding: 6px 12px; }}
+                    body {{ padding: 20px 10px; }}
                 }}
 
                 /* Controls */
@@ -661,23 +667,35 @@ class HTMLGenerator:
                 @media (max-width: 800px) {{ 
                     .controls {{ position: static; flex-direction: column; align-items: stretch; gap: 10px; }} 
                     .diff-table th, .diff-table td {{ padding: 8px; font-size: 0.9em; }} 
+                    .product-block {{ padding: 15px; }}
+                    .product-header {{ flex-direction: column; gap: 8px; }}
+                    .product-title {{ font-size: 1em; }}
                 }}
             </style>
         </head>
         <body>
-            <div class="nav-container">
                 <div class="nav-bar">
                     <div class="nav-logo">🚀 Daily Promotion</div>
                     <div class="nav-links">
-                        <a href="index.html" class="nav-link active">Home</a>
-                        <a href="tools.html" class="nav-link">Tools</a>
+                        <a href="index.html" class="nav-link active">Trang chủ</a>
+                        <a href="tools.html" class="nav-link">Công cụ</a>
                     </div>
                 </div>
             </div>
+            
+            <style>
+                @media (max-width: 768px) {{
+                    .nav-container {{ margin-bottom: 25px; }}
+                    .nav-bar {{ gap: 8px; padding: 6px 8px; width: auto; justify-content: center; }}
+                    .nav-logo {{ font-size: 1em; padding-left: 5px; }}
+                    .nav-links {{ gap: 4px; }}
+                    .nav-link {{ padding: 6px 10px; font-size: 0.85em; }}
+                }}
+            </style>
 
             <div class="page-header">
-                <h1>Promotion Analysis</h1>
-                <p class="meta-info">Generated: {pd.Timestamp.now(tz='Asia/Ho_Chi_Minh').strftime('%Y-%m-%d %H:%M')}</p>
+                <h1>Tổng hợp khuyến mãi</h1>
+                <p class="meta-info">Cập nhật lúc: {pd.Timestamp.now(tz='Asia/Ho_Chi_Minh').strftime('%Y-%m-%d %H:%M')}</p>
                 {comparison_line}
             </div>
             
@@ -685,14 +703,14 @@ class HTMLGenerator:
                  <div class="control-group">
                     <label for="dateFilter">Ngày</label>
                     <select id="dateFilter">
-                        <option value="ALL">All Dates</option>
+                        <option value="ALL">Tất cả ngày</option>
                         {date_opts}
                     </select>
                 </div>
                 <div class="control-group">
                     <label for="channelFilter">Kênh</label>
                     <select id="channelFilter">
-                        <option value="ALL">All Channels</option>
+                        <option value="ALL">Tất cả kênh</option>
                         {channel_opts}
                     </select>
                 </div>
@@ -731,10 +749,10 @@ class HTMLGenerator:
                     </select>
                 </div>
                 <div class="control-group" style="flex-grow: 1;">
-                    <input type="text" id="searchInput" placeholder="Search products..." style="width: 100%;">
+                    <input type="text" id="searchInput" placeholder="Tìm sản phẩm..." style="width: 100%;">
                 </div>
                  <div class="control-group">
-                    <span id="matchCount">Loading...</span>
+                    <span id="matchCount">Đang tải...</span>
                 </div>
             </div>
             

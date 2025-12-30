@@ -15,10 +15,9 @@ NAV_BAR_HTML = """
     <div class="nav-bar">
         <div class="nav-logo">🚀 Daily Promotion</div>
         <div class="nav-links">
-            <a href="index.html" class="nav-link">Home</a>
-            <a href="tools.html" class="nav-link active">Tools</a>
+            <a href="index.html" class="nav-link">Trang chủ</a>
+            <a href="tools.html" class="nav-link active">Công cụ</a>
         </div>
-        <div class="nav-info">Dashboard v2.0</div>
     </div>
 </div>
 <style>
@@ -48,6 +47,15 @@ NAV_BAR_HTML = """
         box-shadow: 0 2px 4px rgba(0,0,0,0.05);
     }
     .nav-info { color: #94a3b8; font-size: 0.85em; font-weight: 500; }
+    
+    @media (max-width: 768px) {{
+        .nav-container {{ margin-bottom: 25px; }}
+        .nav-bar {{ gap: 8px; padding: 6px 8px; width: auto; justify-content: center; }}
+        .nav-logo {{ font-size: 1em; padding-left: 5px; }}
+        .nav-links {{ gap: 4px; }}
+        .nav-link {{ padding: 6px 10px; font-size: 0.85em; }}
+        .nav-info {{ display: none; }} /* Hide version on mobile to save space */
+    }}
 </style>
 """
 
@@ -56,7 +64,7 @@ HTML_HEAD = f"""<!DOCTYPE html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Automation Hub | Daily Promotion</title>
+    <title>Bộ Công Cụ Tự Động | Daily Promotion</title>
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -104,7 +112,7 @@ HTML_HEAD = f"""<!DOCTYPE html>
         /* Grid */
         .tool-grid {{ 
             display: grid; 
-            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); 
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
             gap: 24px; 
         }}
         
@@ -172,6 +180,13 @@ HTML_HEAD = f"""<!DOCTYPE html>
             box-shadow: 0 6px 8px -1px rgba(37, 99, 235, 0.3);
             filter: brightness(1.1);
         }}
+        @media (max-width: 768px) {{
+            body {{ padding: 20px 15px; }}
+            .header-title {{ font-size: 2.2rem; }}
+            .header-subtitle {{ font-size: 1rem; }}
+            .tool-grid {{ grid-template-columns: 1fr; gap: 15px; }}
+            .tool-card {{ padding: 20px; }}
+        }}
     </style>
 </head>
 <body>
@@ -179,9 +194,9 @@ HTML_HEAD = f"""<!DOCTYPE html>
 
     <div class="container">
         <div class="header-section">
-            <div class="header-title">Daily Automation Tools</div>
+            <div class="header-title">Bộ Công Cụ</div>
             <div class="header-subtitle">
-                Access your automated cleaning scripts, report generators, and utility tools directly from here.
+                Truy cập các kịch bản dọn dẹp, tạo báo cáo và công cụ tiện ích tự động.
             </div>
         </div>
         
@@ -212,26 +227,26 @@ def generate_tools_page():
         
         # Determine Icon & Desc based on name
         icon = "📊"
-        desc = "Process data and generate reports."
+        desc = "Xử lý dữ liệu và tạo báo cáo."
         
         if "HoangHa" in name:
             icon = "📱"
-            desc = "Scrape and process HoangHaMobile implementation."
+            desc = "Scraper và xử lý dữ liệu Hoàng Hà Mobile."
         elif "DiDongViet" in name:
             icon = "🏷️"
-            desc = "Scrape and process DiDongViet implementation."
+            desc = "Scraper và xử lý dữ liệu Di Động Việt."
         elif "CPS" in name:
             icon = "📱"
-            desc = "CellphoneS Scraper and Analyzer tool."
+            desc = "Công cụ phân tích và lấy dữ liệu CellphoneS."
         elif "TheGioiDiDong" in name:
             icon = "🌐"
-            desc = "MWG (TheGioiDiDong) data automation."
+            desc = "Tự động hóa dữ liệu Thế Giới Di Động (MWG)."
         elif "Viettel" in name:
             icon = "🔴"
-            desc = "ViettelStore automation scripts."
+            desc = "Kịch bản tự động hóa Viettel Store."
         elif "Generate" in name:
             icon = "⚡"
-            desc = "Core report generator utility."
+            desc = "Tiện ích tạo báo cáo chính."
             
         colab_url = f"https://colab.research.google.com/github/{GITHUB_REPO}/blob/{BRANCH}/{filename}"
         
@@ -242,7 +257,7 @@ def generate_tools_page():
                 <div class="card-desc">{desc}</div>
                 <a href="{colab_url}" target="_blank" class="btn btn-colab">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
-                    Open in Colab
+                    Mở trong Colab
                 </a>
             </div>
         """
