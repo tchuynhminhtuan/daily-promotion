@@ -12,22 +12,20 @@
     
     <style>
         :root {
-            --bg-dark: #0f172a;
-            --card-bg: rgba(30, 41, 59, 0.7);
-            --card-border: rgba(255, 255, 255, 0.08);
-            --text-primary: #f8fafc;
-            --text-secondary: #94a3b8;
-            --accent-gradient: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
-            --accent-glow: rgba(139, 92, 246, 0.5);
+            --bg-body: #f8fafc;
+            --card-bg: #ffffff;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --accent-gradient: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            --card-border: rgba(226, 232, 240, 0.8);
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06);
+            --shadow-card: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
         }
         
         body { 
             font-family: 'Inter', sans-serif; 
             margin: 0; 
-            background-color: var(--bg-dark);
-            background-image: 
-                radial-gradient(at 0% 0%, rgba(59, 130, 246, 0.15) 0px, transparent 50%),
-                radial-gradient(at 100% 0%, rgba(139, 92, 246, 0.15) 0px, transparent 50%);
+            background-color: var(--bg-body);
             color: var(--text-primary);
             min-height: 100vh;
             padding: 40px 20px;
@@ -44,106 +42,82 @@
         .header-title { 
             font-size: 3.5em; 
             font-weight: 800; 
-            background: linear-gradient(to right, #fff, #94a3b8);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: #0f172a;
+            letter-spacing: -0.02em;
             margin-bottom: 10px;
-            letter-spacing: -1px;
         }
-        .header-subtitle { font-size: 1.25em; color: var(--text-secondary); max-width: 600px; margin: 0 auto; }
+        .header-subtitle { font-size: 1.1em; color: var(--text-secondary); max-width: 600px; margin: 0 auto; line-height: 1.6; }
         
         /* Grid */
         .tool-grid { 
             display: grid; 
             grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); 
-            gap: 30px; 
-            perspective: 1000px;
+            gap: 24px; 
         }
         
         /* Card Styling */
         .tool-card { 
             background: var(--card-bg);
             border: 1px solid var(--card-border);
-            border-radius: 24px;
-            padding: 30px;
+            border-radius: 20px;
+            padding: 24px;
             display: flex;
             flex-direction: column;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            backdrop-filter: blur(12px);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: var(--shadow-sm);
             position: relative;
             overflow: hidden;
-            group-hover:;
         }
         
         .tool-card:hover { 
-            transform: translateY(-8px) scale(1.02); 
-            box-shadow: 0 20px 40px -15px rgba(0,0,0,0.5); 
-            border-color: rgba(255,255,255,0.2);
-        }
-        
-        .tool-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; height: 100px;
-            background: linear-gradient(180deg, rgba(255,255,255,0.03) 0%, transparent 100%);
-            pointer-events: none;
+            transform: translateY(-4px); 
+            box-shadow: var(--shadow-card); 
+            border-color: #cbd5e1;
         }
         
         /* Icon */
         .icon-container {
-            width: 64px; height: 64px;
-            background: rgba(255,255,255,0.05);
-            border-radius: 16px;
+            width: 56px; height: 56px;
+            background: #f1f5f9;
+            border-radius: 12px;
             display: flex; align-items: center; justify-content: center;
-            font-size: 32px;
-            margin-bottom: 24px;
-            box-shadow: inset 0 0 0 1px rgba(255,255,255,0.1);
+            font-size: 28px;
+            margin-bottom: 20px;
         }
         
         /* Content */
-        .card-title { font-size: 1.5em; font-weight: 700; margin: 0 0 10px 0; color: white; }
-        .card-desc { color: var(--text-secondary); font-size: 0.95em; line-height: 1.6; flex-grow: 1; margin-bottom: 25px; }
+        .card-title { font-size: 1.25em; font-weight: 600; margin: 0 0 8px 0; color: #0f172a; }
+        .card-desc { color: var(--text-secondary); font-size: 0.95em; line-height: 1.6; flex-grow: 1; margin-bottom: 20px; }
         
         /* Buttons */
         .btn { 
             display: inline-flex; align-items: center; justify-content: center;
-            padding: 12px 24px; border-radius: 12px; 
-            text-decoration: none; font-weight: 600; transition: all 0.3s ease;
+            padding: 10px 20px; border-radius: 10px; 
+            text-decoration: none; font-weight: 500; transition: all 0.2s ease;
             width: 100%; box-sizing: border-box;
-            gap: 8px;
+            gap: 8px; font-size: 0.95em;
         }
         
         .btn-colab { 
-            background: rgba(255,255,255,0.05); 
-            color: white; 
-            border: 1px solid rgba(255,255,255,0.1);
+            background: #0f172a; color: white; 
+            box-shadow: 0 4px 6px -1px rgba(15, 23, 42, 0.1);
         }
         .btn-colab:hover { 
-            background: rgba(255,255,255,0.1); 
-            border-color: rgba(255,255,255,0.3);
+            background: #334155; 
+            transform: translateY(-1px);
+            box-shadow: 0 6px 8px -1px rgba(15, 23, 42, 0.15);
         }
         
         .btn-primary { 
             background: var(--accent-gradient); 
-            color: white; border: none;
-            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+            color: white; 
+            box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.2);
         }
         .btn-primary:hover { 
-            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.5);
             transform: translateY(-1px);
+            box-shadow: 0 6px 8px -1px rgba(37, 99, 235, 0.3);
+            filter: brightness(1.1);
         }
-
-        /* Status Badges */
-        .badge {
-            position: absolute; top: 20px; right: 20px;
-            padding: 4px 10px; border-radius: 20px;
-            font-size: 0.75em; font-weight: 700; text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        .badge-new { background: rgba(59, 130, 246, 0.2); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.3); }
-
-        /* Footer */
-        .footer { margin-top: 80px; text-align: center; color: rgba(255,255,255,0.2); font-size: 0.85em; }
     </style>
 </head>
 <body>
@@ -153,207 +127,116 @@
         <div class="nav-logo">🚀 Daily Promotion</div>
         <div class="nav-links">
             <a href="index.html" class="nav-link">Home</a>
-            <a href="tools.html" class="nav-link ">Tools</a>
+            <a href="tools.html" class="nav-link active">Tools</a>
         </div>
         <div class="nav-info">Dashboard v2.0</div>
     </div>
 </div>
 <style>
-    /* Premium Nav Styling */
-    .nav-container {
-        display: flex;
-        justify-content: center;
-        margin-bottom: 40px;
-    }
+    /* Clean Light Nav Styling */
+    .nav-container { display: flex; justify-content: center; margin-bottom: 40px; }
     .nav-bar {
-        background: rgba(255, 255, 255, 0.03);
+        background: rgba(255, 255, 255, 0.8);
         backdrop-filter: blur(16px);
         -webkit-backdrop-filter: blur(16px);
-        border: 1px solid rgba(255, 255, 255, 0.05);
-        padding: 12px 30px;
+        border: 1px solid rgba(0,0,0,0.05);
+        padding: 8px 12px;
         border-radius: 50px;
-        display: flex;
-        align-items: center;
-        gap: 40px;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        display: flex; align-items: center; gap: 24px;
+        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
     }
-    .nav-logo {
-        color: white;
-        font-weight: 800;
-        font-family: 'Outfit', sans-serif;
-        font-size: 1.1em;
-        letter-spacing: 0.5px;
+    .nav-logo { 
+        color: #1e293b; font-weight: 800; font-family: 'Outfit', sans-serif; font-size: 1.1em; padding-left: 12px; 
     }
-    .nav-links {
-        display: flex;
-        gap: 8px;
-        background: rgba(0,0,0,0.2);
-        padding: 4px;
-        border-radius: 30px;
-    }
+    .nav-links { display: flex; gap: 6px; background: #f1f5f9; padding: 4px; border-radius: 30px; }
     .nav-link {
-        color: #94a3b8;
-        text-decoration: none;
-        font-weight: 600;
-        padding: 8px 20px;
-        border-radius: 24px;
-        transition: all 0.3s ease;
-        font-size: 0.95em;
+        color: #64748b; text-decoration: none; font-weight: 500; padding: 8px 16px; 
+        border-radius: 20px; transition: all 0.2s ease; font-size: 0.9em;
     }
-    .nav-link:hover {
-        color: white;
+    .nav-link:hover { color: #1e293b; background: #ffffff; }
+    .nav-link.active {
+        background: #ffffff; color: #0f172a; font-weight: 600;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
     }
-    .nav-link. {
-        background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
-        color: white;
-        box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
-    }
-    .nav-info {
-        color: #64748b;
-        font-size: 0.85em;
-        font-weight: 500;
-    }
+    .nav-info { color: #94a3b8; font-size: 0.85em; font-weight: 500; }
 </style>
- <!-- Simple hack to reset active class for tools page -->
-    
+
+
     <div class="container">
         <div class="header-section">
-            <div class="header-title">Command Center</div>
-            <div class="header-subtitle">Centralized hub for scraper automation, pricing analysis, and Google Colab notebooks.</div>
+            <div class="header-title">Daily Automation Tools</div>
+            <div class="header-subtitle">
+                Access your automated cleaning scripts, report generators, and utility tools directly from here.
+            </div>
         </div>
         
         <div class="tool-grid">
 
-        <div class="tool-card" style="border-color: rgba(139, 92, 246, 0.3);">
-            <div class="badge badge-new">Core</div>
-            <div class="icon-controller">
-                <div class="icon-container" style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(139, 92, 246, 0.2)); color: #a78bfa;">
-                    📊
-                </div>
+            <div class="tool-card">
+                <div class="icon-container">📱</div>
+                <div class="card-title">CPS</div>
+                <div class="card-desc">CellphoneS Scraper and Analyzer tool.</div>
+                <a href="https://colab.research.google.com/github/tchuynhminhtuan/daily-promotion/blob/main/CPS.ipynb" target="_blank" class="btn btn-colab">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+                    Open in Colab
+                </a>
             </div>
-            <div class="card-title">Analysis Report</div>
-            <div class="card-desc">
-                Access the latest daily price comparison report. Visualizes stock status, promotions, and competitive pricing across all retailers.
+        
+            <div class="tool-card">
+                <div class="icon-container">🏷️</div>
+                <div class="card-title">DiDongViet</div>
+                <div class="card-desc">Scrape and process DiDongViet implementation.</div>
+                <a href="https://colab.research.google.com/github/tchuynhminhtuan/daily-promotion/blob/main/DiDongViet.ipynb" target="_blank" class="btn btn-colab">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+                    Open in Colab
+                </a>
             </div>
-            <a href="index.html" class="btn btn-primary">
-                View Report <span>→</span>
-            </a>
-        </div>
-    
-        <div class="tool-card">
-            <div class="icon-container">💎</div>
-            <div class="card-title">CPS</div>
-            <div class="card-desc">
-                Direct access to <code>CPS.ipynb</code>. Run automation logic individually in the cloud.
+        
+            <div class="tool-card">
+                <div class="icon-container">⚡</div>
+                <div class="card-title">Generate_Report</div>
+                <div class="card-desc">Core report generator utility.</div>
+                <a href="https://colab.research.google.com/github/tchuynhminhtuan/daily-promotion/blob/main/Generate_Report.ipynb" target="_blank" class="btn btn-colab">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+                    Open in Colab
+                </a>
             </div>
-            <a href="https://colab.research.google.com/github/tchuynhminhtuan/daily-promotion/blob/main/CPS.ipynb" target="_blank" class="btn btn-colab">
-                <span>Open in Colab</span>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                    <polyline points="15 3 21 3 21 9"></polyline>
-                    <line x1="10" y1="14" x2="21" y2="3"></line>
-                </svg>
-            </a>
+        
+            <div class="tool-card">
+                <div class="icon-container">📱</div>
+                <div class="card-title">HoangHaMobile</div>
+                <div class="card-desc">Scrape and process HoangHaMobile implementation.</div>
+                <a href="https://colab.research.google.com/github/tchuynhminhtuan/daily-promotion/blob/main/HoangHaMobile.ipynb" target="_blank" class="btn btn-colab">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+                    Open in Colab
+                </a>
+            </div>
+        
+            <div class="tool-card">
+                <div class="icon-container">🌐</div>
+                <div class="card-title">TheGioiDiDong</div>
+                <div class="card-desc">MWG (TheGioiDiDong) data automation.</div>
+                <a href="https://colab.research.google.com/github/tchuynhminhtuan/daily-promotion/blob/main/TheGioiDiDong.ipynb" target="_blank" class="btn btn-colab">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+                    Open in Colab
+                </a>
+            </div>
+        
+            <div class="tool-card">
+                <div class="icon-container">🔴</div>
+                <div class="card-title">ViettelStore</div>
+                <div class="card-desc">ViettelStore automation scripts.</div>
+                <a href="https://colab.research.google.com/github/tchuynhminhtuan/daily-promotion/blob/main/ViettelStore.ipynb" target="_blank" class="btn btn-colab">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+                    Open in Colab
+                </a>
+            </div>
+        
         </div>
         
-        <div class="tool-card">
-            <div class="icon-container">📱</div>
-            <div class="card-title">DiDongViet</div>
-            <div class="card-desc">
-                Direct access to <code>DiDongViet.ipynb</code>. Run automation logic individually in the cloud.
-            </div>
-            <a href="https://colab.research.google.com/github/tchuynhminhtuan/daily-promotion/blob/main/DiDongViet.ipynb" target="_blank" class="btn btn-colab">
-                <span>Open in Colab</span>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                    <polyline points="15 3 21 3 21 9"></polyline>
-                    <line x1="10" y1="14" x2="21" y2="3"></line>
-                </svg>
-            </a>
+        <div style="text-align: center; margin-top: 60px; color: #94a3b8; font-size: 0.9em;">
+            &copy; 2025 Daily Promotion Automation Hub
         </div>
-        
-        <div class="tool-card">
-            <div class="icon-container">⚙️</div>
-            <div class="card-title">Generate Report</div>
-            <div class="card-desc">
-                Direct access to <code>Generate_Report.ipynb</code>. Run automation logic individually in the cloud.
-            </div>
-            <a href="https://colab.research.google.com/github/tchuynhminhtuan/daily-promotion/blob/main/Generate_Report.ipynb" target="_blank" class="btn btn-colab">
-                <span>Open in Colab</span>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                    <polyline points="15 3 21 3 21 9"></polyline>
-                    <line x1="10" y1="14" x2="21" y2="3"></line>
-                </svg>
-            </a>
-        </div>
-        
-        <div class="tool-card">
-            <div class="icon-container">🟢</div>
-            <div class="card-title">HoangHaMobile</div>
-            <div class="card-desc">
-                Direct access to <code>HoangHaMobile.ipynb</code>. Run automation logic individually in the cloud.
-            </div>
-            <a href="https://colab.research.google.com/github/tchuynhminhtuan/daily-promotion/blob/main/HoangHaMobile.ipynb" target="_blank" class="btn btn-colab">
-                <span>Open in Colab</span>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                    <polyline points="15 3 21 3 21 9"></polyline>
-                    <line x1="10" y1="14" x2="21" y2="3"></line>
-                </svg>
-            </a>
-        </div>
-        
-        <div class="tool-card">
-            <div class="icon-container">🟡</div>
-            <div class="card-title">TheGioiDiDong</div>
-            <div class="card-desc">
-                Direct access to <code>TheGioiDiDong.ipynb</code>. Run automation logic individually in the cloud.
-            </div>
-            <a href="https://colab.research.google.com/github/tchuynhminhtuan/daily-promotion/blob/main/TheGioiDiDong.ipynb" target="_blank" class="btn btn-colab">
-                <span>Open in Colab</span>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                    <polyline points="15 3 21 3 21 9"></polyline>
-                    <line x1="10" y1="14" x2="21" y2="3"></line>
-                </svg>
-            </a>
-        </div>
-        
-        <div class="tool-card">
-            <div class="icon-container">🔴</div>
-            <div class="card-title">ViettelStore</div>
-            <div class="card-desc">
-                Direct access to <code>ViettelStore.ipynb</code>. Run automation logic individually in the cloud.
-            </div>
-            <a href="https://colab.research.google.com/github/tchuynhminhtuan/daily-promotion/blob/main/ViettelStore.ipynb" target="_blank" class="btn btn-colab">
-                <span>Open in Colab</span>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                    <polyline points="15 3 21 3 21 9"></polyline>
-                    <line x1="10" y1="14" x2="21" y2="3"></line>
-                </svg>
-            </a>
-        </div>
-        
-        </div> <!-- End Grid -->
-        
-        <div class="footer">
-            Generated automatically by <code>generate_tools_page.py</code> • Last updated: 2025-12-30 11:51
-        </div>
-    </div> <!-- End Container -->
-
-    <script>
-        // Active Link Logic
-        document.querySelectorAll('.nav-link').forEach(link => {
-            const current = link.getAttribute('href');
-            if(window.location.pathname.includes(current) || (current === 'tools.html' && window.location.pathname.includes('tools'))) {
-                link.classList.add('active');
-            } else {
-                link.classList.remove('active');
-            }
-        });
-    </script>
+    </div>
 </body>
 </html>
-    

@@ -524,12 +524,14 @@ class HTMLGenerator:
             
             <style>
                 :root {{
-                    --bg-dark: #0f172a;
-                    --card-bg: rgba(30, 41, 59, 0.7);
-                    --card-border: rgba(255, 255, 255, 0.08);
-                    --text-primary: #f8fafc;
-                    --text-secondary: #94a3b8;
-                    --accent-gradient: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+                    --bg-body: #f8fafc;
+                    --card-bg: #ffffff;
+                    --text-primary: #1e293b;
+                    --text-secondary: #64748b;
+                    --accent-gradient: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+                    --card-border: rgba(226, 232, 240, 0.8);
+                    --shadow-sm: 0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06);
+                    --shadow-card: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
                     --danger: #ef4444;
                     --success: #10b981;
                 }}
@@ -537,10 +539,7 @@ class HTMLGenerator:
                 body {{ 
                     font-family: 'Inter', sans-serif; 
                     margin: 0; 
-                    background-color: var(--bg-dark);
-                    background-image: 
-                        radial-gradient(at 0% 0%, rgba(59, 130, 246, 0.15) 0px, transparent 50%),
-                        radial-gradient(at 100% 0%, rgba(139, 92, 246, 0.15) 0px, transparent 50%);
+                    background-color: var(--bg-body);
                     color: var(--text-primary);
                     min-height: 100vh;
                     padding: 20px;
@@ -551,35 +550,42 @@ class HTMLGenerator:
                 /* Nav Bar */
                 .nav-container {{ display: flex; justify-content: center; margin-bottom: 30px; }}
                 .nav-bar {{
-                    background: rgba(255, 255, 255, 0.03);
+                    background: rgba(255, 255, 255, 0.8);
                     backdrop-filter: blur(16px);
                     -webkit-backdrop-filter: blur(16px);
-                    border: 1px solid rgba(255, 255, 255, 0.05);
-                    padding: 8px 20px;
+                    border: 1px solid rgba(0,0,0,0.05);
+                    padding: 8px 12px;
                     border-radius: 50px;
-                    display: flex; align-items: center; gap: 30px;
-                    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+                    display: flex; align-items: center; gap: 24px;
+                    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
                 }}
-                .nav-logo {{ color: white; font-weight: 800; font-family: 'Outfit', sans-serif; font-size: 1.1em; }}
-                .nav-links {{ display: flex; gap: 8px; background: rgba(0,0,0,0.2); padding: 4px; border-radius: 30px; }}
+                .nav-logo {{ 
+                    color: #1e293b; font-weight: 800; font-family: 'Outfit', sans-serif; font-size: 1.1em; padding-left: 12px; 
+                }}
+                .nav-links {{ display: flex; gap: 6px; background: #f1f5f9; padding: 4px; border-radius: 30px; }}
                 .nav-link {{
-                    color: #94a3b8; text-decoration: none; font-weight: 600; padding: 6px 16px; 
-                    border-radius: 20px; transition: all 0.3s ease; font-size: 0.9em;
+                    color: #64748b; text-decoration: none; font-weight: 500; padding: 8px 16px; 
+                    border-radius: 20px; transition: all 0.2s ease; font-size: 0.9em;
                 }}
-                .nav-link:hover {{ color: white; }}
+                .nav-link:hover {{ color: #1e293b; background: #ffffff; }}
                 .nav-link.active {{
-                    background: var(--accent-gradient); color: white;
-                    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+                    background: #ffffff; color: #0f172a; font-weight: 600;
+                    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
                 }}
 
                 /* Header Info */
                 .page-header {{ text-align: center; margin-bottom: 30px; }}
-                h1 {{ font-size: 2.5rem; margin-bottom: 5px; background: linear-gradient(to right, #fff, #94a3b8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }}
+                h1 {{ 
+                    font-size: 2.5rem; margin-bottom: 5px; 
+                    color: #0f172a;
+                    letter-spacing: -0.02em;
+                }}
                 .meta-info {{ color: var(--text-secondary); font-size: 0.9em; }}
                 .comparison-info {{ 
-                    font-size: 1.1em; color: #cbd5e1; margin-top: 10px; margin-bottom: 20px; 
-                    background: rgba(255,255,255,0.05); display: inline-block; padding: 8px 16px; border-radius: 12px;
+                    font-size: 1.1em; color: var(--text-secondary); margin-top: 10px; margin-bottom: 20px; 
+                    background: #ffffff; display: inline-block; padding: 8px 16px; border-radius: 12px;
                     border: 1px solid var(--card-border);
+                    box-shadow: var(--shadow-sm);
                 }}
 
                 /* Controls */
@@ -592,21 +598,21 @@ class HTMLGenerator:
                     display: flex; gap: 20px; align-items: center; flex-wrap: wrap; 
                     border: 1px solid var(--card-border); 
                     position: sticky; top: 20px; z-index: 100; 
-                    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+                    box-shadow: var(--shadow-card);
                 }}
                 .control-group {{ display: flex; align-items: center; gap: 10px; }}
                 label {{ font-weight: 600; font-size: 0.85em; text-transform: uppercase; letter-spacing: 0.5px; color: #64748b; }}
                 
                 select, input {{ 
-                    background: rgba(0, 0, 0, 0.2); 
-                    color: white; 
-                    border: 1px solid var(--card-border); 
+                    background: #f8fafc; 
+                    color: #1e293b; 
+                    border: 1px solid #cbd5e1; 
                     padding: 8px 12px; border-radius: 8px; 
                     outline: none; transition: border-color 0.2s;
                 }}
-                select:focus, input:focus {{ border-color: #8b5cf6; }}
+                select:focus, input:focus {{ border-color: #3b82f6; ring: 2px solid rgba(59, 130, 246, 0.1); }}
                 
-                #matchCount {{ color: #94a3b8; font-size: 0.9em; font-weight: 600; }}
+                #matchCount {{ color: var(--text-secondary); font-size: 0.9em; font-weight: 600; }}
 
                 /* Product Blocks */
                 .product-block {{ 
@@ -614,36 +620,41 @@ class HTMLGenerator:
                     border: 1px solid var(--card-border); 
                     margin-bottom: 20px; padding: 20px; 
                     border-radius: 16px; 
-                    /* box-shadow: 0 4px 6px rgba(0,0,0,0.05); */
+                    box-shadow: var(--shadow-sm);
+                    transition: transform 0.2s, box-shadow 0.2s;
+                }}
+                .product-block:hover {{
+                    transform: translateY(-2px);
+                    box-shadow: var(--shadow-card);
                 }}
                 
                 .product-header {{ 
                     display: flex; justify-content: space-between; align-items: flex-start;
-                    border-bottom: 1px solid var(--card-border); 
+                    border-bottom: 1px solid #e2e8f0; 
                     padding-bottom: 12px; margin-bottom: 15px; 
                 }}
-                .product-title {{ font-size: 1.1em; font-weight: 700; color: white; display: flex; align-items: center; gap: 10px; }}
+                .product-title {{ font-size: 1.1em; font-weight: 700; color: #0f172a; display: flex; align-items: center; gap: 10px; }}
 
                 .diff-table {{ width: 100%; border-collapse: separate; border-spacing: 0; margin-top: 10px; font-size: 0.95em; }}
                 .diff-table th, .diff-table td {{ 
-                    border: 1px solid var(--card-border); 
-                    padding: 12px; text-align: left; vertical-align: top; width: 50%; color: #cbd5e1;
+                    border: 1px solid #e2e8f0; 
+                    padding: 12px; text-align: left; vertical-align: top; width: 50%; color: #334155;
                 }}
-                .diff-table th {{ background: rgba(0,0,0,0.2); font-weight: 600; color: #94a3b8; font-size: 0.85em; text-transform: uppercase; }}
+                .diff-table th {{ background: #f1f5f9; font-weight: 600; color: #475569; font-size: 0.85em; text-transform: uppercase; }}
                 
                 /* Changes */
                 .price-change-down {{ color: var(--success); font-weight: 800; }}
                 .price-change-up {{ color: var(--danger); font-weight: 800; }}
                 
-                .added {{ background: rgba(16, 185, 129, 0.2); color: #6ee7b7; padding: 2px 6px; border-radius: 4px; }}
-                .removed {{ background: rgba(239, 68, 68, 0.2); color: #fca5a5; text-decoration: line-through; padding: 2px 6px; border-radius: 4px; opacity: 0.7; }}
+                .added {{ background: rgba(16, 185, 129, 0.1); color: #059669; padding: 2px 6px; border-radius: 4px; }}
+                .removed {{ background: rgba(239, 68, 68, 0.1); color: #dc2626; text-decoration: line-through; padding: 2px 6px; border-radius: 4px; opacity: 0.7; }}
                 
                 .stock-tag {{ font-size: 0.75em; padding: 3px 8px; border-radius: 6px; font-weight: 700; margin-left: 8px; vertical-align: middle; text-transform: uppercase; letter-spacing: 0.5px; }}
-                .stock-yes {{ background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); }}
-                .stock-no {{ background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3); }}
+                .stock-yes {{ background: #ecfdf5; color: #059669; border: 1px solid #a7f3d0; }}
+                .stock-no {{ background: #fef2f2; color: #dc2626; border: 1px solid #fecaca; }}
                 
-                .text-promo {{ color: #e879f9; }} /* Purple/Pink */
-                .text-payment {{ color: #60a5fa; }} /* Blue */
+                .text-promo {{ color: #9333ea; font-weight: 600; }} /* Purple */
+                .text-payment {{ color: #2563eb; font-weight: 600; }} /* Blue */
                 
                 .hidden {{ display: none !important; }}
                 
@@ -980,18 +991,18 @@ class HTMLGenerator:
         link_url = row.get('Link', '')
         link_html = ""
         if pd.notna(link_url) and link_url != "":
-            link_html = f'<div style="margin-bottom: 15px;"><a href="{link_url}" target="_blank" style="font-size: 0.9em; color: #60a5fa; text-decoration: none; font-weight: 500; display: inline-flex; align-items: center; gap: 4px;">View Product <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></a></div>'
+            link_html = f'<div style="margin-bottom: 15px;"><a href="{link_url}" target="_blank" style="font-size: 0.9em; color: #2563eb; text-decoration: none; font-weight: 500; display: inline-flex; align-items: center; gap: 4px;">View Product <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></a></div>'
 
         # Styling based on Status
-        # Default Dark Mode Border
+        # Default Light Mode Border
         border_style = "border: 1px solid var(--card-border);" 
         badge_html = ""
         
         if status == "NEW":
-            border_style = "border: 1px solid rgba(16, 185, 129, 0.4); box-shadow: 0 0 15px rgba(16, 185, 129, 0.1);"
-            badge_html = '<span style="background: rgba(16, 185, 129, 0.2); color: #6ee7b7; font-size: 0.7em; padding: 2px 8px; border-radius: 12px; margin-left: 8px; font-weight: 700; border: 1px solid rgba(16, 185, 129, 0.3);">NEW</span>'
+            border_style = "border: 1px solid rgba(16, 185, 129, 0.4); box-shadow: 0 4px 12px rgba(16, 185, 129, 0.1);"
+            badge_html = '<span style="background: #ecfdf5; color: #059669; font-size: 0.7em; padding: 2px 8px; border-radius: 12px; margin-left: 8px; font-weight: 700; border: 1px solid #a7f3d0;">NEW</span>'
         elif status == "CHANGED":
-             border_style = "border: 1px solid rgba(245, 158, 11, 0.4);" # Warning/Amber
+             border_style = "border: 1px solid rgba(245, 158, 11, 0.5);" # Warning/Amber
         
         # Stock Badge
         stock_badge = ""
