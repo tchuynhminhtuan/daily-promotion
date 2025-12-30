@@ -127,11 +127,7 @@ HTML_HEAD = f"""<!DOCTYPE html>
             box-shadow: var(--shadow-card); 
             border-color: #cbd5e1;
         }}
-<<<<<<< HEAD
-=======
-        
         .tool-card::before {{ content: none; }}
->>>>>>> 446a32b (feat(ui): switch to apple-style clean light theme)
         
         /* Icon */
         .icon-container {{
@@ -145,11 +141,7 @@ HTML_HEAD = f"""<!DOCTYPE html>
         
         /* Content */
         .card-title {{ font-size: 1.25em; font-weight: 600; margin: 0 0 8px 0; color: #0f172a; }}
-<<<<<<< HEAD
         .card-desc {{ color: var(--text-secondary); font-size: 0.95em; line-height: 1.6; flex-grow: 1; margin-bottom: 20px; }}
-=======
-        .card-desc {{ color: var(--text-secondary); font-size: 0.95em; line-height: 1.5; flex-grow: 1; margin-bottom: 20px; }}
->>>>>>> 446a32b (feat(ui): switch to apple-style clean light theme)
         
         /* Buttons */
         .btn {{ 
