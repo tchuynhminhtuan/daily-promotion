@@ -163,7 +163,7 @@ class CPSScraper(BaseScraper):
                         if not color_name: color_name = f"Color_{i}"
 
                         await btn.click(force=True)
-                        await page.wait_for_timeout(500)
+                        await page.wait_for_timeout(2000) # Increased wait to ensure page/DOM stability
 
                         await self.scrape_variant(page, url, color_name=color_name, screenshot=True)
 
