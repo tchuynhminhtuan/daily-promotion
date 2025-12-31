@@ -30,10 +30,6 @@ python3 projects/marshall_daily/marshall_workflow.py
 echo "📊 Generating dedicated Marshall dashboard..."
 python3 projects/marshall_daily/generate_marshall_report.py
 
-# 4. Update Integrated Main Dashboard
-echo "📊 Updating main dashboard (Integrated)..."
-python3 code/generate_report.py
-
 if [ $? -eq 0 ]; then
     # 3. Handle Git Push
     echo "📤 Pushing Marshall updates to GitHub..."
