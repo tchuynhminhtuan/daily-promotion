@@ -233,7 +233,7 @@ async def main():
     if os.environ.get("TEST_MODE") == "True":
          urls = urls[:4]
 
-    max_tabs = int(os.environ.get("MAX_CONCURRENT_TABS", 8))
+    max_tabs = int(os.environ.get("MAX_CONCURRENT_TABS", 6))
     scraper = MWScraper(urls=urls, max_concurrent=max_tabs)
     await scraper.run()
 
