@@ -1062,8 +1062,9 @@ class HTMLGenerator:
 
         # --- Global Search Index Generation ---
         # Combine all relevant fields into one normalized string
+        # FIX: Include display_name so users can search "TheGioiDiDong" (MW) or "CellphoneS" (CPS)
         search_terms = [
-            str(channel), str(product), str(color), 
+            str(channel), str(display_name), str(product), str(color), 
             str(row.get('Promotion Details', '')), 
             str(row.get('Payment Promo', '')),
             "{:,.0f}".format(p1) if p1 > 0 else "", # New Price
