@@ -51,7 +51,7 @@ else:
     # Option 2: Hardcoded manual selection
     DATES = [
         # "2025-11-29", "2025-12-01","2025-12-05", "2025-12-08", 
-        "2025-12-20", "2025-12-23"
+        "2025-12-24", "2025-12-31"
     ]
 
 # Output Paths
@@ -838,16 +838,19 @@ class HTMLGenerator:
 
                             const matchesPrice = (selectedPrice === 'ALL' || blockPriceChange === selectedPrice);
                             
-                            // Advanced Search: Check if ALL tokens exist in product name
+                            
+                            // PROMOTED: Global Search (Index-based)
+                            // Check if ALL tokens exist in the Search Index
                             let matchesSearch = true;
                             if (searchTokens.length > 0) {
+                                const searchIndex = block.getAttribute('data-search-content') || "";
                                 // Optimization: Check first token first as fast fail
-                                if (!blockProduct.includes(searchTokens[0])) {
+                                if (!searchIndex.includes(searchTokens[0])) {
                                     matchesSearch = false;
                                 } else {
                                     // Check remaining
                                     for (let i = 1; i < searchTokens.length; i++) {
-                                        if (!blockProduct.includes(searchTokens[i])) {
+                                        if (!searchIndex.includes(searchTokens[i])) {
                                             matchesSearch = false;
                                             break;
                                         }
@@ -1057,6 +1060,19 @@ class HTMLGenerator:
 
         icon_html = f'<span style="background: {bg_col}; color: {text_col}; padding: 4px 8px; border-radius: 6px; font-size: 0.8em; font-weight: 700; margin-right: 8px;">{display_name}</span>'
 
+        # --- Global Search Index Generation ---
+        # Combine all relevant fields into one normalized string
+        search_terms = [
+            str(channel), str(product), str(color), 
+            str(row.get('Promotion Details', '')), 
+            str(row.get('Payment Promo', '')),
+            "{:,.0f}".format(p1) if p1 > 0 else "", # New Price
+            "{:,.0f}".format(p2) if p2 > 0 else ""  # Old Price
+        ]
+        search_raw = " ".join([t for t in search_terms if pd.notna(t) and str(t).strip() != ""])
+        safe_search_index = html.escape(search_raw).lower()
+        # --------------------------------------
+
         block = f"""
         <div class="product-block" 
              style="{border_style}"
@@ -1068,6 +1084,7 @@ class HTMLGenerator:
              data-promo-change="{promo_changed}" 
              data-price-change="{price_changed}"
              data-status="{status}"
+             data-search-content="{safe_search_index}"
              data-price="{current_price}">
             <div class="product-header">
                 <div class="product-title">
