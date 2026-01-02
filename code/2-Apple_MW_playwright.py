@@ -56,6 +56,12 @@ class MWScraper(BaseScraper):
         except: pass
 
     async def get_product_name(self, page, url):
+        # Slower down the process to ensure name loads
+        try:
+            await page.wait_for_timeout(2000)
+            await page.wait_for_selector("h1", timeout=3000)
+        except: pass
+
         name = await self.get_element_text_with_fallbacks(page, PRODUCT_NAME_SELECTORS)
         if name: return name.strip()
 
