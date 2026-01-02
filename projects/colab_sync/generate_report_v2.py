@@ -1,23 +1,58 @@
-import sys
+# @title 2. Tải dữ liệu từ GitHub
+# @markdown Chạy ô này để tải toàn bộ dữ liệu CSV mới nhất.
 import os
+
+# Xóa folder cũ nếu có để đảm bảo lấy dữ liệu mới nhất
+if os.path.exists('daily-promotion'):
+    !rm -rf daily-promotion
+
+print("⬇️ Đang tải dữ liệu từ GitHub (Chế độ Tối ưu)...")
+# 1. Clone không tải file (chỉ lấy khung)
+!git clone --depth 1 --filter=blob:none --sparse https://github.com/tchuynhminhtuan/daily-promotion.git
+
+# 2. Vào thư mục và chỉ lấy folder `content` và FILE `code/generate_report.py`
+%cd daily-promotion
+!git sparse-checkout set content code/generate_report.py
+%cd ..
+
+import sys
 import re
 from google.colab import files
 
 # --- 3. SMART IMPORT (Nhập logic từ Github thay vì copy-paste) ---
+# Thêm đường dẫn chứa code vào hệ thống
+sys.path.append('/content/daily-promotion')
 sys.path.append('/content/daily-promotion/code')
 
+# DEBUG: Kiểm tra xem file có tồn tại không?
+import glob
+print("📂 Kiểm tra thư mục code:")
 try:
-    # Reload module nếu chạy lại cell
+    files_in_code = os.listdir('/content/daily-promotion/code')
+    if 'generate_report.py' in files_in_code:
+        print("   ✅ Đã tìm thấy file 'generate_report.py'")
+    else:
+        print(f"   ❌ KHÔNG THẤY file generate_report.py! Danh sách file: {files_in_code}")
+except Exception as e:
+    print(f"   ❌ Lỗi đọc thư mục: {e}")
+
+try:
+    # Reload module nếu chạy lại cell để cập nhật code mới nhất
+    if 'code.generate_report' in sys.modules:
+        del sys.modules['code.generate_report']
     if 'generate_report' in sys.modules:
         del sys.modules['generate_report']
         
-    # Import trực tiếp file generate_report.py
-    from generate_report import DataLoader, PriceMatrixGenerator, PromoDiffGenerator, BASE_DIR
+    # Cách 1: Import từ package code
+    try:
+        from code.generate_report import DataLoader, PriceMatrixGenerator, PromoDiffGenerator, BASE_DIR
+    except ImportError:
+         # Cách 2: Import trực tiếp nếu sys.path đã trỏ vào code
+         from generate_report import DataLoader, PriceMatrixGenerator, PromoDiffGenerator, BASE_DIR
+         
     print("✅ Đã nhập thành công các thư viện từ Git!")
 except ImportError as e:
-    print(f"❌ Lỗi nhập thư viện: {e}. Hãy kiểm tra lại đường dẫn.")
-except ImportError as e:
-    print(f"❌ Lỗi nhập thư viện: {e}. Hãy đảm bảo Bước 2 (Git Clone) đã chạy thành công.")
+    print(f"❌ Lỗi nhập thư viện: {e}. Hãy kiểm tra xem bước 'git clone' đã chạy chưa.")
 
 # ==============================================================================
 # QUY TRÌNH CHẠY (Interactive Wrapper)
@@ -29,7 +64,7 @@ print(f"\n🚀 --- BẮT ĐẦU TẠO BÁO CÁO ĐỐI SOÁT ---")
 BASE_DIR_COLAB = "/content/daily-promotion/content" 
 
 if not os.path.exists(BASE_DIR_COLAB):
-    print("❌ Lỗi: Thư mục dữ liệu không tồn tại. Vui lòng kiểm tra Bước 2.")
+    print("❌ Lỗi: Thư mục dữ liệu không tồn tại. Vui lòng kiểm tra lại quá trình Git Clone.")
 else:
     # 1. Tìm các ngày có dữ liệu
     date_pattern = re.compile(r'^\d{4}-\d{2}-\d{2}$')
