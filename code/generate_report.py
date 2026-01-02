@@ -52,6 +52,7 @@ else:
     DATES = [
         # "2025-11-29", "2025-12-01","2025-12-05", "2025-12-08", 
         "2025-12-24", "2025-12-31"
+        "2025-12-24", "2025-12-31"
     ]
 
 # Output Paths
@@ -841,15 +842,21 @@ class HTMLGenerator:
                             
                             // PROMOTED: Global Search (Index-based)
                             // Check if ALL tokens exist in the Search Index
+                            
+                            // PROMOTED: Global Search (Index-based)
+                            // Check if ALL tokens exist in the Search Index
                             let matchesSearch = true;
                             if (searchTokens.length > 0) {
                                 const searchIndex = block.getAttribute('data-search-content') || "";
+                                const searchIndex = block.getAttribute('data-search-content') || "";
                                 // Optimization: Check first token first as fast fail
+                                if (!searchIndex.includes(searchTokens[0])) {
                                 if (!searchIndex.includes(searchTokens[0])) {
                                     matchesSearch = false;
                                 } else {
                                     // Check remaining
                                     for (let i = 1; i < searchTokens.length; i++) {
+                                        if (!searchIndex.includes(searchTokens[i])) {
                                         if (!searchIndex.includes(searchTokens[i])) {
                                             matchesSearch = false;
                                             break;
@@ -1085,6 +1092,7 @@ class HTMLGenerator:
              data-promo-change="{promo_changed}" 
              data-price-change="{price_changed}"
              data-status="{status}"
+             data-search-content="{safe_search_index}"
              data-search-content="{safe_search_index}"
              data-price="{current_price}">
             <div class="product-header">
