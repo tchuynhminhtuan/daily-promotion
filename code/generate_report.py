@@ -14,7 +14,7 @@ BASE_DIR = os.path.join(PROJECT_ROOT, "content")
 # --- Date Selection Options ---
 # Option 1: Auto-select the two most recent dates (Default)
 # Option 2: Hardcoded specific dates (Set AUTO_SELECT_DATES = False)
-AUTO_SELECT_DATES = False
+AUTO_SELECT_DATES = True
 
 def get_available_dates(base_dir):
     """Scans content directory for date-like folders (YYYY-MM-DD) and returns them sorted."""
