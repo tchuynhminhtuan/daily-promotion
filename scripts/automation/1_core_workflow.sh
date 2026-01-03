@@ -46,6 +46,7 @@ DATE=$(date +%Y-%m-%d)
 
 # Only commit DATA and REPORT (Ignore Code/Config changes)
 git add "content/$DATE/*.csv" || echo "⚠️ No new CSV data found for $DATE"
+git add "docs/index.html" || echo "⚠️ No report update found"
 
 git commit -m "Auto: Daily Scrape Update - $(date)" || echo "⚠️ No changes to commit"
 

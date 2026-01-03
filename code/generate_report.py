@@ -14,7 +14,7 @@ BASE_DIR = os.path.join(PROJECT_ROOT, "content")
 # --- Date Selection Options ---
 # Option 1: Auto-select the two most recent dates (Default)
 # Option 2: Hardcoded specific dates (Set AUTO_SELECT_DATES = False)
-AUTO_SELECT_DATES = True
+AUTO_SELECT_DATES = False
 
 def get_available_dates(base_dir):
     """Scans content directory for date-like folders (YYYY-MM-DD) and returns them sorted."""
@@ -51,6 +51,7 @@ else:
     # Option 2: Hardcoded manual selection
     DATES = [
         # "2025-11-29", "2025-12-01","2025-12-05", "2025-12-08", 
+        "2025-12-24", "2025-12-31"
         "2025-12-24", "2025-12-31"
     ]
 
@@ -674,6 +675,7 @@ class HTMLGenerator:
             </style>
         </head>
         <body>
+            <div class="nav-container">
                 <div class="nav-bar">
                     <div class="nav-logo">🚀 Daily Promotion</div>
                     <div class="nav-links">
@@ -681,6 +683,7 @@ class HTMLGenerator:
                         <a href="tools.html" class="nav-link">Công cụ</a>
                     </div>
                 </div>
+            </div>
             </div>
             
             <style>
@@ -767,179 +770,164 @@ class HTMLGenerator:
             </div>
             
             <script>
-                document.addEventListener('DOMContentLoaded', function() {
-                    const dateSelect = document.getElementById('dateFilter');
-                    const channelSelect = document.getElementById('channelFilter');
-                    const stockSelect = document.getElementById('stockFilter');
-                    const promoSelect = document.getElementById('promoFilter');
-                    const priceSelect = document.getElementById('priceFilter');
-                    const sortSelect = document.getElementById('sortPrice');
-                    const searchInput = document.getElementById('searchInput');
-                    const reportContainer = document.getElementById('report-container');
-                    let productBlocks = Array.from(document.querySelectorAll('.product-block'));
-                    const matchCountDisplay = document.getElementById('matchCount');
+                // DEBUG: Robust Error Handling
+                window.onerror = function(msg, url, lineNo, columnNo, error) {
+                    const status = document.getElementById('matchCount');
+                    if (status) status.innerHTML = `<span style="color:red; font-weight:bold;">JS Error: ${msg} (Line ${lineNo})</span>`;
+                    return false;
+                };
 
-                    // Debounce function to improve performance
-                    function debounce(func, wait) {
-                        let timeout;
-                        return function(...args) {
-                            clearTimeout(timeout);
-                            timeout = setTimeout(() => func.apply(this, args), wait);
-                        };
-                    }
+                function debounce(func, wait) {
+                    let timeout;
+                    return function(...args) {
+                        clearTimeout(timeout);
+                        timeout = setTimeout(() => func.apply(this, args), wait);
+                    };
+                }
 
-                    function updateView() {
-                        const selectedDate = dateSelect.value;
-                        const selectedChannel = channelSelect.value;
-                        const selectedStock = stockSelect.value;
-                        const selectedPromo = promoSelect.value;
-                        const selectedPrice = priceSelect.value;
-                        const sortMode = sortSelect.value;
+                document.addEventListener('DOMContentLoaded', () => {
+                    try {
+                        const dateSelect = document.getElementById('dateFilter');
+                        const channelSelect = document.getElementById('channelFilter');
+                        const stockSelect = document.getElementById('stockFilter');
+                        const promoSelect = document.getElementById('promoFilter');
+                        const priceSelect = document.getElementById('priceFilter');
+                        const sortSelect = document.getElementById('sortPrice');
+                        const searchInput = document.getElementById('searchInput');
+                        const matchCountDisplay = document.getElementById('matchCount');
+                        const reportContainer = document.getElementById('report-container');
                         
-                        // Tokenize search terms (AND logic)
-                        const rawSearch = searchInput.value.toLowerCase().trim();
-                        const searchTokens = rawSearch.split(/\s+/).filter(t => t.length > 0);
+                        // Check if critical elements exist
+                        if (!matchCountDisplay || !reportContainer) {
+                            console.error("Critical elements missing");
+                            return;
+                        }
+
+                        // Optimization 1: Cache DOM elements and Data
+                        const productBlocks = Array.from(document.querySelectorAll('.product-block'));
                         
-                        let visibleBlocks = [];
+                        // Pre-parse data for fast filtering
+                        const productData = productBlocks.map(block => ({
+                            element: block,
+                            date: block.getAttribute('data-date'),
+                            channel: block.getAttribute('data-channel'),
+                            stock: (block.getAttribute('data-stock') || "").toLowerCase(),
+                            promoChange: block.getAttribute('data-promo-change'), 
+                            status: block.getAttribute('data-status'),
+                            priceChange: block.getAttribute('data-price-change'),
+                            searchIndex: (block.getAttribute('data-search-content') || "").toLowerCase(),
+                            price: parseFloat(block.getAttribute('data-price')) || 0,
+                            index: parseInt(block.getAttribute('data-index')) || 0
+                        }));
 
-                        // 1. Filter
-                        productBlocks.forEach(block => {
-                            const blockDate = block.getAttribute('data-date');
-                            const blockChannel = block.getAttribute('data-channel');
-                            const blockStock = block.getAttribute('data-stock');
-                            const blockPromoChange = block.getAttribute('data-promo-change');
-                            const blockStatus = block.getAttribute('data-status');
-                            const blockPriceChange = block.getAttribute('data-price-change');
-                            const blockProduct = block.getAttribute('data-product'); 
-                            
-                            const matchesDate = (selectedDate === 'ALL' || blockDate === selectedDate);
-                            const matchesChannel = (selectedChannel === 'ALL' || blockChannel === selectedChannel);
-                            
-                            // Stock Filter
-                            let matchesStock = true;
-                            if (selectedStock === 'YES') {
-                                matchesStock = (blockStock && blockStock.toLowerCase().includes('yes'));
-                            } else if (selectedStock === 'NO') {
-                                matchesStock = (!blockStock || !blockStock.toLowerCase().includes('yes'));
-                            }
-                            
-                            // Promo Filter Logic
-                            let matchesPromo = false;
-                            if (selectedPromo === 'ALL') matchesPromo = true;
-                            else if (selectedPromo === 'YES') {
-                                if (blockStatus === 'CHANGED' || blockStatus === 'NEW') matchesPromo = true;
-                            }
-                            else if (selectedPromo === 'NO') {
-                                if (blockStatus === 'UNCHANGED') matchesPromo = true;
-                            }
-                            else if (selectedPromo === 'NEW') {
-                                if (blockStatus === 'NEW') matchesPromo = true;
-                            }
+                        function updateView() {
+                            try {
+                                const selectedDate = dateSelect ? dateSelect.value : 'ALL';
+                                const selectedChannel = channelSelect ? channelSelect.value : 'ALL';
+                                const selectedStock = stockSelect ? stockSelect.value : 'ALL';
+                                const selectedPromo = promoSelect ? promoSelect.value : 'ALL';
+                                const selectedPrice = priceSelect ? priceSelect.value : 'ALL';
+                                const sortMode = sortSelect ? sortSelect.value : 'DEFAULT';
+                                
+                                // Tokenize search terms (AND logic)
+                                const rawSearch = searchInput ? searchInput.value.toLowerCase().trim() : "";
+                                // Use explicit backslash for regex to satisfy Python and JS
+                                const searchTokens = rawSearch.split(/\\s+/).filter(t => t.length > 0);
+                                
+                                let visibleCount = 0;
+                                let needsSort = (sortMode !== 'DEFAULT');
+                                
+                                // 1. Filter Loop (Fast memory check)
+                                productData.forEach(item => {
+                                    const matchesDate = (selectedDate === 'ALL' || item.date === selectedDate);
+                                    const matchesChannel = (selectedChannel === 'ALL' || item.channel === selectedChannel);
+                                    
+                                    // Stock Filter
+                                    let matchesStock = true;
+                                    if (selectedStock === 'YES') matchesStock = item.stock.includes('yes');
+                                    else if (selectedStock === 'NO') matchesStock = !item.stock.includes('yes');
+                                    
+                                    // Promo Filter Logic
+                                    let matchesPromo = false;
+                                    if (selectedPromo === 'ALL') matchesPromo = true;
+                                    else if (selectedPromo === 'YES') matchesPromo = (item.status === 'CHANGED' || item.status === 'NEW');
+                                    else if (selectedPromo === 'NO') matchesPromo = (item.status === 'UNCHANGED');
+                                    else if (selectedPromo === 'NEW') matchesPromo = (item.status === 'NEW');
 
-                            const matchesPrice = (selectedPrice === 'ALL' || blockPriceChange === selectedPrice);
-                            
-                            
-                            // PROMOTED: Global Search (Index-based)
-                            // Check if ALL tokens exist in the Search Index
-                            let matchesSearch = true;
-                            if (searchTokens.length > 0) {
-                                const searchIndex = block.getAttribute('data-search-content') || "";
-                                // Optimization: Check first token first as fast fail
-                                if (!searchIndex.includes(searchTokens[0])) {
-                                    matchesSearch = false;
-                                } else {
-                                    // Check remaining
-                                    for (let i = 1; i < searchTokens.length; i++) {
-                                        if (!searchIndex.includes(searchTokens[i])) {
+                                    const matchesPrice = (selectedPrice === 'ALL' || item.priceChange === selectedPrice);
+                                    
+                                    // Global Search
+                                    let matchesSearch = true;
+                                    if (searchTokens.length > 0) {
+                                        if (!item.searchIndex.includes(searchTokens[0])) {
                                             matchesSearch = false;
-                                            break;
+                                        } else {
+                                            for (let i = 1; i < searchTokens.length; i++) {
+                                                if (!item.searchIndex.includes(searchTokens[i])) {
+                                                    matchesSearch = false;
+                                                    break;
+                                                }
+                                            }
                                         }
                                     }
+
+                                    if (matchesDate && matchesChannel && matchesPromo && matchesSearch && matchesPrice && matchesStock) {
+                                        item.element.classList.remove('hidden');
+                                        item.isVisible = true;
+                                        visibleCount++;
+                                    } else {
+                                        item.element.classList.add('hidden');
+                                        item.isVisible = false;
+                                    }
+                                });
+                                
+                                // 2. Sort Logic
+                                if (needsSort) {
+                                    const visibleItems = productData.filter(i => i.isVisible);
+                                    visibleItems.sort((a, b) => {
+                                        if (sortMode === 'ASC') return a.price - b.price;
+                                        else if (sortMode === 'DESC') return b.price - a.price;
+                                        return a.index - b.index;
+                                    });
+                                    const fragment = document.createDocumentFragment();
+                                    visibleItems.forEach(item => fragment.appendChild(item.element));
+                                    reportContainer.innerHTML = ''; 
+                                    reportContainer.appendChild(fragment);
+                                } else {
+                                     const visibleItems = productData.filter(i => i.isVisible);
+                                     visibleItems.sort((a, b) => a.index - b.index);
+                                     const fragment = document.createDocumentFragment();
+                                     visibleItems.forEach(item => fragment.appendChild(item.element));
+                                     reportContainer.innerHTML = '';
+                                     reportContainer.appendChild(fragment);
                                 }
+                                
+                                matchCountDisplay.textContent = `Hiển thị ${visibleCount} mục`;
+                                
+                            } catch (err) {
+                                console.error("UpdateView Error", err);
+                                matchCountDisplay.innerHTML = `<span style="color:red">Error: ${err.message}</span>`;
                             }
+                        }
+                        
+                        const debouncedUpdate = debounce(updateView, 300);
 
-                            if (matchesDate && matchesChannel && matchesPromo && matchesSearch && matchesPrice && matchesStock) {
-                                block.classList.remove('hidden');
-                                visibleBlocks.push(block);
-                            } else {
-                                block.classList.add('hidden');
-                            }
-                        });
+                        // Event Listeners - check existence first
+                        if(dateSelect) dateSelect.addEventListener('change', updateView);
+                        if(channelSelect) channelSelect.addEventListener('change', updateView);
+                        if(stockSelect) stockSelect.addEventListener('change', updateView);
+                        if(promoSelect) promoSelect.addEventListener('change', updateView);
+                        if(priceSelect) priceSelect.addEventListener('change', updateView);
+                        if(sortSelect) sortSelect.addEventListener('change', updateView);
+                        if(searchInput) searchInput.addEventListener('input', debouncedUpdate);
                         
-                        // 2. Sort visible blocks
-                        visibleBlocks.sort((a, b) => {
-                            if (sortMode === 'DEFAULT') {
-                                return parseInt(a.getAttribute('data-index')) - parseInt(b.getAttribute('data-index'));
-                            }
-                            
-                            const priceA = parseFloat(a.getAttribute('data-price')) || 0;
-                            const priceB = parseFloat(b.getAttribute('data-price')) || 0;
-                            
-                            if (sortMode === 'ASC') {
-                                return priceA - priceB;
-                            } else { // DESC
-                                return priceB - priceA;
-                            }
-                        });
+                        // Init view
+                        setTimeout(() => updateView(), 10);
                         
-                        // Re-append sorted visible blocks (Optimization: use DocumentFragment if extremely large, but simple append is usually fine for < 5000)
-                        // Actually, re-appending EVERYTHING can be slow. 
-                        // Better: just toggle hidden class above. Sorting requires re-order though.
-                        // If sort is default, we don't need to re-append if we didn't mess up order.
-                        // But we want to support sort. 
-                        
-                        // Optimization: Detach -> Sort -> Append is faster than appending one by one live.
-                        const fragment = document.createDocumentFragment();
-                        visibleBlocks.forEach(block => fragment.appendChild(block));
-                        
-                        // We also need to keep the hidden ones? No, they are hidden. 
-                        // But if we re-append visible ones, they move to bottom. 
-                        // The hidden ones stay at top?
-                        // To clear and re-render correctly:
-                        reportContainer.innerHTML = '';
-                        visibleBlocks.forEach(block => fragment.appendChild(block));
-                        // Append hidden ones too to keep them in DOM? 
-                        // Actually, filter logic relies on `productBlocks` array which preserves references.
-                        // If we wipe container, we lose hidden blocks if we don't add them back.
-                        // But efficient filtering usually just toggles classes.
-                        // Sorting requires DOM reordering.
-                        
-                        // Let's Stick to standard Re-append of ALL blocks (Sorted visible + Hidden).
-                        // Or just Re-append Visible. Hidden ones can be gathered or just let them stay? 
-                        // If we append visible ones to end, hidden ones stay at top. 
-                        // Let's just re-append everything in correct order.
-                        
-                        // To Support sorting of ALL blocks (even hidden ones? No, usually sort visible).
-                        // Let's simplified: If Sort is changed, we re-append. 
-                        // If only filter changed, we just toggle (if layout is preserved).
-                        
-                        // Current approach: clear and re-append simplified
-                        reportContainer.innerHTML = ''; 
-                        visibleBlocks.forEach(b => fragment.appendChild(b));
-                        // Also append hidden blocks? 
-                        // If we don't append hidden blocks, `querySelectorAll` in next run won't find them if we re-query?
-                        // BUT: `productBlocks` is cached at start! So they are in memory. 
-                        // So correct: `reportContainer.innerHTML = ''` removes them from DOM, but `productBlocks` keeps them.
-                        // So next time we append from `productBlocks` (which still holds references).
-                        
-                        reportContainer.appendChild(fragment);
-                        
-                        matchCountDisplay.textContent = `Hiển thị ${visibleBlocks.length} mục`;
+                    } catch (e) {
+                        const disp = document.getElementById('matchCount');
+                        if(disp) disp.innerHTML = "Init Error: " + e.message;
                     }
-                    
-                    const debouncedUpdate = debounce(updateView, 300);
-
-                    dateSelect.addEventListener('change', updateView); // Instant for selects
-                    channelSelect.addEventListener('change', updateView);
-                    stockSelect.addEventListener('change', updateView);
-                    promoSelect.addEventListener('change', updateView);
-                    priceSelect.addEventListener('change', updateView);
-                    sortSelect.addEventListener('change', updateView);
-                    
-                    // Debounce input
-                    searchInput.addEventListener('input', debouncedUpdate);
-                    
-                    updateView();
                 });
             </script>
         </body>
@@ -1085,6 +1073,7 @@ class HTMLGenerator:
              data-promo-change="{promo_changed}" 
              data-price-change="{price_changed}"
              data-status="{status}"
+             data-search-content="{safe_search_index}"
              data-search-content="{safe_search_index}"
              data-price="{current_price}">
             <div class="product-header">
