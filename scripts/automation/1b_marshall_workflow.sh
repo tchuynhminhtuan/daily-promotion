@@ -14,10 +14,19 @@ cd "$PROJECT_ROOT" || exit
 echo "📍 Working Directory: $PROJECT_ROOT"
 
 # 0. PRE-FLIGHT SYNC (Sandboxing) 🥪
-echo "🛡️ Executing Safety Sync (Stash -> Pull -> Pop)..."
-git stash push -m "Auto-Stash: Marshall Pre-Run"
+# Capture output to check if stash was actually created
+STASH_OUT=$(git stash push -m "Auto-Stash: Marshall Pre-Run")
+echo "Stash Status: $STASH_OUT"
+
 git pull origin main --rebase
-git stash pop || echo "⚠️ No local changes to restore."
+
+# Only pop if we actually stashed something (avoid popping old stashes)
+if [[ "$STASH_OUT" != *"No local changes"* ]]; then
+    echo "♻️ Restoring local changes..."
+    git stash pop || echo "⚠️ Conflict during stash pop. Please resolve manually."
+else
+    echo "✅ No local changes to restore (Clean state)."
+fi
 
 # 1. Notify User
 osascript -e 'display notification "Scrapers Running: Marshall" with title "Daily Promotion (Marshall)"'

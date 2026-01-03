@@ -16,9 +16,20 @@ echo "📍 Working Directory: $PROJECT_ROOT"
 # 0. PRE-FLIGHT SYNC (Sandboxing) 🥪
 # Isolates local changes to prevent conflicts during run
 echo "🛡️ Executing Safety Sync (Stash -> Pull -> Pop)..."
-git stash push -m "Auto-Stash: Pre-Run Safety"  # Save local changes
+
+# Capture output to check if stash was actually created
+STASH_OUT=$(git stash push -m "Auto-Stash: Pre-Run Safety")
+echo "Stash Status: $STASH_OUT"
+
 git pull origin main --rebase                  # Sync with remote
-git stash pop || echo "⚠️ No local changes to restore (Clean state)."
+
+# Only pop if we actually stashed something (avoid popping old stashes)
+if [[ "$STASH_OUT" != *"No local changes"* ]]; then
+    echo "♻️ Restoring local changes..."
+    git stash pop || echo "⚠️ Conflict during stash pop. Please resolve manually."
+else
+    echo "✅ No local changes to restore (Clean state)."
+fi
 
 # 1. Install/Update Dependencies
 echo "📦 Checking dependencies..."
