@@ -11,6 +11,7 @@ from utils.base_scraper import BaseScraper
 # Constants
 # Selectors
 PRODUCT_NAME_SELECTORS = [
+    ".product-name h1",
     "h1",
     ".product-name",
     "title",
@@ -221,22 +222,19 @@ class MWScraper(BaseScraper):
 
 async def main():
     urls = total_links['mw_urls']
+    specific_urls = os.environ.get("SPECIFIC_URLS")
     specific_url = os.environ.get("SPECIFIC_URL")
-    if specific_url:
+    
+    if specific_urls:
+        urls = [u.strip() for u in specific_urls.split(',') if u.strip()]
+    elif specific_url:
         urls = [specific_url]
-    elif os.environ.get("TEST_MODE") == "False": # MW uses False logic in original? "TEST_MODE enabled: Debugging Macbook Storage"
-        # The original code logic was: if specific_url ... elif test_mode == "False": ... print("TEST MODE ENABLED").
-        # Wait, that means if TEST_MODE is FALSE, it enables test mode? That's confusing.
-        # Let's align with standard: If TEST_MODE=True, use subset.
-        pass
-
-    # Re-reading original logic:
-    # elif os.environ.get("TEST_MODE") == "False":
-    #    initial_urls = ["..."]
-    #    print("TEST MODE ENABLED...")
-    # This implies the user set TEST_MODE=False to enable that specific debug URL? Or it was a typo in original.
-    # I will stick to standard:
-    if os.environ.get("TEST_MODE") == "True":
+    
+    if specific_urls:
+        urls = [u.strip() for u in specific_urls.split(',') if u.strip()]
+    elif specific_url:
+        urls = [specific_url]
+    elif os.environ.get("TEST_MODE") == "True":
          urls = urls[:4]
 
     max_tabs = int(os.environ.get("MAX_CONCURRENT_TABS", 6))
