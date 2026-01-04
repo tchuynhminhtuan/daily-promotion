@@ -13,6 +13,20 @@ cd "$PROJECT_ROOT" || exit
 
 echo "📍 Working Directory: $PROJECT_ROOT"
 
+# --- INTERNET CHECK ---
+check_internet() {
+    echo "📡 Checking internet connection..."
+    while ! ping -c 1 -W 2000 google.com > /dev/null 2>&1; do
+        echo "❌ No internet connection. Waiting 30 minutes to retry..."
+        sleep 1800 # 30 minutes
+        echo "🔄 Retrying internet check..."
+    done
+    echo "✅ Internet connected. Proceeding..."
+}
+
+check_internet
+
+
 # 0. PRE-FLIGHT SYNC (Sandboxing) 🥪
 # Isolates local changes to prevent conflicts during run
 echo "🛡️ Executing Safety Sync (Stash -> Pull -> Pop)..."
