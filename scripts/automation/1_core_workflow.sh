@@ -17,8 +17,9 @@ echo "📍 Working Directory: $PROJECT_ROOT"
 check_internet() {
     echo "📡 Checking internet connection..."
     while ! ping -c 1 -W 2000 google.com > /dev/null 2>&1; do
-        echo "❌ No internet connection. Waiting 30 minutes to retry..."
-        sleep 1800 # 30 minutes
+        echo "❌ No internet connection."
+        echo "⏳ Waiting 30 minutes. Press [ENTER] to retry immediately..."
+        read -t 1800
         echo "🔄 Retrying internet check..."
     done
     echo "✅ Internet connected. Proceeding..."
