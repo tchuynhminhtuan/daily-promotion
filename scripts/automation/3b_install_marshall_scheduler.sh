@@ -24,5 +24,5 @@ cp "$PLIST_PATH" "$TARGET_DIR/"
 # Load the new agent
 launchctl load "$TARGET_DIR/$PLIST_NAME"
 
-echo "✅ Success! The Marshall tracker will now run automatically every day at 09:30."
+echo "✅ Success! The Marshall tracker will now run automatically every day at 08:15."
 echo "📝 Logs will be saved to /tmp/marshall_daily.out and /tmp/marshall_daily.err"

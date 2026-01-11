@@ -24,5 +24,5 @@ cp "$PLIST_PATH" "$TARGET_DIR/"
 # Load the new agent
 launchctl load "$TARGET_DIR/$PLIST_NAME"
 
-echo "✅ Success! The scraper will now run automatically every day at 09:00."
+echo "✅ Success! The scraper will now run automatically every day at 08:00."
 echo "📝 Logs will be saved to /tmp/daily_scrape.out and /tmp/daily_scrape.err"
