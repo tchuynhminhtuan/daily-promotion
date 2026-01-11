@@ -10,3 +10,5 @@ content/**/*
 !content/**/*.csv
 source/
 venv/
+projects/marshall_daily/content/*/img_fpt/
+projects/marshall_daily/content/*/img_mw/
