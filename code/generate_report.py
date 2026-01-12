@@ -35,25 +35,17 @@ def get_available_dates(base_dir):
         
     return sorted(dates)
 
-if AUTO_SELECT_DATES:
-    available_dates = get_available_dates(BASE_DIR)
+# Default DATES logic (can be overridden)
+def get_default_dates(base_dir):
+    available_dates = get_available_dates(base_dir)
     if len(available_dates) >= 2:
-        # Strictly compare the two most recent dates found
-        DATES = available_dates[-2:]
-        print(f"🔄 Auto-selecting the 2 most recent dates: {DATES}")
+        return available_dates[-2:]
     elif available_dates:
-        DATES = available_dates
-        print(f"⚠️ Only found these dates: {DATES}")
-    else:
-        print("❌ No date folders found in content/. Using fallback.")
-        DATES = ["2025-12-19", "2025-12-20"] # Fallback
-else:
-    # Option 2: Hardcoded manual selection
-    DATES = [
-        # "2025-11-29", "2025-12-01","2025-12-05", "2025-12-08", 
-        "2025-12-24", "2025-12-31"
-        "2025-12-24", "2025-12-31"
-    ]
+        return available_dates
+    return ["2025-12-19", "2025-12-20"] # Fallback
+
+# For backward compatibility with other scripts that use the global DATES
+DATES = get_default_dates(BASE_DIR)
 
 # Output Paths
 OUTPUT_DIR = os.path.join(BASE_DIR, "analysis_result")
