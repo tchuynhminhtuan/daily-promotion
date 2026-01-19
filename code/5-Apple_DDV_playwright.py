@@ -40,19 +40,32 @@ class DDVScraper(BaseScraper):
         except: pass
 
     async def extract_stock_status(self, page):
-        ton_kho = "Yes"
         try:
+            # 1. Strong Positive: "MUA NGAY" exists and is visible
+            # We look for any button containing "MUA NGAY"
+            buy_btn = page.locator("button", has_text=re.compile(r"MUA NGAY", re.IGNORECASE))
+            if await buy_btn.count() > 0:
+                for i in range(await buy_btn.count()):
+                    if await buy_btn.nth(i).is_visible():
+                        return "Yes"
+
+            # 2. Strong Negative: Register/Contact buttons
+            reg_btn = page.locator("button", has_text=re.compile(r"ĐĂNG KÝ|THÔNG TIN|LIÊN HỆ", re.IGNORECASE))
+            if await reg_btn.count() > 0:
+                for i in range(await reg_btn.count()):
+                    if await reg_btn.nth(i).is_visible():
+                        return "No"
+
+            # 3. Text Fallback (Risky, keep last)
             oos_text_loc = page.locator("text=SẮP VỀ HÀNG")
             if await oos_text_loc.count() > 0 and await oos_text_loc.first.is_visible():
                 return "No"
-            
-            btn_loc = page.locator("button.ant-btn-primary").first
-            if await btn_loc.count() > 0:
-                btn_text = await btn_loc.inner_text()
-                if "ĐĂNG KÝ" in btn_text.upper() or "THÔNG TIN" in btn_text.upper():
-                    return "No"
-        except: pass
-        return ton_kho
+
+        except Exception as e:
+            print(f"Stock check error: {e}")
+            pass
+        
+        return "Yes" # Default fallback
 
     async def scrape_variant(self, page, url, variant_color="Unknown", screenshot=False):
         # 1. Product Name
