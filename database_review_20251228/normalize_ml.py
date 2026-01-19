@@ -10,11 +10,16 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
 # --- CONFIGURATION ---
-DB_FILE = "apple_products_db.json"
-CONTENT_DIR = "content"
-PRICES_DB = "apple_prices.db"
-OUTPUT_FILE = "mappings_candidate.json"
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+PROJECT_ROOT = os.path.dirname(SCRIPT_DIR)
+
+DB_FILE = os.path.join(SCRIPT_DIR, "apple_products_db.json")
+CONTENT_DIR = os.path.join(PROJECT_ROOT, "content")
+PRICES_DB = os.path.join(SCRIPT_DIR, "apple_prices.db")
+OUTPUT_FILE = os.path.join(SCRIPT_DIR, "mappings_candidate.json")
 SIMILARITY_THRESHOLD = 0.2
+
+TARGET_DATE = "2026-01-18" # User requested specific date
 
 # --- HELPER FUNCTIONS ---
 def canonicalize_key(text):
@@ -191,11 +196,13 @@ def get_blocking_constraints(text):
 
 # --- DATA LOADING ---
 def load_raw_data():
-    folders = [d for d in os.listdir(CONTENT_DIR) if re.match(r'\d{4}-\d{2}-\d{2}', d)]
-    if not folders: return pd.DataFrame()
-    latest_folder = sorted(folders)[-1]
-    target_dir = os.path.join(CONTENT_DIR, latest_folder)
-    print(f"📂 Loading data from: {latest_folder}")
+    # Use specific TARGET_DATE
+    target_dir = os.path.join(CONTENT_DIR, TARGET_DATE)
+    if not os.path.exists(target_dir):
+        print(f"❌ Target directory not found: {target_dir}") 
+        return pd.DataFrame()
+        
+    print(f"📂 Loading data from: {TARGET_DATE}")
     all_dfs = []
     for f in glob.glob(os.path.join(target_dir, "*.csv")):
         try:
@@ -205,6 +212,7 @@ def load_raw_data():
             actual_rename = {k: v for k, v in rename_map.items() if k in df.columns}
             df.rename(columns=actual_rename, inplace=True)
             if 'name' in df.columns:
+                df['name'] = df['name'].fillna('').astype(str) # Force String
                 if 'price' not in df.columns: df['price'] = 0
                 def cp(p):
                     if pd.isna(p) or isinstance(p, (int, float)): return float(p or 0)

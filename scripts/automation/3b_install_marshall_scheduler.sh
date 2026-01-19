@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # --- 3b_install_marshall_scheduler.sh ---
-# Run this once to set up the daily automated run (9:30 AM) on your Mac.
+# Run this once to set up the daily automated run (8:15 AM) on your Mac.
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PLIST_NAME="com.brucehuynh.marshall_daily.plist"

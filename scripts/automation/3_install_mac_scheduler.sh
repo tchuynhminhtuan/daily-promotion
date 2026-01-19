@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # --- 3_install_mac_scheduler.sh ---
-# Run this once to set up the daily automated run (9:00 AM) on your Mac.
+# Run this once to set up the daily automated run (8:00 AM) on your Mac.
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PLIST_NAME="com.brucehuynh.dailyscrape.plist"

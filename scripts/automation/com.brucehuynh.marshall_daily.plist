@@ -7,7 +7,7 @@
     <key>ProgramArguments</key>
     <array>
         <string>/usr/bin/open</string>
-        <string>/Users/brucehuynh/Documents/Code_Projects/Daily_Promotion/scripts/automation/2b_marshall_run_now.command</string>
+        <string>/Users/brucehuynh/GitHub/daily-promotion/scripts/automation/2b_marshall_run_now.command</string>
     </array>
     <key>RunAtLoad</key>
     <false/>
