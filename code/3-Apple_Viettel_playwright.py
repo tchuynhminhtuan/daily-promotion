@@ -221,13 +221,26 @@ class ViettelScraper(BaseScraper):
                 if not is_disabled:
                     print(f"  Clicking: {color_name}")
                     try:
+                        # Attempt 1: JS Click on Label
                         targets = btn.locator("label")
                         if await targets.count() > 0:
-                            await targets.first.click(force=True)
+                            await targets.first.evaluate("el => el.click()")
                         else:
-                            await btn.click(force=True)
+                            await btn.evaluate("el => el.click()")
                         
-                        await page.wait_for_timeout(1000)
+                        await page.wait_for_timeout(3000)
+                        
+                        # Check if active
+                        is_active = False
+                        class_after = await btn.get_attribute("class")
+                        if class_after and "active" in class_after:
+                            is_active = True
+                        
+                        if not is_active:
+                            print(f"    Warning: Option not active after JS click. Retrying on LI...")
+                            await btn.evaluate("el => el.click()")
+                            await page.wait_for_timeout(2000)
+
                         await self.remove_overlays(page)
                     except Exception as e:
                         print(f"    Click error: {e}")
