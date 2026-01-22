@@ -163,6 +163,7 @@ class BaseScraper:
                 # Common navigation with retry?
                 try:
                     await page.goto(url, timeout=60000, wait_until="domcontentloaded")
+                    await page.wait_for_timeout(500) # Added delay for stability
                 except Exception as e:
                     print(f"⚠️ Navigation failed: {url} - {e}")
                     # Child might want to handle retry or just return

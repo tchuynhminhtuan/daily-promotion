@@ -248,7 +248,7 @@ async def main():
     elif os.environ.get("TEST_MODE") == "True":
         urls = urls[:4]
     
-    max_tabs = int(os.environ.get("MAX_CONCURRENT_TABS", 10))
+    max_tabs = int(os.environ.get("MAX_CONCURRENT_TABS", 8))
     scraper = DDVScraper(urls=urls, max_concurrent=max_tabs)
     await scraper.run()
 

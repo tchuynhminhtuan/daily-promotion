@@ -30,8 +30,8 @@ class AppleDeepSpider(scrapy.Spider):
     custom_settings = {
         'USER_AGENT': "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
         'LOG_LEVEL': 'INFO',
-        'CONCURRENT_REQUESTS': 16, # High concurrency
-        'DOWNLOAD_DELAY': 0.2, # Slight delay to be polite but fast
+        'CONCURRENT_REQUESTS': 10, # Reduced concurrency
+        'DOWNLOAD_DELAY': 0.5, # Increased delay to minimize errors
         'FEEDS': {
             f"content/{get_vietnam_time()}/4-scrapy-{TARGET_BRAND.lower()}-{get_vietnam_time()}.csv": {
                 'format': 'csv',
