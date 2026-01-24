@@ -720,8 +720,8 @@ class HTMLGenerator:
                 <div class="control-group">
                     <label for="promoFilter">Thay đổi KM</label>
                     <select id="promoFilter">
-                        <option value="YES" selected>Có thay đổi</option>
-                        <option value="ALL">Tất cả</option>
+                        <option value="YES">Có thay đổi</option>
+                        <option value="ALL" selected>Tất cả</option>
                         <option value="NO">Không đổi</option>
                         <option value="NEW">Mới</option>
                     </select>
