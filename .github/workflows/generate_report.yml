@@ -2,8 +2,8 @@ name: Manual Report Generation
 
 on:
   schedule:
-    # Runs at 07:00 UTC (14:00 PM Vietnam Time) every day
-    - cron: "0 7 * * *"
+    # Runs at 05:00 UTC (12:00 PM Vietnam Time) every day
+    - cron: "0 5 * * *"
   workflow_dispatch:
 
 permissions:
