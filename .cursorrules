@@ -1,0 +1,11 @@
+# AI Behavior Rules
+
+1. **Audio Notifications**:
+   - Khi hoàn thành một task lớn hoặc workflow (ví dụ: refactor xong, fix bug xong), hãy chạy lệnh:
+     `say "Hi boss, please check"`
+   - Khi bị chặn và cần người dùng xác nhận thông tin (blocked on user), hãy chạy lệnh:
+     `say "Hi boss, please confirm"`
+
+2. **Style**:
+   - Luôn trả lời ngắn gọn, đi thẳng vào vấn đề.
+   - Ưu tiên tiếng Việt trong giao tiếp.
