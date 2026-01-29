@@ -77,7 +77,7 @@ class HoangHaScraper(BaseScraper):
                         # 1. Must NOT have 'disabled' or 'out-of-stock' in class
                         # 2. Must NOT have Vietnamese OOS phrases in text
                         is_disabled = "disabled" in cls.lower() or "out-of-stock" in cls.lower()
-                        is_oos_text = any(phrase in txt.upper() for phrase in ["HẾT HÀNG", "LIÊN HỆ", "TẠM HẾT"])
+                        is_oos_text = any(phrase in txt.upper() for phrase in ["HẾT HÀNG", "LIÊN HỆ", "TẠM HẾT", "ĐĂNG KÝ NHẬN THÔNG TIN", "ĐĂNG KÝ"])
                         
                         if not is_disabled and not is_oos_text:
                             is_any_enabled = True
