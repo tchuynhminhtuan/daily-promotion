@@ -3,3 +3,5 @@ playwright
 pytz
 streamlit
 markdown
+PyYAML
+scipy
