@@ -59,6 +59,11 @@ jobs:
 
           echo "All scrapers completed."
 
+      - name: Run AI Insight Generator
+        run: |
+          echo "Run AI Insight Generator..."
+          python3 analysis/daily_insight_generator.py
+
       - name: Generate Report
         run: |
           echo "Generating HTML Report..."
@@ -72,6 +77,9 @@ jobs:
 
           # Add new content files (data)
           git add content/
+
+          # Add AI Insights
+          git add docs/insights/
 
           # Add updated reports
           git add docs/index.html

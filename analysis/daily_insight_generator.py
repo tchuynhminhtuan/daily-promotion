@@ -14,11 +14,18 @@ from datetime import datetime, timedelta
 from scipy import stats
 
 # --- Config ---
+# Configuration
+BASE_DIR = os.path.join(os.path.dirname(__file__), "../content")
+# Save reports to docs/insights so they are published to GitHub Pages
+REPORT_DIR = os.path.join(os.path.dirname(__file__), "../docs/insights")
+# Ensure directory exists
+os.makedirs(REPORT_DIR, exist_ok=True)
+
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 PROJECT_ROOT = os.path.dirname(SCRIPT_DIR)
 CATALOG_PATH = os.path.join(SCRIPT_DIR, "reference", "product_catalog.yaml")
-CONTENT_DIR = os.path.join(PROJECT_ROOT, "content")
-REPORTS_DIR = os.path.join(SCRIPT_DIR, "reports")
+CONTENT_DIR = os.path.join(PROJECT_ROOT, "content") # This might need to be adjusted based on BASE_DIR if BASE_DIR is meant to replace it. Keeping it for now as per strict instruction.
+# REPORTS_DIR = os.path.join(SCRIPT_DIR, "reports") # This is replaced by REPORT_DIR
 
 # Thresholds
 ANOMALY_THRESHOLD = 0.10  # 10% deviation = anomaly
