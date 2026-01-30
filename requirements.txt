@@ -5,3 +5,4 @@ streamlit
 markdown
 PyYAML
 scipy
+numpy
