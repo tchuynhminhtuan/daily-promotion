@@ -218,8 +218,11 @@ def detect_best_price_ever(df, target_date):
     # Merge back to get stores offering this min price
     with_stores = min_prices.merge(today_records, on=["canonical_name", "color_normalized", "Gia_Khuyen_Mai"])
     
-    # Aggregate stores (comma separated if multiple stores have the same best price)
-    today = with_stores.groupby(["canonical_name", "color_normalized", "Gia_Khuyen_Mai"])["Store"].apply(lambda x: ", ".join(sorted(x.unique()))).reset_index()
+    # Aggregate stores and keep one product name for details
+    today = with_stores.groupby(["canonical_name", "color_normalized", "Gia_Khuyen_Mai"]).agg({
+        "Store": lambda x: ", ".join(sorted(x.unique())),
+        "Product_Name": "first"
+    }).reset_index()
     today.rename(columns={"Gia_Khuyen_Mai": "today_price"}, inplace=True)
     
     merged = today.merge(historical, on=["canonical_name", "color_normalized"], how="left")
@@ -294,9 +297,22 @@ def generate_report(target_date, df):
     best_prices = detect_best_price_ever(df, target_date)
     if len(best_prices) > 0:
         for _, row in best_prices.head(10).iterrows():
+            # Extract storage info if missing and available in raw name
+            raw_name_lower = str(row['Product_Name']).lower()
+            storage_capacities = ["1tb", "2tb", "512gb", "256gb", "128gb"]
+            extra_info = ""
+            
+            # Check for storage in raw name but not in canonical name
+            canonical_lower = row['canonical_name'].lower()
+            for cap in storage_capacities:
+                if cap in raw_name_lower and cap not in canonical_lower:
+                    # Found a capacity (e.g. 512gb) in raw name that isn't in canonical
+                    extra_info = f" **[{cap.upper()}]**"
+                    break
+            
             report_lines.append(
-                f"- **{row['canonical_name']}** ({row['color_normalized']}) @ **[{row['Store']}]**: "
-                f"**{row['today_price']:,.0f}đ** ← Giá thấp nhất từ trước tới nay!"
+                f"- **{row['canonical_name']}**{extra_info} ({row['color_normalized']}) @ **[{row['Store']}]**: "
+                f"**{row['today_price']:,.0f}đ**"
             )
     else:
         report_lines.append("_Không có sản phẩm nào đạt giá thấp nhất lịch sử hôm nay._")
