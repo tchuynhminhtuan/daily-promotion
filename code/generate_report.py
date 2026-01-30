@@ -474,11 +474,40 @@ class PromoDiffGenerator:
         # Use HTMLGenerator class to keep this clean
         HTMLGenerator(df, path).generate()
 
+import markdown
+
 class HTMLGenerator:
     def __init__(self, df, output_file):
         self.df = df
         self.output_file = output_file
         
+    def _get_latest_insights_html(self):
+        """Scans reports dir for latest markdown and converts to HTML."""
+        try:
+            # Updated to read from docs/insights
+            reports_dir = os.path.join(SCRIPT_DIR, '../docs/insights')
+            files = glob.glob(os.path.join(reports_dir, '*_insights.md'))
+            if not files:
+                return ""
+            
+            latest_file = max(files, key=os.path.getmtime)
+            with open(latest_file, 'r', encoding='utf-8') as f:
+                md_content = f.read()
+                
+            html_content = markdown.markdown(md_content)
+            
+            return f"""
+            <div id="ai-insights-wrapper" style="text-align: center; margin-bottom: 10px;">
+                <button id="toggleInsights" onclick="toggleInsights()">📊 Xem Phân Tích AI</button>
+            </div>
+            <div id="insightsPanel" class="insights-container hidden">
+                {html_content}
+            </div>
+            """
+        except Exception as e:
+            print(f"Error loading insights: {e}")
+            return ""
+
     def generate(self):
         channels = sorted(self.df['Channel'].unique().tolist())
         dates = sorted(self.df['Date'].unique().tolist(), reverse=True)
@@ -664,6 +693,30 @@ class HTMLGenerator:
                     .product-header {{ flex-direction: column; gap: 8px; }}
                     .product-title {{ font-size: 1em; }}
                 }}
+                #toggleInsights {{
+                    background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);
+                    color: white; border: none; padding: 10px 20px;
+                    border-radius: 20px; font-weight: 600; cursor: pointer;
+                    margin: 20px auto; display: block;
+                    box-shadow: 0 4px 6px -1px rgba(124, 58, 237, 0.3);
+                    transition: transform 0.2s;
+                    font-size: 1em;
+                }}
+                #toggleInsights:hover {{ transform: scale(1.05); }}
+                .insights-container {{
+                    background: #fff; padding: 30px; border-radius: 16px;
+                    margin: 20px 0; border: 1px solid #e2e8f0;
+                    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+                    animation: fadeIn 0.3s ease-out;
+                }}
+                @keyframes fadeIn {{ from {{ opacity: 0; transform: translateY(-10px); }} to {{ opacity: 1; transform: translateY(0); }} }}
+                .insights-container h1, .insights-container h2 {{ color: #4c1d95; margin-top: 1.5em; margin-bottom: 0.5em; }}
+                .insights-container h1 {{ font-size: 1.8em; border-bottom: 2px solid #ddd6fe; padding-bottom: 10px; margin-top: 0; }}
+                .insights-container h2 {{ font-size: 1.4em; }}
+                .insights-container ul {{ padding-left: 20px; color: #374151; line-height: 1.6; }}
+                .insights-container li {{ margin-bottom: 8px; }}
+                .insights-container strong {{ color: #1e40af; }}
+                .insights-container em {{ color: #6b7280; font-style: italic; }}
             </style>
         </head>
         <body>
@@ -675,7 +728,6 @@ class HTMLGenerator:
                         <a href="tools.html" class="nav-link">Công cụ</a>
                     </div>
                 </div>
-            </div>
             </div>
             
             <style>
@@ -693,6 +745,22 @@ class HTMLGenerator:
                 <p class="meta-info">Cập nhật lúc: {pd.Timestamp.now(tz='Asia/Ho_Chi_Minh').strftime('%Y-%m-%d %H:%M')}</p>
                 {comparison_line}
             </div>
+            
+            <!-- AI Insights Section -->
+            {self._get_latest_insights_html()}
+            
+            <script>
+                function toggleInsights() {{
+                    const panel = document.getElementById('insightsPanel');
+                    if (panel.classList.contains('hidden')) {{
+                        panel.classList.remove('hidden');
+                        document.getElementById('toggleInsights').innerText = "❌ Đóng Phân Tích";
+                    }} else {{
+                        panel.classList.add('hidden');
+                        document.getElementById('toggleInsights').innerText = "📊 Xem Phân Tích AI";
+                    }}
+                }}
+            </script>
             
             <div class="controls">
                  <div class="control-group">
