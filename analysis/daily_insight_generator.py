@@ -211,9 +211,16 @@ def detect_best_price_ever(df, target_date):
     ).agg(historical_min=("Gia_Khuyen_Mai", "min")).reset_index()
     
     # Today's prices
-    today = df[df["Date"] == target_dt].groupby(
-        ["canonical_name", "color_normalized"]
-    ).agg(today_price=("Gia_Khuyen_Mai", "min")).reset_index()
+    today_records = df[df["Date"] == target_dt]
+    # Find min price per product/color
+    min_prices = today_records.groupby(["canonical_name", "color_normalized"])["Gia_Khuyen_Mai"].min().reset_index()
+    
+    # Merge back to get stores offering this min price
+    with_stores = min_prices.merge(today_records, on=["canonical_name", "color_normalized", "Gia_Khuyen_Mai"])
+    
+    # Aggregate stores (comma separated if multiple stores have the same best price)
+    today = with_stores.groupby(["canonical_name", "color_normalized", "Gia_Khuyen_Mai"])["Store"].apply(lambda x: ", ".join(sorted(x.unique()))).reset_index()
+    today.rename(columns={"Gia_Khuyen_Mai": "today_price"}, inplace=True)
     
     merged = today.merge(historical, on=["canonical_name", "color_normalized"], how="left")
     merged = merged.dropna()
@@ -288,7 +295,7 @@ def generate_report(target_date, df):
     if len(best_prices) > 0:
         for _, row in best_prices.head(10).iterrows():
             report_lines.append(
-                f"- **{row['canonical_name']}** ({row['color_normalized']}): "
+                f"- **{row['canonical_name']}** ({row['color_normalized']}) @ **[{row['Store']}]**: "
                 f"**{row['today_price']:,.0f}đ** ← Giá thấp nhất từ trước tới nay!"
             )
     else:
