@@ -359,7 +359,7 @@ def main():
     parser.add_argument("--date", help="Target date YYYY-MM-DD", default=None)
     args = parser.parse_args()
     
-    os.makedirs(REPORTS_DIR, exist_ok=True)
+    os.makedirs(REPORT_DIR, exist_ok=True)
     
     # Default to latest date in data
     load_catalog()
@@ -380,7 +380,7 @@ def main():
     report = generate_report(target_date, df)
     
     # Save
-    output_file = os.path.join(REPORTS_DIR, f"{target_date}_insights.md")
+    output_file = os.path.join(REPORT_DIR, f"{target_date}_insights.md")
     with open(output_file, "w", encoding="utf-8") as f:
         f.write(report)
     
