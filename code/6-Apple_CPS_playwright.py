@@ -19,8 +19,9 @@ PRODUCT_NAME_SELECTORS = [
     "[property='og:title']"
 ]
 PRICE_MAIN_SELECTORS = [
-    ".sale-price",
+    "//div[@class='smember-price-label']//div[@class='sale-price']",
     ".tpt---sale-price",
+    ".sale-price",
     ".price",
     "[itemprop='price']",
     ".special-price"
@@ -126,54 +127,94 @@ class CPSScraper(BaseScraper):
         await self.write_to_csv(data)
         print(f"Saved: {product_name} - {color_name} | Price: {gia_khuyen_mai}")
 
-    async def scrape(self, page, url):
-        # 1. Process Colors
+    async def set_location(self, page, location="Hà Nội"):
         try:
-            try:
-                 await page.wait_for_selector(COLOR_OPTIONS_SELECTOR, timeout=10000)
-            except: pass
+            # Check current location text
+            btn = page.locator(".button__change-province").first
+            if await btn.count() > 0:
+                current_text = await btn.inner_text()
+                if location in current_text:
+                    return # Already set
 
-            candidates = page.locator(COLOR_OPTIONS_SELECTOR)
-            count = await candidates.count()
-            
-            if count == 0:
-                print("No color options found, scraping current page.")
-                await self.scrape_variant(page, url, "Default")
-            else:
-                print(f"Found {count} color options.")
-
-                for i in range(count):
-                    try:
-                        # Relocate to handle stale elements
-                        btn = page.locator(COLOR_OPTIONS_SELECTOR).nth(i)
-
-                        if not await btn.is_visible(): continue
-
-                        color_name = ""
-                        strong = btn.locator("strong")
-                        if await strong.count() > 0:
-                            color_name = await strong.first.inner_text()
-                        else:
-                            a_tag = btn.locator("a")
-                            if await a_tag.count() > 0:
-                                color_name = await a_tag.get_attribute("title")
-                            else:
-                                color_name = await btn.get_attribute("title")
-
-                        if not color_name: color_name = f"Color_{i}"
-
-                        await btn.click(force=True)
-                        await page.wait_for_timeout(2000) # Increased wait to ensure page/DOM stability
-
-                        await self.scrape_variant(page, url, color_name=color_name, screenshot=True)
-
-                    except Exception as e:
-                        print(f"Error processing color {i}: {e}")
-
+                # Click to open modal
+                await btn.click()
+                await page.wait_for_timeout(1000)
+                
+                # Click location
+                # Try specific modal selectors
+                loc_option = page.locator(f"//div[contains(@class, 'modal')]//li/div/p[contains(text(), '{location}')]").first
+                if await loc_option.count() == 0:
+                     loc_option = page.locator(f"//div[contains(@class, 'modal')]//a[contains(text(), '{location}')]").first
+                
+                if await loc_option.count() > 0:
+                    await loc_option.click()
+                    await page.wait_for_timeout(2000) # Wait for reload/update
+                    print(f"  Changed location to {location}")
         except Exception as e:
-            print(f"Error in process_colors: {e}")
+            print(f"  Location set error: {e}")
 
-        # Gap Filling (Recursive)
+    async def scrape(self, page, url):
+        locations = ["Hồ Chí Minh", "Hà Nội"]
+        for loc in locations:
+            # 0. Set Location
+            await self.set_location(page, loc)
+
+            # 1. Process Colors
+            try:
+                try:
+                     await page.wait_for_selector(COLOR_OPTIONS_SELECTOR, timeout=10000)
+                except: pass
+    
+                candidates = page.locator(COLOR_OPTIONS_SELECTOR)
+                count = await candidates.count()
+                
+                if count == 0:
+                    print(f"[{loc}] No color options found, scraping current page.")
+                    # Pass location to scrape_variant name if needed? 
+                    # Actually scrape_variant pulls data from page, which is now updated.
+                    # We might want to tag the location in the saved data?
+                    # The user just wants best price. 
+                    # If we save rows, the analyzer picks min.
+                    # Ideally we add 'Store' or 'Location' column? 
+                    # Current schema: Product_Name, Color, Ton_Kho, etc.
+                    # Using 'Product_Name' to distinguish? No, standard analysis uses columns.
+                    # Just saving it as is works for 'min price'.
+                    await self.scrape_variant(page, url, "Default")
+                else:
+                    print(f"[{loc}] Found {count} color options.")
+    
+                    for i in range(count):
+                        try:
+                            # Relocate to handle stale elements
+                            btn = page.locator(COLOR_OPTIONS_SELECTOR).nth(i)
+    
+                            if not await btn.is_visible(): continue
+    
+                            color_name = ""
+                            strong = btn.locator("strong")
+                            if await strong.count() > 0:
+                                color_name = await strong.first.inner_text()
+                            else:
+                                a_tag = btn.locator("a")
+                                if await a_tag.count() > 0:
+                                    color_name = await a_tag.get_attribute("title")
+                                else:
+                                    color_name = await btn.get_attribute("title")
+    
+                            if not color_name: color_name = f"Color_{i}"
+    
+                            await btn.click(force=True)
+                            await page.wait_for_timeout(2000) # Increased wait to ensure page/DOM stability
+    
+                            await self.scrape_variant(page, url, color_name=color_name, screenshot=True)
+    
+                        except Exception as e:
+                            print(f"[{loc}] Error processing color {i}: {e}")
+    
+            except Exception as e:
+                print(f"[{loc}] Error in process_colors: {e}")
+
+        # Gap Filling (Recursive) - Run once after location loops (URL discovery doesn't change)
         if ENABLE_GAP_FILLING:
             try:
                 links = page.locator(STORAGE_OPTIONS_SELECTOR)
@@ -197,24 +238,10 @@ class CPSScraper(BaseScraper):
                     if s_url in cps_set: continue
 
                     print(f"  Gap Filling: Found new variant {s_url}")
-                    # Recursively scrape new variant using same method
-                    # But wait, 'scrape' expects an existing page.
-                    # We need to navigate using the current page or a new one?
-                    # Since we are inside 'scrape' which is inside a semaphore lock,
-                    # reusing 'page' is fine if we navigate back or just navigate away?
-                    # If we navigate away, we lose the original page context if we needed to do more.
-                    # But here we are at the end of processing the original URL.
-                    # So we can navigate to the new URL on the SAME page.
                     
                     try:
                         t_nav = time.time()
                         await page.goto(s_url, timeout=60000, wait_until="domcontentloaded")
-                        # Recursively call scrape on this page
-                        # We need to be careful about infinite recursion?
-                        # Assuming structure is flat (variants link to each other), we might bounce back and forth.
-                        # We should check if we already processed this URL in this session.
-                        # Ideally, discovered URLs should be added to the queue, but here we are doing it depth-first.
-                        # Let's simple scrape it.
                         await self.scrape(page, s_url)
 
                     except Exception as e:
