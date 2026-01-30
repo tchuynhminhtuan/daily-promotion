@@ -136,10 +136,14 @@ def load_all_data() -> pd.DataFrame:
     # Filter 1: Valid Price
     combined = combined[(combined["Gia_Khuyen_Mai"] > 0) & (combined["Gia_Khuyen_Mai"] < MAX_PRICE)]
     
-    # Filter 2: In Stock Only (Ton_Kho contains 'Yes' or 'Co')
+    # Filter 2: In Stock Only (Ton_Kho contains 'Yes', 'Co', 'Còn hàng', 'In stock')
     if "Ton_Kho" in combined.columns:
-        # Normalize to string and lower case
-        combined = combined[combined["Ton_Kho"].astype(str).str.lower().str.contains("yes|có|co", na=False)]
+        # Normalize to string, lower case, strip whitespace
+        combined["Ton_Kho_Norm"] = combined["Ton_Kho"].astype(str).str.lower().str.strip()
+        # Filter for positive stock indicators
+        stock_keywords = ["yes", "có", "co", "còn", "in stock", "con hang"]
+        combined = combined[combined["Ton_Kho_Norm"].str.contains("|".join(stock_keywords), na=False)]
+        combined = combined.drop(columns=["Ton_Kho_Norm"])
     
     combined["canonical_key"] = combined["Product_Name"].apply(get_canonical_key)
     combined["color_normalized"] = combined["Color"].apply(normalize_color)
