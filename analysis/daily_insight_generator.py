@@ -184,9 +184,15 @@ def detect_anomalies(df, target_date, group_cols, label=""):
     
     # Get today's prices
     today_df = df[pd.to_datetime(df["Date"]) == target_dt].copy()
+    
+    # Include Link if available, otherwise empty
+    if "Link" not in today_df.columns:
+        today_df["Link"] = ""
+        
     today_agg = today_df.groupby(group_cols).agg(
         today_price=("Gia_Khuyen_Mai", "mean"),
-        today_count=("Gia_Khuyen_Mai", "count")
+        today_count=("Gia_Khuyen_Mai", "count"),
+        link=("Link", "first")
     ).reset_index()
     
     # Merge and calculate deviation
@@ -220,10 +226,14 @@ def detect_best_price_ever(df, target_date):
     # Merge back to get stores offering this min price
     with_stores = min_prices.merge(today_records, on=["canonical_name", "color_normalized", "Gia_Khuyen_Mai"])
     
+    if "Link" not in with_stores.columns:
+        with_stores["Link"] = ""
+
     # Aggregate stores and keep one product name for details
     today = with_stores.groupby(["canonical_name", "color_normalized", "Gia_Khuyen_Mai"]).agg({
         "Store": lambda x: ", ".join(sorted(x.unique())),
-        "Product_Name": "first"
+        "Product_Name": "first",
+        "Link": "first"
     }).reset_index()
     today.rename(columns={"Gia_Khuyen_Mai": "today_price"}, inplace=True)
     
@@ -241,11 +251,15 @@ def calculate_trend(df, group_cols, days=30):
     df = df.copy()
     df["Date"] = pd.to_datetime(df["Date"])
     
+    if "Link" not in df.columns:
+        df["Link"] = ""
+
     cutoff = df["Date"].max() - timedelta(days=days)
     recent = df[df["Date"] >= cutoff]
     
     daily = recent.groupby(group_cols + ["Date"]).agg(
-        price=("Gia_Khuyen_Mai", "mean")
+        price=("Gia_Khuyen_Mai", "mean"),
+        link=("Link", "first")
     ).reset_index()
     
     results = []
@@ -275,7 +289,8 @@ def calculate_trend(df, group_cols, days=30):
             "pct_change": round(pct_change, 1),
             "r_squared": round(r_value**2, 2),
             "first_price": y[0],
-            "last_price": y[-1]
+            "last_price": y[-1],
+            "link": group.iloc[-1]["link"]
         })
         results.append(row)
     
@@ -312,9 +327,11 @@ def generate_report(target_date, df):
                     extra_info = f" **[{cap.upper()}]**"
                     break
             
+            link_str = f"[Link]({row['Link']})" if row.get('Link') else ""
+            
             report_lines.append(
                 f"- **{row['canonical_name']}**{extra_info} ({row['color_normalized']}) @ **[{row['Store']}]**: "
-                f"**{row['today_price']:,.0f}đ**"
+                f"**{row['today_price']:,.0f}đ** {link_str}"
             )
     else:
         report_lines.append("_Không có sản phẩm nào đạt giá thấp nhất lịch sử hôm nay._")
@@ -329,9 +346,11 @@ def generate_report(target_date, df):
     )
     if len(market_anomalies) > 0:
         for _, row in market_anomalies.head(10).iterrows():
+            # Market anomalies might average multiple links, so link might be representative
+            link_str = f"[Link]({row['link']})" if row.get('link') else ""
             report_lines.append(
                 f"- {row['type']} **{row['canonical_name']}** ({row['color_normalized']}): "
-                f"{row['deviation_pct']:+.1f}% → {row['today_price']:,.0f}đ"
+                f"{row['deviation_pct']:+.1f}% → {row['today_price']:,.0f}đ {link_str}"
             )
     else:
         report_lines.append("_Không phát hiện biến động bất thường._")
@@ -346,9 +365,10 @@ def generate_report(target_date, df):
     )
     if len(store_anomalies) > 0:
         for _, row in store_anomalies.head(15).iterrows():
+            link_str = f"[Link]({row['link']})" if row.get('link') else ""
             report_lines.append(
                 f"- {row['type']} [{row['Store']}] **{row['canonical_name']}** ({row['color_normalized']}): "
-                f"{row['deviation_pct']:+.1f}%"
+                f"{row['deviation_pct']:+.1f}% {link_str}"
             )
     else:
         report_lines.append("_Không phát hiện biến động bất thường._")
@@ -361,9 +381,10 @@ def generate_report(target_date, df):
         # Show top movers
         big_movers = market_trends[abs(market_trends["pct_change"]) > 5].sort_values("pct_change")
         for _, row in big_movers.head(10).iterrows():
+            link_str = f"[Link]({row['link']})" if row.get('link') else ""
             report_lines.append(
                 f"- {row['trend']} **{row['canonical_name']}** ({row['color_normalized']}): "
-                f"{row['pct_change']:+.1f}% ({row['first_price']:,.0f}đ → {row['last_price']:,.0f}đ)"
+                f"{row['pct_change']:+.1f}% ({row['first_price']:,.0f}đ → {row['last_price']:,.0f}đ) {link_str}"
             )
     else:
         report_lines.append("_Chưa đủ dữ liệu để phân tích xu hướng._")
@@ -375,9 +396,10 @@ def generate_report(target_date, df):
     if len(store_trends) > 0:
         big_store_movers = store_trends[abs(store_trends["pct_change"]) > 10].sort_values("pct_change")
         for _, row in big_store_movers.head(15).iterrows():
+            link_str = f"[Link]({row['link']})" if row.get('link') else ""
             report_lines.append(
                 f"- {row['trend']} [{row['Store']}] **{row['canonical_name']}** ({row['color_normalized']}): "
-                f"{row['pct_change']:+.1f}%"
+                f"{row['pct_change']:+.1f}% {link_str}"
             )
     else:
         report_lines.append("_Chưa đủ dữ liệu để phân tích xu hướng._")
