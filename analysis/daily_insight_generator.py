@@ -133,8 +133,10 @@ def load_all_data() -> pd.DataFrame:
     # Clean up
     combined["Gia_Khuyen_Mai"] = pd.to_numeric(combined["Gia_Khuyen_Mai"], errors="coerce").fillna(0)
     
-    # Filter 1: Valid Price
-    combined = combined[(combined["Gia_Khuyen_Mai"] > 0) & (combined["Gia_Khuyen_Mai"] < MAX_PRICE)]
+    # Filter 1: Valid Price Range (Sanity Check)
+    # Min Price > 2M to avoid accessory/deposit errors (e.g. 1M VND entries)
+    MIN_PRICE_THRESHOLD = 2000000 
+    combined = combined[(combined["Gia_Khuyen_Mai"] > MIN_PRICE_THRESHOLD) & (combined["Gia_Khuyen_Mai"] < MAX_PRICE)]
     
     # Filter 2: In Stock Only (Ton_Kho contains 'Yes', 'Co', 'Còn hàng', 'In stock')
     if "Ton_Kho" in combined.columns:
