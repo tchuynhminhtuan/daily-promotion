@@ -116,6 +116,48 @@ def load_retailer_mapping():
     with open(MAPPING_PATH, 'r') as f:
         return yaml.safe_load(f)
 
+# AI Configuration
+AI_MODEL_PATH = BASE_DIR / "experiments/fine_tuning/adapters"
+BASE_MODEL_ID = "Qwen/Qwen2.5-0.5B-Instruct"
+_AI_MODEL = None
+_AI_TOKENIZER = None
+_AI_CACHE = {} # Cache for AI predictions to improve speed
+
+def load_ai_model():
+    global _AI_MODEL, _AI_TOKENIZER
+    if _AI_MODEL is None:
+        try:
+            from mlx_lm import load
+            print(f"🤖 Loading AI Model from {AI_MODEL_PATH}...")
+            _AI_MODEL, _AI_TOKENIZER = load(BASE_MODEL_ID, adapter_path=str(AI_MODEL_PATH))
+        except Exception as e:
+            # print(f"⚠️ Failed to load AI model: {e}")
+            return False
+    return True
+
+def ai_predict_key(product_name):
+    global _AI_MODEL, _AI_TOKENIZER
+    if not _AI_MODEL: return None
+    
+    try:
+        from mlx_lm import generate
+        SYSTEM_PROMPT = "You are a product matching assistant. Map the retailer product name to the correct canonical key."
+        prompt = f"<|im_start|>system\n{SYSTEM_PROMPT}<|im_end|>\n<|im_start|>user\nMap this product: {product_name}<|im_end|>\n<|im_start|>assistant\n"
+        
+        response = generate(_AI_MODEL, _AI_TOKENIZER, prompt=prompt, max_tokens=20, verbose=False)
+        pred_key = response.strip()
+
+        # Hybrid Rules (Same as Benchmark)
+        p_lower = product_name.lower()
+        if "gps" in p_lower and "lte" not in p_lower and "cellular" not in p_lower:
+            pred_key = pred_key.replace("_lte", "_gps").replace("_cellular", "_gps").replace("_gps_gps", "_gps")
+        if "wifi" in p_lower and "5g" not in p_lower:
+             pred_key = pred_key.replace("_5g", "").replace("_lte", "").replace("_cellular", "")
+        
+        return pred_key
+    except:
+        return None
+
 def match_product(row_name, row_specs, catalog, retailer_name=None, retailer_mapping=None):
     # 1. Exact Match via Retailer Mapping (Priority)
     if retailer_name and retailer_mapping and retailer_name in retailer_mapping:
@@ -123,6 +165,35 @@ def match_product(row_name, row_specs, catalog, retailer_name=None, retailer_map
          if mapped_key:
              return mapped_key
 
+    # 2. AI Fallback (New V3 Layer)
+    # OPTIMIZATION: Only call AI for reasonable product names to avoid spam latency
+    spam_keywords = ["giảm", "ưu đãi", "thanh toán", "thẻ tín dụng", "vnpay", "hoàn tiền", "chính sách", "liên hệ", "trả góp", "quà tặng", "v ch"]
+    name_lower = str(row_name).lower()
+    
+    # Check Cache First
+    global _AI_CACHE
+    if row_name in _AI_CACHE:
+        return _AI_CACHE[row_name]
+
+    if len(row_name) < 100 and not any(k in name_lower for k in spam_keywords):
+        if load_ai_model():
+            pred = ai_predict_key(row_name)
+            
+            # Normalize year suffix if present
+            final_pred = None
+            if pred:
+                if pred in catalog:
+                    final_pred = pred
+                elif pred.replace('_2023', '') in catalog:
+                    final_pred = pred.replace('_2023', '')
+            
+            # Cache the result (even if None, to avoid re-querying)
+            _AI_CACHE[row_name] = final_pred
+            
+            if final_pred:
+                return final_pred
+
+    # 3. Legacy Regex Fallback (Keep as safety net)
     # Normalize
     row_name_norm = normalize_text(row_name)
     name_tokens = set(row_name_norm.split())
@@ -634,8 +705,8 @@ def calculate_trend(df_historical, group_cols, days=30):
         try:
             slope, intercept, r_value, p_value, std_err = stats.linregress(x, y)
             
-            # Calculate % change over period
-            pct_change = (slope * len(group)) / y.mean() * 100 if y.mean() != 0 else 0
+            # Calculate % change over period (Simple Growth Rate: (End - Start) / Start)
+            pct_change = ((y[-1] - y[0]) / y[0]) * 100 if y[0] != 0 else 0
             
             if pct_change < -5:
                 trend = "🔻 Giảm"
@@ -885,7 +956,7 @@ def main(target_date=None, process_all=False):
         global CONTENT_DIR
         CONTENT_DIR = CONTENT_BASE / date_str
         
-        print("Normalizing data via Product Name + Tech Specs...")
+        print("Normalizing data via Product Name...")
         df, df_unmatched = process_csv_files()
         
         if not df.empty:

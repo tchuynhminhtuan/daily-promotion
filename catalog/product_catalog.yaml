@@ -257,7 +257,7 @@ apple_watch_series_11_titanium:
     - Titanium
   source: manual_fix
 apple_watch_se_3_gps:
-  name: Apple Watch SE 3 (GPS)
+  name: Apple Watch SE 2 (2024)
   category: Watch
   url: https://www.apple.com/vn/shop/buy-watch/apple-watch-se
   sizes:
@@ -274,7 +274,7 @@ apple_watch_se_3_gps:
     - GPS
   source: split_fix_gps
 apple_watch_se_3_lte:
-  name: Apple Watch SE 3 (GPS + Cellular)
+  name: Apple Watch SE 2 (2024) (LTE)
   category: Watch
   url: https://www.apple.com/vn/shop/buy-watch/apple-watch-se
   sizes:
@@ -2851,7 +2851,7 @@ apple_watch_series_11_aluminum_lte:
     - nhôm
     - aluminum
 ipad_a16_wifi:
-  name: iPad A16 WiFi
+  name: iPad Gen 10 (2022)
   category: iPad
   storage:
     - 128GB
@@ -2869,7 +2869,7 @@ ipad_a16_wifi:
     - wifi
     - "2025"
 ipad_a16_lte:
-  name: iPad A16 5G
+  name: iPad Gen 10 (2022) 5G
   category: iPad
   storage:
     - 128GB
