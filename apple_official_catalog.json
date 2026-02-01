@@ -1,0 +1,232 @@
+{
+  "iPhone": [
+    {
+      "category": "iPhone",
+      "url": "https://www.apple.com/vn/shop/buy-iphone/iphone-16e",
+      "name": "iPhone 16e",
+      "colors": [
+        "Đen",
+        "Trắng"
+      ],
+      "storage": [
+        "128GB",
+        "512GB",
+        "256GB"
+      ],
+      "sizes": []
+    },
+    {
+      "category": "iPhone",
+      "url": "https://www.apple.com/vn/shop/buy-iphone/iphone-16",
+      "name": "iPhone 16",
+      "colors": [
+        "Đen",
+        "Xanh Lưu Ly",
+        "Xanh Mòng Két",
+        "Hồng",
+        "Trắng"
+      ],
+      "storage": [
+        "128GB",
+        "256GB"
+      ],
+      "sizes": []
+    },
+    {
+      "category": "iPhone",
+      "url": "https://www.apple.com/vn/shop/buy-iphone/iphone-17",
+      "name": "iPhone 17",
+      "colors": [
+        "Xanh Lam Khói",
+        "Đen",
+        "Tím Oải Hương",
+        "Xanh Lá Xô Thơm",
+        "Trắng"
+      ],
+      "storage": [
+        "512GB",
+        "256GB"
+      ],
+      "sizes": []
+    },
+    {
+      "category": "iPhone",
+      "url": "https://www.apple.com/vn/shop/buy-iphone/iphone-air",
+      "name": "iPhone Air",
+      "colors": [
+        "Vàng Nhạt",
+        "Xanh Da Trời",
+        "Trắng Mây",
+        "Đen Không Gian"
+      ],
+      "storage": [
+        "512GB",
+        "1TB",
+        "256GB"
+      ],
+      "sizes": []
+    },
+    {
+      "category": "iPhone",
+      "url": "https://www.apple.com/vn/shop/buy-iphone/iphone-17-pro",
+      "name": "iPhone 17 Pro",
+      "colors": [
+        "Xanh Đậm",
+        "Cam Vũ Trụ",
+        "Bạc"
+      ],
+      "storage": [
+        "512GB",
+        "1TB",
+        "256GB",
+        "2TB"
+      ],
+      "sizes": []
+    }
+  ],
+  "iPad": [
+    {
+      "category": "iPad",
+      "url": "https://www.apple.com/vn/shop/buy-ipad/ipad-air",
+      "name": "iPad Air",
+      "colors": [
+        "Xám Không Gian",
+        "Tím",
+        "Xanh Dương",
+        "Ánh Sao"
+      ],
+      "storage": [
+        "128GB1",
+        "1TB",
+        "512GB1",
+        "256GB1"
+      ],
+      "sizes": []
+    },
+    {
+      "category": "iPad",
+      "url": "https://www.apple.com/vn/shop/buy-ipad/ipad-pro",
+      "name": "iPad Pro",
+      "colors": [
+        "Đen Không Gian",
+        "Bạc"
+      ],
+      "storage": [
+        "Dung lượng lưu trữ 2TB",
+        "Dung lượng lưu trữ 256GB",
+        "Dung lượng lưu trữ 512GB",
+        "Dung lượng lưu trữ 1TB"
+      ],
+      "sizes": []
+    },
+    {
+      "category": "iPad",
+      "url": "https://www.apple.com/vn/shop/buy-ipad/ipad",
+      "name": "iPad",
+      "colors": [
+        "Vàng",
+        "Bạc",
+        "Hồng",
+        "Xanh Dương"
+      ],
+      "storage": [
+        "128GB1",
+        "512GB1",
+        "256GB1"
+      ],
+      "sizes": []
+    },
+    {
+      "category": "iPad",
+      "url": "https://www.apple.com/vn/shop/buy-ipad/ipad-mini",
+      "name": "iPad mini",
+      "colors": [
+        "Xám Không Gian",
+        "Tím",
+        "Xanh Dương",
+        "Ánh Sao"
+      ],
+      "storage": [
+        "128GB1",
+        "512GB1",
+        "256GB1"
+      ],
+      "sizes": []
+    }
+  ],
+  "Mac": [
+    {
+      "category": "Mac",
+      "url": "https://www.apple.com/vn/shop/buy-mac/macbook-air",
+      "name": "MacBook Air",
+      "colors": [
+        "Ánh Sao",
+        "Xanh Da Trời",
+        "Đêm Xanh Thẳm",
+        "Bạc"
+      ],
+      "storage": [],
+      "sizes": [
+        "15 inch",
+        "13 inch"
+      ]
+    },
+    {
+      "category": "Mac",
+      "url": "https://www.apple.com/vn/shop/buy-mac/imac",
+      "name": "iMac",
+      "colors": [
+        "Tím",
+        "Xanh Dương",
+        "Cam",
+        "Xanh Lá",
+        "Bạc",
+        "Hồng",
+        "Vàng"
+      ],
+      "storage": [],
+      "sizes": []
+    },
+    {
+      "category": "Mac",
+      "url": "https://www.apple.com/vn/shop/buy-mac/macbook-pro",
+      "name": "MacBook Pro",
+      "colors": [
+        "Đen Không Gian",
+        "Bạc"
+      ],
+      "storage": [],
+      "sizes": [
+        "14 inch",
+        "16 inch"
+      ]
+    }
+  ],
+  "Watch": [
+    {
+      "category": "Watch",
+      "url": "https://www.apple.com/vn/shop/buy-watch/apple-watch",
+      "name": "Apple Watch Series 11",
+      "colors": [
+        "Nhôm",
+        "Titan"
+      ],
+      "storage": [],
+      "sizes": [
+        "46mm",
+        "42 mm"
+      ]
+    },
+    {
+      "category": "Watch",
+      "url": "https://www.apple.com/vn/shop/buy-watch/apple-watch-se",
+      "name": "Apple Watch SE 3",
+      "colors": [],
+      "storage": [],
+      "sizes": [
+        "44 mm",
+        "40 mm"
+      ]
+    }
+  ]
+}
