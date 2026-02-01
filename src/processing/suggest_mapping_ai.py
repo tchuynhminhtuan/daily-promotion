@@ -50,8 +50,30 @@ def find_unmapped_products(mapped_names):
             elif 'hoangha' in filename: retailer = "hoangha_mobile"
             elif 'ddv' in filename: retailer = "didongviet"
 
+            # Check for Price column (to filter out bad rows)
+            price_col = next((c for c in df.columns if 'price' in c.lower()), None)
+
             for _, row in df.iterrows():
                 p_name = str(row[name_col]).strip()
+                
+                # FILTER 1: Skip if Price is 0 or NaN (likely promo text)
+                if price_col:
+                    try:
+                        price_val = float(str(row[price_col]).replace('.', '').replace(',', '').replace('đ', '').strip() or 0)
+                        if price_val < 100000: # Skip items cheaper than 100k (accessories/spam)
+                            continue
+                    except:
+                        continue # Skip if price parse fails
+                
+                # FILTER 2: Skip common spam/promo keywords
+                spam_keywords = ["giảm", "ưu đãi", "thanh toán", "thẻ tín dụng", "vnpay", "hoàn tiền", "chính sách", "liên hệ"]
+                if any(k in p_name.lower() for k in spam_keywords):
+                    continue
+
+                # FILTER 3: Skip long promo descriptions
+                if len(p_name) > 150: 
+                    continue
+                
                 p_retailer = row[retailer_col] if retailer_col and pd.notna(row[retailer_col]) else retailer
                 
                 # Normalize retailer key to match yaml format
