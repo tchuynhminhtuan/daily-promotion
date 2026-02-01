@@ -10,14 +10,14 @@ CellphoneS:
   Apple Watch SE 3 44mm (5G) Viền Nhôm Dây Cao Su Size S/M: apple_watch_se_3_lte
   Apple Watch Series 10 42mm (GPS) Viền Nhôm - Dây Vải: apple_watch_series_10_aluminum
   Apple Watch Series 10 42mm (GPS) Viền Nhôm Dây Cao Su Size S/M: apple_watch_series_10_aluminum
-  Apple Watch Series 11 42mm (5G) Viền Nhôm Dây Cao Su Size M/L: apple_watch_series_11_aluminum
-  Apple Watch Series 11 42mm (5G) Viền Nhôm Dây Cao Su Size S/M: apple_watch_series_11_aluminum
-  Apple Watch Series 11 42mm (GPS) Viền Nhôm Dây Cao Su Size M/L: apple_watch_series_11_aluminum
-  Apple Watch Series 11 42mm (GPS) Viền Nhôm Dây Cao Su Size S/M: apple_watch_series_11_aluminum
-  Apple Watch Series 11 46mm (5G) Viền Nhôm Dây Cao Su Size M/L: apple_watch_series_11_aluminum
-  Apple Watch Series 11 46mm (5G) Viền Nhôm Dây Cao Su Size S/M: apple_watch_series_11_aluminum
-  Apple Watch Series 11 46mm (GPS) Viền Nhôm Dây Cao Su Size M/L: apple_watch_series_11_aluminum
-  Apple Watch Series 11 46mm (GPS) Viền Nhôm Dây Cao Su Size S/M: apple_watch_series_11_aluminum
+  Apple Watch Series 11 42mm (5G) Viền Nhôm Dây Cao Su Size M/L: apple_watch_series_11_aluminum_lte
+  Apple Watch Series 11 42mm (5G) Viền Nhôm Dây Cao Su Size S/M: apple_watch_series_11_aluminum_lte
+  Apple Watch Series 11 42mm (GPS) Viền Nhôm Dây Cao Su Size M/L: apple_watch_series_11_aluminum_gps
+  Apple Watch Series 11 42mm (GPS) Viền Nhôm Dây Cao Su Size S/M: apple_watch_series_11_aluminum_gps
+  Apple Watch Series 11 46mm (5G) Viền Nhôm Dây Cao Su Size M/L: apple_watch_series_11_aluminum_lte
+  Apple Watch Series 11 46mm (5G) Viền Nhôm Dây Cao Su Size S/M: apple_watch_series_11_aluminum_lte
+  Apple Watch Series 11 46mm (GPS) Viền Nhôm Dây Cao Su Size M/L: apple_watch_series_11_aluminum_gps
+  Apple Watch Series 11 46mm (GPS) Viền Nhôm Dây Cao Su Size S/M: apple_watch_series_11_aluminum_gps
   Apple Watch Ultra 2 2024 49mm 4G Viền Titan Dây Alpine Size L: apple_watch_ultra_2
   Apple Watch Ultra 2 2024 49mm 4G Viền Titan Dây Alpine Size M: apple_watch_ultra_2
   Apple Watch Ultra 2 2024 49mm 4G Viền Titan Dây Alpine Size S: apple_watch_ultra_2
@@ -73,10 +73,10 @@ CellphoneS:
   MacBook Pro 16 M4 Pro 14CPU 20GPU 48GB 512GB: macbook_pro_m4
   iMac M4 2024 24 inch 10CPU 10GPU 16GB 256GB: imac_m4
   iMac M4 2024 24 inch 8CPU 8GPU 16GB 256GB: imac_m4
-  iPad A16 5G 128GB 2025: ipad_a16
-  iPad A16 5G 256GB 2025: ipad_a16
-  iPad A16 Wifi 128GB 2025: ipad_a16
-  iPad A16 Wifi 256GB 2025: ipad_a16
+  iPad A16 5G 128GB 2025: ipad_a16_lte
+  iPad A16 5G 256GB 2025: ipad_a16_lte
+  iPad A16 Wifi 128GB 2025: ipad_a16_wifi
+  iPad A16 Wifi 256GB 2025: ipad_a16_wifi
   iPad Air 11 inch M3 5G 128GB 2025: ipad_air_11_inch_m3
   iPad Air 11 inch M3 5G 256GB 2025: ipad_air_11_inch_m3
   iPad Air 11 inch M3 Wifi 128GB 2025: ipad_air_11_inch_m3
@@ -141,9 +141,9 @@ Di Động Việt:
   Apple Watch SE 3 (2025) 40mm (GPS) Viền nhôm - Dây cao su S/M: apple_watch_se_3_gps
   Apple Watch SE 3 (2025) 44mm (5G) Viền nhôm - Dây cao su S/M: apple_watch_se_3_lte
   Apple Watch SE 3 (2025) 44mm (GPS) Viền nhôm - Dây cao su S/M: apple_watch_se_3_gps
-  Apple Watch Series 11 42mm (GPS) Viền nhôm - Dây cao su S/M: apple_watch_series_11_aluminum
-  Apple Watch Series 11 46mm (GPS) Viền nhôm - Dây cao su M/L: apple_watch_series_11_aluminum
-  Apple Watch Series 11 46mm (GPS) Viền nhôm - Dây cao su S/M: apple_watch_series_11_aluminum
+  Apple Watch Series 11 42mm (GPS) Viền nhôm - Dây cao su S/M: apple_watch_series_11_aluminum_gps
+  Apple Watch Series 11 46mm (GPS) Viền nhôm - Dây cao su M/L: apple_watch_series_11_aluminum_gps
+  Apple Watch Series 11 46mm (GPS) Viền nhôm - Dây cao su S/M: apple_watch_series_11_aluminum_gps
   Apple Watch Series 9 45mm (GPS) Viền nhôm - Dây cao su size M/L: apple_watch_series_9
   Mac mini M4 10‑Core CPU | 10‑Core GPU 16GB/512GB Chính Hãng: mac_mini_m4
   MacBook Air M2 2024 13-inch 16GB/256GB Chính Hãng: macbook_air_13_inch_m2
@@ -152,9 +152,9 @@ Di Động Việt:
   MacBook Air M4 13-inch 24GB/512GB Chính Hãng: macbook_air_13_inch_m4
   MacBook Pro 2025 14 inch M5 10‑core CPU | 10‑core GPU 16GB/512GB Chính Hãng: macbook_pro_14_inch_m5
   MacBook Pro M3 Pro 16 inch 18GB/512GB Chính Hãng: macbook_pro_16_m3_pro_max
-  iPad A16 11 inch (2025) | 128GB Wifi & 5G Chính Hãng: ipad_a16
-  iPad A16 11 inch (2025) | 128GB Wifi Chính Hãng: ipad_a16
-  iPad A16 11 inch 2025 256GB Wifi Chính hãng: ipad_a16
+  iPad A16 11 inch (2025) | 128GB Wifi & 5G Chính Hãng: ipad_a16_lte
+  iPad A16 11 inch (2025) | 128GB Wifi Chính Hãng: ipad_a16_wifi
+  iPad A16 11 inch 2025 256GB Wifi Chính hãng: ipad_a16_wifi
   iPad Air M3 11 inch | 128GB Wifi Chính Hãng: ipad_air_11_inch_m3
   iPad Pro M5 11 inch 256GB Wifi Chính Hãng: ipad_pro_11_inch_m5
   iPad mini 7 2024 128GB Wifi Chính Hãng: ipad_mini_a17_pro
@@ -187,10 +187,10 @@ FPT Shop:
   Apple Watch SE 3 GPS + Cellular 44mm Viền nhôm dây cao su: apple_watch_se_3_lte
   Apple Watch SE 3 GPS 40mm Viền nhôm dây cao su: apple_watch_se_3_gps
   Apple Watch SE 3 GPS 44mm Viền nhôm Ánh sao Dây cao su Ánh sao - S/M: apple_watch_se_3_gps
-  Apple Watch Series 11 GPS + Cellular 42mm Viền nhôm dây cao su: apple_watch_series_11_aluminum
-  Apple Watch Series 11 GPS + Cellular 46mm Viền nhôm dây cao su: apple_watch_series_11_aluminum
-  Apple Watch Series 11 GPS 42mm Viền nhôm dây cao su: apple_watch_series_11_aluminum
-  Apple Watch Series 11 GPS 46mm Viền nhôm dây cao su: apple_watch_series_11_aluminum
+  Apple Watch Series 11 GPS + Cellular 42mm Viền nhôm dây cao su: apple_watch_series_11_aluminum_lte
+  Apple Watch Series 11 GPS + Cellular 46mm Viền nhôm dây cao su: apple_watch_series_11_aluminum_lte
+  Apple Watch Series 11 GPS 42mm Viền nhôm dây cao su: apple_watch_series_11_aluminum_gps
+  Apple Watch Series 11 GPS 46mm Viền nhôm dây cao su: apple_watch_series_11_aluminum_gps
   Apple Watch Ultra 3 GPS + Cellular 49mm Viền titan Dây Ocean: apple_watch_ultra_3
   Apple Watch Ultra 3 GPS + Cellular 49mm Viền titan Dây quấn Alpine: apple_watch_ultra_3
   Apple Watch Ultra 3 GPS + Cellular 49mm Viền titan Dây quấn Milan Titan: apple_watch_ultra_3
@@ -207,8 +207,8 @@ FPT Shop:
   Macbook Pro 14 M5 2025 10CPU/10GPU/16GB/512GB Nano: macbook_pro_m5
   Macbook Pro 14 M5 2025 10CPU/10GPU/24GB/1TB Nano: macbook_pro_m5
   Macbook Pro 14 inch M5 2025 10CPU/10GPU/16GB/1TB Nano: macbook_pro_14_inch_m5
-  iPad A16 5G 128GB: ipad_a16
-  iPad A16 WiFi 128GB: ipad_a16
+  iPad A16 5G 128GB: ipad_a16_lte
+  iPad A16 WiFi 128GB: ipad_a16_wifi
   iPad Air 11 inch M2 2024 Wifi + Cellular 128GB: ipad_air_11_inch_m2
   iPad Air 11 inch M2 2024 Wifi 512GB: ipad_air_11_inch_m2
   iPad Air 11 inch M3 2025 WiFi + Cellular 128GB: ipad_air_11_inch_m3
@@ -251,9 +251,9 @@ HoangHa:
   MacBook Pro 14 inch M5 10CPU 10GPU (16GB/512GB): macbook_pro_14_inch_m5
   Máy tính bảng iPad Pro M5 11 inch 5G (256GB): ipad_pro_11_inch_m5
   Máy tính bảng iPad Pro M5 11 inch Wi-Fi (256GB): ipad_pro_11_inch_m5
-  iPad A16 11 inch Wifi (128GB): ipad_a16
-  iPad A16 11 inch Wifi (256GB): ipad_a16
-  iPad A16 11 inch Wifi (512GB): ipad_a16
+  iPad A16 11 inch Wifi (128GB): ipad_a16_wifi
+  iPad A16 11 inch Wifi (256GB): ipad_a16_wifi
+  iPad A16 11 inch Wifi (512GB): ipad_a16_wifi
   iPad Air M3 11 inch 5G (128GB): ipad_air_11_inch_m3
   iPad Air M3 11 inch Wifi (128GB): ipad_air_11_inch_m3
   iPad Mini 7 8.3 inch WiFi (128GB): ipad_mini_a17_pro
@@ -283,8 +283,8 @@ Mobile World:
   Apple Watch SE 3 GPS + Cellular 44mm viền nhôm dây thể thao: apple_watch_se_3_lte
   Apple Watch SE 3 GPS 40mm viền nhôm dây thể thao: apple_watch_se_3_gps
   Apple Watch SE 3 GPS 44mm viền nhôm dây thể thao: apple_watch_se_3_gps
-  Apple Watch Series 11 GPS 42mm viền nhôm dây thể thao: apple_watch_series_11_aluminum
-  Apple Watch Series 11 GPS 46mm viền nhôm dây thể thao: apple_watch_series_11_aluminum
+  Apple Watch Series 11 GPS 42mm viền nhôm dây thể thao: apple_watch_series_11_aluminum_gps
+  Apple Watch Series 11 GPS 46mm viền nhôm dây thể thao: apple_watch_series_11_aluminum_gps
   Apple Watch Ultra 2 GPS + Cellular 49mm viền Titanium đen dây Alpine: apple_watch_ultra_2
   Apple Watch Ultra 2 GPS + Cellular 49mm viền Titanium đen dây Ocean: apple_watch_ultra_2
   Apple Watch Ultra 3 GPS + Cellular 49mm viền Titanium dây Alpine: apple_watch_ultra_3
@@ -297,10 +297,10 @@ Mobile World:
   MacBook Air 15 inch M4 16GB/1TB: macbook_air_15_inch_m4
   MacBook Air 15 inch M4 16GB/256GB: macbook_air_15_inch_m4
   MacBook Pro 14 inch M5 16GB/512GB: macbook_pro_14_inch_m5
-  iPad A16 5G 128GB: ipad_a16
-  iPad A16 5G 256GB: ipad_a16
-  iPad A16 WiFi 128GB: ipad_a16
-  iPad A16 WiFi 256GB: ipad_a16
+  iPad A16 5G 128GB: ipad_a16_lte
+  iPad A16 5G 256GB: ipad_a16_lte
+  iPad A16 WiFi 128GB: ipad_a16_wifi
+  iPad A16 WiFi 256GB: ipad_a16_wifi
   iPad Air M3 11 inch 5G 128GB: ipad_air_11_inch_m3
   iPad Air M3 11 inch WiFi 128GB: ipad_air_11_inch_m3
   iPad Air M3 11 inch WiFi 256GB: ipad_air_11_inch_m3
@@ -351,8 +351,8 @@ Viettel Store:
   Apple Watch SE 3 Viền Nhôm Cellular 40mm Dây cao su S/M: apple_watch_se_3_lte
   Apple Watch SE 3 Viền Nhôm Cellular 44mm Dây cao su M/L: apple_watch_se_3_lte
   Apple Watch SE 3 Viền Nhôm GPS 44mm Dây cao su M/L: apple_watch_se_3_gps
-  Apple Watch Series 11 Viền Nhôm Cellular 42mm Dây cao su S/M: apple_watch_series_11_aluminum
-  Apple Watch Series 11 Viền Nhôm GPS 46mm Dây cao su M/L: apple_watch_series_11_aluminum
+  Apple Watch Series 11 Viền Nhôm Cellular 42mm Dây cao su S/M: apple_watch_series_11_aluminum_lte
+  Apple Watch Series 11 Viền Nhôm GPS 46mm Dây cao su M/L: apple_watch_series_11_aluminum_gps
   Apple Watch Ultra 3 Viền Titan Cellular 49mm Dây Ocean: apple_watch_ultra_3
   Apple Watch Ultra 3 Viền Titan Cellular 49mm Dây quấn Alpine L: apple_watch_ultra_3
   Apple Watch Ultra 3 Viền Titan Cellular 49mm Dây quấn Alpine M: apple_watch_ultra_3

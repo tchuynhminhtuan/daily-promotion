@@ -13,6 +13,7 @@ import numpy as np
 # Config
 BASE_DIR = Path("/Users/brucehuynh/GitHub/daily-promotion")
 CATALOG_PATH = BASE_DIR / "catalog/product_catalog.yaml"
+COLOR_ALIASES_PATH = BASE_DIR / "catalog/color_aliases.yaml"
 CONTENT_BASE = BASE_DIR / "data/raw"  # Base directory, will scan for dates
 OUTPUT_DIR = BASE_DIR / "catalog/output"
 LOGS_DIR = BASE_DIR / "data/logs"
@@ -29,6 +30,12 @@ RETAILER_MAP = {
 
 def load_catalog():
     with open(CATALOG_PATH, 'r') as f:
+        return yaml.safe_load(f)
+
+def load_color_aliases():
+    if not os.path.exists(COLOR_ALIASES_PATH):
+        return {}
+    with open(COLOR_ALIASES_PATH, 'r', encoding='utf-8') as f:
         return yaml.safe_load(f)
 
 def clean_price(price):
@@ -214,24 +221,26 @@ def extract_extra_specs(text, exclude_storage=None):
     return " ".join(details)
 
 
-def standardize_attributes(product_key, raw_text, catalog):
+def standardize_attributes(product_key, raw_text, catalog, color_aliases=None):
     """
-    Map extracted attributes from raw_text to permissible values in catalog[product_key].
-    Returns a dict of standard attributes.
+    Extract Standard Attributes (Color, Storage, Size) based on Catalog definitions.
+    Uses regex and fuzzy matching against the Valid Value Lists in Catalog.
     """
-    entry = catalog.get(product_key, {})
-    valid_sizes = entry.get('sizes', []) or []
-    valid_colors = entry.get('colors', []) or []
-    # valid_storage = entry.get('storage', []) or [] # Storage usually handled by normalize_storage
-    valid_conn = entry.get('connectivity', []) or []
+    info = catalog.get(product_key, {})
+    valid_colors = info.get('colors', [])
+    valid_storage = info.get('storage', [])
+    valid_sizes = info.get('sizes', [])
+    valid_conn = info.get('connectivity', [])
     
-    raw_lower = raw_text.lower()
     std_attrs = {
+        'color': "Unknown",
+        'storage': None,
         'size': None,
         'connectivity': None,
-        'color': None,
-        'band': None # Band is usually not in catalog, treat separately
+        'band': None
     }
+    
+    raw_lower = normalize_text(raw_text)
     
     # 1. Size Matching
     # Extract number + unit (mm, inch)
@@ -281,26 +290,63 @@ def standardize_attributes(product_key, raw_text, catalog):
                          std_attrs['connectivity'] = vc
                          break
     
-    # 3. Color Matching (Fuzzy)
-    # Retailer might say "Đen", Catalog has "Nhôm Đen Bóng" or "Titan Đen"
-    # We prioritize the color that contains the retailer's word
-    # Also extracted raw_color from previous steps might help.
-    # Here we search for keywords in raw_text against valid_colors
+    # 3. Color Matching (Enhanced with Aliases)
+    # 3.1 Extract raw color candidate from text (simple extraction logic)
+    # This is hard because color can be anywhere. 
+    # Instead, we iterate over known aliases + catalog colors to find matches.
     
-    # Basic token set match
-    raw_tokens = set(re.split(r'\W+', raw_lower))
-    best_color = None
-    best_overlap = 0
+    found_color = None
     
-    for vc in valid_colors:
-        vc_tokens = set(re.split(r'\W+', vc.lower()))
-        overlap = len(raw_tokens.intersection(vc_tokens))
-        if overlap > best_overlap:
-            best_overlap = overlap
-            best_color = vc
+    # helper to check if a word is in text
+    def has_word(word, text):
+        # simple word boundary check
+        return re.search(r'\b' + re.escape(word.lower()) + r'\b', text)
+
+    # 3.2 Check Product-Specific Overrides first (Highest Priority)
+    if color_aliases and 'product_overrides' in color_aliases:
+        overrides = color_aliases['product_overrides'].get(product_key, {})
+        for raw_col, map_col in overrides.items():
+            if has_word(raw_col, raw_lower):
+                found_color = map_col
+                break
+                
+    # 3.3 Check Global Aliases (Medium Priority)
+    if not found_color and color_aliases and 'global_aliases' in color_aliases:
+        # Sort keys by length desc to match "Xanh Dương" before "Xanh"
+        for raw_col in sorted(color_aliases['global_aliases'].keys(), key=len, reverse=True):
+            if has_word(raw_col, raw_lower):
+                 mapped = color_aliases['global_aliases'][raw_col]
+                 if mapped: # if not null
+                     found_color = mapped
+                     break
+                 
+    # 3.4 Fallback to Catalog Colors (Exact Match)
+    if not found_color:
+        for vc in valid_colors:
+            if has_word(vc, raw_lower):
+                found_color = vc
+                break
+                
+    # 3.5 Fallback to Fuzzy Token Match (Lowest Priority)
+    if not found_color:
+        raw_tokens = set(re.split(r'\W+', raw_lower))
+        best_color = None
+        best_overlap = 0 # Need at least 2 tokens overlap if color name is long, or 1 if short
+        
+        for vc in valid_colors:
+            vc_tokens = set(re.split(r'\W+', vc.lower()))
+            overlap = len(raw_tokens.intersection(vc_tokens))
             
-    if best_color and best_overlap >= 1: # At least one word matches (e.g. "Bạc")
-        std_attrs['color'] = best_color
+            # Penalize generic matches like just "Màu" or "Sắc" if they existed
+            if overlap > best_overlap:
+                best_overlap = overlap
+                best_color = vc
+        
+        if best_color and best_overlap >= 1: 
+             found_color = best_color
+
+    if found_color:
+        std_attrs['color'] = found_color
 
     # 4. Band Types (Not in Catalog, keep custom logic)
     bands = []
@@ -318,6 +364,7 @@ def standardize_attributes(product_key, raw_text, catalog):
 def process_csv_files(quiet=False):
     catalog = load_catalog()
     retailer_mapping = load_retailer_mapping()
+    color_aliases = load_color_aliases()
     all_data = []
     unmatched_data = []  # Track products that don't match catalog
     
@@ -386,8 +433,8 @@ def process_csv_files(quiet=False):
                     storage = normalize_storage(raw_name)
                     if storage == "unknown_storage": storage = normalize_storage(raw_specs)
 
-                    # Standardize Attributes using Catalog
-                    std_attrs = standardize_attributes(prod_key, raw_full, catalog)
+                    # Standardize Attributes (Color, Storage, Size)
+                    std_attrs = standardize_attributes(prod_key, f"{raw_name} {raw_specs} {raw_color}", catalog, color_aliases)
                     cat_name = catalog[prod_key]['name']
                     
                     # Construction: Name + Size + Connectivity + Color + Storage + Band

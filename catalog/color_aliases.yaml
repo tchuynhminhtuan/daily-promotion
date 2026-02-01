@@ -1,0 +1,101 @@
+# Color Aliases Configuration
+# Maps retailer color names (raw) to official Apple catalog colors (standardized)
+
+# Global color aliases that apply to ALL products
+global_aliases:
+  # English → Vietnamese Dictionary
+  "Blue": "Xanh Dương"
+  "Silver": "Bạc"
+  "Gold": "Vàng"
+  "Pink": "Hồng"
+  "Purple": "Tím"
+  "Green": "Xanh Lá"
+  "Red": "Đỏ"
+  "White": "Trắng"
+  "Black": "Đen"
+  "Midnight": "Xanh Đêm"
+  "Starlight": "Ánh Sao"
+  "Space Grey": "Xám Không Gian"
+  "Space Gray": "Xám Không Gian"
+  "Space Black": "Đen Không Gian"
+  "Graphite": "Than Chì"
+  "Yellow": "Vàng"
+  "Orange": "Cam"
+  "Alpine Green": "Xanh Alpine"
+  "Deep Purple": "Tím Đậm"
+
+  # Uppercase variants (just in case case-insensitive matching fails or for explicit mapping)
+  "BLUE": "Xanh Dương"
+  "SILVER": "Bạc"
+  "SPACE GREY": "Xám Không Gian"
+  "STARLIGHT": "Ánh Sao"
+  "MIDNIGHT": "Xanh Đêm"
+  "PURPLE": "Tím"
+  "GREEN": "Xanh Lá"
+  "RED": "Đỏ"
+  "WHITE": "Trắng"
+  "SPACEBLACK": "Đen Không Gian"
+
+  # Vietnamese variations cleaning
+  "Xanh dương": "Xanh Dương"
+  "Xanh lá": "Xanh Lá"
+  "Ánh sao": "Ánh Sao"
+  "Xám không gian": "Xám Không Gian"
+
+  # Titanium variations
+  "Titan tự nhiên": "Titan Tự Nhiên"
+  "Titan trắng": "Titan Trắng"
+  "Titan xám": "Titan Xám"
+  "Titan đen": "Titan Đen"
+  "Titan vàng": "Titan Vàng"
+  "Natural Titanium": "Titan Tự Nhiên"
+  "White Titanium": "Titan Trắng"
+  "Blue Titanium": "Titan Xanh"
+  "Black Titanium": "Titan Đen"
+  "Desert Titanium": "Titan Sa Mạc"
+
+  # Common shortcuts & Noise
+  "Xanh": "Xanh Dương"
+  "Xám": "Xám Không Gian"
+  "Titan": "Titan Tự Nhiên"
+  "Mặc định": null
+  "Default": null
+  "Unknown": null
+  "N/A": null
+
+# Per-product overrides
+# Used when a generic color name maps to a specific fancy marketing name for a product
+product_overrides:
+  # iPhone 16 Series
+  iphone_16:
+    "Xanh Dương": "Xanh Lưu Ly"
+    "Xanh": "Xanh Lưu Ly"
+    "Blue": "Xanh Lưu Ly"
+    "Xanh Lá": "Xanh Mòng Két"
+    "Pink": "Hồng"
+
+  iphone_16_plus:
+    "Xanh Dương": "Xanh Lưu Ly"
+    "Xanh": "Xanh Lưu Ly"
+    "Blue": "Xanh Lưu Ly"
+    "Xanh Lá": "Xanh Mòng Két"
+
+  iphone_16_pro:
+    "Vàng": "Titan Sa Mạc"
+    "Gold": "Titan Sa Mạc"
+    "Desert": "Titan Sa Mạc"
+
+  iphone_16_pro_max:
+    "Vàng": "Titan Sa Mạc"
+    "Gold": "Titan Sa Mạc"
+    "Desert": "Titan Sa Mạc"
+
+  # iPhone 15 Series
+  iphone_15:
+    "Xanh Dương": "Xanh Dương"
+    "Xanh Lá": "Xanh Lá"
+
+  # Watch Ultra
+  apple_watch_ultra_2:
+    "Titan": "Titan Tự Nhiên"
+    "Đen": "Titan Đen"
