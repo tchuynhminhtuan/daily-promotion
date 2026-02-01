@@ -56,14 +56,18 @@ osascript -e 'display notification "Scrapers Running: FPT & MW" with title "Dail
 echo "🕷️ Running FPT & MW Scrapers..."
 
 # Use absolute paths or root-relative paths
-python3 "$PROJECT_ROOT/code/1-Apple_FPT_playwright.py"
-python3 "$PROJECT_ROOT/code/2-Apple_MW_playwright.py"
+python3 "$PROJECT_ROOT/src/crawlers/1-Apple_FPT_playwright.py"
+python3 "$PROJECT_ROOT/src/crawlers/2-Apple_MW_playwright.py"
 
 osascript -e 'display notification "Scrapers Completed: FPT & MW" with title "Daily Promotion"'
 echo "✅ FPT & MW Scrapers Completed."
 
 # 3. Handle Normalization & Data Versioning
-# (Add any additional normalization logic here if needed)
+echo "🧠 Normalizing Data..."
+python3 "$PROJECT_ROOT/src/processing/normalize.py"
+
+echo "📊 Generating Report..."
+python3 "$PROJECT_ROOT/src/reporting/generate_report.py"
 
 # 4. Push Results to GitHub (STRICT SCOPE)
 echo "🚀 Pushing results to GitHub..."
@@ -71,7 +75,7 @@ echo "🚀 Pushing results to GitHub..."
 DATE=$(date +%Y-%m-%d)
 
 # Only commit DATA and REPORT (Ignore Code/Config changes)
-git add "content/$DATE/*.csv" || echo "⚠️ No new CSV data found for $DATE"
+git add "data/raw/$DATE/*.csv" || echo "⚠️ No new CSV data found for $DATE"
 git add "docs/index.html" || echo "⚠️ No report update found"
 
 git commit -m "Auto: Daily Scrape Update - $(date)" || echo "⚠️ No changes to commit"

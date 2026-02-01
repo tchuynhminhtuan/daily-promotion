@@ -8,7 +8,7 @@ import importlib.util
 
 # Paths
 ROOT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../"))
-CODE_DIR = os.path.join(ROOT_DIR, "code")
+CODE_DIR = os.path.join(ROOT_DIR, "src/crawlers")
 PROJECT_CONTENT_DIR = os.path.join(os.path.dirname(__file__), "content")
 
 # Add CODE_DIR to sys.path so we can import utils.sites

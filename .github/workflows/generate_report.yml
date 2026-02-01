@@ -27,15 +27,15 @@ jobs:
           python -m pip install --upgrade pip
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
-      - name: Run AI Insight Generator
+      - name: Normalize Data & Generate Insights
         run: |
-          echo "Run AI Insight Generator..."
-          python3 analysis/daily_insight_generator.py
+          echo "Run Normalization + AI Insight Generator..."
+          python3 src/processing/normalize.py
 
       - name: Generate Report
         run: |
           echo "Generating HTML Report..."
-          python3 code/generate_report.py
+          python3 src/reporting/generate_report.py
 
       - name: Commit and Push Results
         run: |
@@ -43,7 +43,7 @@ jobs:
           git config --global user.email "action@github.com"
 
           # Add new content files (data)
-          git add content/
+          git add data/raw/
 
           # Add AI Insights
           git add docs/insights/

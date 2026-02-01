@@ -3,7 +3,7 @@ import sys
 
 # 1. Add 'code' directory to sys.path
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-sys.path.append(os.path.join(PROJECT_ROOT, "code"))
+sys.path.append(os.path.join(PROJECT_ROOT, "src/reporting"))
 
 # 2. Import the core report generator
 import generate_report
