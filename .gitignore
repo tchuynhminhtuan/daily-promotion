@@ -1,14 +1,31 @@
+# System Files
 .DS_Store
+.idea/
+.vscode/
+
+# Python
 __pycache__/
 *.pyc
-.idea/
-.ipynb_checkpoints/
-# Ignore content unless it's a CSV
-content/**/*
-!content/
-!content/*/
-!content/**/*.csv
-source/
 venv/
+.venv/
+
+# Raw Data (Don't commit massive scrape history)
+data/raw/*
+!data/raw/.gitkeep
+data/raw_legacy/
+Market Promotion/
+legacy/data_archive/
+
+# Logs and Temp
+data/logs/
+*.log
+
+# Old Structure (Clean up later)
+content/
 projects/marshall_daily/content/*/img_fpt/
 projects/marshall_daily/content/*/img_mw/
+
+# IMPORTANT: Keep AI Experiments & Models
+!experiments/
+!experiments/fine_tuning/data/
+!experiments/fine_tuning/adapters/
