@@ -29,8 +29,8 @@ jobs:
 
       - name: Normalize Data & Generate Insights
         run: |
-          echo "Run Normalization + AI Insight Generator..."
-          python3 src/processing/normalize.py
+          echo "Run Normalization (AI disabled on Linux)..."
+          python3 src/processing/normalize.py --no-ai
 
       - name: Generate Report
         run: |

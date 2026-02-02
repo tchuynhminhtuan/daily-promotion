@@ -122,6 +122,7 @@ BASE_MODEL_ID = "Qwen/Qwen2.5-0.5B-Instruct"
 _AI_MODEL = None
 _AI_TOKENIZER = None
 _AI_CACHE = {} # Cache for AI predictions to improve speed
+AI_ENABLED = True  # Global flag to enable/disable AI (set via --no-ai)
 
 def load_ai_model():
     global _AI_MODEL, _AI_TOKENIZER
@@ -166,32 +167,36 @@ def match_product(row_name, row_specs, catalog, retailer_name=None, retailer_map
              return mapped_key
 
     # 2. AI Fallback (New V3 Layer)
-    # OPTIMIZATION: Only call AI for reasonable product names to avoid spam latency
-    spam_keywords = ["giảm", "ưu đãi", "thanh toán", "thẻ tín dụng", "vnpay", "hoàn tiền", "chính sách", "liên hệ", "trả góp", "quà tặng", "v ch"]
-    name_lower = str(row_name).lower()
-    
-    # Check Cache First
-    global _AI_CACHE
-    if row_name in _AI_CACHE:
-        return _AI_CACHE[row_name]
+    # Skip if AI is disabled (e.g., --no-ai flag for CI/CD)
+    if not AI_ENABLED:
+        pass  # Skip to legacy fallback
+    else:
+        # OPTIMIZATION: Only call AI for reasonable product names to avoid spam latency
+        spam_keywords = ["giảm", "ưu đãi", "thanh toán", "thẻ tín dụng", "vnpay", "hoàn tiền", "chính sách", "liên hệ", "trả góp", "quà tặng", "v ch"]
+        name_lower = str(row_name).lower()
+        
+        # Check Cache First
+        global _AI_CACHE
+        if row_name in _AI_CACHE:
+            return _AI_CACHE[row_name]
 
-    if len(row_name) < 100 and not any(k in name_lower for k in spam_keywords):
-        if load_ai_model():
-            pred = ai_predict_key(row_name)
-            
-            # Normalize year suffix if present
-            final_pred = None
-            if pred:
-                if pred in catalog:
-                    final_pred = pred
-                elif pred.replace('_2023', '') in catalog:
-                    final_pred = pred.replace('_2023', '')
-            
-            # Cache the result (even if None, to avoid re-querying)
-            _AI_CACHE[row_name] = final_pred
-            
-            if final_pred:
-                return final_pred
+        if len(row_name) < 100 and not any(k in name_lower for k in spam_keywords):
+            if load_ai_model():
+                pred = ai_predict_key(row_name)
+                
+                # Normalize year suffix if present
+                final_pred = None
+                if pred:
+                    if pred in catalog:
+                        final_pred = pred
+                    elif pred.replace('_2023', '') in catalog:
+                        final_pred = pred.replace('_2023', '')
+                
+                # Cache the result (even if None, to avoid re-querying)
+                _AI_CACHE[row_name] = final_pred
+                
+                if final_pred:
+                    return final_pred
 
     # 3. Legacy Regex Fallback (Keep as safety net)
     # Normalize
@@ -991,16 +996,22 @@ def main(target_date=None, process_all=False):
 
 if __name__ == "__main__":
     import sys
+    import argparse
     
-    # Command line arguments:
-    # python 10-Normalize_and_Analyze.py              # Process latest date
-    # python 10-Normalize_and_Analyze.py 2026-01-31   # Process specific date
-    # python 10-Normalize_and_Analyze.py --all        # Process all dates
+    parser = argparse.ArgumentParser(description='Normalize product data')
+    parser.add_argument('date', nargs='?', help='Target date (YYYY-MM-DD)')
+    parser.add_argument('--all', action='store_true', help='Process all dates')
+    parser.add_argument('--no-ai', action='store_true', help='Disable AI fallback (for CI/CD)')
+    args = parser.parse_args()
     
-    if len(sys.argv) > 1:
-        if sys.argv[1] == "--all":
-            main(process_all=True)
-        else:
-            main(target_date=sys.argv[1])
+    # Set global AI flag
+    if args.no_ai:
+        AI_ENABLED = False
+        print("⚠️ AI fallback disabled (--no-ai flag)")
+    
+    if args.all:
+        main(process_all=True)
+    elif args.date:
+        main(target_date=args.date)
     else:
         main()  # Latest date only
