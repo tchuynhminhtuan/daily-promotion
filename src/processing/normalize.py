@@ -111,7 +111,7 @@ def normalize_storage(name):
     return f"{best_val}{best_unit}"
 
 # New Config
-MAPPING_PATH = BASE_DIR / "config/retailer_mapping.yaml"
+MAPPING_PATH = BASE_DIR / "catalog/retailer_mapping.yaml"
 
 def load_retailer_mapping():
     if not os.path.exists(MAPPING_PATH): return {}
@@ -696,10 +696,13 @@ def calculate_trend(df_historical, group_cols, days=30):
     if recent.empty:
         return pd.DataFrame()
     
-    # Get daily average price per group
+    # Get daily average price per group, include product_name for display
     daily = recent.groupby(group_cols + ['date']).agg(
         price=('price', 'mean'),
-        url=('url', 'first')
+        url=('url', 'first'),
+        product_name=('product_name', 'first'),  # Add for display
+        category=('category', 'first'),
+        variant_color=('variant_color', 'first')
     ).reset_index()
     
     results = []
@@ -731,7 +734,10 @@ def calculate_trend(df_historical, group_cols, days=30):
                 'r_squared': round(r_value**2, 2),
                 'first_price': y[0],
                 'last_price': y[-1],
-                'url': group.iloc[-1]['url']
+                'url': group.iloc[-1]['url'],
+                'product_name': group.iloc[-1]['product_name'],  # Add for display
+                'category': group.iloc[-1]['category'],
+                'variant_color': group.iloc[-1]['variant_color']
             })
             results.append(row)
         except Exception:
@@ -741,165 +747,199 @@ def calculate_trend(df_historical, group_cols, days=30):
 
 
 def generate_insights(df):
+    """
+    Generate daily price insights with proper deduplication.
+    Groups by product_key + variant_storage to ensure consistency across retailers.
+    """
     # Filter OUT of stock products for insights ONLY
     df_in_stock = df[df['stock'] == 'Yes'].copy()
     
     if df_in_stock.empty:
         return "# 📊 Daily Price Insights\n\n⚠️ No in-stock products found.\n"
-        
+    
     s = f"# 📊 Daily Price Insights - {datetime.date.today()}\n\n"
     s += f"*Generated at: {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}*\n\n"
     s += f"*Showing only **IN-STOCK** products ({len(df_in_stock)} out of {len(df)} total)*\n\n"
     
-    # 1. BEST PRICE EVER (Min Price per Product/Storage)
-    s += "## 💰 BEST PRICES (Top 15 Deals)\n"
+    # Helper: Get canonical product name for display
+    def get_display_name(row):
+        """Build display name: ProductName + Storage (if applicable)"""
+        name = row.get('product_name', 'Unknown')
+        storage = row.get('variant_storage', '')
+        color = row.get('variant_color', 'Unknown')
+        
+        # Don't show storage for Watch/Audio categories or if already in name
+        if row.get('category') in ['Audio', 'Watch'] or storage in ['', 'unknown_storage']:
+            return f"{name} ({color})"
+        
+        # Check if storage is already in product_name to avoid duplication
+        if storage.lower() in name.lower():
+            return f"{name} ({color})"
+        
+        return f"{name} {storage} ({color})"
     
-    idx = df_in_stock.groupby(['product_key', 'variant_storage'])['price'].idxmin()
-    best_prices = df_in_stock.loc[idx].sort_values('price').head(20) # Show top 20 cheap to expensive?
-    best_prices = best_prices.sort_values(['category', 'product_name'])
+    # ============================================================
+    # 1. BEST PRICES (Top 15 Deals) - Deduplicated by product_key
+    # ============================================================
+    s += "## 💰 GIÁ TỐT NHẤT (Top 15)\n"
     
-    for _, row in best_prices.iterrows():
+    # Get min price per product/storage combination
+    min_prices = df_in_stock.groupby(['product_key', 'variant_storage', 'variant_color']).agg(
+        min_price=('price', 'min')
+    ).reset_index()
+    
+    # Merge to get full row info for min prices
+    merged_best = df_in_stock.merge(min_prices, on=['product_key', 'variant_storage', 'variant_color'])
+    best_deals = merged_best[merged_best['price'] == merged_best['min_price']]
+    
+    # Deduplicate: keep first retailer per product/storage/color
+    best_deals = best_deals.drop_duplicates(
+        subset=['product_key', 'variant_storage', 'variant_color']
+    ).sort_values('price').head(15)
+    
+    for _, row in best_deals.iterrows():
         price_fmt = "{:,.0f}đ".format(row['price'])
-        
-        # Logic: Storage is now stripped from product_name for Watch/Audio at source.
-        # Just handle warning for others.
-        storage_str = ""
-        if row['variant_storage'] == 'unknown_storage':
-             if row['category'] not in ['Audio', 'Watch']:
-                 storage_str = " (unknown_storage)"
-            
-        s += f"- **{row['product_name']}{storage_str}** ({row['variant_color']}) @ **[{row['retailer']}]**: **{price_fmt}** [Link]({row['url']})\n"
-        
+        display = get_display_name(row)
+        s += f"- **{display}** @ **{row['retailer']}**: **{price_fmt}** [Link]({row['url']})\n"
     s += "\n"
     
-    # 2. Anomalies (Price Difference vs Average)
-    s += "## ⚠️ PRICE VARIATION (Retailer vs Average)\n"
+    # ============================================================
+    # 2. PRICE VARIATION (Retailer vs Market Average)
+    # ============================================================
+    s += "## ⚠️ BIẾN ĐỘNG GIÁ (vs Giá Trung Bình)\n"
     
+    # Calculate average price per product/storage
     avg_prices = df_in_stock.groupby(['product_key', 'variant_storage'])['price'].mean().reset_index()
     avg_prices.rename(columns={'price': 'avg_price'}, inplace=True)
     
-    merged = pd.merge(df_in_stock, avg_prices, on=['product_key', 'variant_storage'])
-    merged['diff_pct'] = ((merged['price'] - merged['avg_price']) / merged['avg_price']) * 100
+    merged_var = pd.merge(df_in_stock, avg_prices, on=['product_key', 'variant_storage'])
+    merged_var['diff_pct'] = ((merged_var['price'] - merged_var['avg_price']) / merged_var['avg_price']) * 100
     
-    deals = merged[merged['diff_pct'] < -10].sort_values('diff_pct')
+    # Filter significant deals (>10% below average)
+    deals = merged_var[merged_var['diff_pct'] < -10].copy()
     
-    deal_count = 0
-    for _, row in deals.iterrows():
-        if deal_count >= 20: break
-        
-        price_fmt = "{:,.0f}đ".format(row['price'])
-        avg_fmt = "{:,.0f}đ".format(row['avg_price'])
-        
-        # Logic: If storage is known, it's already in product_name.
-        # If unknown, append (unknown_storage) ONLY if not Audio/Watch.
-        storage_str = ""
-        if row['variant_storage'] == 'unknown_storage':
-             if row['category'] not in ['Audio', 'Watch']:
-                 storage_str = " (unknown_storage)"
-            
-        s += f"- 📉 **{row['retailer']}** sells **{row['product_name']}{storage_str}** for **{price_fmt}** ({row['diff_pct']:.1f}% below avg {avg_fmt}) [Link]({row['url']})\n"
-        deal_count += 1
+    # Deduplicate by product/storage/retailer
+    deals = deals.drop_duplicates(subset=['product_key', 'variant_storage', 'retailer']).sort_values('diff_pct').head(15)
     
+    if len(deals) > 0:
+        for _, row in deals.iterrows():
+            price_fmt = "{:,.0f}đ".format(row['price'])
+            avg_fmt = "{:,.0f}đ".format(row['avg_price'])
+            display = get_display_name(row)
+            s += f"- 📉 **{row['retailer']}** bán **{display}** giá **{price_fmt}** ({row['diff_pct']:.1f}% so với TB {avg_fmt}) [Link]({row['url']})\n"
+    else:
+        s += "_Không có sản phẩm giá thấp hơn đáng kể so với thị trường._\n"
     s += "\n"
     
     # ============================================================
     # TREND ANALYSIS SECTIONS (using historical data)
     # ============================================================
-    
-    # Load historical data for trend analysis
     df_historical = load_historical_data(days=30, verbose=True)
     
     if not df_historical.empty:
-        # Filter historical to in-stock only
         df_hist_instock = df_historical[df_historical['stock'] == 'Yes'].copy()
         
         if not df_hist_instock.empty:
-            # --- Section 3: ANOMALIES - THỊ TRƯỜNG (vs 7-day avg) ---
-            s += "## 📊 ANOMALIES - THỊ TRƯỜNG (vs 7-day avg)\n"
-            
-            # Get last 7 days of historical data
             max_date = df_hist_instock['date'].max()
             cutoff_7d = max_date - timedelta(days=7)
             df_7d = df_hist_instock[df_hist_instock['date'] >= cutoff_7d]
             
+            # --- 3. ANOMALIES - THỊ TRƯỜNG (vs 7-day avg) ---
+            s += "## 📊 BIẾN ĐỘNG BẤT THƯỜNG - THỊ TRƯỜNG (vs 7 ngày)\n"
+            
             market_anomalies = detect_anomalies(
                 df_in_stock, df_7d, 
-                ['product_name', 'variant_color'], 
+                ['product_key', 'variant_storage'],  # Fixed: use product_key
                 threshold=0.10
             )
             
             if len(market_anomalies) > 0:
-                for _, row in market_anomalies.head(10).iterrows():
+                # Deduplicate
+                market_anomalies = market_anomalies.drop_duplicates(
+                    subset=['product_key', 'variant_storage']
+                ).head(10)
+                
+                for _, row in market_anomalies.iterrows():
                     price_fmt = "{:,.0f}đ".format(row['price'])
-                    s += f"- {row['type']} **{row['product_name']}** ({row['variant_color']}): {row['deviation_pct']:+.1f}% → {price_fmt} [Link]({row['url']})\n"
+                    display = get_display_name(row)
+                    s += f"- {row['type']} **{display}**: {row['deviation_pct']:+.1f}% → {price_fmt} [Link]({row['url']})\n"
             else:
                 s += "_Không phát hiện biến động bất thường._\n"
             s += "\n"
             
-            # --- Section 4: ANOMALIES - TỪNG CHUỖI (vs 7-day avg) ---
-            s += "## 🏪 ANOMALIES - TỪNG CHUỖI (vs 7-day avg)\n"
+            # --- 4. ANOMALIES - TỪNG CHUỖI ---
+            s += "## 🏪 BIẾN ĐỘNG BẤT THƯỜNG - TỪNG CHUỖI (vs 7 ngày)\n"
             
             store_anomalies = detect_anomalies(
                 df_in_stock, df_7d,
-                ['retailer', 'product_name', 'variant_color'],
+                ['retailer', 'product_key', 'variant_storage'],  # Fixed
                 threshold=0.10
             )
             
             if len(store_anomalies) > 0:
-                for _, row in store_anomalies.head(15).iterrows():
-                    s += f"- {row['type']} [{row['retailer']}] **{row['product_name']}** ({row['variant_color']}): {row['deviation_pct']:+.1f}% [Link]({row['url']})\n"
+                store_anomalies = store_anomalies.drop_duplicates(
+                    subset=['retailer', 'product_key', 'variant_storage']
+                ).head(15)
+                
+                for _, row in store_anomalies.iterrows():
+                    display = get_display_name(row)
+                    s += f"- {row['type']} [{row['retailer']}] **{display}**: {row['deviation_pct']:+.1f}% [Link]({row['url']})\n"
             else:
                 s += "_Không phát hiện biến động bất thường._\n"
             s += "\n"
             
-            # --- Section 5: XU HƯỚNG 7 NGÀY - THỊ TRƯỜNG ---
+            # --- 5. XU HƯỚNG 7 NGÀY - THỊ TRƯỜNG ---
             s += "## 📈 XU HƯỚNG 7 NGÀY - THỊ TRƯỜNG\n"
             
-            market_trends_7 = calculate_trend(df_hist_instock, ['product_name', 'variant_color'], days=7)
+            market_trends_7 = calculate_trend(df_hist_instock, ['product_key', 'variant_storage'], days=7)
             
             if len(market_trends_7) > 0:
-                big_movers = market_trends_7[abs(market_trends_7['pct_change']) > 5].sort_values('pct_change')
-                for _, row in big_movers.head(10).iterrows():
-                    s += f"- {row['trend']} **{row['product_name']}** ({row['variant_color']}): {row['pct_change']:+.1f}% ({row['first_price']:,.0f}đ → {row['last_price']:,.0f}đ) [Link]({row['url']})\n"
+                big_movers = market_trends_7[abs(market_trends_7['pct_change']) > 5].sort_values('pct_change').head(10)
+                for _, row in big_movers.iterrows():
+                    display = get_display_name(row)
+                    s += f"- {row['trend']} **{display}**: {row['pct_change']:+.1f}% ({row['first_price']:,.0f}đ → {row['last_price']:,.0f}đ) [Link]({row['url']})\n"
             else:
                 s += "_Chưa đủ dữ liệu để phân tích xu hướng 7 ngày._\n"
             s += "\n"
             
-            # --- Section 6: XU HƯỚNG 7 NGÀY - TỪNG CHUỖI ---
+            # --- 6. XU HƯỚNG 7 NGÀY - TỪNG CHUỖI ---
             s += "## 🏪 XU HƯỚNG 7 NGÀY - TỪNG CHUỖI\n"
             
-            store_trends_7 = calculate_trend(df_hist_instock, ['retailer', 'product_name', 'variant_color'], days=7)
+            store_trends_7 = calculate_trend(df_hist_instock, ['retailer', 'product_key', 'variant_storage'], days=7)
             
             if len(store_trends_7) > 0:
-                big_store_movers = store_trends_7[abs(store_trends_7['pct_change']) > 10].sort_values('pct_change')
-                for _, row in big_store_movers.head(15).iterrows():
-                    s += f"- {row['trend']} [{row['retailer']}] **{row['product_name']}** ({row['variant_color']}): {row['pct_change']:+.1f}% [Link]({row['url']})\n"
+                big_store_movers = store_trends_7[abs(store_trends_7['pct_change']) > 10].sort_values('pct_change').head(15)
+                for _, row in big_store_movers.iterrows():
+                    display = get_display_name(row)
+                    s += f"- {row['trend']} [{row['retailer']}] **{display}**: {row['pct_change']:+.1f}% [Link]({row['url']})\n"
             else:
                 s += "_Chưa đủ dữ liệu để phân tích xu hướng 7 ngày._\n"
             s += "\n"
             
-            # --- Section 7: XU HƯỚNG 30 NGÀY - THỊ TRƯỜNG ---
+            # --- 7. XU HƯỚNG 30 NGÀY - THỊ TRƯỜNG ---
             s += "## 📈 XU HƯỚNG 30 NGÀY - THỊ TRƯỜNG\n"
             
-            market_trends_30 = calculate_trend(df_hist_instock, ['product_name', 'variant_color'], days=30)
+            market_trends_30 = calculate_trend(df_hist_instock, ['product_key', 'variant_storage'], days=30)
             
             if len(market_trends_30) > 0:
-                big_movers_30 = market_trends_30[abs(market_trends_30['pct_change']) > 5].sort_values('pct_change')
-                for _, row in big_movers_30.head(10).iterrows():
-                    s += f"- {row['trend']} **{row['product_name']}** ({row['variant_color']}): {row['pct_change']:+.1f}% ({row['first_price']:,.0f}đ → {row['last_price']:,.0f}đ) [Link]({row['url']})\n"
+                big_movers_30 = market_trends_30[abs(market_trends_30['pct_change']) > 5].sort_values('pct_change').head(10)
+                for _, row in big_movers_30.iterrows():
+                    display = get_display_name(row)
+                    s += f"- {row['trend']} **{display}**: {row['pct_change']:+.1f}% ({row['first_price']:,.0f}đ → {row['last_price']:,.0f}đ) [Link]({row['url']})\n"
             else:
                 s += "_Chưa đủ dữ liệu để phân tích xu hướng 30 ngày._\n"
             s += "\n"
             
-            # --- Section 8: XU HƯỚNG 30 NGÀY - TỪNG CHUỖI ---
+            # --- 8. XU HƯỚNG 30 NGÀY - TỪNG CHUỖI ---
             s += "## 🏪 XU HƯỚNG 30 NGÀY - TỪNG CHUỖI\n"
             
-            store_trends_30 = calculate_trend(df_hist_instock, ['retailer', 'product_name', 'variant_color'], days=30)
+            store_trends_30 = calculate_trend(df_hist_instock, ['retailer', 'product_key', 'variant_storage'], days=30)
             
             if len(store_trends_30) > 0:
-                big_store_movers_30 = store_trends_30[abs(store_trends_30['pct_change']) > 10].sort_values('pct_change')
-                for _, row in big_store_movers_30.head(15).iterrows():
-                    s += f"- {row['trend']} [{row['retailer']}] **{row['product_name']}** ({row['variant_color']}): {row['pct_change']:+.1f}% [Link]({row['url']})\n"
+                big_store_movers_30 = store_trends_30[abs(store_trends_30['pct_change']) > 10].sort_values('pct_change').head(15)
+                for _, row in big_store_movers_30.iterrows():
+                    display = get_display_name(row)
+                    s += f"- {row['trend']} [{row['retailer']}] **{display}**: {row['pct_change']:+.1f}% [Link]({row['url']})\n"
             else:
                 s += "_Chưa đủ dữ liệu để phân tích xu hướng 30 ngày._\n"
             s += "\n"
@@ -910,6 +950,7 @@ def generate_insights(df):
     s += f"*Data sources: {df_in_stock['retailer'].nunique()} retailers, {len(df_in_stock)} in-stock records (excluded {len(df) - len(df_in_stock)} OOS products).*\n"
     
     return s
+
 
 def get_available_dates():
     """Scan content directory for date folders (YYYY-MM-DD format)"""

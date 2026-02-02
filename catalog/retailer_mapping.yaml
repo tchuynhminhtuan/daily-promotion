@@ -238,7 +238,7 @@ FPT Shop:
   Apple Watch Ultra 3 GPS + Cellular 49mm Viền titan Dây Ocean: apple_watch_ultra_3
   Apple Watch Ultra 3 GPS + Cellular 49mm Viền titan Dây quấn Alpine: apple_watch_ultra_3
   Apple Watch Ultra 3 GPS + Cellular 49mm Viền titan Dây quấn Milan Titan: apple_watch_ultra_3
-  MacBook Air 15 inch M2 2023 8CPU 10GPU/8GB/512GB/Sạc 70W: macbook_air_15_inch_m2_2023
+  MacBook Air 15 inch M2 2023 8CPU 10GPU/8GB/512GB/Sạc 70W: macbook_air_15_inch_m2
   MacBook Pro 14 M4 Pro 2024 12CPU/16GPU/24GB/512GB: macbook_pro_m4
   Macbook Air 13 M2 2024 8CPU/8GPU/16GB/256GB: macbook_air_m2
   Macbook Air 13 M4 2025 10CPU/10GPU/16GB/512GB: macbook_air_m4
@@ -260,7 +260,7 @@ FPT Shop:
   iPad Air 11 inch M3 2025 WiFi 128GB: ipad_air_11_inch_m3
   iPad Air 13 inch M3 2025 WiFi + Cellular 128GB: ipad_air_13_inch_m3
   iPad Air 13 inch M3 2025 WiFi 128GB: ipad_air_13_inch_m3
-  iPad Air 5 2022 10.9 inch M1 WiFi 5G 64GB: ipad
+  iPad Air 5 2022 10.9 inch M1 WiFi 5G 64GB: ipad_air_thế_hệ_thứ_5
   iPad Pro 11 M5 2025 WiFi + Cellular 12GB 256GB: ipad_pro_m5
   iPad Pro 11 M5 2025 WiFi 12GB 256GB: ipad_pro_m5
   iPad Pro 11 inch M4 2024 Wifi 256GB: ipad_pro_11_inch_m4
@@ -287,7 +287,7 @@ FPT Shop:
   iPhone 16 Pro 1TB: iphone_16_pro
   iPhone 16e 128GB: iphone_16e
   iPad Air 11 inch M2 2024 Wifi 128GB: ipad_air_11_inch_m2
-  iPad Air 5 2022 10.9 inch M1 WiFi 5G 256GB: ipad_a16_lte
+  iPad Air 5 2022 10.9 inch M1 WiFi 5G 256GB: ipad_air_thế_hệ_thứ_5
   iPad Air 11 inch M2 2024 Wifi 256GB: ipad_air_11_inch_m2
   iPad Air 11 inch M2 2024 Wifi 1TB: ipad_air_11_inch_m2
   Macbook Air 15 M4 2025 10CPU/ 10GPU/ 24GB/ 512GB: macbook_air_m4
@@ -295,6 +295,7 @@ FPT Shop:
   MacBook Pro 16 M4 Max 2024 16CPU/40GPU/48GB/1TB: macbook_pro_m4
   Apple Watch Series 11 GPS + Cellular 42mm Viền titan dây Milan: apple_watch_series_11_aluminum_lte
   Apple Watch Series 11 GPS + Cellular 46mm Viền titan dây Milan: apple_watch_series_11_aluminum_lte
+  iPhone 16 Pro 512GB: iphone_16_pro
 HoangHa:
   Apple Watch SE 3: apple_watch_se_3_gps
   Apple Watch Series 9: apple_watch_series_9
@@ -477,6 +478,7 @@ Mobile World:
   iPad mini 7 WiFi 128GB: ipad_mini_a17_pro
   iPad mini 7 WiFi 256GB: ipad_mini_a17_pro
   iPad mini 7 WiFi 512GB: ipad_mini_a17_pro
+  iPad mini 7 5G 256GB: ipad_mini_a17_pro
   iPhone 13 128GB: iphone_13
   iPhone 14 128GB: iphone_14
   iPhone 14 256GB: iphone_14
@@ -507,12 +509,12 @@ Mobile World:
   iPhone Air 512GB: iphone_air
   Apple Watch Series 10 GPS + Cellular 46mm viền Titanium dây thể thao: apple_watch_series_10_aluminum
   Apple Watch Series 10 GPS + Cellular 46mm viền Titanium dây Milan: apple_watch_series_10_aluminum
-  Apple Watch SE 2 GPS 44mm viền nhôm dây vải: apple_watch_series_11_aluminum_lte
-  Apple Watch SE 2 GPS 44mm viền nhôm dây thể thao: apple_watch_series_11_aluminum_lte
-  Apple Watch Series 10 GPS 42mm viền nhôm dây vải: apple_watch_series_11_aluminum_lte
-  Apple Watch Series 10 GPS + Cellular 42mm viền nhôm dây vải: apple_watch_se_3_lte
+  Apple Watch SE 2 GPS 44mm viền nhôm dây vải: apple_watch_se_2
+  Apple Watch SE 2 GPS 44mm viền nhôm dây thể thao: apple_watch_se_2
+  Apple Watch Series 10 GPS 42mm viền nhôm dây vải: apple_watch_series_10_aluminum
+  Apple Watch Series 10 GPS + Cellular 42mm viền nhôm dây vải: apple_watch_series_10_aluminum
   Apple Watch Series 11 GPS + Cellular 42m viền Titanium dây thể thao: apple_watch_series_11_aluminum
-  Apple Watch Series 11 GPS + Cellular 42mm viền nhôm dây thể thao: apple_watch_se_3_lte
+  Apple Watch Series 11 GPS + Cellular 42mm viền nhôm dây thể thao: apple_watch_series_11_aluminum_lte
   Apple Watch Series 11 GPS + Cellular 46mm viền Titanium dây thể thao: apple_watch_series_11_aluminum
   Apple Watch Series 11 GPS + Cellular 42mm viền Titanium dây Milan: apple_watch_series_11_aluminum
   Apple Watch Series 11 GPS + Cellular 46mm viền Titanium dây Milan: apple_watch_series_11_aluminum
@@ -620,3 +622,6 @@ Viettel Store:
   iPad Pro M5 13 inch WIFI 5G 1TB: ipad_pro_13_inch_m5
   Tai nghe AirPods 4: airpods_4
   Tai nghe AirPods 4 Khử ồn chủ động: airpods_4_anc
+  # Added from fix CSV 2026-02-02
+  iPad mini 7 5G 256GB: ipad_mini_a17_pro
+  iPhone 16 Pro 512GB: iphone_16_pro

@@ -1,0 +1,150 @@
+{
+  "device_name": "Mac mini (M2 hoặc M2 Pro)",
+  "model_key": "FSAlSkLT",
+  "_category": "mac",
+  "_adapter_version": "3.3_daily_promo",
+  "_scraped_at": "2026-02-02T09:15:04.655375",
+  "hero_image": "https://www.apple.com/v/mac/compare/af/images/overview/compare_mac_mini_m2_silver__c644zyot2vki_large.jpg",
+  "Trình đơn thả xuống": [
+    "Máy Tính Xách Tay Hiện Tại",
+    "Máy Tính Bàn Hiện Tại",
+    "Máy Tính Xách Tay Khác",
+    "Máy Tính Bàn Khác",
+    "MacBook Air 13 inch (M4)MacBook Air 15 inch (M4)MacBook Pro 14 inch (M5)MacBook Pro 14 inch (M4 Pro)MacBook Pro 14 inch (M4 Max)MacBook Pro 16 inch (M4 Pro)MacBook Pro 16 inch (M4 Max)iMac (M4, hai cổng)iMac (M4, bốn cổng)Mac mini (M4)Mac mini (M4 Pro)Mac Studio (M4 Max)Mac Studio (M3 Ultra)Mac Pro (M2 Ultra)MacBook Air 13 inch (M3)MacBook Air 13 inch (M2)MacBook Air 13 inch (M1, 2020)MacBook Air 15 inch (M3)MacBook Air 15 inch (M2, 2023)MacBook Air (Intel, 2020)MacBook Air (Intel, 2017)MacBook Pro 13 inch (M2, 2022)MacBook Pro 13 inch (M1, 2020)MacBook Pro 13 inch (Intel, hai cổng, 2020)MacBook Pro 13 inch (Intel, bốn cổng, 2020)MacBook Pro 14 inch (M4)MacBook Pro 14 inch (M3)MacBook Pro 14 inch (M3 Pro hoặc M3 Max)MacBook Pro 14 inch (M2 Pro hoặc M2 Max, 2023)MacBook Pro 14 inch (M1 Pro hoặc M1 Max, 2021)MacBook Pro 16 inch (M3 Pro hoặc M3 Max)MacBook Pro 16 inch (M2 Pro hoặc M2 Max, 2023)MacBook Pro 16 inch (M1 Pro hoặc M1 Max, 2021)MacBook Pro 16 inch (Intel, 2019)iMac (M3, hai cổng)iMac (M3, bốn cổng)iMac 21,5 inch (Intel, 2019)iMac 21,5 inch (Intel, 2017)iMac 24 inch (M1, hai cổng, 2021)iMac 24 inch (M1, bốn cổng, 2021)iMac 27 inch (Intel, 2020)iMac Pro (Intel, 2017)Mac mini (M2 hoặc M2 Pro)Mac mini (M1, 2020)Mac mini (Intel, 2018)Mac Studio (M2 Max hoặc M2 Ultra)Mac Studio (M1 Max hoặc M1 Ultra, 2022)Mac Pro (Intel, 2019)"
+  ],
+  "Màu": [
+    "Xanh Dương",
+    "Xanh Dương",
+    "Tím",
+    "Xanh Lá",
+    "Hồng",
+    "Hồng",
+    "Cam",
+    "Vàng",
+    "Xanh Lá",
+    "Xanh Da Trời",
+    "Bạc",
+    "Ánh Sao",
+    "Đêm Xanh Thẳm",
+    "Ánh Sao",
+    "Xám Không Gian",
+    "Đen Không Gian",
+    "Bạc",
+    "Bạc",
+    "Vàng",
+    "Cam",
+    "Tím",
+    "Gold",
+    "Đen",
+    "Bạc",
+    "—"
+  ],
+  "Mua": [
+    "Mua",
+    "Tìm hiểu thêm"
+  ],
+  "Xem Nhanh": [
+    "Màn Hình",
+    "Chip",
+    "Trí Thông Minh",
+    "Bộ Xử Lý",
+    "GPU",
+    "Bộ Nhớ",
+    "Dung Lượng Lưu Trữ",
+    "Pin",
+    "Cảm Ứng",
+    "Chip Apple M2 hoặcchip Apple M2 Pro",
+    "Apple Intelligence",
+    "CPUlên đến12 lõi",
+    "GPUlên đến19 lõi",
+    "Bộ nhớ thống nhấtlên đến32GB",
+    "Dung lượng lưu trữlên đến8TB"
+  ],
+  "Tính Toán": [
+    "Bộ Xử Lý",
+    "Media Engine",
+    "Bộ Xử Lý Thứ 2",
+    "Media Engine",
+    "Đồ Họa",
+    "Hệ thống tích hợp đơn chip (SoC)Chip M2 CPU 8 lõi với 4 lõi hiệu năng và 4 lõi tiết kiệm điện GPU 10 lõi Neural Engine 16 lõi Băng thông bộ nhớ 100GB/s",
+    "Media Engine H.264, HEVC, ProRes, và ProRes RAW được tăng tốc phần cứngBộ giải mã video Bộ mã hóa videoBộ mã hóa và giải mã ProRes",
+    "Chip M2 Pro CPU lên đến 12 lõi với 8 lõi hiệu năng và 4 lõi tiết kiệm điệnGPU lên đến 19 lõiNeural Engine 16 lõi Băng thông bộ nhớ 200GB/s",
+    "Media Engine H.264, HEVC, ProRes, và ProRes RAW được tăng tốc phần cứngBộ giải mã video Bộ mã hóa videoBộ mã hóa và giải mã ProRes",
+    "—"
+  ],
+  "Kích Thước Và Trọng Lượng4": [
+    "Cao",
+    "Rộng",
+    "Dài",
+    "Trọng lượng",
+    "Cao 3,58 cm",
+    "Rộng 19,70 cm",
+    "Dài 19,70 cm",
+    "Trọng lượng 1,18 kg (M2); 1,28 kg (M2 Pro)"
+  ],
+  "Âm Thanh": [
+    "Stereo",
+    "Micrô",
+    "Tai Nghe",
+    "Đa Kênh",
+    "Minijack",
+    "Loa",
+    "Jack cắm tai nghe 3,5 mm có hỗ trợ nâng cao cho tai nghe trở kháng cao",
+    "Cổng HDMI hỗ trợ đầu ra âm thanh đa kênh"
+  ],
+  "Cổng Kết Nối": [
+    "Cổng Thunderbolt",
+    "USB",
+    "Hdmi",
+    "Ethernet",
+    "SDXC",
+    "Hai cổng Thunderbolt 4 (M2); bốn cổng Thunderbolt 4 (M2 Pro)",
+    "Hai cổng USB-A",
+    "Cổng HDMI",
+    "Gigabit Ethernet hoặc Ethernet 10Gb"
+  ],
+  "Thông Số Kỹ Thuật": [
+    "Sản Phẩm",
+    "Thông số kỹ thuật"
+  ],
+  "Tất cả các phiên bản Mac": [
+    "Mua"
+  ],
+  "Apple Intelligence11": [
+    "Apple Intelligence là hệ thống trí tuệ cá nhân giúp bạn viết lách, thể hiện bản thân và hoàn thành công việc dễ dàng. Với tính năng bảo vệ quyền riêng tư đột phá, Apple Intelligence giúp bạn yên tâm rằng không một ai khác có thể truy cập dữ liệu của bạn, kể cả Apple.",
+    "Tìm hiểu thêm"
+  ],
+  "Bộ Nhớ": [
+    "8GB (M2)16GB24GB (M2)32GB (M2 Pro)"
+  ],
+  "Dung Lượng Lưu Trữ3": [
+    "SSD 256GB (M2)SSD 512GBSSD 1TB SSD 2TBSSD 4TB (M2 Pro)SSD 8TB (M2 Pro)"
+  ],
+  "Màn Hình": [
+    "Hỗ trợ lên đến hai màn hình (M2) hoặc ba màn hình (M2 Pro) tùy thuộc vào cấu hình được chọn (màn hình được bán riêng)"
+  ],
+  "Bàn Phím Và Bàn Di Chuột": [
+    "Magic Keyboard với Touch ID và Numeric Keypad (được bán riêng)",
+    "Magic Mouse hoặc Magic Trackpad (được bán riêng)"
+  ],
+  "Kết Nối Không Dây": [
+    "Wi‑Fi 6E (802.11ax)",
+    "Bluetooth 5.3"
+  ],
+  "Apple Pay": [
+    "Thực hiện thanh toán trên web"
+  ],
+  "Gọi Video": [
+    "FaceTime video",
+    "Thực hiện cuộc gọi video qua mạng Wi‑Fi với bất kỳ thiết bị nào bật FaceTime"
+  ],
+  "Gọi Thoại": [
+    "FaceTime âm thanh",
+    "Thực hiện cuộc gọi thoại qua mạng Wi‑Fi với bất kỳ thiết bị nào bật FaceTime",
+    "Cuộc Gọi Wi‑Fi"
+  ],
+  "Siri": [
+    "Sử dụng giọng nói để gửi tin nhắn, thiết lập lời nhắc và làm nhiều việc khác",
+    "Mac mini (M2 hoặc M2 Pro)—"
+  ]
+}
