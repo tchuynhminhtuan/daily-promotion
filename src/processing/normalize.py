@@ -717,27 +717,48 @@ def calculate_trend(df_historical, group_cols, days=30):
         try:
             slope, intercept, r_value, p_value, std_err = stats.linregress(x, y)
             
-            # Calculate % change over period (Simple Growth Rate: (End - Start) / Start)
-            pct_change = ((y[-1] - y[0]) / y[0]) * 100 if y[0] != 0 else 0
+            # Calculate % change:
+            # - For Drops: Compare Current Price vs MAX Price in period (User Request)
+            # - For Increases: Compare Current Price vs MIN Price in period (to see true hikes)
+            # This avoids "Start Price" bias if start price was high/low
             
-            if pct_change < -5:
+            max_price = np.max(y)
+            min_price = np.min(y)
+            current_price = y[-1]
+            
+            # Default to Start vs End logic
+            pct_change = ((current_price - y[0]) / y[0]) * 100 if y[0] != 0 else 0
+            
+            # Refined Logic for Drop Detection
+            drop_from_peak = ((current_price - max_price) / max_price) * 100 if max_price != 0 else 0
+            increase_from_bottom = ((current_price - min_price) / min_price) * 100 if min_price != 0 else 0
+            
+            # Decide which metric to show
+            if drop_from_peak < -5:
                 trend = "🔻 Giảm"
-            elif pct_change > 5:
+                display_pct = drop_from_peak
+                base_price = max_price # Show drop from Peak
+            elif increase_from_bottom > 5:
                 trend = "🔺 Tăng"
+                display_pct = increase_from_bottom
+                base_price = min_price # Show increase from Bottom
             else:
                 trend = "➡️ Ổn định"
+                display_pct = pct_change
+                base_price = y[0]
             
             row = {col: val for col, val in zip(group_cols, name if isinstance(name, tuple) else [name])}
             row.update({
                 'trend': trend,
-                'pct_change': round(pct_change, 1),
+                'pct_change': round(display_pct, 1), # Updated to use new metric
                 'r_squared': round(r_value**2, 2),
-                'first_price': y[0],
-                'last_price': y[-1],
+                'first_price': base_price, # Use Base Price (Peak/Bottom) for display
+                'last_price': current_price,
                 'url': group.iloc[-1]['url'],
-                'product_name': group.iloc[-1]['product_name'],  # Add for display
+                'product_name': group.iloc[-1]['product_name'],
                 'category': group.iloc[-1]['category'],
-                'variant_color': group.iloc[-1]['variant_color']
+                'variant_color': group.iloc[-1]['variant_color'],
+                'max_price': max_price
             })
             results.append(row)
         except Exception:
