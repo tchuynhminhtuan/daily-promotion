@@ -11,13 +11,15 @@ from scipy import stats
 import numpy as np
 
 # Config
-BASE_DIR = Path("/Users/brucehuynh/GitHub/daily-promotion")
+# Dynamic BASE_DIR: Works on both local and CI environments
+BASE_DIR = Path(__file__).resolve().parent.parent.parent  # src/processing/normalize.py -> daily-promotion/
 CATALOG_PATH = BASE_DIR / "catalog/product_catalog.yaml"
 COLOR_ALIASES_PATH = BASE_DIR / "catalog/color_aliases.yaml"
 CONTENT_BASE = BASE_DIR / "data/raw"  # Base directory, will scan for dates
 OUTPUT_DIR = BASE_DIR / "catalog/output"
 LOGS_DIR = BASE_DIR / "data/logs"
 INSIGHTS_DIR = BASE_DIR / "docs/insights"
+
 
 RETAILER_MAP = {
     '1-fpt': 'FPT Shop',
