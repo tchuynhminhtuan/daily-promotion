@@ -180,6 +180,8 @@ def match_product(row_name, row_specs, catalog, retailer_name=None, retailer_map
         if row_name in _AI_CACHE:
             return _AI_CACHE[row_name]
 
+
+            
         if len(row_name) < 100 and not any(k in name_lower for k in spam_keywords):
             if load_ai_model():
                 pred = ai_predict_key(row_name)
