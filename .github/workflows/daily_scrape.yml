@@ -69,8 +69,16 @@ jobs:
           git config --global user.name "GitHub Action Scraper"
           git config --global user.email "action@github.com"
 
-          # Add new content files (data)
-          git add data/raw/
+          # Get current date (UTC)
+          TODAY=$(date +'%Y-%m-%d')
+
+          # Add new content files (data) for today only
+          if [ -d "data/raw/$TODAY" ]; then
+            git add "data/raw/$TODAY/"
+          else
+            echo "⚠️ Data folder data/raw/$TODAY not found!"
+            ls -R data/raw/
+          fi
 
           # Commit if there are changes
           git commit -m "Auto: Update Raw Scraped Data [skip ci]" || echo "No changes to commit"
