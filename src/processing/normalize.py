@@ -519,15 +519,34 @@ def process_csv_files(quiet=False):
                     
                     # Construction: Name + Size + Connectivity + Color + Storage + Band
                     parts = [cat_name]
+                    current_name_lower = cat_name.lower()
                     
-                    if std_attrs['size']: parts.append(std_attrs['size'])
-                    if std_attrs['connectivity']: parts.append(f"({std_attrs['connectivity']})") # User liked parens (GPS)
-                    if std_attrs['color']: parts.append(std_attrs['color'])
+                    # Helper to check redundancy
+                    def is_redundant(val, current_text):
+                        if not val: return True
+                        # Check strictly for the value boundary
+                        val_cleaned = str(val).lower().replace('(', '').replace(')', '')
+                        return val_cleaned in current_text
+
+                    # Size
+                    if std_attrs['size'] and not is_redundant(std_attrs['size'], current_name_lower): 
+                        parts.append(std_attrs['size'])
+                    
+                    # Connectivity (GPS/Cellular)
+                    if std_attrs['connectivity']:
+                        # Special handling for GPS/Cellular often in name
+                        if not is_redundant(std_attrs['connectivity'], current_name_lower):
+                             parts.append(f"({std_attrs['connectivity']})")
+                    
+                    # Color
+                    if std_attrs['color'] and std_attrs['color'] != "Unknown": 
+                        parts.append(std_attrs['color'])
                     
                     # Storage (Hide for Watch/Audio)
-                    if storage != 'unknown_storage': 
+                    if storage and storage != 'unknown_storage': 
                          if catalog[prod_key]['category'] not in ['Watch', 'Audio']:
-                             parts.append(storage)
+                             if not is_redundant(storage, current_name_lower):
+                                 parts.append(storage)
                     
                     # Band
                     if std_attrs['band']: parts.append(std_attrs['band'])
@@ -549,13 +568,10 @@ def process_csv_files(quiet=False):
                         'product_key': prod_key,
                         'product_name': rich_name,
                         'category': catalog[prod_key]['category'],
-                        'variant_storage': storage,
-                        'variant_color': std_attrs['color'] or raw_color,
+                        'variant_storage': storage if storage != 'unknown_storage' else '',
+                        'variant_color': std_attrs['color'] if std_attrs['color'] != 'Unknown' else '',
                         'price': price,
                         'stock': stock_status,  # Include stock status (Yes/No)
-                        'stock': stock_status,
-                        'url': row.get('URL', ''),
-                        'Promotion Details': row.get('Promotion Details', ''),
                         'url': row.get('URL', ''),
                         'Promotion Details': row.get('Promotion Details', ''),
                         'Payment Promo': row.get('Payment Promo', ''),
