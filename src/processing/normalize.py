@@ -840,27 +840,57 @@ def generate_insights(df):
     # ============================================================
     # 1. BEST PRICES (Top 15 Deals) - Deduplicated by product_key
     # ============================================================
-    s += "## 💰 GIÁ TỐT NHẤT (Top 15)\n"
+    # ============================================================
+    # 1. BEST PRICES PER MODEL (Grouped by Category)
+    # ============================================================
+    s += "## 💰 GIÁ TỐT NHẤT (Theo Dòng Máy)\n"
+    s += "_Giá thấp nhất ghi nhận được cho từng dòng sản phẩm (In-Stock Only)_\n\n"
     
-    # Get min price per product/storage combination
-    min_prices = df_in_stock.groupby(['product_key', 'variant_storage', 'variant_color']).agg(
-        min_price=('price', 'min')
-    ).reset_index()
+    # Define Category Order
+    cat_order = ['iPhone', 'iPad', 'Mac', 'Watch', 'Audio', 'Accessories']
     
-    # Merge to get full row info for min prices
-    merged_best = df_in_stock.merge(min_prices, on=['product_key', 'variant_storage', 'variant_color'])
-    best_deals = merged_best[merged_best['price'] == merged_best['min_price']]
+    # Calculate min price per product_key (Model Level)
+    # We want the absolute lowest price for "iPhone 16 Pro Max" regardless of color/storage?
+    # No, usually "Best Price" for a model implies the base model (cheapest storage/color).
+    # So we group by product_key and find min price row.
     
-    # Deduplicate: keep first retailer per product/storage/color
-    best_deals = best_deals.drop_duplicates(
-        subset=['product_key', 'variant_storage', 'variant_color']
-    ).sort_values('price').head(15)
+    min_prices_idx = df_in_stock.groupby('product_key')['price'].idxmin()
+    best_models = df_in_stock.loc[min_prices_idx].copy()
     
-    for _, row in best_deals.iterrows():
-        price_fmt = "{:,.0f}đ".format(row['price'])
-        display = get_display_name(row)
-        s += f"- **{display}** @ **{row['retailer']}**: **{price_fmt}** [Link]({row['url']})\n"
-    s += "\n"
+    # Sort by Category Order then Price Descending (Flagships first)
+    best_models['cat_rank'] = best_models['category'].map({c: i for i, c in enumerate(cat_order)}).fillna(99)
+    best_models = best_models.sort_values(by=['cat_rank', 'price'], ascending=[True, False])
+    
+    # Group by Category for Display
+    for cat in cat_order:
+        cat_models = best_models[best_models['category'] == cat]
+        if cat_models.empty: continue
+        
+        # Icon mapping
+        icon = ""
+        if cat == 'iPhone': icon = "📱"
+        elif cat == 'iPad': icon = "🖊️"
+        elif cat == 'Mac': icon = "💻"
+        elif cat == 'Watch': icon = "⌚"
+        elif cat in ['Audio', 'Accessories']: icon = "🎧"
+        
+        s += f"### {icon} {cat}\n"
+        
+        for _, row in cat_models.iterrows():
+            price_fmt = "{:,.0f}đ".format(row['price'])
+            
+            # For display, we want just the Model Name mostly, but 'product_name' includes color/storage.
+            # We should probably use the Catalog Name or clean up the product_name to be just the Model?
+            # User wants "iPhone 16 Pro Max", "iPhone 16".
+            # Currently 'product_name' is "iPhone 16 Pro Max 256GB Titan Sa Mạc".
+            # We can try to extract the base Model Name from Catalog if available, or just use product_key logic.
+            # Actually, `product_name` is constructed in `process_csv_files`. 
+            # Let's try to show the full name of the cheapest variant found, so user knows WHICH one is cheap.
+            # e.g. "iPhone 16 Pro Max 256GB Titan: 28.9m"
+            
+            display = get_display_name(row)
+            s += f"- **{display}**: **{price_fmt}** @ **{row['retailer']}** [Link]({row['url']})\n"
+        s += "\n"
     
     # ============================================================
     # 2. PRICE VARIATION (Retailer vs Market Average)

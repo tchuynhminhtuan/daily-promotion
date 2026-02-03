@@ -83,6 +83,9 @@ jobs:
           # Add normalized clean data
           git add -f catalog/output/
 
+          # Add normalized docs (insights/report) to update HEAD
+          git add docs/
+
           # Commit if there are changes
           git commit -m "Auto: Update Raw Scraped Data [skip ci]" || echo "No changes to commit"
 
