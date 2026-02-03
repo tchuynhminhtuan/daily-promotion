@@ -1297,7 +1297,7 @@ class HTMLGenerator:
                 <div class="product-title">
                     {icon_html}
                     <span>{product}</span>
-                    <span style="opacity: 0.6; font-weight: 400; font-size: 0.9em;">({color})</span>
+                    <!-- Color removed to avoid redundancy with Product Name -->
                     {badge_html} 
                     {stock_badge}
                 </div>

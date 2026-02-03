@@ -19,6 +19,7 @@ CONTENT_BASE = BASE_DIR / "data/raw"  # Base directory, will scan for dates
 OUTPUT_DIR = BASE_DIR / "catalog/output"
 LOGS_DIR = BASE_DIR / "data/logs"
 INSIGHTS_DIR = BASE_DIR / "docs/insights"
+CONTENT_DIR = CONTENT_BASE # Default content directory
 
 
 RETAILER_MAP = {
@@ -108,7 +109,7 @@ def normalize_storage(name):
     
     # Return largest
     best_val, best_unit = candidates[0][1], candidates[0][2]
-    return f"{best_val}{best_unit}"
+    return f"{best_val}{best_unit.upper()}"
 
 # New Config
 MAPPING_PATH = BASE_DIR / "catalog/retailer_mapping.yaml"
@@ -516,47 +517,64 @@ def process_csv_files(quiet=False):
                     # Standardize Attributes (Color, Storage, Size)
                     std_attrs = standardize_attributes(prod_key, f"{raw_name} {raw_specs} {raw_color}", catalog, color_aliases)
                     cat_name = catalog[prod_key]['name']
+                    category = catalog[prod_key]['category']
                     
-                    # Construction: Name + Size + Connectivity + Color + Storage + Band
+                    # Extract extra details (RAM, etc.) early
+                    other_details = extract_extra_specs(raw_full, exclude_storage=storage) 
+                    
+                    # --- Category-Specific Name Construction ---
                     parts = [cat_name]
-                    current_name_lower = cat_name.lower()
                     
-                    # Helper to check redundancy
-                    def is_redundant(val, current_text):
+                    # Helper to check redundancy against dynamic current name
+                    def is_redundant(val):
                         if not val: return True
+                        current_text = " ".join(parts).lower()
                         # Check strictly for the value boundary
                         val_cleaned = str(val).lower().replace('(', '').replace(')', '')
                         return val_cleaned in current_text
 
-                    # Size
-                    if std_attrs['size'] and not is_redundant(std_attrs['size'], current_name_lower): 
-                        parts.append(std_attrs['size'])
-                    
-                    # Connectivity (GPS/Cellular)
-                    if std_attrs['connectivity']:
-                        # Special handling for GPS/Cellular often in name
-                        if not is_redundant(std_attrs['connectivity'], current_name_lower):
-                             parts.append(f"({std_attrs['connectivity']})")
-                    
-                    # Color
-                    if std_attrs['color'] and std_attrs['color'] != "Unknown": 
-                        parts.append(std_attrs['color'])
-                    
-                    # Storage (Hide for Watch/Audio)
-                    if storage and storage != 'unknown_storage': 
-                         if catalog[prod_key]['category'] not in ['Watch', 'Audio']:
-                             if not is_redundant(storage, current_name_lower):
-                                 parts.append(storage)
-                    
-                    # Band
-                    if std_attrs['band']: parts.append(std_attrs['band'])
-                    
-                    # Extracted Details fallback (RAM, etc if not covered)?
-                    # For Macs, we might want RAM/CPU.
-                    # Re-use extract_extra_specs() for non-watch items?
-                    # Let's keep extract_extra_specs for "Other Specs" like RAM/CPU
-                    other_details = extract_extra_specs(raw_full, exclude_storage=storage) 
-                    if other_details: parts.append(other_details)
+                    # 1. Mac: Name + RAM + Color + Storage
+                     # 1. Mac: Name + RAM + Storage + Color
+                    if category == 'Mac':
+                         # RAM (from other_details, excluding storage)
+                         if other_details and not is_redundant(other_details):
+                             parts.append(other_details)
+                         
+                         # Storage
+                         if storage and storage != 'unknown_storage' and not is_redundant(storage):
+                             parts.append(storage)
+
+                         # Color
+                         if std_attrs['color'] and std_attrs['color'] != "Unknown" and not is_redundant(std_attrs['color']):
+                             parts.append(std_attrs['color'])
+
+                    # 2. Watch: Name + Band + Color
+                    elif category == 'Watch':
+                         # Band
+                         if std_attrs['band'] and not is_redundant(std_attrs['band']):
+                             parts.append(std_attrs['band'])
+                         
+                         # Color (Case/Band Color)
+                         if std_attrs['color'] and std_attrs['color'] != "Unknown" and not is_redundant(std_attrs['color']):
+                             parts.append(std_attrs['color'])
+                             
+                         # No storage for watches usually
+
+                    # 3. Audio / Accessories: Name + Color
+                    elif category in ['Audio', 'Accessories']:
+                         if std_attrs['color'] and std_attrs['color'] != "Unknown" and not is_redundant(std_attrs['color']):
+                             parts.append(std_attrs['color'])
+
+                    # 4. Default (iPhone, iPad): Name + Color + Storage
+                    # 4. Default (iPhone, iPad): Name + Storage + Color
+                    else:
+                         # Storage
+                         if storage and storage != 'unknown_storage' and not is_redundant(storage):
+                             parts.append(storage)
+
+                         # Color
+                         if std_attrs['color'] and std_attrs['color'] != "Unknown" and not is_redundant(std_attrs['color']):
+                             parts.append(std_attrs['color'])
                         
                     rich_name = " ".join(parts)
                     rich_name = re.sub(r'\s+', ' ', rich_name).strip()
@@ -567,7 +585,7 @@ def process_csv_files(quiet=False):
                         'original_specs': raw_specs[:100],
                         'product_key': prod_key,
                         'product_name': rich_name,
-                        'category': catalog[prod_key]['category'],
+                        'category': category,
                         'variant_storage': storage if storage != 'unknown_storage' else '',
                         'variant_color': std_attrs['color'] if std_attrs['color'] != 'Unknown' else '',
                         'price': price,
@@ -750,26 +768,39 @@ def calculate_trend(df_historical, group_cols, days=30):
             increase_from_bottom = ((current_price - min_price) / min_price) * 100 if min_price != 0 else 0
             
             # Decide which metric to show
+            # Determine dates for display
+            last_date = group.iloc[-1]['date']
+            
             if drop_from_peak < -5:
                 trend = "🔻 Giảm"
                 display_pct = drop_from_peak
-                base_price = max_price # Show drop from Peak
+                base_price = max_price
+                # Find date of max price
+                base_date = group[group['price'] == max_price].iloc[0]['date']
             elif increase_from_bottom > 5:
                 trend = "🔺 Tăng"
                 display_pct = increase_from_bottom
-                base_price = min_price # Show increase from Bottom
+                base_price = min_price
+                # Find date of min price
+                base_date = group[group['price'] == min_price].iloc[0]['date']
             else:
                 trend = "➡️ Ổn định"
                 display_pct = pct_change
                 base_price = y[0]
+                base_date = group.iloc[0]['date']
             
+            # Format dates (YYYY-MM-DD -> DD/MM/YYYY)
+            def fmt_date(d): return pd.to_datetime(d).strftime('%d/%m/%Y')
+
             row = {col: val for col, val in zip(group_cols, name if isinstance(name, tuple) else [name])}
             row.update({
                 'trend': trend,
-                'pct_change': round(display_pct, 1), # Updated to use new metric
+                'pct_change': round(display_pct, 1),
                 'r_squared': round(r_value**2, 2),
-                'first_price': base_price, # Use Base Price (Peak/Bottom) for display
+                'first_price': base_price,
                 'last_price': current_price,
+                'base_date_str': fmt_date(base_date),
+                'last_date_str': fmt_date(last_date),
                 'url': group.iloc[-1]['url'],
                 'product_name': group.iloc[-1]['product_name'],
                 'category': group.iloc[-1]['category'],
@@ -800,20 +831,11 @@ def generate_insights(df):
     
     # Helper: Get canonical product name for display
     def get_display_name(row):
-        """Build display name: ProductName + Storage (if applicable)"""
-        name = row.get('product_name', 'Unknown')
-        storage = row.get('variant_storage', '')
-        color = row.get('variant_color', 'Unknown')
-        
-        # Don't show storage for Watch/Audio categories or if already in name
-        if row.get('category') in ['Audio', 'Watch'] or storage in ['', 'unknown_storage']:
-            return f"{name} ({color})"
-        
-        # Check if storage is already in product_name to avoid duplication
-        if storage.lower() in name.lower():
-            return f"{name} ({color})"
-        
-        return f"{name} {storage} ({color})"
+        """
+        Return the pre-calculated rich product name.
+        (Color/Storage are already included in product_name by normalize.py)
+        """
+        return row.get('product_name', 'Unknown')
     
     # ============================================================
     # 1. BEST PRICES (Top 15 Deals) - Deduplicated by product_key
@@ -934,7 +956,7 @@ def generate_insights(df):
                 big_movers = market_trends_7[abs(market_trends_7['pct_change']) > 5].sort_values('pct_change').head(10)
                 for _, row in big_movers.iterrows():
                     display = get_display_name(row)
-                    s += f"- {row['trend']} **{display}**: {row['pct_change']:+.1f}% ({row['first_price']:,.0f}đ → {row['last_price']:,.0f}đ) [Link]({row['url']})\n"
+                    s += f"- {row['trend']} **{display}**: {row['pct_change']:+.1f}% ({row['base_date_str']}: {row['first_price']:,.0f}đ → {row['last_date_str']}: {row['last_price']:,.0f}đ) [Link]({row['url']})\n"
             else:
                 s += "_Chưa đủ dữ liệu để phân tích xu hướng 7 ngày._\n"
             s += "\n"
@@ -948,7 +970,7 @@ def generate_insights(df):
                 big_store_movers = store_trends_7[abs(store_trends_7['pct_change']) > 10].sort_values('pct_change').head(15)
                 for _, row in big_store_movers.iterrows():
                     display = get_display_name(row)
-                    s += f"- {row['trend']} [{row['retailer']}] **{display}**: {row['pct_change']:+.1f}% [Link]({row['url']})\n"
+                    s += f"- {row['trend']} [{row['retailer']}] **{display}**: {row['pct_change']:+.1f}% ({row['base_date_str']}: {row['first_price']:,.0f}đ → {row['last_date_str']}: {row['last_price']:,.0f}đ) [Link]({row['url']})\n"
             else:
                 s += "_Chưa đủ dữ liệu để phân tích xu hướng 7 ngày._\n"
             s += "\n"
@@ -962,7 +984,7 @@ def generate_insights(df):
                 big_movers_30 = market_trends_30[abs(market_trends_30['pct_change']) > 5].sort_values('pct_change').head(10)
                 for _, row in big_movers_30.iterrows():
                     display = get_display_name(row)
-                    s += f"- {row['trend']} **{display}**: {row['pct_change']:+.1f}% ({row['first_price']:,.0f}đ → {row['last_price']:,.0f}đ) [Link]({row['url']})\n"
+                    s += f"- {row['trend']} **{display}**: {row['pct_change']:+.1f}% ({row['base_date_str']}: {row['first_price']:,.0f}đ → {row['last_date_str']}: {row['last_price']:,.0f}đ) [Link]({row['url']})\n"
             else:
                 s += "_Chưa đủ dữ liệu để phân tích xu hướng 30 ngày._\n"
             s += "\n"
@@ -976,7 +998,7 @@ def generate_insights(df):
                 big_store_movers_30 = store_trends_30[abs(store_trends_30['pct_change']) > 10].sort_values('pct_change').head(15)
                 for _, row in big_store_movers_30.iterrows():
                     display = get_display_name(row)
-                    s += f"- {row['trend']} [{row['retailer']}] **{display}**: {row['pct_change']:+.1f}% [Link]({row['url']})\n"
+                    s += f"- {row['trend']} [{row['retailer']}] **{display}**: {row['pct_change']:+.1f}% ({row['base_date_str']}: {row['first_price']:,.0f}đ → {row['last_date_str']}: {row['last_price']:,.0f}đ) [Link]({row['url']})\n"
             else:
                 s += "_Chưa đủ dữ liệu để phân tích xu hướng 30 ngày._\n"
             s += "\n"

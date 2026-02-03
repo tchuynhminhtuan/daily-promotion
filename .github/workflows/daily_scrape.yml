@@ -74,11 +74,14 @@ jobs:
 
           # Add new content files (data) for today only
           if [ -d "data/raw/$TODAY" ]; then
-            git add "data/raw/$TODAY/"
+            git add -f "data/raw/$TODAY/"
           else
             echo "⚠️ Data folder data/raw/$TODAY not found!"
             ls -R data/raw/
           fi
+
+          # Add normalized clean data
+          git add -f catalog/output/
 
           # Commit if there are changes
           git commit -m "Auto: Update Raw Scraped Data [skip ci]" || echo "No changes to commit"

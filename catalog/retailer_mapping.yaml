@@ -132,6 +132,9 @@ Viettel Store:
   iPad Pro M5 13 inch WIFI 1TB Nano-texture: ipad_pro_13_m5_wifi_nano
 Mobile World:
   Apple Watch Series 10 GPS + Cellular 46mm viền Titanium dây thể thao: apple_watch_series_10_titanium_46mm
+  iPad mini 7 5G 256GB: ipad_mini_a17_pro_lte
+  iPad mini 7 5G 128GB: ipad_mini_a17_pro_lte
+  iPad mini 7 5G 512GB: ipad_mini_a17_pro_lte
   Apple Watch Series 10 GPS + Cellular 46mm viền Titanium dây Milan: apple_watch_series_10_titanium_46mm
   Apple Watch SE 2 GPS 44mm viền nhôm dây vải: apple_watch_se_3_gps_44mm
   Apple Watch SE 2 GPS 44mm viền nhôm dây thể thao: apple_watch_se_3_gps_44mm
@@ -139,6 +142,7 @@ Mobile World:
   Apple Watch Series 10 GPS + Cellular 42mm viền nhôm dây vải: apple_watch_se_3_lte_44mm
   Apple Watch Series 11 GPS + Cellular 42m viền Titanium dây thể thao: apple_watch_series_11_titanium_42mm
   Apple Watch Series 11 GPS + Cellular 42mm viền nhôm dây thể thao: apple_watch_series_11_lte_42mm
+  Apple Watch Series 11 GPS + Cellular 46mm viền nhôm dây thể thao: apple_watch_series_11_lte_46mm
   Apple Watch Series 11 GPS + Cellular 46mm viền Titanium dây thể thao: apple_watch_series_11_titanium_46mm
   Apple Watch Series 11 GPS + Cellular 42mm viền Titanium dây Milan: apple_watch_series_11_titanium_42mm
   Apple Watch Series 11 GPS + Cellular 46mm viền Titanium dây Milan: apple_watch_series_11_titanium_46mm
@@ -291,7 +295,7 @@ Di Động Việt:
   Apple Watch SE 3 (2025) 40mm (GPS) Viền nhôm - Dây cao su S/M: apple_watch_se_3_gps_40mm
   Apple Watch Series 11 46mm (GPS) Viền nhôm - Dây cao su S/M: apple_watch_series_11_gps_46mm
   Apple Watch Series 11 46mm (GPS) Viền nhôm - Dây cao su M/L: apple_watch_series_11_gps_46mm
-  iPad A16 11 inch (2025) | 128GB Wifi & 5G Chính Hãng: ipad_a16_wifi
+  iPad A16 11 inch (2025) | 128GB Wifi & 5G Chính Hãng: ipad_a16_lte
   iPad A16 11 inch 2025 256GB Wifi Chính hãng: ipad_a16_wifi
   Apple Watch Series 11 42mm (GPS) Viền nhôm - Dây cao su S/M: apple_watch_series_11_gps_42mm
   iPad A16 11 inch (2025) | 128GB Wifi Chính Hãng: ipad_a16_wifi
@@ -299,7 +303,9 @@ Di Động Việt:
   iPad Pro M5 11 inch 256GB Wifi Chính Hãng: ipad_pro_11_m5_wifi
   iPad mini 7 2024 128GB Wifi Chính Hãng: ipad_mini_a17_pro_wifi
   iPhone Air 512GB Chính Hãng: iphone_air
+
   Apple Watch Series 9 45mm (GPS) Viền nhôm - Dây cao su size M/L: apple_watch_series_9_45mm
+
 FPT Shop:
   iPhone 16 Pro 128GB: iphone_16_pro
   iPhone 16 Pro 256GB: iphone_16_pro
@@ -313,6 +319,8 @@ FPT Shop:
   iPad Air 5 2022 10.9 inch M1 WiFi 5G 256GB: ipad_air_5_lte
   iPad Air 11 inch M2 2024 Wifi 256GB: ipad_air_11_m2_wifi
   iPad Air 11 inch M2 2024 Wifi 1TB: ipad_air_11_m2_wifi
+  iPad Air 11 inch M2 2024 Wifi + Cellular 128GB: ipad_air_11_m2_lte
+  iPad Air 11 inch M2 2024 Wifi + Cellular 256GB: ipad_air_11_m2_lte
   Macbook Air 15 M4 2025 10CPU/ 10GPU/ 24GB/ 512GB: macbook_air_m4
   MacBook Pro 14 2023 M3 Pro 12 CPU/18 GPU/18GB/1TB: macbook_pro_14_m3
   MacBook Pro 16 M4 Max 2024 16CPU/40GPU/48GB/1TB: macbook_pro_m4
@@ -347,31 +355,31 @@ FPT Shop:
   iPad A16 WiFi 128GB: ipad_a16_wifi
   iPad Air 5 2022 10.9 inch M1 WiFi 5G 64GB: ipad_air_5_lte
   iPad Air 11 inch M3 2025 WiFi 128GB: ipad_air_11_m3_wifi
-  iPad Air 11 inch M3 2025 WiFi + Cellular 128GB: ipad_air_11_m3_wifi
+  iPad Air 11 inch M3 2025 WiFi + Cellular 128GB: ipad_air_11_m3_lte
   iPad A16 WiFi 256GB: ipad_a16_wifi
   iPad A16 WiFi 512GB: ipad_a16_wifi
   iPad Air 11 inch M3 2025 WiFi 256GB: ipad_air_11_m3_wifi
   iPad Air 11 inch M3 2025 WiFi 512GB: ipad_air_11_m3_wifi
-  iPad Air 11 inch M3 2025 WiFi + Cellular 256GB: ipad_air_11_m3_wifi
-  iPad Air 11 inch M3 2025 WiFi + Cellular 512GB: ipad_air_11_m3_wifi
+  iPad Air 11 inch M3 2025 WiFi + Cellular 256GB: ipad_air_11_m3_lte
+  iPad Air 11 inch M3 2025 WiFi + Cellular 512GB: ipad_air_11_m3_lte
   iPad Air 13 inch M3 2025 WiFi 128GB: ipad_air_13_m3_wifi
   iPad Air 11 inch M2 2024 Wifi 512GB: ipad_air_11_m2_wifi
-  iPad Air 13 inch M3 2025 WiFi + Cellular 128GB: ipad_air_13_m3_wifi
+  iPad Air 13 inch M3 2025 WiFi + Cellular 128GB: ipad_air_13_m3_lte
   iPad Air 11 inch M3 2025 WiFi 1TB: ipad_air_11_m3_wifi
   iPad Air 13 inch M3 2025 WiFi 256GB: ipad_air_13_m3_wifi
-  iPad Air 11 inch M3 2025 WiFi + Cellular 1TB: ipad_air_11_m3_wifi
-  iPad Air 13 inch M3 2025 WiFi + Cellular 256GB: ipad_air_13_m3_wifi
+  iPad Air 11 inch M3 2025 WiFi + Cellular 1TB: ipad_air_11_m3_lte
+  iPad Air 13 inch M3 2025 WiFi + Cellular 256GB: ipad_air_13_m3_lte
   iPad mini 7 2024 Wifi 128GB: ipad_mini_a17_pro_wifi
   iPad Air 13 inch M3 2025 WiFi 512GB: ipad_air_13_m3_wifi
   iPad mini 7 2024 Wifi + Cellular 128GB: ipad_mini_a17_pro_lte
-  iPad Air 13 inch M3 2025 WiFi + Cellular 512GB: ipad_air_13_m3_wifi
+  iPad Air 13 inch M3 2025 WiFi + Cellular 512GB: ipad_air_13_m3_lte
   iPad Pro 11 inch M4 2024 Wifi 256GB: ipad_pro_11_m4_wifi
   iPad mini 7 2024 Wifi 256GB: ipad_mini_a17_pro_wifi
   iPad Pro 11 inch M4 2024 Wifi 512GB: ipad_pro_11_m4_wifi
   iPad Air 13 inch M3 2025 WiFi 1TB: ipad_air_13_m3_wifi
   iPad mini 7 2024 Wifi + Cellular 256GB: ipad_mini_a17_pro_lte
   iPad Pro 11 inch M4 2024 Wifi 1TB: ipad_pro_11_m4_wifi
-  iPad Air 13 inch M3 2025 WiFi + Cellular 1TB: ipad_air_13_m3_wifi
+  iPad Air 13 inch M3 2025 WiFi + Cellular 1TB: ipad_air_13_m3_lte
   iPad Pro 11 inch M4 2024 Wifi 2TB: ipad_pro_11_m4_wifi
   iPad mini 7 2024 Wifi 512GB: ipad_mini_a17_pro_wifi
   Macbook Air 13 M4 2025 10CPU/10GPU/16GB/512GB: macbook_air_m4

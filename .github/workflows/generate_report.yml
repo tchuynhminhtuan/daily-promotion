@@ -43,7 +43,10 @@ jobs:
           git config --global user.email "action@github.com"
 
           # Add new content files (data)
-          git add data/raw/
+          git add -f data/raw/
+
+          # Add normalized clean data
+          git add -f catalog/output/
 
           # Add AI Insights
           git add docs/insights/
