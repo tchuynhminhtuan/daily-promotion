@@ -28,4 +28,4 @@ projects/marshall_daily/content/*/img_mw/
 # IMPORTANT: Keep AI Experiments & Models
 !experiments/
 !experiments/fine_tuning/data/
-!experiments/fine_tuning/adapters/
+!experiments/fine_tuning/adapters/experiments/fine_tuning/adapters_llama/*_adapters.safetensors

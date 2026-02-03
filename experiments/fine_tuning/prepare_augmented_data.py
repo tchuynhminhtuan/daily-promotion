@@ -17,8 +17,8 @@ from processing.normalize import load_catalog, match_product
 DATA_DIR = BASE_DIR / "data/raw"
 MAPPING_PATH = BASE_DIR / "catalog/retailer_mapping.yaml"
 OUTPUT_DIR = BASE_DIR / "experiments/fine_tuning/data"
-OUTPUT_FILE = OUTPUT_DIR / "train_augmented.jsonl"
-VALID_FILE_AUG = OUTPUT_DIR / "valid_augmented.jsonl"
+OUTPUT_FILE = OUTPUT_DIR / "train.jsonl"
+VALID_FILE_AUG = OUTPUT_DIR / "valid.jsonl"
 
 def load_existing_mapping():
     with open(MAPPING_PATH, 'r') as f:
@@ -79,6 +79,57 @@ def generate_from_raw():
             
     return generated_data
 
+def generate_synthetic_data(catalog):
+    """
+    Generate synthetic variations for ALL products to ensure balanced coverage.
+    Solves the bias issue where rare products (e.g. SE 3 LTE 44mm) have no training data.
+    """
+    print("🧪 Generating synthetic data for balanced coverage...")
+    synthetic_samples = []
+    
+    # Common noise words in retailer titles
+    prefixes = ["Điện thoại", "Máy tính bảng", "Laptop", "Đồng hồ", "Tai nghe", "Apple", "Mua ngay"]
+    suffixes = ["Chính hãng", "VN/A", "Giá rẻ", "Trả góp 0%", "Mới 100%", "Nguyên seal"]
+    
+    for key, info in catalog.items():
+        base_name = info.get('name', '')
+        category = info.get('category', 'Unknown')
+        
+        # Skip if no name
+        if not base_name: continue
+        
+        # Generate variations
+        variations = [
+            base_name, # Raw name
+            base_name.lower(), # Lowercase
+            f"{base_name} VN/A", # Common suffix
+            f"Apple {base_name}", # Common prefix
+        ]
+        
+        # Add color/storage permutations if available
+        colors = info.get('colors', [])
+        storages = info.get('storage', [])
+        
+        # Pick random combos to avoid explosion, but ensure at least 5 samples per key
+        for _ in range(10):
+            p = random.choice(prefixes) if random.random() > 0.5 else ""
+            s = random.choice(suffixes) if random.random() > 0.5 else ""
+            c = random.choice(colors) if colors else ""
+            st = random.choice(storages) if storages else ""
+            
+            # Construct noisy title
+            # e.g. "Điện thoại iPhone 13 128GB Xanh VN/A"
+            components = [p, base_name, st, c, s]
+            # Shuffle slightly? No, word order usually fixed.
+            
+            full_name = " ".join([x for x in components if x]).strip()
+            variations.append(full_name)
+            
+        for v in variations:
+            synthetic_samples.append({"input": v, "output": key, "source": "synthetic"})
+            
+    return synthetic_samples
+
 def main():
     # 1. Load Manual Labels (High Quality)
     manual_data = load_existing_mapping()
@@ -92,12 +143,18 @@ def main():
     # We want to oversample manual data to ensure high priority
     final_dataset = []
     
-    # Add manual data 5 times to give it weight
-    for _ in range(5):
-        for item in manual_data:
-            final_dataset.append(item)
+    # Add manual data 10 times (High Priority)
+    for _ in range(10):
+        final_dataset.extend(manual_data)
             
-    # Add auto data once
+    # Add synthetic data 5 times (Medium Priority - Coverage)
+    synthetic_data = generate_synthetic_data(load_catalog())
+    for _ in range(5):
+        final_dataset.extend(synthetic_data)
+        
+    print(f"✅ Generated {len(synthetic_data)} synthetic balanced samples.")
+
+    # Add auto data once (Low Priority - Volume)
     final_dataset.extend(auto_data)
     
     print(f"📊 Total Training Samples: {len(final_dataset)}")
