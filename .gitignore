@@ -10,7 +10,6 @@ venv/
 .venv/
 
 # Raw Data (Don't commit massive scrape history)
-data/raw/*
 !data/raw/.gitkeep
 data/raw_legacy/
 Market Promotion/
@@ -28,4 +27,5 @@ projects/marshall_daily/content/*/img_mw/
 # IMPORTANT: Keep AI Experiments & Models
 !experiments/
 !experiments/fine_tuning/data/
-!experiments/fine_tuning/adapters/experiments/fine_tuning/adapters_llama/*_adapters.safetensors
+!experiments/fine_tuning/adapters/
+experiments/fine_tuning/adapters_llama/*_adapters.safetensors
