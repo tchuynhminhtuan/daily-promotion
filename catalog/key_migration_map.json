@@ -1,0 +1,513 @@
+{
+  "apple_watch_series_11_titanium": {
+    "strategies": [
+      "split_size"
+    ],
+    "targets": {
+      "42mm": "apple_watch_series_11_titanium_42mm",
+      "46mm": "apple_watch_series_11_titanium_46mm"
+    }
+  },
+  "apple_watch_se_3_gps": {
+    "strategies": [
+      "split_size"
+    ],
+    "targets": {
+      "40mm": "apple_watch_se_3_gps_40mm",
+      "44mm": "apple_watch_se_3_gps_44mm"
+    }
+  },
+  "apple_watch_se_3_lte": {
+    "strategies": [
+      "split_size"
+    ],
+    "targets": {
+      "40mm": "apple_watch_se_3_lte_40mm",
+      "44mm": "apple_watch_se_3_lte_44mm"
+    }
+  },
+  "ipad_pro_97_inch": {
+    "strategies": [
+      "split_conn"
+    ],
+    "targets": {
+      "lower_tier": "ipad_pro_97_inch_wifi",
+      "higher_tier": "ipad_pro_97_inch_lte"
+    }
+  },
+  "ipad_pro_129_inch_th\u1ebf_h\u1ec7_th\u1ee9_6": {
+    "strategies": [
+      "split_conn"
+    ],
+    "targets": {
+      "lower_tier": "ipad_pro_129_inch_th\u1ebf_h\u1ec7_th\u1ee9_6_wifi",
+      "higher_tier": "ipad_pro_129_inch_th\u1ebf_h\u1ec7_th\u1ee9_6_lte"
+    }
+  },
+  "ipad_th\u1ebf_h\u1ec7_th\u1ee9_10": {
+    "strategies": [
+      "split_conn"
+    ],
+    "targets": {
+      "lower_tier": "ipad_th\u1ebf_h\u1ec7_th\u1ee9_10_wifi",
+      "higher_tier": "ipad_th\u1ebf_h\u1ec7_th\u1ee9_10_lte"
+    }
+  },
+  "ipad_pro_11_inch_m4": {
+    "strategies": [
+      "split_conn"
+    ],
+    "targets": {
+      "lower_tier": "ipad_pro_11_inch_m4_wifi",
+      "higher_tier": "ipad_pro_11_inch_m4_lte"
+    }
+  },
+  "ipad_pro_129_inch_th\u1ebf_h\u1ec7_th\u1ee9_4": {
+    "strategies": [
+      "split_conn"
+    ],
+    "targets": {
+      "lower_tier": "ipad_pro_129_inch_th\u1ebf_h\u1ec7_th\u1ee9_4_wifi",
+      "higher_tier": "ipad_pro_129_inch_th\u1ebf_h\u1ec7_th\u1ee9_4_lte"
+    }
+  },
+  "ipad_pro_13_inch_m5": {
+    "strategies": [
+      "split_conn"
+    ],
+    "targets": {
+      "lower_tier": "ipad_pro_13_inch_m5_wifi",
+      "higher_tier": "ipad_pro_13_inch_m5_lte"
+    }
+  },
+  "ipad_th\u1ebf_h\u1ec7_th\u1ee9_8": {
+    "strategies": [
+      "split_conn"
+    ],
+    "targets": {
+      "lower_tier": "ipad_th\u1ebf_h\u1ec7_th\u1ee9_8_wifi",
+      "higher_tier": "ipad_th\u1ebf_h\u1ec7_th\u1ee9_8_lte"
+    }
+  },
+  "ipad_pro_129_inch_th\u1ebf_h\u1ec7_th\u1ee9_2": {
+    "strategies": [
+      "split_conn"
+    ],
+    "targets": {
+      "lower_tier": "ipad_pro_129_inch_th\u1ebf_h\u1ec7_th\u1ee9_2_wifi",
+      "higher_tier": "ipad_pro_129_inch_th\u1ebf_h\u1ec7_th\u1ee9_2_lte"
+    }
+  },
+  "ipad_pro_11_inch_m5": {
+    "strategies": [
+      "split_conn"
+    ],
+    "targets": {
+      "lower_tier": "ipad_pro_11_inch_m5_wifi",
+      "higher_tier": "ipad_pro_11_inch_m5_lte"
+    }
+  },
+  "ipad_pro_129_inch_th\u1ebf_h\u1ec7_th\u1ee9_5": {
+    "strategies": [
+      "split_conn"
+    ],
+    "targets": {
+      "lower_tier": "ipad_pro_129_inch_th\u1ebf_h\u1ec7_th\u1ee9_5_wifi",
+      "higher_tier": "ipad_pro_129_inch_th\u1ebf_h\u1ec7_th\u1ee9_5_lte"
+    }
+  },
+  "ipad_pro_13_inch_m4": {
+    "strategies": [
+      "split_conn"
+    ],
+    "targets": {
+      "lower_tier": "ipad_pro_13_inch_m4_wifi",
+      "higher_tier": "ipad_pro_13_inch_m4_lte"
+    }
+  },
+  "ipad_pro_129_inch_th\u1ebf_h\u1ec7_th\u1ee9_3": {
+    "strategies": [
+      "split_conn"
+    ],
+    "targets": {
+      "lower_tier": "ipad_pro_129_inch_th\u1ebf_h\u1ec7_th\u1ee9_3_wifi",
+      "higher_tier": "ipad_pro_129_inch_th\u1ebf_h\u1ec7_th\u1ee9_3_lte"
+    }
+  },
+  "ipad_th\u1ebf_h\u1ec7_th\u1ee9_9": {
+    "strategies": [
+      "split_conn"
+    ],
+    "targets": {
+      "lower_tier": "ipad_th\u1ebf_h\u1ec7_th\u1ee9_9_wifi",
+      "higher_tier": "ipad_th\u1ebf_h\u1ec7_th\u1ee9_9_lte"
+    }
+  },
+  "ipad_pro_105_inch": {
+    "strategies": [
+      "split_conn"
+    ],
+    "targets": {
+      "lower_tier": "ipad_pro_105_inch_wifi",
+      "higher_tier": "ipad_pro_105_inch_lte"
+    }
+  },
+  "ipad_pro_129_inch_th\u1ebf_h\u1ec7_th\u1ee9_1": {
+    "strategies": [
+      "split_conn"
+    ],
+    "targets": {
+      "lower_tier": "ipad_pro_129_inch_th\u1ebf_h\u1ec7_th\u1ee9_1_wifi",
+      "higher_tier": "ipad_pro_129_inch_th\u1ebf_h\u1ec7_th\u1ee9_1_lte"
+    }
+  },
+  "ipad_mini_th\u1ebf_h\u1ec7_th\u1ee9_6": {
+    "strategies": [
+      "split_conn"
+    ],
+    "targets": {
+      "lower_tier": "ipad_mini_th\u1ebf_h\u1ec7_th\u1ee9_6_wifi",
+      "higher_tier": "ipad_mini_th\u1ebf_h\u1ec7_th\u1ee9_6_lte"
+    }
+  },
+  "ipad_th\u1ebf_h\u1ec7_th\u1ee9_7": {
+    "strategies": [
+      "split_conn"
+    ],
+    "targets": {
+      "lower_tier": "ipad_th\u1ebf_h\u1ec7_th\u1ee9_7_wifi",
+      "higher_tier": "ipad_th\u1ebf_h\u1ec7_th\u1ee9_7_lte"
+    }
+  },
+  "ipad_air_th\u1ebf_h\u1ec7_th\u1ee9_4": {
+    "strategies": [
+      "split_conn"
+    ],
+    "targets": {
+      "lower_tier": "ipad_air_th\u1ebf_h\u1ec7_th\u1ee9_4_wifi",
+      "higher_tier": "ipad_air_th\u1ebf_h\u1ec7_th\u1ee9_4_lte"
+    }
+  },
+  "ipad_air_2": {
+    "strategies": [
+      "split_conn"
+    ],
+    "targets": {
+      "lower_tier": "ipad_air_2_wifi",
+      "higher_tier": "ipad_air_2_lte"
+    }
+  },
+  "ipad_th\u1ebf_h\u1ec7_th\u1ee9_5": {
+    "strategies": [
+      "split_conn"
+    ],
+    "targets": {
+      "lower_tier": "ipad_th\u1ebf_h\u1ec7_th\u1ee9_5_wifi",
+      "higher_tier": "ipad_th\u1ebf_h\u1ec7_th\u1ee9_5_lte"
+    }
+  },
+  "ipad_air_13_inch_m3": {
+    "strategies": [
+      "split_conn"
+    ],
+    "targets": {
+      "lower_tier": "ipad_air_13_inch_m3_wifi",
+      "higher_tier": "ipad_air_13_inch_m3_lte"
+    }
+  },
+  "ipad_mini_2": {
+    "strategies": [
+      "split_conn"
+    ],
+    "targets": {
+      "lower_tier": "ipad_mini_2_wifi",
+      "higher_tier": "ipad_mini_2_lte"
+    }
+  },
+  "ipad_mini_3": {
+    "strategies": [
+      "split_conn"
+    ],
+    "targets": {
+      "lower_tier": "ipad_mini_3_wifi",
+      "higher_tier": "ipad_mini_3_lte"
+    }
+  },
+  "ipad_pro_11_inch_th\u1ebf_h\u1ec7_th\u1ee9_3": {
+    "strategies": [
+      "split_conn"
+    ],
+    "targets": {
+      "lower_tier": "ipad_pro_11_inch_th\u1ebf_h\u1ec7_th\u1ee9_3_wifi",
+      "higher_tier": "ipad_pro_11_inch_th\u1ebf_h\u1ec7_th\u1ee9_3_lte"
+    }
+  },
+  "ipad_pro_11_inch_th\u1ebf_h\u1ec7_th\u1ee9_1": {
+    "strategies": [
+      "split_conn"
+    ],
+    "targets": {
+      "lower_tier": "ipad_pro_11_inch_th\u1ebf_h\u1ec7_th\u1ee9_1_wifi",
+      "higher_tier": "ipad_pro_11_inch_th\u1ebf_h\u1ec7_th\u1ee9_1_lte"
+    }
+  },
+  "ipad_air_11_inch_m2": {
+    "strategies": [
+      "split_conn"
+    ],
+    "targets": {
+      "lower_tier": "ipad_air_11_inch_m2_wifi",
+      "higher_tier": "ipad_air_11_inch_m2_lte"
+    }
+  },
+  "ipad_mini_th\u1ebf_h\u1ec7_th\u1ee9_5": {
+    "strategies": [
+      "split_conn"
+    ],
+    "targets": {
+      "lower_tier": "ipad_mini_th\u1ebf_h\u1ec7_th\u1ee9_5_wifi",
+      "higher_tier": "ipad_mini_th\u1ebf_h\u1ec7_th\u1ee9_5_lte"
+    }
+  },
+  "ipad_air_th\u1ebf_h\u1ec7_th\u1ee9_5": {
+    "strategies": [
+      "split_conn"
+    ],
+    "targets": {
+      "lower_tier": "ipad_air_th\u1ebf_h\u1ec7_th\u1ee9_5_wifi",
+      "higher_tier": "ipad_air_th\u1ebf_h\u1ec7_th\u1ee9_5_lte"
+    }
+  },
+  "ipad_mini_4": {
+    "strategies": [
+      "split_conn"
+    ],
+    "targets": {
+      "lower_tier": "ipad_mini_4_wifi",
+      "higher_tier": "ipad_mini_4_lte"
+    }
+  },
+  "ipad_air_13_inch_m2": {
+    "strategies": [
+      "split_conn"
+    ],
+    "targets": {
+      "lower_tier": "ipad_air_13_inch_m2_wifi",
+      "higher_tier": "ipad_air_13_inch_m2_lte"
+    }
+  },
+  "ipad_pro_11_inch_th\u1ebf_h\u1ec7_th\u1ee9_4": {
+    "strategies": [
+      "split_conn"
+    ],
+    "targets": {
+      "lower_tier": "ipad_pro_11_inch_th\u1ebf_h\u1ec7_th\u1ee9_4_wifi",
+      "higher_tier": "ipad_pro_11_inch_th\u1ebf_h\u1ec7_th\u1ee9_4_lte"
+    }
+  },
+  "ipad_th\u1ebf_h\u1ec7_th\u1ee9_6": {
+    "strategies": [
+      "split_conn"
+    ],
+    "targets": {
+      "lower_tier": "ipad_th\u1ebf_h\u1ec7_th\u1ee9_6_wifi",
+      "higher_tier": "ipad_th\u1ebf_h\u1ec7_th\u1ee9_6_lte"
+    }
+  },
+  "ipad_air_th\u1ebf_h\u1ec7_th\u1ee9_3": {
+    "strategies": [
+      "split_conn"
+    ],
+    "targets": {
+      "lower_tier": "ipad_air_th\u1ebf_h\u1ec7_th\u1ee9_3_wifi",
+      "higher_tier": "ipad_air_th\u1ebf_h\u1ec7_th\u1ee9_3_lte"
+    }
+  },
+  "ipad_air_11_inch_m3": {
+    "strategies": [
+      "split_conn"
+    ],
+    "targets": {
+      "lower_tier": "ipad_air_11_inch_m3_wifi",
+      "higher_tier": "ipad_air_11_inch_m3_lte"
+    }
+  },
+  "ipad_air_th\u1ebf_h\u1ec7_th\u1ee9_1": {
+    "strategies": [
+      "split_conn"
+    ],
+    "targets": {
+      "lower_tier": "ipad_air_th\u1ebf_h\u1ec7_th\u1ee9_1_wifi",
+      "higher_tier": "ipad_air_th\u1ebf_h\u1ec7_th\u1ee9_1_lte"
+    }
+  },
+  "ipad_pro_11_inch_th\u1ebf_h\u1ec7_th\u1ee9_2": {
+    "strategies": [
+      "split_conn"
+    ],
+    "targets": {
+      "lower_tier": "ipad_pro_11_inch_th\u1ebf_h\u1ec7_th\u1ee9_2_wifi",
+      "higher_tier": "ipad_pro_11_inch_th\u1ebf_h\u1ec7_th\u1ee9_2_lte"
+    }
+  },
+  "apple_watch_series_4": {
+    "strategies": [
+      "split_size"
+    ],
+    "targets": {
+      "38mm": "apple_watch_series_4_38mm",
+      "40mm": "apple_watch_series_4_40mm",
+      "44mm": "apple_watch_series_4_44mm"
+    }
+  },
+  "apple_watch_series_10_titanium": {
+    "strategies": [
+      "split_size"
+    ],
+    "targets": {
+      "42mm": "apple_watch_series_10_titanium_42mm",
+      "46mm": "apple_watch_series_10_titanium_46mm"
+    }
+  },
+  "apple_watch_series_8": {
+    "strategies": [
+      "split_size"
+    ],
+    "targets": {
+      "38mm": "apple_watch_series_8_38mm",
+      "41mm": "apple_watch_series_8_41mm",
+      "45mm": "apple_watch_series_8_45mm"
+    }
+  },
+  "apple_watch_series_9": {
+    "strategies": [
+      "split_size"
+    ],
+    "targets": {
+      "38mm": "apple_watch_series_9_38mm",
+      "41mm": "apple_watch_series_9_41mm",
+      "45mm": "apple_watch_series_9_45mm"
+    }
+  },
+  "apple_watch_se_2": {
+    "strategies": [
+      "split_conn",
+      "split_size"
+    ],
+    "targets": {
+      "lower_tier|40mm": "apple_watch_se_2_gps_40mm",
+      "lower_tier|44mm": "apple_watch_se_2_gps_44mm",
+      "higher_tier|40mm": "apple_watch_se_2_lte_40mm",
+      "higher_tier|44mm": "apple_watch_se_2_lte_44mm"
+    }
+  },
+  "apple_watch_series_5": {
+    "strategies": [
+      "split_size"
+    ],
+    "targets": {
+      "38mm": "apple_watch_series_5_38mm",
+      "40mm": "apple_watch_series_5_40mm",
+      "44mm": "apple_watch_series_5_44mm"
+    }
+  },
+  "apple_watch_series_2": {
+    "strategies": [
+      "split_size"
+    ],
+    "targets": {
+      "38mm": "apple_watch_series_2_38mm",
+      "42mm": "apple_watch_series_2_42mm"
+    }
+  },
+  "apple_watch_series_3": {
+    "strategies": [
+      "split_size"
+    ],
+    "targets": {
+      "38mm": "apple_watch_series_3_38mm",
+      "42mm": "apple_watch_series_3_42mm"
+    }
+  },
+  "apple_watch_series_1": {
+    "strategies": [
+      "split_size"
+    ],
+    "targets": {
+      "38mm": "apple_watch_series_1_38mm",
+      "42mm": "apple_watch_series_1_42mm"
+    }
+  },
+  "apple_watch_series_6": {
+    "strategies": [
+      "split_size"
+    ],
+    "targets": {
+      "38mm": "apple_watch_series_6_38mm",
+      "40mm": "apple_watch_series_6_40mm",
+      "44mm": "apple_watch_series_6_44mm"
+    }
+  },
+  "apple_watch_se": {
+    "strategies": [
+      "split_size"
+    ],
+    "targets": {
+      "38mm": "apple_watch_se_38mm",
+      "40mm": "apple_watch_se_40mm",
+      "44mm": "apple_watch_se_44mm"
+    }
+  },
+  "apple_watch_series_7": {
+    "strategies": [
+      "split_size"
+    ],
+    "targets": {
+      "38mm": "apple_watch_series_7_38mm",
+      "41mm": "apple_watch_series_7_41mm",
+      "45mm": "apple_watch_series_7_45mm"
+    }
+  },
+  "apple_watch_series_10_aluminum": {
+    "strategies": [
+      "split_conn",
+      "split_size"
+    ],
+    "targets": {
+      "lower_tier|42mm": "apple_watch_series_10_aluminum_gps_42mm",
+      "lower_tier|46mm": "apple_watch_series_10_aluminum_gps_46mm",
+      "higher_tier|42mm": "apple_watch_series_10_aluminum_lte_42mm",
+      "higher_tier|46mm": "apple_watch_series_10_aluminum_lte_46mm"
+    }
+  },
+  "apple_watch_series_11_aluminum_gps": {
+    "strategies": [
+      "split_size"
+    ],
+    "targets": {
+      "42mm": "apple_watch_series_11_aluminum_gps_42mm",
+      "46mm": "apple_watch_series_11_aluminum_gps_46mm"
+    }
+  },
+  "apple_watch_series_11_aluminum_lte": {
+    "strategies": [
+      "split_conn",
+      "split_size"
+    ],
+    "targets": {
+      "lower_tier|42mm": "apple_watch_series_11_aluminum_lte_gps_42mm",
+      "lower_tier|46mm": "apple_watch_series_11_aluminum_lte_gps_46mm",
+      "higher_tier|42mm": "apple_watch_series_11_aluminum_lte_lte_42mm",
+      "higher_tier|46mm": "apple_watch_series_11_aluminum_lte_lte_46mm"
+    }
+  },
+  "ipad_a16_lte": {
+    "strategies": [
+      "split_conn"
+    ],
+    "targets": {
+      "lower_tier": "ipad_a16_lte_wifi",
+      "higher_tier": "ipad_a16_lte_lte"
+    }
+  }
+}

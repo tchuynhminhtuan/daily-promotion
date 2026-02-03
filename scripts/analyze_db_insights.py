@@ -16,7 +16,8 @@ def analyze_prices():
         ph.date,
         ph.retailer,
         ph.price,
-        ph.variant
+        ph.variant,
+        ph.source
     FROM price_history ph
     JOIN products p ON ph.product_id = p.id
     WHERE ph.date >= date('now', '-30 days')
@@ -33,10 +34,31 @@ def analyze_prices():
 
     df['date'] = pd.to_datetime(df['date'])
     
-    # Normalize variant if needed or use as is
-    # Just group by Key + Retailer + Variant to compare specific items
+    # Fill missing retailer from source
+    def get_retailer(source):
+        if not source: return 'Unknown'
+        if 'fpt' in source: return 'FPT Shop'
+        if 'mw' in source: return 'Mobile World'
+        if 'cps' in source: return 'CellphoneS'
+        if 'ddv' in source: return 'Di Dong Viet'
+        if 'hoangha' in source: return 'HoangHa Mobile'
+        if 'viettel' in source: return 'Viettel Store'
+        return 'Unknown'
+        
+    df['retailer'] = df['source'].apply(get_retailer)
+    
+    # Max price filter to remove potential anomalies (e.g. 0 or very high errors)
+    df = df[df['price'] > 100000] # > 100k
     
     print(f"Loaded {len(df)} records from {df['date'].min().date()} to {df['date'].max().date()}\n")
+    print(df.head())
+    print("\nData Types:")
+    print(df.dtypes)
+    print("\nUnique Product Keys:")
+    print(df['product_key'].unique()[:20])
+    print(f"Total Unique Keys: {df['product_key'].nunique()}")
+    print("\nSample Retailers:")
+    print(df['retailer'].unique())
     
     # 1. Biggest Price Drops (Absolute & %) OVERALL per product key/variant
     # We group by product_key, retailer, variant first to find drops within a single item listing
@@ -70,7 +92,7 @@ def analyze_prices():
         
         volatility = group['price'].std()
         
-        if drop_pct > 5 or abs(change_pct) > 5:
+        if drop_pct > 1 or abs(change_pct) > 1: # Lowered threshold to 1%
             insights.append({
                 'product': prod_key,
                 'retailer': retailer,
@@ -83,6 +105,7 @@ def analyze_prices():
             })
             
     df_insights = pd.DataFrame(insights)
+    print(f"DEBUG: Found {len(df_insights)} insights with >1% change")
     
     if not df_insights.empty:
         print("--- 🔥 GIẢM GIÁ MẠNH NHẤT (Top drops from peak in 30 days) ---")
@@ -121,6 +144,8 @@ def analyze_prices():
     price_spreads['spread_pct'] = (price_spreads['spread'] / price_spreads['min_price']) * 100
     
     # Filter for items sold by >1 retailer
+    print(f"DEBUG: Found {len(price_spreads)} unique products today. {len(price_spreads[price_spreads['num_retailers'] > 1])} sold by >1 retailer.")
+    
     multi_retailer = price_spreads[price_spreads['num_retailers'] > 1].sort_values('spread_pct', ascending=False)
     
     if not multi_retailer.empty:

@@ -7,6 +7,7 @@ import re
 import html
 
 import yaml
+import subprocess
 
 # --- Configuration ---
 # Determine the project root directory
@@ -1477,13 +1478,49 @@ def select_dates(available_dates):
         return None, None
 
 
+def run_ai_mapping_pipeline():
+    """Execution of the AI Mapping Pipeline: Suggest -> Merge -> Normalize"""
+    print("\n" + "="*50)
+    print("🤖 --- KÍCH HOẠT QUY TRÌNH AI MAPPING TỰ ĐỘNG ---")
+    print("="*50)
+    
+    try:
+        # 1. Run Suggest Mapping
+        print("\n🔮 [Bước 1/3] Đang tìm kiếm sản phẩm chưa map (AI Qwen)...")
+        suggest_script = os.path.join(PROJECT_ROOT, "src", "processing", "suggest_mapping_ai.py")
+        subprocess.run(["python3", suggest_script], check=True)
+        
+        # 2. Run Merge Mappings
+        print("\n🔗 [Bước 2/3] Đang hợp nhất và sửa lỗi mapping...")
+        merge_script = os.path.join(PROJECT_ROOT, "scripts", "merge_mappings.py")
+        subprocess.run(["python3", merge_script], check=True)
+        
+        # 3. Re-run Normalization
+        print("\n🔄 [Bước 3/3] Đang chuẩn hóa lại dữ liệu với mapping mới...")
+        normalize_script = os.path.join(PROJECT_ROOT, "src", "processing", "normalize.py")
+        subprocess.run(["python3", normalize_script], check=True)
+        
+        print("\n✅ Quy trình AI Mapping hoàn tất! Tiếp tục tạo báo cáo...")
+        print("="*50 + "\n")
+        
+    except subprocess.CalledProcessError as e:
+        print(f"\n❌ Lỗi trong quy trình AI: {e}")
+        print("➡️ Đang tiếp tục tạo báo cáo với dữ liệu hiện có...\n")
+    except Exception as e:
+        print(f"\n❌ Lỗi không xác định: {e}")
+
 def main():
     parser = argparse.ArgumentParser(description="Daily Promotion Report Generator")
     parser.add_argument("--interactive", action="store_true", help="Run in interactive mode (prompt for dates)")
+    parser.add_argument("--fix-mappings", action="store_true", help="Auto-run AI mapping pipeline before reporting")
     args = parser.parse_args()
 
     # Determine Base Directory
     base_dir = BASE_DIR
+    
+    # 0. Run AI Pipeline if requested
+    if args.fix_mappings:
+        run_ai_mapping_pipeline()
     
     target_dates = DATES
     is_interactive = args.interactive

@@ -21,6 +21,7 @@ def load_existing_mapping():
     
     mapped_names = set()
     for retailer in data:
+        if not data[retailer]: continue
         for name in data[retailer]:
             mapped_names.add(name)
     return mapped_names
@@ -99,9 +100,21 @@ def ai_predict(model, tokenizer, product_name):
     response = generate(model, tokenizer, prompt=prompt, max_tokens=20, verbose=False)
     return response.strip()
 
+
+CATALOG_PATH = BASE_DIR / "catalog/product_catalog.yaml"
+
+def load_canonical_keys():
+    if not CATALOG_PATH.exists():
+        print("⚠️ Warning: Catalog not found!")
+        return set()
+    with open(CATALOG_PATH, 'r') as f:
+        data = yaml.safe_load(f)
+    return set(data.keys())
+
 def main():
     # 1. Load what we already know
     mapped_names = load_existing_mapping()
+    canonical_keys = load_canonical_keys()
     
     # 2. Find what we don't know
     unmapped_data = find_unmapped_products(mapped_names)
@@ -128,10 +141,25 @@ def main():
         suggestions[retailer] = {}
         for p_name in products:
             predicted_key = ai_predict(model, tokenizer, p_name)
+            
+            # VALIDATION CHECK
+            if predicted_key not in canonical_keys:
+                # Try simple normalization or fuzzy fix?
+                # Or try to fix _lte suffix if hallucinated?
+                # For now, just mark invalid to prevent crash
+                # Maybe map to 'nan' or skip
+                print(f"   ⚠️ Invalid Key Predict: '{predicted_key}' (Not in Catalog)")
+                # suggestions[retailer][p_name] = f"FIXME: {predicted_key}"
+                continue
+            
             suggestions[retailer][p_name] = predicted_key
             print(f"   '{p_name}' -> {predicted_key}")
 
     # 5. Save Report
+    if not suggestions:
+        print("No valid suggestions generated.")
+        return
+
     with open(OUTPUT_FILE, 'w', encoding='utf-8') as f:
         f.write("# AI Generated Suggestions (Review before merging)\n")
         yaml.dump(suggestions, f, allow_unicode=True, sort_keys=False)

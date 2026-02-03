@@ -64,19 +64,34 @@ jobs:
           echo "Run Normalization (AI disabled on Linux)..."
           python3 src/processing/normalize.py --no-ai
 
-      - name: Generate Report
-        run: |
-          echo "Generating HTML Report..."
-          # Run the interactive report in non-interactive mode (default)
-          python3 src/reporting/generate_report.py
-
-      - name: Commit and Push Results
+      - name: Commit Scraped Data
         run: |
           git config --global user.name "GitHub Action Scraper"
           git config --global user.email "action@github.com"
 
           # Add new content files (data)
           git add data/raw/
+
+          # Commit if there are changes
+          git commit -m "Auto: Update Raw Scraped Data [skip ci]" || echo "No changes to commit"
+
+          # Pull latest changes to avoid conflicts
+          git pull --rebase origin main
+
+          # Push changes
+          git push
+
+      - name: Generate Report
+        run: |
+          echo "Generating HTML Report..."
+          # Run the interactive report in non-interactive mode (default)
+          python3 src/reporting/generate_report.py
+
+      - name: Commit Report
+        if: success() || failure()
+        run: |
+          git config --global user.name "GitHub Action Scraper"
+          git config --global user.email "action@github.com"
 
           # Add AI Insights
           git add docs/insights/
@@ -85,7 +100,7 @@ jobs:
           git add docs/index.html
 
           # Commit if there are changes
-          git commit -m "Auto: Update Daily Promotion Data & Report [skip ci]" || echo "No changes to commit"
+          git commit -m "Auto: Update Report & Insights [skip ci]" || echo "No changes to commit"
 
           # Pull latest changes to avoid conflicts (Fix for concurrent runs/edits)
           git pull --rebase origin main

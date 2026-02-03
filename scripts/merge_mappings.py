@@ -64,7 +64,16 @@ def correct_mapping(product_name, ai_key):
 
 def main():
     main_map = load_yaml(MAPPING_PATH)
-    new_map = load_yaml(NEW_MAPPING_PATH)
+    
+    # Load sources
+    sources = [NEW_MAPPING_PATH, BASE_DIR / "catalog/ai_suggested_mapping.yaml"]
+    new_map = {}
+    
+    for src in sources:
+        data = load_yaml(src)
+        for retailer, products in data.items():
+            if retailer not in new_map: new_map[retailer] = {}
+            new_map[retailer].update(products)
     
     added_count = 0
     
@@ -73,6 +82,9 @@ def main():
     for retailer, products in new_map.items():
         if retailer not in main_map:
             main_map[retailer] = {}
+            
+        if main_map[retailer] is None:
+             main_map[retailer] = {}
             
         for p_name, ai_key in products.items():
             # Skip if already exists

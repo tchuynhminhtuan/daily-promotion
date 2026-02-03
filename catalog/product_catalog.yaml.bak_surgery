@@ -91,48 +91,6 @@ iphone_17_pro:
   sizes:
     - 6.3 inch
   source: official_combined
-ipad_air_m2:
-  name: iPad Air M2
-  category: iPad
-  url: https://www.apple.com/vn/shop/buy-ipad/ipad-air
-  colors:
-    - Tím
-    - Xanh Dương
-    - Xám Không Gian
-    - Ánh Sao
-  storage:
-    - 128GB
-    - 256GB
-    - 512GB
-    - 1TB
-ipad_air_m3:
-  name: iPad Air M3
-  category: iPad
-  storage:
-    - 128GB
-    - 256GB
-    - 512GB
-    - 1TB
-ipad_pro_m4:
-  name: iPad Pro M4
-  category: iPad
-  url: https://www.apple.com/vn/shop/buy-ipad/ipad-pro
-  colors:
-    - Bạc
-    - Đen Không Gian
-  storage:
-    - 256GB
-    - 512GB
-    - 1TB
-    - 2TB
-ipad_pro_m5:
-  name: iPad Pro M5
-  category: iPad
-  storage:
-    - 256GB
-    - 512GB
-    - 1TB
-    - 2TB
 ipad:
   name: iPad
   category: iPad
@@ -142,19 +100,6 @@ ipad:
     - Hồng
     - Vàng
     - Xanh Dương
-  storage:
-    - 128GB1
-    - 256GB1
-    - 512GB1
-ipad_mini:
-  name: iPad mini
-  category: iPad
-  url: https://www.apple.com/vn/shop/buy-ipad/ipad-mini
-  colors:
-    - Tím
-    - Xanh Dương
-    - Xám Không Gian
-    - Ánh Sao
   storage:
     - 128GB1
     - 256GB1
@@ -169,36 +114,6 @@ macbook_air_m1:
     - Xám Không Gian
   sizes:
     - 13.3 inch
-macbook_air_m2:
-  name: MacBook Air M2
-  category: Mac
-  url: https://www.apple.com/vn/shop/buy-mac/macbook-air-m2
-  colors:
-    - Xanh Đêm (Midnight)
-    - Ánh Sao (Starlight)
-    - Xám Không Gian
-    - Bạc
-  sizes:
-    - 13.6 inch
-    - 15.3 inch
-macbook_air_m3:
-  name: MacBook Air M3
-  category: Mac
-  url: https://www.apple.com/vn/shop/buy-mac/macbook-air-m3
-  colors:
-    - Xanh Đêm (Midnight)
-    - Ánh Sao (Starlight)
-    - Xám Không Gian
-    - Bạc
-  sizes:
-    - 13.6 inch
-    - 15.3 inch
-macbook_air_m4:
-  name: MacBook Air M4
-  category: Mac
-  sizes:
-    - 13 inch
-    - 15 inch
 imac_m3:
   name: iMac M3
   category: Mac
@@ -223,7 +138,6 @@ macbook_pro_14_m3:
     - Xám Không Gian
   sizes:
     - 14 inch
-
 macbook_pro_14_m3_pro_max:
   name: MacBook Pro 14 M3 Pro
   category: Mac
@@ -233,7 +147,6 @@ macbook_pro_14_m3_pro_max:
     - Đen Không Gian
   sizes:
     - 14 inch
-
 macbook_pro_16_m3_pro_max:
   name: MacBook Pro 16 M3 Pro
   category: Mac
@@ -242,18 +155,6 @@ macbook_pro_16_m3_pro_max:
     - Bạc
     - Đen Không Gian
   sizes:
-    - 16 inch
-macbook_pro_m4:
-  name: MacBook Pro M4
-  category: Mac
-  sizes:
-    - 14 inch
-    - 16 inch
-macbook_pro_m5:
-  name: MacBook Pro M5
-  category: Mac
-  sizes:
-    - 14 inch
     - 16 inch
 apple_watch_series_11_titanium:
   name: Apple Watch Series 11 (Titanium Titan)
@@ -268,33 +169,47 @@ apple_watch_series_11_titanium:
   connectivity:
     - GPS + Cellular
   keywords:
-    - Series 11
     - Titan
     - Titanium
-    - 5G
-    - LTE
-    - GPS + Cellular
-    - Cellular
   source: manual_fix
-apple_watch_se_3:
-  name: Apple Watch SE 3
+apple_watch_se_3_gps:
+  name: Apple Watch SE 3 (GPS)
   category: Watch
   url: https://www.apple.com/vn/shop/buy-watch/apple-watch-se
   sizes:
-    - 38mm
-    - 40 mm
     - 40mm
-    - 44 mm
     - 44mm
   colors:
     - Nhôm Bạc
     - Nhôm Vàng Hồng
     - Nhôm Xám Không Gian
     - Nhôm Ánh Sao
-    - Titan Gold
-    - Titan Tự Nhiên
-  connectivity: null
-  source: official_combined
+  connectivity:
+    - GPS
+  keywords:
+    - GPS
+  source: split_fix_gps
+apple_watch_se_3_lte:
+  name: Apple Watch SE 3 (GPS + Cellular)
+  category: Watch
+  url: https://www.apple.com/vn/shop/buy-watch/apple-watch-se
+  sizes:
+    - 40mm
+    - 44mm
+  colors:
+    - Nhôm Bạc
+    - Nhôm Vàng Hồng
+    - Nhôm Xám Không Gian
+    - Nhôm Ánh Sao
+  connectivity:
+    - GPS + Cellular
+  keywords:
+    - Cellular
+    - LTE
+    - 5G
+    - eSIM
+    - GPS + Cellular
+  source: split_fix_lte
 iphone_15_plus:
   name: iPhone 15 Plus
   category: iPhone
@@ -1166,23 +1081,7 @@ ipad_pro_129_inch_thế_hệ_thứ_1:
     - Wi-Fi
     - Wi-Fi + Cellular
   source: official_combined
-ipad_a16:
-  name: iPad (A16)
-  category: iPad
-  url: null
-  colors:
-    - Bạc
-    - Hồng
-    - Vàng
-    - Xanh Dương
-  storage:
-    - 128GB
-    - 256GB
-    - 512GB
-  connectivity:
-    - Wi-Fi
-    - Wi-Fi + Cellular
-  source: official_combined
+
 ipad_mini_thế_hệ_thứ_6:
   name: iPad mini (thế hệ thứ 6)
   category: iPad
@@ -1205,6 +1104,11 @@ ipad_mini_thế_hệ_thứ_6:
   connectivity:
     - Wi-Fi
     - Wi-Fi + Cellular
+  keywords:
+    - mini 64GB
+    - 2021
+    - iPad mini 6
+    - mini 256GB
   source: official_combined
 ipad_thế_hệ_thứ_7:
   name: iPad (thế hệ thứ 7)
@@ -1523,8 +1427,8 @@ ipad_air_thế_hệ_thứ_3:
     - Wi-Fi
     - Wi-Fi + Cellular
   source: official_combined
-ipad_mini_a17_pro:
-  name: iPad mini (A17 Pro)
+ipad_mini_a17_pro_wifi:
+  name: iPad mini (A17 Pro) WiFi
   category: iPad
   url: null
   colors:
@@ -1538,7 +1442,32 @@ ipad_mini_a17_pro:
     - 512GB
   connectivity:
     - Wi-Fi
+  keywords:
+    - A17
+    - mini 128GB
+    - iPad mini 7
+  source: official_combined
+ipad_mini_a17_pro_lte:
+  name: iPad mini (A17 Pro) 5G
+  category: iPad
+  url: null
+  colors:
+    - Tím
+    - Xanh Dương
+    - Xám Không Gian
+    - Ánh Sao
+  storage:
+    - 128GB
+    - 256GB
+    - 512GB
+  connectivity:
     - Wi-Fi + Cellular
+  keywords:
+    - A17
+    - mini 128GB
+    - iPad mini 7
+    - 5G
+    - Cellular
   source: official_combined
 ipad_air_11_inch_m3:
   name: iPad Air 11 inch (M3)
@@ -2035,8 +1964,8 @@ macbook_air_intel_2020:
   sizes:
     - 13.3 inch
   source: official_combined
-macbook_air_15_inch_m2_2023:
-  name: MacBook Air 15 inch (M2, 2023)
+macbook_air_15_inch_m2:
+  name: MacBook Air 15 inch (M2)
   category: Mac
   url: null
   colors:
@@ -2469,13 +2398,8 @@ apple_watch_series_10_titanium:
   connectivity:
     - GPS + Cellular
   keywords:
-    - Series 10
     - Titan
     - Titanium
-    - 4G
-    - LTE
-    - GPS + Cellular
-    - Cellular
   source: manual_fix
 apple_watch_series_8:
   name: Apple Watch Series 8
@@ -2681,27 +2605,6 @@ apple_watch_series_7:
     - 45mm
   connectivity: null
   source: official_combined
-apple_watch_series_11_aluminum:
-  name: Apple Watch Series 11 (Nhôm)
-  category: Watch
-  colors:
-    - Nhôm Bạc
-    - Nhôm Vàng Hồng
-    - Nhôm Xám Không Gian
-    - Nhôm Ánh Sao
-  sizes:
-    - 42mm
-    - 46mm
-  connectivity:
-    - GPS
-    - GPS + Cellular
-  keywords:
-    - Series 11
-    - Nhôm
-    - Aluminum
-    - Viền nhôm
-    - GPS
-  source: manual_fix
 apple_watch_series_10_aluminum:
   name: Apple Watch Series 10 (Nhôm)
   category: Watch
@@ -2717,16 +2620,7 @@ apple_watch_series_10_aluminum:
     - GPS + Cellular
   keywords:
     - Series 10
-    - Nhôm
-    - Aluminum
-    - Viền nhôm
-    - GPS
   source: manual_fix
-
-# ============================================================
-# AUDIO DEVICES (AirPods)
-# ============================================================
-
 airpods_pro_2:
   name: AirPods Pro 2
   category: Audio
@@ -2743,7 +2637,6 @@ airpods_pro_2:
     - USB-C
     - MTJV3
   source: manual_fix
-
 airpods_pro_3:
   name: AirPods Pro 3
   category: Audio
@@ -2758,7 +2651,6 @@ airpods_pro_3:
     - Pro 3
     - MFHP4
   source: manual_fix
-
 airpods_4:
   name: AirPods 4
   category: Audio
@@ -2771,7 +2663,6 @@ airpods_4:
     - AirPods 4
     - MXP63
   source: manual_fix
-
 airpods_4_anc:
   name: AirPods 4 ANC
   category: Audio
@@ -2782,16 +2673,10 @@ airpods_4_anc:
     - Active Noise Cancellation
     - Chống ồn chủ động
   keywords:
-    - AirPods 4
     - ANC
     - chống ồn
     - Khử ồn
   source: manual_fix
-
-# ============================================================
-# LEGACY MAC DEVICES
-# ============================================================
-
 macbook_air_13_inch_2020:
   name: MacBook Air 13 inch (2020)
   category: Mac
@@ -2812,7 +2697,6 @@ macbook_air_13_inch_2020:
     - MacBook Air 13 256GB 2020
     - MacBook Air 13 2020
   source: manual_fix
-
 imac_m1_2021_24_inch:
   name: iMac M1 2021 24 inch
   category: Mac
@@ -2836,3 +2720,86 @@ imac_m1_2021_24_inch:
     - 8GB
     - 16GB
   source: manual_fix
+apple_watch_series_11_aluminum_gps:
+  name: Apple Watch Series 11 (GPS)
+  category: Watch
+  colors:
+    - Nhôm Bạc
+    - Nhôm Vàng Hồng
+    - Nhôm Xám Không Gian
+    - Nhôm Ánh Sao
+  sizes:
+    - 42mm
+    - 46mm
+  connectivity:
+    - GPS
+  keywords:
+    - series 11
+    - gps
+    - nhôm
+    - aluminum
+apple_watch_series_11_aluminum_lte:
+  name: Apple Watch Series 11 (GPS + Cellular)
+  category: Watch
+  colors:
+    - Nhôm Bạc
+    - Nhôm Vàng Hồng
+    - Nhôm Xám Không Gian
+    - Nhôm Ánh Sao
+  sizes:
+    - 42mm
+    - 46mm
+  connectivity:
+    - GPS
+    - Cellular
+    - LTE
+    - 5G
+  keywords:
+    - series 11
+    - lte
+    - cellular
+    - 5g
+    - 4g
+    - nhôm
+    - aluminum
+ipad_a16_wifi:
+  name: iPad A16 WiFi
+  category: iPad
+  storage:
+    - 128GB
+    - 256GB
+  connectivity:
+    - WiFi
+  colors:
+    - Xanh
+    - Hồng
+    - Vàng
+    - Bạc
+    - Xanh dương
+  keywords:
+    - ipad a16
+    - wifi
+    - "2025"
+ipad_a16_lte:
+  name: iPad A16 5G
+  category: iPad
+  storage:
+    - 128GB
+    - 256GB
+  connectivity:
+    - WiFi
+    - 5G
+    - Cellular
+    - LTE
+  colors:
+    - Xanh
+    - Hồng
+    - Vàng
+    - Bạc
+    - Xanh dương
+  keywords:
+    - ipad a16
+    - 5g
+    - cellular
+    - lte
+    - "2025"
