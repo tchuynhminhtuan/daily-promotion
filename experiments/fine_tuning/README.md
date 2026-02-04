@@ -43,16 +43,16 @@ python experiments/fine_tuning/prepare_data.py
 *Output: `data/train.jsonl` (347 examples), `data/valid.jsonl` (39 examples)*
 
 ### 2. Fine-tune (LoRA)
-Train the adapter using MLX. We use `Qwen/Qwen2.5-0.5B-Instruct` as the base.
+Train the adapter using MLX. We use `mlx-community/Llama-3.2-3B-Instruct-4bit` as the base.
 
 ```bash
 python -m mlx_lm.lora \
-    --model Qwen/Qwen2.5-0.5B-Instruct \
+    --model mlx-community/Llama-3.2-3B-Instruct-4bit \
     --train \
     --data experiments/fine_tuning/data \
-    --iters 200 \
+    --iters 1000 \
     --batch-size 4 \
-    --adapter-path experiments/fine_tuning/adapters
+    --adapter-path experiments/fine_tuning/adapters_llama
 ```
 
 ### 3. Inference / Testing

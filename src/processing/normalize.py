@@ -132,10 +132,10 @@ def load_ai_model():
     if _AI_MODEL is None:
         try:
             from mlx_lm import load
-            print(f"🤖 Loading AI Model from {AI_MODEL_PATH}...")
+            print(f"🤖 Loading Llama 3B V2 from {AI_MODEL_PATH}...")
             _AI_MODEL, _AI_TOKENIZER = load(BASE_MODEL_ID, adapter_path=str(AI_MODEL_PATH))
         except Exception as e:
-            # print(f"⚠️ Failed to load AI model: {e}")
+            print(f"⚠️ Failed to load AI model: {e}")
             return False
     return True
 
@@ -146,7 +146,11 @@ def ai_predict_key(product_name):
     try:
         from mlx_lm import generate
         SYSTEM_PROMPT = "You are a product matching assistant. Map the retailer product name to the correct canonical key."
-        prompt = f"<|im_start|>system\n{SYSTEM_PROMPT}<|im_end|>\n<|im_start|>user\nMap this product: {product_name}<|im_end|>\n<|im_start|>assistant\n"
+        messages = [
+            {"role": "system", "content": SYSTEM_PROMPT},
+            {"role": "user", "content": f"Map this product: {product_name}"}
+        ]
+        prompt = _AI_TOKENIZER.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
         
         response = generate(_AI_MODEL, _AI_TOKENIZER, prompt=prompt, max_tokens=20, verbose=False)
         pred_key = response.strip()

@@ -3,129 +3,129 @@ iphone_16e:
   category: iPhone
   url: https://www.apple.com/vn/shop/buy-iphone/iphone-16e
   colors:
-  - Trắng
-  - Tím Oải Hương
-  - Xanh Lam Khói
-  - Xanh Lá Xô Thơm
-  - Đen
+    - Trắng
+    - Tím Oải Hương
+    - Xanh Lam Khói
+    - Xanh Lá Xô Thơm
+    - Đen
   storage:
-  - 128GB
-  - 256GB
-  - 512GB
-  - 1TB
+    - 128GB
+    - 256GB
+    - 512GB
+    - 1TB
   sizes:
-  - 6.1 inch
+    - 6.1 inch
   source: official_combined
 iphone_16:
   name: iPhone 16
   category: iPhone
   url: https://www.apple.com/vn/shop/buy-iphone/iphone-16
   colors:
-  - Hồng
-  - Titan Sa Mạc
-  - Titan Trắng
-  - Titan Tự Nhiên
-  - Trắng
-  - Xanh Lưu Ly
-  - Xanh Mòng Két
-  - Đen
+    - Hồng
+    - Titan Sa Mạc
+    - Titan Trắng
+    - Titan Tự Nhiên
+    - Trắng
+    - Xanh Lưu Ly
+    - Xanh Mòng Két
+    - Đen
   storage:
-  - 128GB
-  - 256GB
-  - 512GB
-  - 1TB
+    - 128GB
+    - 256GB
+    - 512GB
+    - 1TB
   sizes:
-  - 6.1 inch
+    - 6.1 inch
   source: official_combined
 iphone_17:
   name: iPhone 17
   category: iPhone
   url: https://www.apple.com/vn/shop/buy-iphone/iphone-17
   colors:
-  - Trắng
-  - Trắng Mây
-  - Tím Oải Hương
-  - Vàng Nhạt
-  - Xanh Da Trời
-  - Xanh Lam Khói
-  - Xanh Lá Xô Thơm
-  - Đen
+    - Trắng
+    - Trắng Mây
+    - Tím Oải Hương
+    - Vàng Nhạt
+    - Xanh Da Trời
+    - Xanh Lam Khói
+    - Xanh Lá Xô Thơm
+    - Đen
   storage:
-  - 256GB
-  - 512GB
-  - 1TB
+    - 256GB
+    - 512GB
+    - 1TB
   sizes:
-  - 6.3 inch
+    - 6.3 inch
   source: official_combined
 iphone_air:
   name: iPhone Air
   category: iPhone
   url: https://www.apple.com/vn/shop/buy-iphone/iphone-air
   colors:
-  - Bạc
-  - Cam Vũ Trụ
-  - Trắng Mây
-  - Vàng Nhạt
-  - Xanh Da Trời
-  - Đen Không Gian
+    - Bạc
+    - Cam Vũ Trụ
+    - Trắng Mây
+    - Vàng Nhạt
+    - Xanh Da Trời
+    - Đen Không Gian
   storage:
-  - 256GB
-  - 512GB
-  - 1TB
+    - 256GB
+    - 512GB
+    - 1TB
   sizes:
-  - 6.5 inch
+    - 6.5 inch
   source: official_combined
 iphone_17_pro:
   name: iPhone 17 Pro
   category: iPhone
   url: https://www.apple.com/vn/shop/buy-iphone/iphone-17-pro
   colors:
-  - Bạc
-  - Cam Vũ Trụ
-  - Xanh Đậm
+    - Bạc
+    - Cam Vũ Trụ
+    - Xanh Đậm
   storage:
-  - 256GB
-  - 512GB
-  - 1TB
-  - 2TB
+    - 256GB
+    - 512GB
+    - 1TB
+    - 2TB
   sizes:
-  - 6.3 inch
+    - 6.3 inch
   source: official_combined
 ipad:
   name: iPad
   category: iPad
   url: https://www.apple.com/vn/shop/buy-ipad/ipad
   colors:
-  - Bạc
-  - Hồng
-  - Vàng
-  - Xanh Dương
+    - Bạc
+    - Hồng
+    - Vàng
+    - Xanh Dương
   storage:
-  - 128GB1
-  - 256GB1
-  - 512GB1
+    - 128GB1
+    - 256GB1
+    - 512GB1
 macbook_air_m1:
   name: MacBook Air M1
   category: Mac
   url: https://www.apple.com/vn/shop/buy-mac/macbook-air-m1
   colors:
-  - Vàng
-  - Bạc
-  - Xám Không Gian
+    - Vàng
+    - Bạc
+    - Xám Không Gian
   sizes:
-  - 13.3 inch
+    - 13.3 inch
 imac_m3:
   name: iMac M3
   category: Mac
   url: https://www.apple.com/vn/shop/buy-mac/imac
   colors:
-  - Bạc
-  - Cam
-  - Hồng
-  - Tím
-  - Vàng
-  - Xanh Dương
-  - Xanh Lá
+    - Bạc
+    - Cam
+    - Hồng
+    - Tím
+    - Vàng
+    - Xanh Dương
+    - Xanh Lá
 imac_m4:
   name: iMac M4
   category: Mac
@@ -134,54 +134,54 @@ macbook_pro_14_m3:
   category: Mac
   url: null
   colors:
-  - Bạc
-  - Xám Không Gian
+    - Bạc
+    - Xám Không Gian
   storage:
-  - 512GB
-  - 1TB
-  - 2TB
+    - 512GB
+    - 1TB
+    - 2TB
   sizes:
-  - 14.2 inch
+    - 14.2 inch
   source: official_combined
 macbook_pro_14_m3_pro_max:
   name: MacBook Pro 14 M3 Pro
   category: Mac
   url: https://www.apple.com/vn/shop/buy-mac/macbook-pro/14-inch-m3-pro
   colors:
-  - Bạc
-  - Đen Không Gian
+    - Bạc
+    - Đen Không Gian
   sizes:
-  - 14 inch
+    - 14 inch
 macbook_pro_16_m3_pro_max:
   name: MacBook Pro 16 M3 Pro
   category: Mac
   url: https://www.apple.com/vn/shop/buy-mac/macbook-pro/16-inch-m3-pro
   colors:
-  - Bạc
-  - Đen Không Gian
+    - Bạc
+    - Đen Không Gian
   sizes:
-  - 16 inch
+    - 16 inch
 apple_watch_series_11_titanium_42mm:
   name: Apple Watch Series 11 (Titanium Titan) 42mm
   category: Watch
   colors: &id001
-  - Titan Gold
-  - Titan Tự Nhiên
-  - Titan Xám
+    - Titan Gold
+    - Titan Tự Nhiên
+    - Titan Xám
   sizes:
-  - 42mm
+    - 42mm
   connectivity: &id002
-  - GPS + Cellular
+    - GPS + Cellular
   keywords: &id003
-  - Titan
-  - Titanium
+    - Titan
+    - Titanium
   source: manual_fix
 apple_watch_series_11_titanium_46mm:
   name: Apple Watch Series 11 (Titanium Titan) 46mm
   category: Watch
   colors: *id001
   sizes:
-  - 46mm
+    - 46mm
   connectivity: *id002
   keywords: *id003
   source: manual_fix
@@ -190,23 +190,23 @@ apple_watch_se_3_gps_40mm:
   category: Watch
   url: https://www.apple.com/vn/shop/buy-watch/apple-watch-se
   sizes:
-  - 40mm
+    - 40mm
   colors: &id004
-  - Nhôm Bạc
-  - Nhôm Vàng Hồng
-  - Nhôm Xám Không Gian
-  - Nhôm Ánh Sao
+    - Nhôm Bạc
+    - Nhôm Vàng Hồng
+    - Nhôm Xám Không Gian
+    - Nhôm Ánh Sao
   connectivity: &id005
-  - GPS
+    - GPS
   keywords: &id006
-  - GPS
+    - GPS
   source: split_fix_gps
 apple_watch_se_3_gps_44mm:
   name: Apple Watch SE 3 (GPS) 44mm
   category: Watch
   url: https://www.apple.com/vn/shop/buy-watch/apple-watch-se
   sizes:
-  - 44mm
+    - 44mm
   colors: *id004
   connectivity: *id005
   keywords: *id006
@@ -216,27 +216,27 @@ apple_watch_se_3_lte_40mm:
   category: Watch
   url: https://www.apple.com/vn/shop/buy-watch/apple-watch-se
   sizes:
-  - 40mm
+    - 40mm
   colors: &id007
-  - Nhôm Bạc
-  - Nhôm Vàng Hồng
-  - Nhôm Xám Không Gian
-  - Nhôm Ánh Sao
+    - Nhôm Bạc
+    - Nhôm Vàng Hồng
+    - Nhôm Xám Không Gian
+    - Nhôm Ánh Sao
   connectivity: &id008
-  - GPS + Cellular
+    - GPS + Cellular
   keywords: &id009
-  - Cellular
-  - LTE
-  - 5G
-  - eSIM
-  - GPS + Cellular
+    - Cellular
+    - LTE
+    - 5G
+    - eSIM
+    - GPS + Cellular
   source: split_fix_lte
 apple_watch_se_3_lte_44mm:
   name: Apple Watch SE 3 (GPS + Cellular) 44mm
   category: Watch
   url: https://www.apple.com/vn/shop/buy-watch/apple-watch-se
   sizes:
-  - 44mm
+    - 44mm
   colors: *id007
   connectivity: *id008
   keywords: *id009
@@ -246,599 +246,599 @@ iphone_15_plus:
   category: iPhone
   url: null
   colors:
-  - Hồng
-  - Vàng
-  - Xanh Dương
-  - Xanh Lá
+    - Hồng
+    - Vàng
+    - Xanh Dương
+    - Xanh Lá
   storage:
-  - 128GB
-  - 256GB
-  - 512GB
+    - 128GB
+    - 256GB
+    - 512GB
   sizes:
-  - 6.7 inch
+    - 6.7 inch
   source: official_combined
 iphone_12:
   name: iPhone 12
   category: iPhone
   url: null
   colors:
-  - Product Red
-  - Trắng
-  - Tím
-  - Xanh Dương
-  - Xanh Lá
+    - Product Red
+    - Trắng
+    - Tím
+    - Xanh Dương
+    - Xanh Lá
   storage:
-  - 64GB
-  - 128GB
-  - 256GB
+    - 64GB
+    - 128GB
+    - 256GB
   sizes:
-  - 6.1 inch
+    - 6.1 inch
   source: official_combined
 iphone_13_mini:
   name: iPhone 13 mini
   category: iPhone
   url: null
   colors:
-  - Bạc
-  - Gold
-  - Hồng
-  - Product Red
-  - Than Chì
-  - Xanh Dương
-  - Xanh Dương Sierra
-  - Xanh Lá
-  - Xanh Rừng Thông
-  - Ánh Sao
+    - Bạc
+    - Gold
+    - Hồng
+    - Product Red
+    - Than Chì
+    - Xanh Dương
+    - Xanh Dương Sierra
+    - Xanh Lá
+    - Xanh Rừng Thông
+    - Ánh Sao
   storage:
-  - 128GB
-  - 256GB
-  - 512GB
+    - 128GB
+    - 256GB
+    - 512GB
   sizes:
-  - 5.4 inch
+    - 5.4 inch
   source: official_combined
 iphone_13_pro_max:
   name: iPhone 13 Pro Max
   category: iPhone
   url: null
   colors:
-  - Bạc
-  - Gold
-  - Than Chì
-  - Xanh Dương Sierra
-  - Xanh Rừng Thông
+    - Bạc
+    - Gold
+    - Than Chì
+    - Xanh Dương Sierra
+    - Xanh Rừng Thông
   storage:
-  - 128GB
-  - 256GB
-  - 512GB
-  - 1TB
+    - 128GB
+    - 256GB
+    - 512GB
+    - 1TB
   sizes:
-  - 6.7 inch
+    - 6.7 inch
   source: official_combined
 iphone_14_pro_max:
   name: iPhone 14 Pro Max
   category: iPhone
   url: null
   colors:
-  - Bạc
-  - Gold
+    - Bạc
+    - Gold
   storage:
-  - 128GB
-  - 256GB
-  - 512GB
-  - 1TB
+    - 128GB
+    - 256GB
+    - 512GB
+    - 1TB
   sizes:
-  - 6.7 inch
+    - 6.7 inch
   source: official_combined
 iphone_8:
   name: iPhone 8
   category: iPhone
   url: null
   colors:
-  - Bạc
-  - Gold
-  - Xám Không Gian
+    - Bạc
+    - Gold
+    - Xám Không Gian
   storage:
-  - 64GB
-  - 128GB
+    - 64GB
+    - 128GB
   sizes:
-  - 4.7 inch
+    - 4.7 inch
   source: official_combined
 iphone_11_pro:
   name: iPhone 11 Pro
   category: iPhone
   url: null
   colors:
-  - Bạc
-  - Gold
-  - Product Red
-  - Trắng
-  - Tím
-  - Xanh Dương
-  - Xanh Lá
-  - Xanh Rêu
-  - Xám Không Gian
+    - Bạc
+    - Gold
+    - Product Red
+    - Trắng
+    - Tím
+    - Xanh Dương
+    - Xanh Lá
+    - Xanh Rêu
+    - Xám Không Gian
   storage:
-  - 64GB
-  - 128GB
-  - 256GB
-  - 512GB
+    - 64GB
+    - 128GB
+    - 256GB
+    - 512GB
   sizes:
-  - 5.8 inch
+    - 5.8 inch
   source: official_combined
 iphone_13:
   name: iPhone 13
   category: iPhone
   url: null
   colors:
-  - Hồng
-  - Product Red
-  - Xanh Dương
-  - Xanh Lá
-  - Ánh Sao
+    - Hồng
+    - Product Red
+    - Xanh Dương
+    - Xanh Lá
+    - Ánh Sao
   storage:
-  - 128GB
-  - 256GB
-  - 512GB
+    - 128GB
+    - 256GB
+    - 512GB
   sizes:
-  - 6.1 inch
+    - 6.1 inch
   source: official_combined
 iphone_15_pro_max:
   name: iPhone 15 Pro Max
   category: iPhone
   url: null
   colors:
-  - Titan Trắng
-  - Titan Tự Nhiên
-  - Titan Xanh
+    - Titan Trắng
+    - Titan Tự Nhiên
+    - Titan Xanh
   storage:
-  - 128GB
-  - 256GB
-  - 512GB
-  - 1TB
+    - 128GB
+    - 256GB
+    - 512GB
+    - 1TB
   sizes:
-  - 6.7 inch
+    - 6.7 inch
   source: official_combined
 iphone_12_pro_max:
   name: iPhone 12 Pro Max
   category: iPhone
   url: null
   colors:
-  - Bạc
-  - Gold
-  - Than Chì
-  - Xanh Thái Bình Dương
+    - Bạc
+    - Gold
+    - Than Chì
+    - Xanh Thái Bình Dương
   storage:
-  - 128GB
-  - 256GB
-  - 512GB
+    - 128GB
+    - 256GB
+    - 512GB
   sizes:
-  - 6.7 inch
+    - 6.7 inch
   source: official_combined
 iphone_7_plus:
   name: iPhone 7 Plus
   category: iPhone
   url: null
   colors:
-  - Bạc
-  - Gold
-  - Vàng Hồng
-  - Xám Không Gian
+    - Bạc
+    - Gold
+    - Vàng Hồng
+    - Xám Không Gian
   storage:
-  - 32GB
-  - 64GB
-  - 128GB
+    - 32GB
+    - 64GB
+    - 128GB
   sizes:
-  - 5.5 inch
+    - 5.5 inch
   source: official_combined
 iphone_xs_max:
   name: iPhone XS Max
   category: iPhone
   url: null
   colors:
-  - Bạc
-  - Gold
-  - Xám Không Gian
+    - Bạc
+    - Gold
+    - Xám Không Gian
   storage:
-  - 64GB
-  - 256GB
-  - 512GB
+    - 64GB
+    - 256GB
+    - 512GB
   sizes:
-  - 6.5 inch
+    - 6.5 inch
   source: official_combined
 iphone_14_plus:
   name: iPhone 14 Plus
   category: iPhone
   url: null
   colors:
-  - Product Red
-  - Tím
-  - Vàng
-  - Xanh Dương
-  - Ánh Sao
+    - Product Red
+    - Tím
+    - Vàng
+    - Xanh Dương
+    - Ánh Sao
   storage:
-  - 128GB
-  - 256GB
-  - 512GB
+    - 128GB
+    - 256GB
+    - 512GB
   sizes:
-  - 6.7 inch
+    - 6.7 inch
   source: official_combined
 iphone_xs:
   name: iPhone XS
   category: iPhone
   url: null
   colors:
-  - Bạc
-  - Gold
-  - Product Red
-  - Trắng
-  - Xám Không Gian
+    - Bạc
+    - Gold
+    - Product Red
+    - Trắng
+    - Xám Không Gian
   storage:
-  - 64GB
-  - 128GB
-  - 256GB
-  - 512GB
+    - 64GB
+    - 128GB
+    - 256GB
+    - 512GB
   sizes:
-  - 5.8 inch
+    - 5.8 inch
   source: official_combined
 iphone_16_pro:
   name: iPhone 16 Pro
   category: iPhone
   url: null
   colors:
-  - Titan Sa Mạc
-  - Titan Trắng
-  - Titan Tự Nhiên
-  - Trắng
+    - Titan Sa Mạc
+    - Titan Trắng
+    - Titan Tự Nhiên
+    - Trắng
   storage:
-  - 128GB
-  - 256GB
-  - 512GB
-  - 1TB
+    - 128GB
+    - 256GB
+    - 512GB
+    - 1TB
   sizes:
-  - 6.3 inch
+    - 6.3 inch
   source: official_combined
 iphone_12_mini:
   name: iPhone 12 mini
   category: iPhone
   url: null
   colors:
-  - Bạc
-  - Gold
-  - Product Red
-  - Than Chì
-  - Trắng
-  - Tím
-  - Xanh Dương
-  - Xanh Lá
-  - Xanh Thái Bình Dương
+    - Bạc
+    - Gold
+    - Product Red
+    - Than Chì
+    - Trắng
+    - Tím
+    - Xanh Dương
+    - Xanh Lá
+    - Xanh Thái Bình Dương
   storage:
-  - 64GB
-  - 128GB
-  - 256GB
+    - 64GB
+    - 128GB
+    - 256GB
   sizes:
-  - 5.4 inch
+    - 5.4 inch
   source: official_combined
 iphone_14:
   name: iPhone 14
   category: iPhone
   url: null
   colors:
-  - Bạc
-  - Gold
-  - Product Red
-  - Tím
-  - Vàng
-  - Xanh Dương
-  - Ánh Sao
+    - Bạc
+    - Gold
+    - Product Red
+    - Tím
+    - Vàng
+    - Xanh Dương
+    - Ánh Sao
   storage:
-  - 128GB
-  - 256GB
-  - 512GB
+    - 128GB
+    - 256GB
+    - 512GB
   sizes:
-  - 6.1 inch
+    - 6.1 inch
   source: official_combined
 iphone_15:
   name: iPhone 15
   category: iPhone
   url: null
   colors:
-  - Hồng
-  - Titan Trắng
-  - Titan Tự Nhiên
-  - Titan Xanh
-  - Vàng
-  - Xanh Dương
-  - Xanh Lá
+    - Hồng
+    - Titan Trắng
+    - Titan Tự Nhiên
+    - Titan Xanh
+    - Vàng
+    - Xanh Dương
+    - Xanh Lá
   storage:
-  - 128GB
-  - 256GB
-  - 512GB
+    - 128GB
+    - 256GB
+    - 512GB
   sizes:
-  - 6.1 inch
+    - 6.1 inch
   source: official_combined
 iphone_xr:
   name: iPhone XR
   category: iPhone
   url: null
   colors:
-  - Bạc
-  - Gold
-  - Product Red
-  - San Hô
-  - Trắng
-  - Vàng
-  - Xanh Dương
-  - Xám Không Gian
+    - Bạc
+    - Gold
+    - Product Red
+    - San Hô
+    - Trắng
+    - Vàng
+    - Xanh Dương
+    - Xám Không Gian
   storage:
-  - 64GB
-  - 128GB
-  - 256GB
+    - 64GB
+    - 128GB
+    - 256GB
   sizes:
-  - 6.1 inch
+    - 6.1 inch
   source: official_combined
 iphone_se_gen2:
   name: iPhone SE (thế hệ thứ 2)
   category: iPhone
   url: null
   colors:
-  - Product Red
-  - Trắng
-  - Tím
-  - Vàng
-  - Xanh Lá
+    - Product Red
+    - Trắng
+    - Tím
+    - Vàng
+    - Xanh Lá
   storage:
-  - 64GB
-  - 128GB
-  - 512GB
+    - 64GB
+    - 128GB
+    - 512GB
   sizes:
-  - 4.7 inch
+    - 4.7 inch
   source: official_combined
 iphone_13_pro:
   name: iPhone 13 Pro
   category: iPhone
   url: null
   colors:
-  - Bạc
-  - Gold
-  - Product Red
-  - Than Chì
-  - Tím
-  - Vàng
-  - Xanh Dương
-  - Xanh Dương Sierra
-  - Xanh Rừng Thông
-  - Ánh Sao
+    - Bạc
+    - Gold
+    - Product Red
+    - Than Chì
+    - Tím
+    - Vàng
+    - Xanh Dương
+    - Xanh Dương Sierra
+    - Xanh Rừng Thông
+    - Ánh Sao
   storage:
-  - 128GB
-  - 256GB
-  - 512GB
-  - 1TB
+    - 128GB
+    - 256GB
+    - 512GB
+    - 1TB
   sizes:
-  - 6.1 inch
+    - 6.1 inch
   source: official_combined
 iphone_12_pro:
   name: iPhone 12 Pro
   category: iPhone
   url: null
   colors:
-  - Bạc
-  - Gold
-  - Product Red
-  - Than Chì
-  - Xanh Thái Bình Dương
-  - Ánh Sao
+    - Bạc
+    - Gold
+    - Product Red
+    - Than Chì
+    - Xanh Thái Bình Dương
+    - Ánh Sao
   storage:
-  - 64GB
-  - 128GB
-  - 256GB
-  - 512GB
+    - 64GB
+    - 128GB
+    - 256GB
+    - 512GB
   sizes:
-  - 6.1 inch
+    - 6.1 inch
   source: official_combined
 iphone_7:
   name: iPhone 7
   category: iPhone
   url: null
   colors:
-  - Bạc
-  - Gold
-  - Vàng Hồng
+    - Bạc
+    - Gold
+    - Vàng Hồng
   storage:
-  - 32GB
-  - 128GB
+    - 32GB
+    - 128GB
   sizes:
-  - 4.7 inch
+    - 4.7 inch
   source: official_combined
 iphone_16_plus:
   name: iPhone 16 Plus
   category: iPhone
   url: null
   colors:
-  - Hồng
-  - Trắng
-  - Xanh Lưu Ly
-  - Xanh Mòng Két
+    - Hồng
+    - Trắng
+    - Xanh Lưu Ly
+    - Xanh Mòng Két
   storage:
-  - 128GB
-  - 256GB
-  - 512GB
+    - 128GB
+    - 256GB
+    - 512GB
   sizes:
-  - 6.7 inch
+    - 6.7 inch
   source: official_combined
 iphone_se_gen3:
   name: iPhone SE (thế hệ thứ 3)
   category: iPhone
   url: null
   colors:
-  - Hồng
-  - Product Red
-  - Xanh Dương
-  - Xanh Lá
-  - Ánh Sao
+    - Hồng
+    - Product Red
+    - Xanh Dương
+    - Xanh Lá
+    - Ánh Sao
   storage:
-  - 64GB
-  - 128GB
-  - 256GB
+    - 64GB
+    - 128GB
+    - 256GB
   sizes:
-  - 4.7 inch
+    - 4.7 inch
   source: official_combined
 iphone_8_plus:
   name: iPhone 8 Plus
   category: iPhone
   url: null
   colors:
-  - Bạc
-  - Gold
-  - Xám Không Gian
+    - Bạc
+    - Gold
+    - Xám Không Gian
   storage:
-  - 64GB
-  - 128GB
-  - 256GB
+    - 64GB
+    - 128GB
+    - 256GB
   sizes:
-  - 5.5 inch
+    - 5.5 inch
   source: official_combined
 iphone_17_pro_max:
   name: iPhone 17 Pro Max
   category: iPhone
   url: null
   colors:
-  - Bạc
-  - Cam Vũ Trụ
+    - Bạc
+    - Cam Vũ Trụ
   storage:
-  - 256GB
-  - 512GB
-  - 1TB
-  - 2TB
+    - 256GB
+    - 512GB
+    - 1TB
+    - 2TB
   sizes:
-  - 6.9 inch
+    - 6.9 inch
   source: official_combined
 iphone_16_pro_max:
   name: iPhone 16 Pro Max
   category: iPhone
   url: null
   colors:
-  - Titan Sa Mạc
-  - Titan Trắng
-  - Titan Tự Nhiên
+    - Titan Sa Mạc
+    - Titan Trắng
+    - Titan Tự Nhiên
   storage:
-  - 128GB
-  - 256GB
-  - 512GB
-  - 1TB
+    - 128GB
+    - 256GB
+    - 512GB
+    - 1TB
   sizes:
-  - 6.9 inch
+    - 6.9 inch
   source: official_combined
 iphone_11_pro_max:
   name: iPhone 11 Pro Max
   category: iPhone
   url: null
   colors:
-  - Bạc
-  - Gold
-  - Xanh Rêu
-  - Xám Không Gian
+    - Bạc
+    - Gold
+    - Xanh Rêu
+    - Xám Không Gian
   storage:
-  - 64GB
-  - 256GB
-  - 512GB
+    - 64GB
+    - 256GB
+    - 512GB
   sizes:
-  - 6.5 inch
+    - 6.5 inch
   source: official_combined
 iphone_x:
   name: iPhone X
   category: iPhone
   url: null
   colors:
-  - Bạc
-  - Product Red
-  - San Hô
-  - Trắng
-  - Vàng
-  - Xanh Dương
-  - Xám Không Gian
+    - Bạc
+    - Product Red
+    - San Hô
+    - Trắng
+    - Vàng
+    - Xanh Dương
+    - Xám Không Gian
   storage:
-  - 64GB
-  - 128GB
-  - 256GB
+    - 64GB
+    - 128GB
+    - 256GB
   sizes:
-  - 5.8 inch
+    - 5.8 inch
   source: official_combined
 iphone_11:
   name: iPhone 11
   category: iPhone
   url: null
   colors:
-  - Bạc
-  - Gold
-  - Product Red
-  - Trắng
-  - Tím
-  - Vàng
-  - Xanh Lá
-  - Xanh Rêu
-  - Xám Không Gian
+    - Bạc
+    - Gold
+    - Product Red
+    - Trắng
+    - Tím
+    - Vàng
+    - Xanh Lá
+    - Xanh Rêu
+    - Xám Không Gian
   storage:
-  - 64GB
-  - 128GB
-  - 256GB
-  - 512GB
+    - 64GB
+    - 128GB
+    - 256GB
+    - 512GB
   sizes:
-  - 6.1 inch
+    - 6.1 inch
   source: official_combined
 iphone_14_pro:
   name: iPhone 14 Pro
   category: iPhone
   url: null
   colors:
-  - Bạc
-  - Gold
-  - Hồng
-  - Vàng
-  - Xanh Dương
-  - Xanh Lá
+    - Bạc
+    - Gold
+    - Hồng
+    - Vàng
+    - Xanh Dương
+    - Xanh Lá
   storage:
-  - 128GB
-  - 256GB
-  - 512GB
-  - 1TB
+    - 128GB
+    - 256GB
+    - 512GB
+    - 1TB
   sizes:
-  - 6.1 inch
+    - 6.1 inch
   source: official_combined
 iphone_15_pro:
   name: iPhone 15 Pro
   category: iPhone
   url: null
   colors:
-  - Hồng
-  - Titan Trắng
-  - Titan Tự Nhiên
-  - Titan Xanh
-  - Trắng
-  - Xanh Lưu Ly
-  - Xanh Mòng Két
+    - Hồng
+    - Titan Trắng
+    - Titan Tự Nhiên
+    - Titan Xanh
+    - Trắng
+    - Xanh Lưu Ly
+    - Xanh Mòng Két
   storage:
-  - 128GB
-  - 256GB
-  - 512GB
-  - 1TB
+    - 128GB
+    - 256GB
+    - 512GB
+    - 1TB
   sizes:
-  - 6.1 inch
+    - 6.1 inch
   source: official_combined
 ipad_pro_97_wifi:
   name: iPad Pro 9,7 inch WiFi
   category: iPad
   url: null
   colors: &id010
-  - Bạc
-  - Gold
-  - Vàng Hồng
-  - Xám Không Gian
+    - Bạc
+    - Gold
+    - Vàng Hồng
+    - Xám Không Gian
   storage: &id011
-  - 32GB
-  - 128GB
-  - 256GB
+    - 32GB
+    - 128GB
+    - 256GB
   connectivity:
-  - Wi-Fi
+    - Wi-Fi
   source: official_combined
 ipad_pro_97_lte:
   name: iPad Pro 9,7 inch 5G/LTE
@@ -847,23 +847,23 @@ ipad_pro_97_lte:
   colors: *id010
   storage: *id011
   connectivity:
-  - Wi-Fi + Cellular
+    - Wi-Fi + Cellular
   source: official_combined
 ipad_pro_129_gen6_wifi:
   name: iPad Pro 12,9 inch (thế hệ thứ 6) WiFi
   category: iPad
   url: null
   colors: &id012
-  - Bạc
-  - Xám Không Gian
+    - Bạc
+    - Xám Không Gian
   storage: &id013
-  - 128GB
-  - 256GB
-  - 512GB
-  - 1TB
-  - 2TB
+    - 128GB
+    - 256GB
+    - 512GB
+    - 1TB
+    - 2TB
   connectivity:
-  - Wi-Fi
+    - Wi-Fi
   source: official_combined
 ipad_pro_129_gen6_lte:
   name: iPad Pro 12,9 inch (thế hệ thứ 6) 5G/LTE
@@ -872,29 +872,29 @@ ipad_pro_129_gen6_lte:
   colors: *id012
   storage: *id013
   connectivity:
-  - Wi-Fi + Cellular
+    - Wi-Fi + Cellular
   source: official_combined
 ipad_gen10_wifi:
   name: iPad (thế hệ thứ 10) WiFi
   category: iPad
   url: null
   colors: &id014
-  - Bạc
-  - Gold
-  - Hồng
-  - Tím
-  - Vàng
-  - Vàng Hồng
-  - Xanh Da Trời
-  - Xanh Dương
-  - Xanh Lá
-  - Xám Không Gian
-  - Ánh Sao
+    - Bạc
+    - Gold
+    - Hồng
+    - Tím
+    - Vàng
+    - Vàng Hồng
+    - Xanh Da Trời
+    - Xanh Dương
+    - Xanh Lá
+    - Xám Không Gian
+    - Ánh Sao
   storage: &id015
-  - 64GB
-  - 256GB
+    - 64GB
+    - 256GB
   connectivity:
-  - Wi-Fi
+    - Wi-Fi
   source: official_combined
 ipad_gen10_lte:
   name: iPad (thế hệ thứ 10) 5G/LTE
@@ -903,21 +903,21 @@ ipad_gen10_lte:
   colors: *id014
   storage: *id015
   connectivity:
-  - Wi-Fi + Cellular
+    - Wi-Fi + Cellular
   source: official_combined
 ipad_pro_11_m4_wifi:
   name: iPad Pro 11 inch (M4) WiFi
   category: iPad
   url: null
   colors: &id016
-  - Bạc
+    - Bạc
   storage: &id017
-  - 256GB
-  - 512GB
-  - 1TB
-  - 2TB
+    - 256GB
+    - 512GB
+    - 1TB
+    - 2TB
   connectivity:
-  - Wi-Fi
+    - Wi-Fi
   source: official_combined
 ipad_pro_11_m4_lte:
   name: iPad Pro 11 inch (M4) 5G/LTE
@@ -926,31 +926,31 @@ ipad_pro_11_m4_lte:
   colors: *id016
   storage: *id017
   connectivity:
-  - Wi-Fi + Cellular
+    - Wi-Fi + Cellular
   source: official_combined
 ipad_pro_129_gen4_wifi:
   name: iPad Pro 12,9 inch (thế hệ thứ 4) WiFi
   category: iPad
   url: null
   colors: &id018
-  - Bạc
-  - Gold
-  - Hồng
-  - Tím
-  - Vàng
-  - Vàng Hồng
-  - Xanh Da Trời
-  - Xanh Dương
-  - Xanh Lá
-  - Xám Không Gian
-  - Ánh Sao
+    - Bạc
+    - Gold
+    - Hồng
+    - Tím
+    - Vàng
+    - Vàng Hồng
+    - Xanh Da Trời
+    - Xanh Dương
+    - Xanh Lá
+    - Xám Không Gian
+    - Ánh Sao
   storage: &id019
-  - 128GB
-  - 256GB
-  - 512GB
-  - 1TB
+    - 128GB
+    - 256GB
+    - 512GB
+    - 1TB
   connectivity:
-  - Wi-Fi
+    - Wi-Fi
   source: official_combined
 ipad_pro_129_gen4_lte:
   name: iPad Pro 12,9 inch (thế hệ thứ 4) 5G/LTE
@@ -959,31 +959,31 @@ ipad_pro_129_gen4_lte:
   colors: *id018
   storage: *id019
   connectivity:
-  - Wi-Fi + Cellular
+    - Wi-Fi + Cellular
   source: official_combined
 ipad_pro_13_m5_wifi:
   name: iPad Pro 13 inch (M5) WiFi
   category: iPad
   url: null
   colors: &id020
-  - Bạc
-  - Gold
-  - Hồng
-  - Tím
-  - Vàng
-  - Vàng Hồng
-  - Xanh Da Trời
-  - Xanh Dương
-  - Xanh Lá
-  - Xám Không Gian
-  - Ánh Sao
+    - Bạc
+    - Gold
+    - Hồng
+    - Tím
+    - Vàng
+    - Vàng Hồng
+    - Xanh Da Trời
+    - Xanh Dương
+    - Xanh Lá
+    - Xám Không Gian
+    - Ánh Sao
   storage: &id021
-  - 256GB
-  - 512GB
-  - 1TB
-  - 2TB
+    - 256GB
+    - 512GB
+    - 1TB
+    - 2TB
   connectivity:
-  - Wi-Fi
+    - Wi-Fi
   source: official_combined
 ipad_pro_13_m5_lte:
   name: iPad Pro 13 inch (M5) 5G/LTE
@@ -992,7 +992,7 @@ ipad_pro_13_m5_lte:
   colors: *id020
   storage: *id021
   connectivity:
-  - Wi-Fi + Cellular
+    - Wi-Fi + Cellular
   source: official_combined
 ipad_pro_11_m4_wifi_nano:
   name: iPad Pro 11 inch (M4) WiFi Nano-texture Glass
@@ -1000,13 +1000,13 @@ ipad_pro_11_m4_wifi_nano:
   url: null
   colors: *id016
   storage:
-  - 1TB
-  - 2TB
+    - 1TB
+    - 2TB
   connectivity:
-  - Wi-Fi
+    - Wi-Fi
   keywords:
-  - Nano-texture
-  - Nano
+    - Nano-texture
+    - Nano
   source: official_combined
 ipad_pro_11_m4_lte_nano:
   name: iPad Pro 11 inch (M4) 5G/LTE Nano-texture Glass
@@ -1014,13 +1014,13 @@ ipad_pro_11_m4_lte_nano:
   url: null
   colors: *id016
   storage:
-  - 1TB
-  - 2TB
+    - 1TB
+    - 2TB
   connectivity:
-  - Wi-Fi + Cellular
+    - Wi-Fi + Cellular
   keywords:
-  - Nano-texture
-  - Nano
+    - Nano-texture
+    - Nano
   source: official_combined
 ipad_pro_13_m4_wifi_nano:
   name: iPad Pro 13 inch (M4) WiFi Nano-texture Glass
@@ -1028,13 +1028,13 @@ ipad_pro_13_m4_wifi_nano:
   url: null
   colors: *id016
   storage:
-  - 1TB
-  - 2TB
+    - 1TB
+    - 2TB
   connectivity:
-  - Wi-Fi
+    - Wi-Fi
   keywords:
-  - Nano-texture
-  - Nano
+    - Nano-texture
+    - Nano
   source: official_combined
 ipad_pro_13_m4_lte_nano:
   name: iPad Pro 13 inch (M4) 5G/LTE Nano-texture Glass
@@ -1042,27 +1042,27 @@ ipad_pro_13_m4_lte_nano:
   url: null
   colors: *id016
   storage:
-  - 1TB
-  - 2TB
+    - 1TB
+    - 2TB
   connectivity:
-  - Wi-Fi + Cellular
+    - Wi-Fi + Cellular
   keywords:
-  - Nano-texture
-  - Nano
+    - Nano-texture
+    - Nano
   source: official_combined
 ipad_gen8_wifi:
   name: iPad (thế hệ thứ 8) WiFi
   category: iPad
   url: null
   colors: &id022
-  - Bạc
-  - Gold
-  - Xám Không Gian
+    - Bạc
+    - Gold
+    - Xám Không Gian
   storage: &id023
-  - 32GB
-  - 128GB
+    - 32GB
+    - 128GB
   connectivity:
-  - Wi-Fi
+    - Wi-Fi
   source: official_combined
 ipad_gen8_lte:
   name: iPad (thế hệ thứ 8) 5G/LTE
@@ -1071,22 +1071,22 @@ ipad_gen8_lte:
   colors: *id022
   storage: *id023
   connectivity:
-  - Wi-Fi + Cellular
+    - Wi-Fi + Cellular
   source: official_combined
 ipad_pro_129_gen2_wifi:
   name: iPad Pro 12,9 inch (thế hệ thứ 2) WiFi
   category: iPad
   url: null
   colors: &id024
-  - Bạc
-  - Gold
-  - Xám Không Gian
+    - Bạc
+    - Gold
+    - Xám Không Gian
   storage: &id025
-  - 64GB
-  - 256GB
-  - 512GB
+    - 64GB
+    - 256GB
+    - 512GB
   connectivity:
-  - Wi-Fi
+    - Wi-Fi
   source: official_combined
 ipad_pro_129_gen2_lte:
   name: iPad Pro 12,9 inch (thế hệ thứ 2) 5G/LTE
@@ -1095,21 +1095,21 @@ ipad_pro_129_gen2_lte:
   colors: *id024
   storage: *id025
   connectivity:
-  - Wi-Fi + Cellular
+    - Wi-Fi + Cellular
   source: official_combined
 ipad_pro_11_m5_wifi:
   name: iPad Pro 11 inch (M5) WiFi
   category: iPad
   url: null
   colors: &id026
-  - Bạc
+    - Bạc
   storage: &id027
-  - 256GB
-  - 512GB
-  - 1TB
-  - 2TB
+    - 256GB
+    - 512GB
+    - 1TB
+    - 2TB
   connectivity:
-  - Wi-Fi
+    - Wi-Fi
   source: official_combined
 ipad_pro_11_m5_lte:
   name: iPad Pro 11 inch (M5) 5G/LTE
@@ -1118,23 +1118,23 @@ ipad_pro_11_m5_lte:
   colors: *id026
   storage: *id027
   connectivity:
-  - Wi-Fi + Cellular
+    - Wi-Fi + Cellular
   source: official_combined
 ipad_pro_129_gen5_wifi:
   name: iPad Pro 12,9 inch (thế hệ thứ 5) WiFi
   category: iPad
   url: null
   colors: &id028
-  - Bạc
-  - Xám Không Gian
+    - Bạc
+    - Xám Không Gian
   storage: &id029
-  - 128GB
-  - 256GB
-  - 512GB
-  - 1TB
-  - 2TB
+    - 128GB
+    - 256GB
+    - 512GB
+    - 1TB
+    - 2TB
   connectivity:
-  - Wi-Fi
+    - Wi-Fi
   source: official_combined
 ipad_pro_129_gen5_lte:
   name: iPad Pro 12,9 inch (thế hệ thứ 5) 5G/LTE
@@ -1143,31 +1143,31 @@ ipad_pro_129_gen5_lte:
   colors: *id028
   storage: *id029
   connectivity:
-  - Wi-Fi + Cellular
+    - Wi-Fi + Cellular
   source: official_combined
 ipad_pro_13_m4_wifi:
   name: iPad Pro 13 inch (M4) WiFi
   category: iPad
   url: null
   colors: &id030
-  - Bạc
-  - Gold
-  - Hồng
-  - Tím
-  - Vàng
-  - Vàng Hồng
-  - Xanh Da Trời
-  - Xanh Dương
-  - Xanh Lá
-  - Xám Không Gian
-  - Ánh Sao
+    - Bạc
+    - Gold
+    - Hồng
+    - Tím
+    - Vàng
+    - Vàng Hồng
+    - Xanh Da Trời
+    - Xanh Dương
+    - Xanh Lá
+    - Xám Không Gian
+    - Ánh Sao
   storage: &id031
-  - 256GB
-  - 512GB
-  - 1TB
-  - 2TB
+    - 256GB
+    - 512GB
+    - 1TB
+    - 2TB
   connectivity:
-  - Wi-Fi
+    - Wi-Fi
   source: official_combined
 ipad_pro_13_m4_lte:
   name: iPad Pro 13 inch (M4) 5G/LTE
@@ -1176,22 +1176,22 @@ ipad_pro_13_m4_lte:
   colors: *id030
   storage: *id031
   connectivity:
-  - Wi-Fi + Cellular
+    - Wi-Fi + Cellular
   source: official_combined
 ipad_pro_129_gen3_wifi:
   name: iPad Pro 12,9 inch (thế hệ thứ 3) WiFi
   category: iPad
   url: null
   colors: &id032
-  - Bạc
-  - Xám Không Gian
+    - Bạc
+    - Xám Không Gian
   storage: &id033
-  - 64GB
-  - 256GB
-  - 512GB
-  - 1TB
+    - 64GB
+    - 256GB
+    - 512GB
+    - 1TB
   connectivity:
-  - Wi-Fi
+    - Wi-Fi
   source: official_combined
 ipad_pro_129_gen3_lte:
   name: iPad Pro 12,9 inch (thế hệ thứ 3) 5G/LTE
@@ -1200,20 +1200,20 @@ ipad_pro_129_gen3_lte:
   colors: *id032
   storage: *id033
   connectivity:
-  - Wi-Fi + Cellular
+    - Wi-Fi + Cellular
   source: official_combined
 ipad_gen9_wifi:
   name: iPad (thế hệ thứ 9) WiFi
   category: iPad
   url: null
   colors: &id034
-  - Bạc
-  - Xám Không Gian
+    - Bạc
+    - Xám Không Gian
   storage: &id035
-  - 64GB
-  - 256GB
+    - 64GB
+    - 256GB
   connectivity:
-  - Wi-Fi
+    - Wi-Fi
   source: official_combined
 ipad_gen9_lte:
   name: iPad (thế hệ thứ 9) 5G/LTE
@@ -1222,30 +1222,30 @@ ipad_gen9_lte:
   colors: *id034
   storage: *id035
   connectivity:
-  - Wi-Fi + Cellular
+    - Wi-Fi + Cellular
   source: official_combined
 ipad_pro_105_wifi:
   name: iPad Pro 10,5 inch WiFi
   category: iPad
   url: null
   colors: &id036
-  - Bạc
-  - Gold
-  - Hồng
-  - Tím
-  - Vàng
-  - Vàng Hồng
-  - Xanh Da Trời
-  - Xanh Dương
-  - Xanh Lá
-  - Xám Không Gian
-  - Ánh Sao
+    - Bạc
+    - Gold
+    - Hồng
+    - Tím
+    - Vàng
+    - Vàng Hồng
+    - Xanh Da Trời
+    - Xanh Dương
+    - Xanh Lá
+    - Xám Không Gian
+    - Ánh Sao
   storage: &id037
-  - 64GB
-  - 256GB
-  - 512GB
+    - 64GB
+    - 256GB
+    - 512GB
   connectivity:
-  - Wi-Fi
+    - Wi-Fi
   source: official_combined
 ipad_pro_105_lte:
   name: iPad Pro 10,5 inch 5G/LTE
@@ -1254,30 +1254,30 @@ ipad_pro_105_lte:
   colors: *id036
   storage: *id037
   connectivity:
-  - Wi-Fi + Cellular
+    - Wi-Fi + Cellular
   source: official_combined
 ipad_pro_129_gen1_wifi:
   name: iPad Pro 12,9 inch (thế hệ thứ 1) WiFi
   category: iPad
   url: null
   colors: &id038
-  - Bạc
-  - Gold
-  - Hồng
-  - Tím
-  - Vàng
-  - Vàng Hồng
-  - Xanh Da Trời
-  - Xanh Dương
-  - Xanh Lá
-  - Xám Không Gian
-  - Ánh Sao
+    - Bạc
+    - Gold
+    - Hồng
+    - Tím
+    - Vàng
+    - Vàng Hồng
+    - Xanh Da Trời
+    - Xanh Dương
+    - Xanh Lá
+    - Xám Không Gian
+    - Ánh Sao
   storage: &id039
-  - 32GB
-  - 128GB
-  - 256GB
+    - 32GB
+    - 128GB
+    - 256GB
   connectivity:
-  - Wi-Fi
+    - Wi-Fi
   source: official_combined
 ipad_pro_129_gen1_lte:
   name: iPad Pro 12,9 inch (thế hệ thứ 1) 5G/LTE
@@ -1286,34 +1286,34 @@ ipad_pro_129_gen1_lte:
   colors: *id038
   storage: *id039
   connectivity:
-  - Wi-Fi + Cellular
+    - Wi-Fi + Cellular
   source: official_combined
 ipad_mini_gen6_wifi:
   name: iPad mini (thế hệ thứ 6) WiFi
   category: iPad
   url: null
   colors: &id040
-  - Bạc
-  - Gold
-  - Hồng
-  - Tím
-  - Vàng
-  - Vàng Hồng
-  - Xanh Da Trời
-  - Xanh Dương
-  - Xanh Lá
-  - Xám Không Gian
-  - Ánh Sao
+    - Bạc
+    - Gold
+    - Hồng
+    - Tím
+    - Vàng
+    - Vàng Hồng
+    - Xanh Da Trời
+    - Xanh Dương
+    - Xanh Lá
+    - Xám Không Gian
+    - Ánh Sao
   storage: &id041
-  - 64GB
-  - 256GB
+    - 64GB
+    - 256GB
   connectivity:
-  - Wi-Fi
+    - Wi-Fi
   keywords: &id042
-  - mini 64GB
-  - 2021
-  - iPad mini 6
-  - mini 256GB
+    - mini 64GB
+    - 2021
+    - iPad mini 6
+    - mini 256GB
   source: official_combined
 ipad_mini_gen6_lte:
   name: iPad mini (thế hệ thứ 6) 5G/LTE
@@ -1322,7 +1322,7 @@ ipad_mini_gen6_lte:
   colors: *id040
   storage: *id041
   connectivity:
-  - Wi-Fi + Cellular
+    - Wi-Fi + Cellular
   keywords: *id042
   source: official_combined
 ipad_gen7_wifi:
@@ -1330,22 +1330,22 @@ ipad_gen7_wifi:
   category: iPad
   url: null
   colors: &id043
-  - Bạc
-  - Gold
-  - Hồng
-  - Tím
-  - Vàng
-  - Vàng Hồng
-  - Xanh Da Trời
-  - Xanh Dương
-  - Xanh Lá
-  - Xám Không Gian
-  - Ánh Sao
+    - Bạc
+    - Gold
+    - Hồng
+    - Tím
+    - Vàng
+    - Vàng Hồng
+    - Xanh Da Trời
+    - Xanh Dương
+    - Xanh Lá
+    - Xám Không Gian
+    - Ánh Sao
   storage: &id044
-  - 32GB
-  - 128GB
+    - 32GB
+    - 128GB
   connectivity:
-  - Wi-Fi
+    - Wi-Fi
   source: official_combined
 ipad_gen7_lte:
   name: iPad (thế hệ thứ 7) 5G/LTE
@@ -1354,23 +1354,23 @@ ipad_gen7_lte:
   colors: *id043
   storage: *id044
   connectivity:
-  - Wi-Fi + Cellular
+    - Wi-Fi + Cellular
   source: official_combined
 ipad_air_gen4_wifi:
   name: iPad Air (thế hệ thứ 4) WiFi
   category: iPad
   url: null
   colors: &id045
-  - Bạc
-  - Vàng Hồng
-  - Xanh Da Trời
-  - Xanh Lá
-  - Xám Không Gian
+    - Bạc
+    - Vàng Hồng
+    - Xanh Da Trời
+    - Xanh Lá
+    - Xám Không Gian
   storage: &id046
-  - 64GB
-  - 256GB
+    - 64GB
+    - 256GB
   connectivity:
-  - Wi-Fi
+    - Wi-Fi
   source: official_combined
 ipad_air_gen4_lte:
   name: iPad Air (thế hệ thứ 4) 5G/LTE
@@ -1379,22 +1379,22 @@ ipad_air_gen4_lte:
   colors: *id045
   storage: *id046
   connectivity:
-  - Wi-Fi + Cellular
+    - Wi-Fi + Cellular
   source: official_combined
 ipad_air_2_wifi:
   name: iPad Air 2 WiFi
   category: iPad
   url: null
   colors: &id047
-  - Bạc
-  - Gold
-  - Xám Không Gian
+    - Bạc
+    - Gold
+    - Xám Không Gian
   storage: &id048
-  - 16GB
-  - 64GB
-  - 128GB
+    - 16GB
+    - 64GB
+    - 128GB
   connectivity:
-  - Wi-Fi
+    - Wi-Fi
   source: official_combined
 ipad_air_2_lte:
   name: iPad Air 2 5G/LTE
@@ -1403,21 +1403,21 @@ ipad_air_2_lte:
   colors: *id047
   storage: *id048
   connectivity:
-  - Wi-Fi + Cellular
+    - Wi-Fi + Cellular
   source: official_combined
 ipad_gen5_wifi:
   name: iPad (thế hệ thứ 5) WiFi
   category: iPad
   url: null
   colors: &id049
-  - Bạc
-  - Gold
-  - Xám Không Gian
+    - Bạc
+    - Gold
+    - Xám Không Gian
   storage: &id050
-  - 32GB
-  - 128GB
+    - 32GB
+    - 128GB
   connectivity:
-  - Wi-Fi
+    - Wi-Fi
   source: official_combined
 ipad_gen5_lte:
   name: iPad (thế hệ thứ 5) 5G/LTE
@@ -1426,24 +1426,24 @@ ipad_gen5_lte:
   colors: *id049
   storage: *id050
   connectivity:
-  - Wi-Fi + Cellular
+    - Wi-Fi + Cellular
   source: official_combined
 ipad_air_13_m3_wifi:
   name: iPad Air 13 inch (M3) WiFi
   category: iPad
   url: null
   colors: &id051
-  - Tím
-  - Xanh Dương
-  - Xám Không Gian
-  - Ánh Sao
+    - Tím
+    - Xanh Dương
+    - Xám Không Gian
+    - Ánh Sao
   storage: &id052
-  - 128GB
-  - 256GB
-  - 512GB
-  - 1TB
+    - 128GB
+    - 256GB
+    - 512GB
+    - 1TB
   connectivity:
-  - Wi-Fi
+    - Wi-Fi
   source: official_combined
 ipad_air_13_m3_lte:
   name: iPad Air 13 inch (M3) 5G/LTE
@@ -1452,22 +1452,22 @@ ipad_air_13_m3_lte:
   colors: *id051
   storage: *id052
   connectivity:
-  - Wi-Fi + Cellular
+    - Wi-Fi + Cellular
   source: official_combined
 ipad_mini_2_wifi:
   name: iPad mini 2 WiFi
   category: iPad
   url: null
   colors: &id053
-  - Bạc
-  - Xám Không Gian
+    - Bạc
+    - Xám Không Gian
   storage: &id054
-  - 16GB
-  - 32GB
-  - 64GB
-  - 128GB
+    - 16GB
+    - 32GB
+    - 64GB
+    - 128GB
   connectivity:
-  - Wi-Fi
+    - Wi-Fi
   source: official_combined
 ipad_mini_2_lte:
   name: iPad mini 2 5G/LTE
@@ -1476,30 +1476,30 @@ ipad_mini_2_lte:
   colors: *id053
   storage: *id054
   connectivity:
-  - Wi-Fi + Cellular
+    - Wi-Fi + Cellular
   source: official_combined
 ipad_mini_3_wifi:
   name: iPad mini 3 WiFi
   category: iPad
   url: null
   colors: &id055
-  - Bạc
-  - Gold
-  - Hồng
-  - Tím
-  - Vàng
-  - Vàng Hồng
-  - Xanh Da Trời
-  - Xanh Dương
-  - Xanh Lá
-  - Xám Không Gian
-  - Ánh Sao
+    - Bạc
+    - Gold
+    - Hồng
+    - Tím
+    - Vàng
+    - Vàng Hồng
+    - Xanh Da Trời
+    - Xanh Dương
+    - Xanh Lá
+    - Xám Không Gian
+    - Ánh Sao
   storage: &id056
-  - 16GB
-  - 64GB
-  - 128GB
+    - 16GB
+    - 64GB
+    - 128GB
   connectivity:
-  - Wi-Fi
+    - Wi-Fi
   source: official_combined
 ipad_mini_3_lte:
   name: iPad mini 3 5G/LTE
@@ -1508,32 +1508,32 @@ ipad_mini_3_lte:
   colors: *id055
   storage: *id056
   connectivity:
-  - Wi-Fi + Cellular
+    - Wi-Fi + Cellular
   source: official_combined
 ipad_pro_11_gen3_wifi:
   name: iPad Pro 11 inch (thế hệ thứ 3) WiFi
   category: iPad
   url: null
   colors: &id057
-  - Bạc
-  - Gold
-  - Hồng
-  - Tím
-  - Vàng
-  - Vàng Hồng
-  - Xanh Da Trời
-  - Xanh Dương
-  - Xanh Lá
-  - Xám Không Gian
-  - Ánh Sao
+    - Bạc
+    - Gold
+    - Hồng
+    - Tím
+    - Vàng
+    - Vàng Hồng
+    - Xanh Da Trời
+    - Xanh Dương
+    - Xanh Lá
+    - Xám Không Gian
+    - Ánh Sao
   storage: &id058
-  - 128GB
-  - 256GB
-  - 512GB
-  - 1TB
-  - 2TB
+    - 128GB
+    - 256GB
+    - 512GB
+    - 1TB
+    - 2TB
   connectivity:
-  - Wi-Fi
+    - Wi-Fi
   source: official_combined
 ipad_pro_11_gen3_lte:
   name: iPad Pro 11 inch (thế hệ thứ 3) 5G/LTE
@@ -1542,22 +1542,22 @@ ipad_pro_11_gen3_lte:
   colors: *id057
   storage: *id058
   connectivity:
-  - Wi-Fi + Cellular
+    - Wi-Fi + Cellular
   source: official_combined
 ipad_pro_11_gen1_wifi:
   name: iPad Pro 11 inch (thế hệ thứ 1) WiFi
   category: iPad
   url: null
   colors: &id059
-  - Bạc
-  - Xám Không Gian
+    - Bạc
+    - Xám Không Gian
   storage: &id060
-  - 64GB
-  - 256GB
-  - 512GB
-  - 1TB
+    - 64GB
+    - 256GB
+    - 512GB
+    - 1TB
   connectivity:
-  - Wi-Fi
+    - Wi-Fi
   source: official_combined
 ipad_pro_11_gen1_lte:
   name: iPad Pro 11 inch (thế hệ thứ 1) 5G/LTE
@@ -1566,31 +1566,31 @@ ipad_pro_11_gen1_lte:
   colors: *id059
   storage: *id060
   connectivity:
-  - Wi-Fi + Cellular
+    - Wi-Fi + Cellular
   source: official_combined
 ipad_air_11_m2_wifi:
   name: iPad Air 11 inch (M2) WiFi
   category: iPad
   url: null
   colors: &id061
-  - Bạc
-  - Gold
-  - Hồng
-  - Tím
-  - Vàng
-  - Vàng Hồng
-  - Xanh Da Trời
-  - Xanh Dương
-  - Xanh Lá
-  - Xám Không Gian
-  - Ánh Sao
+    - Bạc
+    - Gold
+    - Hồng
+    - Tím
+    - Vàng
+    - Vàng Hồng
+    - Xanh Da Trời
+    - Xanh Dương
+    - Xanh Lá
+    - Xám Không Gian
+    - Ánh Sao
   storage: &id062
-  - 128GB
-  - 256GB
-  - 512GB
-  - 1TB
+    - 128GB
+    - 256GB
+    - 512GB
+    - 1TB
   connectivity:
-  - Wi-Fi
+    - Wi-Fi
   source: official_combined
 ipad_air_11_m2_lte:
   name: iPad Air 11 inch (M2) 5G/LTE
@@ -1599,21 +1599,21 @@ ipad_air_11_m2_lte:
   colors: *id061
   storage: *id062
   connectivity:
-  - Wi-Fi + Cellular
+    - Wi-Fi + Cellular
   source: official_combined
 ipad_mini_gen5_wifi:
   name: iPad mini (thế hệ thứ 5) WiFi
   category: iPad
   url: null
   colors: &id063
-  - Bạc
-  - Gold
-  - Xám Không Gian
+    - Bạc
+    - Gold
+    - Xám Không Gian
   storage: &id064
-  - 64GB
-  - 256GB
+    - 64GB
+    - 256GB
   connectivity:
-  - Wi-Fi
+    - Wi-Fi
   source: official_combined
 ipad_mini_gen5_lte:
   name: iPad mini (thế hệ thứ 5) 5G/LTE
@@ -1622,23 +1622,23 @@ ipad_mini_gen5_lte:
   colors: *id063
   storage: *id064
   connectivity:
-  - Wi-Fi + Cellular
+    - Wi-Fi + Cellular
   source: official_combined
 ipad_air_5_wifi:
   name: iPad Air 5 (Gen 5) WiFi
   category: iPad
   url: null
   colors: &id065
-  - Hồng
-  - Tím
-  - Xanh Dương
-  - Xám Không Gian
-  - Ánh Sao
+    - Hồng
+    - Tím
+    - Xanh Dương
+    - Xám Không Gian
+    - Ánh Sao
   storage: &id066
-  - 64GB
-  - 256GB
+    - 64GB
+    - 256GB
   connectivity:
-  - Wi-Fi
+    - Wi-Fi
   source: official_combined
 ipad_air_5_lte:
   name: iPad Air 5 (Gen 5) 5G/LTE
@@ -1647,22 +1647,22 @@ ipad_air_5_lte:
   colors: *id065
   storage: *id066
   connectivity:
-  - Wi-Fi + Cellular
+    - Wi-Fi + Cellular
   source: official_combined
 ipad_mini_4_wifi:
   name: iPad mini 4 WiFi
   category: iPad
   url: null
   colors: &id067
-  - Bạc
-  - Gold
-  - Xám Không Gian
+    - Bạc
+    - Gold
+    - Xám Không Gian
   storage: &id068
-  - 16GB
-  - 64GB
-  - 128GB
+    - 16GB
+    - 64GB
+    - 128GB
   connectivity:
-  - Wi-Fi
+    - Wi-Fi
   source: official_combined
 ipad_mini_4_lte:
   name: iPad mini 4 5G/LTE
@@ -1671,24 +1671,24 @@ ipad_mini_4_lte:
   colors: *id067
   storage: *id068
   connectivity:
-  - Wi-Fi + Cellular
+    - Wi-Fi + Cellular
   source: official_combined
 ipad_air_13_m2_wifi:
   name: iPad Air 13 inch (M2) WiFi
   category: iPad
   url: null
   colors: &id069
-  - Tím
-  - Xanh Dương
-  - Xám Không Gian
-  - Ánh Sao
+    - Tím
+    - Xanh Dương
+    - Xám Không Gian
+    - Ánh Sao
   storage: &id070
-  - 128GB
-  - 256GB
-  - 512GB
-  - 1TB
+    - 128GB
+    - 256GB
+    - 512GB
+    - 1TB
   connectivity:
-  - Wi-Fi
+    - Wi-Fi
   source: official_combined
 ipad_air_13_m2_lte:
   name: iPad Air 13 inch (M2) 5G/LTE
@@ -1697,23 +1697,23 @@ ipad_air_13_m2_lte:
   colors: *id069
   storage: *id070
   connectivity:
-  - Wi-Fi + Cellular
+    - Wi-Fi + Cellular
   source: official_combined
 ipad_pro_11_gen4_wifi:
   name: iPad Pro 11 inch (thế hệ thứ 4) WiFi
   category: iPad
   url: null
   colors: &id071
-  - Bạc
-  - Xám Không Gian
+    - Bạc
+    - Xám Không Gian
   storage: &id072
-  - 128GB
-  - 256GB
-  - 512GB
-  - 1TB
-  - 2TB
+    - 128GB
+    - 256GB
+    - 512GB
+    - 1TB
+    - 2TB
   connectivity:
-  - Wi-Fi
+    - Wi-Fi
   source: official_combined
 ipad_pro_11_gen4_lte:
   name: iPad Pro 11 inch (thế hệ thứ 4) 5G/LTE
@@ -1722,21 +1722,21 @@ ipad_pro_11_gen4_lte:
   colors: *id071
   storage: *id072
   connectivity:
-  - Wi-Fi + Cellular
+    - Wi-Fi + Cellular
   source: official_combined
 ipad_gen6_wifi:
   name: iPad (thế hệ thứ 6) WiFi
   category: iPad
   url: null
   colors: &id073
-  - Bạc
-  - Gold
-  - Xám Không Gian
+    - Bạc
+    - Gold
+    - Xám Không Gian
   storage: &id074
-  - 32GB
-  - 128GB
+    - 32GB
+    - 128GB
   connectivity:
-  - Wi-Fi
+    - Wi-Fi
   source: official_combined
 ipad_gen6_lte:
   name: iPad (thế hệ thứ 6) 5G/LTE
@@ -1745,29 +1745,29 @@ ipad_gen6_lte:
   colors: *id073
   storage: *id074
   connectivity:
-  - Wi-Fi + Cellular
+    - Wi-Fi + Cellular
   source: official_combined
 ipad_air_gen3_wifi:
   name: iPad Air (thế hệ thứ 3) WiFi
   category: iPad
   url: null
   colors: &id075
-  - Bạc
-  - Gold
-  - Hồng
-  - Tím
-  - Vàng
-  - Vàng Hồng
-  - Xanh Da Trời
-  - Xanh Dương
-  - Xanh Lá
-  - Xám Không Gian
-  - Ánh Sao
+    - Bạc
+    - Gold
+    - Hồng
+    - Tím
+    - Vàng
+    - Vàng Hồng
+    - Xanh Da Trời
+    - Xanh Dương
+    - Xanh Lá
+    - Xám Không Gian
+    - Ánh Sao
   storage: &id076
-  - 64GB
-  - 256GB
+    - 64GB
+    - 256GB
   connectivity:
-  - Wi-Fi
+    - Wi-Fi
   source: official_combined
 ipad_air_gen3_lte:
   name: iPad Air (thế hệ thứ 3) 5G/LTE
@@ -1776,73 +1776,73 @@ ipad_air_gen3_lte:
   colors: *id075
   storage: *id076
   connectivity:
-  - Wi-Fi + Cellular
+    - Wi-Fi + Cellular
   source: official_combined
 ipad_mini_a17_pro_wifi:
   name: iPad mini (A17 Pro) WiFi
   category: iPad
   url: null
   colors:
-  - Tím
-  - Xanh Dương
-  - Xám Không Gian
-  - Ánh Sao
+    - Tím
+    - Xanh Dương
+    - Xám Không Gian
+    - Ánh Sao
   storage:
-  - 128GB
-  - 256GB
-  - 512GB
+    - 128GB
+    - 256GB
+    - 512GB
   connectivity:
-  - Wi-Fi
+    - Wi-Fi
   keywords:
-  - A17
-  - mini 128GB
-  - iPad mini 7
+    - A17
+    - mini 128GB
+    - iPad mini 7
   source: official_combined
 ipad_mini_a17_pro_lte:
   name: iPad mini (A17 Pro) 5G
   category: iPad
   url: null
   colors:
-  - Tím
-  - Xanh Dương
-  - Xám Không Gian
-  - Ánh Sao
+    - Tím
+    - Xanh Dương
+    - Xám Không Gian
+    - Ánh Sao
   storage:
-  - 128GB
-  - 256GB
-  - 512GB
+    - 128GB
+    - 256GB
+    - 512GB
   connectivity:
-  - Wi-Fi + Cellular
+    - Wi-Fi + Cellular
   keywords:
-  - A17
-  - mini 128GB
-  - iPad mini 7
-  - 5G
-  - Cellular
+    - A17
+    - mini 128GB
+    - iPad mini 7
+    - 5G
+    - Cellular
   source: official_combined
 ipad_air_11_m3_wifi:
   name: iPad Air 11 inch (M3) WiFi
   category: iPad
   url: null
   colors: &id077
-  - Bạc
-  - Gold
-  - Hồng
-  - Tím
-  - Vàng
-  - Vàng Hồng
-  - Xanh Da Trời
-  - Xanh Dương
-  - Xanh Lá
-  - Xám Không Gian
-  - Ánh Sao
+    - Bạc
+    - Gold
+    - Hồng
+    - Tím
+    - Vàng
+    - Vàng Hồng
+    - Xanh Da Trời
+    - Xanh Dương
+    - Xanh Lá
+    - Xám Không Gian
+    - Ánh Sao
   storage: &id078
-  - 128GB
-  - 256GB
-  - 512GB
-  - 1TB
+    - 128GB
+    - 256GB
+    - 512GB
+    - 1TB
   connectivity:
-  - Wi-Fi
+    - Wi-Fi
   source: official_combined
 ipad_air_11_m3_lte:
   name: iPad Air 11 inch (M3) 5G/LTE
@@ -1851,21 +1851,21 @@ ipad_air_11_m3_lte:
   colors: *id077
   storage: *id078
   connectivity:
-  - Wi-Fi + Cellular
+    - Wi-Fi + Cellular
   source: official_combined
 ipad_air_gen1_wifi:
   name: iPad Air (thế hệ thứ 1) WiFi
   category: iPad
   url: null
   colors: &id079
-  - Bạc
-  - Xám Không Gian
+    - Bạc
+    - Xám Không Gian
   storage: &id080
-  - 16GB
-  - 32GB
-  - 128GB
+    - 16GB
+    - 32GB
+    - 128GB
   connectivity:
-  - Wi-Fi
+    - Wi-Fi
   source: official_combined
 ipad_air_gen1_lte:
   name: iPad Air (thế hệ thứ 1) 5G/LTE
@@ -1874,22 +1874,22 @@ ipad_air_gen1_lte:
   colors: *id079
   storage: *id080
   connectivity:
-  - Wi-Fi + Cellular
+    - Wi-Fi + Cellular
   source: official_combined
 ipad_pro_11_gen2_wifi:
   name: iPad Pro 11 inch (thế hệ thứ 2) WiFi
   category: iPad
   url: null
   colors: &id081
-  - Bạc
-  - Xám Không Gian
+    - Bạc
+    - Xám Không Gian
   storage: &id082
-  - 128GB
-  - 256GB
-  - 512GB
-  - 1TB
+    - 128GB
+    - 256GB
+    - 512GB
+    - 1TB
   connectivity:
-  - Wi-Fi
+    - Wi-Fi
   source: official_combined
 ipad_pro_11_gen2_lte:
   name: iPad Pro 11 inch (thế hệ thứ 2) 5G/LTE
@@ -1898,1028 +1898,1030 @@ ipad_pro_11_gen2_lte:
   colors: *id081
   storage: *id082
   connectivity:
-  - Wi-Fi + Cellular
+    - Wi-Fi + Cellular
   source: official_combined
 macbook_pro_14_m4_max:
   name: MacBook Pro 14 inch (M4 Max)
   category: Mac
   url: null
   colors:
-  - Bạc
+    - Bạc
   storage:
-  - 1TB
-  - 2TB
-  - 4TB
-  - 8TB
+    - 1TB
+    - 2TB
+    - 4TB
+    - 8TB
   sizes:
-  - 14.2 inch
+    - 14.2 inch
   source: official_combined
 macbook_pro_16_intel_2019:
   name: MacBook Pro 16 inch (Intel, 2019)
   category: Mac
   url: null
   colors:
-  - Bạc
-  - Cam
-  - Gold
-  - Hồng
-  - Tím
-  - Vàng
-  - Xanh Da Trời
-  - Xanh Dương
-  - Xanh Lá
-  - Xám Không Gian
-  - Ánh Sao
+    - Bạc
+    - Cam
+    - Gold
+    - Hồng
+    - Tím
+    - Vàng
+    - Xanh Da Trời
+    - Xanh Dương
+    - Xanh Lá
+    - Xám Không Gian
+    - Ánh Sao
   storage:
-  - 512GB
-  - 1TB
-  - 2TB
-  - 4TB
-  - 8TB
+    - 512GB
+    - 1TB
+    - 2TB
+    - 4TB
+    - 8TB
   sizes:
-  - 16 inch
+    - 16 inch
   source: official_combined
 mac_studio_m4_max:
   name: Mac Studio (M4 Max)
   category: Mac
   url: null
   colors:
-  - Bạc
+    - Bạc
   storage:
-  - 512GB
-  - 1TB
-  - 2TB
-  - 4TB
-  - 8TB
+    - 512GB
+    - 1TB
+    - 2TB
+    - 4TB
+    - 8TB
   source: official_combined
 imac_24_m1_4port_2021:
   name: iMac 24 inch (M1, bốn cổng, 2021)
   category: Mac
   url: null
   colors:
-  - Bạc
-  - Cam
-  - Gold
-  - Hồng
-  - Tím
-  - Vàng
-  - Xanh Da Trời
-  - Xanh Dương
-  - Xanh Lá
-  - Xám Không Gian
-  - Ánh Sao
+    - Bạc
+    - Cam
+    - Gold
+    - Hồng
+    - Tím
+    - Vàng
+    - Xanh Da Trời
+    - Xanh Dương
+    - Xanh Lá
+    - Xám Không Gian
+    - Ánh Sao
   storage:
-  - 256GB
-  - 512GB
-  - 1TB
-  - 2TB
+    - 256GB
+    - 512GB
+    - 1TB
+    - 2TB
   source: official_combined
 macbook_pro_16_m3_pro:
   name: MacBook Pro 16 inch (M3 Pro M3
   category: Mac
   url: null
   colors:
-  - Bạc
-  - Cam
-  - Gold
-  - Hồng
-  - Tím
-  - Vàng
-  - Xanh Da Trời
-  - Xanh Dương
-  - Xanh Lá
-  - Xám Không Gian
-  - Ánh Sao
+    - Bạc
+    - Cam
+    - Gold
+    - Hồng
+    - Tím
+    - Vàng
+    - Xanh Da Trời
+    - Xanh Dương
+    - Xanh Lá
+    - Xám Không Gian
+    - Ánh Sao
   storage:
-  - 512GB
-  - 1TB
-  - 2TB
-  - 4TB
-  - 8TB
+    - 512GB
+    - 1TB
+    - 2TB
+    - 4TB
+    - 8TB
   sizes:
-  - 16.2 inch
+    - 16.2 inch
   source: official_combined
 macbook_pro_16_m3_max:
   name: MacBook Pro 16 inch (M3 M3 Max)
   category: Mac
   url: null
   colors:
-  - Bạc
-  - Cam
-  - Gold
-  - Hồng
-  - Tím
-  - Vàng
-  - Xanh Da Trời
-  - Xanh Dương
-  - Xanh Lá
-  - Xám Không Gian
-  - Ánh Sao
+    - Bạc
+    - Cam
+    - Gold
+    - Hồng
+    - Tím
+    - Vàng
+    - Xanh Da Trời
+    - Xanh Dương
+    - Xanh Lá
+    - Xám Không Gian
+    - Ánh Sao
   storage:
-  - 512GB
-  - 1TB
-  - 2TB
-  - 4TB
-  - 8TB
+    - 512GB
+    - 1TB
+    - 2TB
+    - 4TB
+    - 8TB
   sizes:
-  - 16.2 inch
+    - 16.2 inch
   source: official_combined
 imac_m3_4port:
   name: iMac (M3, bốn cổng)
   category: Mac
   url: null
   colors:
-  - Bạc
-  - Cam
-  - Hồng
-  - Tím
-  - Vàng
-  - Xanh Dương
-  - Xanh Lá
+    - Bạc
+    - Cam
+    - Hồng
+    - Tím
+    - Vàng
+    - Xanh Dương
+    - Xanh Lá
   storage:
-  - 256GB
-  - 512GB
-  - 1TB
-  - 2TB
+    - 256GB
+    - 512GB
+    - 1TB
+    - 2TB
   source: official_combined
 macbook_pro_14_m4_pro:
   name: MacBook Pro 14 inch (M4 Pro)
   category: Mac
   url: null
   colors:
-  - Bạc
-  - Cam
-  - Gold
-  - Hồng
-  - Tím
-  - Vàng
-  - Xanh Da Trời
-  - Xanh Dương
-  - Xanh Lá
-  - Xám Không Gian
-  - Ánh Sao
+    - Bạc
+    - Cam
+    - Gold
+    - Hồng
+    - Tím
+    - Vàng
+    - Xanh Da Trời
+    - Xanh Dương
+    - Xanh Lá
+    - Xám Không Gian
+    - Ánh Sao
   storage:
-  - 512GB
-  - 1TB
-  - 2TB
-  - 4TB
+    - 512GB
+    - 1TB
+    - 2TB
+    - 4TB
   sizes:
-  - 14.2 inch
+    - 14.2 inch
   source: official_combined
 macbook_pro_14_m5:
   name: MacBook Pro 14 inch (M5)
   category: Mac
   url: null
   colors:
-  - Bạc
+    - Bạc
   storage:
-  - 512GB
-  - 1TB
-  - 2TB
-  - 4TB
+    - 512GB
+    - 1TB
+    - 2TB
+    - 4TB
   sizes:
-  - 14.2 inch
+    - 14.2 inch
   source: official_combined
 imac_215_intel_2017:
   name: iMac 21,5 inch (Intel, 2017)
   category: Mac
   url: null
   colors:
-  - Bạc
+    - Bạc
   storage:
-  - 256GB
-  - 1TB
+    - 256GB
+    - 1TB
   source: official_combined
 mac_mini_m2:
   name: Mac mini (M2 hoặc M2 Pro)
   category: Mac
   url: null
   colors:
-  - Bạc
-  - Cam
-  - Gold
-  - Hồng
-  - Tím
-  - Vàng
-  - Xanh Da Trời
-  - Xanh Dương
-  - Xanh Lá
-  - Xám Không Gian
-  - Ánh Sao
+    - Bạc
+    - Cam
+    - Gold
+    - Hồng
+    - Tím
+    - Vàng
+    - Xanh Da Trời
+    - Xanh Dương
+    - Xanh Lá
+    - Xám Không Gian
+    - Ánh Sao
   storage:
-  - 256GB
-  - 512GB
-  - 1TB
-  - 2TB
-  - 4TB
-  - 8TB
+    - 256GB
+    - 512GB
+    - 1TB
+    - 2TB
+    - 4TB
+    - 8TB
   keywords:
-  - Mac mini M2 2023
-  - Mac mini M2
+    - Mac mini M2 2023
+    - Mac mini M2
   source: official_combined
 mac_mini_m2_pro:
   name: Mac mini (M2 hoặc M2 Pro)
   category: Mac
   url: null
   colors:
-  - Bạc
-  - Cam
-  - Gold
-  - Hồng
-  - Tím
-  - Vàng
-  - Xanh Da Trời
-  - Xanh Dương
-  - Xanh Lá
-  - Xám Không Gian
-  - Ánh Sao
+    - Bạc
+    - Cam
+    - Gold
+    - Hồng
+    - Tím
+    - Vàng
+    - Xanh Da Trời
+    - Xanh Dương
+    - Xanh Lá
+    - Xám Không Gian
+    - Ánh Sao
   storage:
-  - 256GB
-  - 512GB
-  - 1TB
-  - 2TB
-  - 4TB
-  - 8TB
+    - 256GB
+    - 512GB
+    - 1TB
+    - 2TB
+    - 4TB
+    - 8TB
   keywords:
-  - Mac mini M2 2023
-  - Mac mini M2
+    - Mac mini M2 2023
+    - Mac mini M2
   source: official_combined
 macbook_pro_16_m1_pro_2021:
   name: MacBook Pro 16 inch (M1 Pro M1
   category: Mac
   url: null
   colors:
-  - Bạc
-  - Xám Không Gian
+    - Bạc
+    - Xám Không Gian
   storage:
-  - 512GB
-  - 1TB
-  - 2TB
-  - 4TB
-  - 8TB
+    - 512GB
+    - 1TB
+    - 2TB
+    - 4TB
+    - 8TB
   sizes:
-  - 16.2 inch
+    - 16.2 inch
   source: official_combined
 macbook_pro_16_m1_max_2021:
   name: MacBook Pro 16 inch (M1 Pro M1 Max, 2021)
   category: Mac
   url: null
   colors:
-  - Bạc
-  - Xám Không Gian
+    - Bạc
+    - Xám Không Gian
   storage:
-  - 512GB
-  - 1TB
-  - 2TB
-  - 4TB
-  - 8TB
+    - 512GB
+    - 1TB
+    - 2TB
+    - 4TB
+    - 8TB
   sizes:
-  - 16.2 inch
+    - 16.2 inch
   source: official_combined
 imac_m4_4port:
   name: iMac (M4, bốn cổng)
   category: Mac
   url: null
   colors:
-  - Bạc
-  - Cam
-  - Hồng
-  - Tím
-  - Vàng
-  - Xanh Dương
-  - Xanh Lá
+    - Bạc
+    - Cam
+    - Hồng
+    - Tím
+    - Vàng
+    - Xanh Dương
+    - Xanh Lá
   storage:
-  - 256GB
-  - 512GB
-  - 1TB
-  - 2TB
+    - 256GB
+    - 512GB
+    - 1TB
+    - 2TB
   source: official_combined
 macbook_air_13_m1_2020:
   name: MacBook Air 13 inch (M1, 2020)
   category: Mac
   url: null
   colors:
-  - Bạc
-  - Gold
-  - Xám Không Gian
+    - Bạc
+    - Gold
+    - Xám Không Gian
   storage:
-  - 256GB
-  - 512GB
-  - 1TB
-  - 2TB
+    - 256GB
+    - 512GB
+    - 1TB
+    - 2TB
   sizes:
-  - 13.3 inch
+    - 13.3 inch
   source: official_combined
 mac_studio_m3_ultra:
   name: Mac Studio (M3 Ultra)
   category: Mac
   url: null
   colors:
-  - Bạc
-  - Cam
-  - Gold
-  - Hồng
-  - Tím
-  - Vàng
-  - Xanh Da Trời
-  - Xanh Dương
-  - Xanh Lá
-  - Xám Không Gian
-  - Ánh Sao
+    - Bạc
+    - Cam
+    - Gold
+    - Hồng
+    - Tím
+    - Vàng
+    - Xanh Da Trời
+    - Xanh Dương
+    - Xanh Lá
+    - Xám Không Gian
+    - Ánh Sao
   storage:
-  - 1TB
-  - 2TB
-  - 4TB
-  - 8TB
-  - 16TB
+    - 1TB
+    - 2TB
+    - 4TB
+    - 8TB
+    - 16TB
   source: official_combined
 mac_mini_intel_2018:
   name: Mac mini (Intel, 2018)
   category: Mac
   url: null
   colors:
-  - Xám Không Gian
+    - Xám Không Gian
   storage:
-  - 512GB
-  - 1TB
-  - 2TB
+    - 512GB
+    - 1TB
+    - 2TB
   source: official_combined
 macbook_pro_13_intel_2port_2020:
   name: MacBook Pro 13 inch (Intel, hai cổng, 2020)
   category: Mac
   url: null
   colors:
-  - Bạc
-  - Xám Không Gian
+    - Bạc
+    - Xám Không Gian
   storage:
-  - 256GB
-  - 512GB
-  - 1TB
-  - 2TB
+    - 256GB
+    - 512GB
+    - 1TB
+    - 2TB
   sizes:
-  - 13.3 inch
+    - 13.3 inch
   source: official_combined
 macbook_air_intel_2017:
   name: MacBook Air (Intel, 2017)
   category: Mac
   url: null
   colors:
-  - Bạc
+    - Bạc
   storage:
-  - 128GB
-  - 256GB
-  - 512GB
+    - 128GB
+    - 256GB
+    - 512GB
   sizes:
-  - 13.3 inch
+    - 13.3 inch
   source: official_combined
 mac_pro_m2_ultra:
   name: Mac Pro (M2 Ultra)
   category: Mac
   url: null
   colors:
-  - Bạc
+    - Bạc
   storage:
-  - 1TB
-  - 2TB
-  - 4TB
-  - 8TB
+    - 1TB
+    - 2TB
+    - 4TB
+    - 8TB
   source: official_combined
 imac_pro_intel_2017:
   name: iMac Pro (Intel, 2017)
   category: Mac
   url: null
   colors:
-  - Xám Không Gian
+    - Xám Không Gian
   storage:
-  - 1TB
-  - 2TB
-  - 4TB
+    - 1TB
+    - 2TB
+    - 4TB
   source: official_combined
 macbook_pro_16_m2_pro_2023:
   name: MacBook Pro 16 inch (M2 Pro M2
   category: Mac
   url: null
   colors:
-  - Bạc
-  - Xám Không Gian
+    - Bạc
+    - Xám Không Gian
   storage:
-  - 512GB
-  - 1TB
-  - 2TB
-  - 4TB
-  - 8TB
+    - 512GB
+    - 1TB
+    - 2TB
+    - 4TB
+    - 8TB
   sizes:
-  - 16.2 inch
+    - 16.2 inch
   source: official_combined
 macbook_pro_16_m2_max_2023:
   name: MacBook Pro 16 inch (M2 M2 Max, 2023)
   category: Mac
   url: null
   colors:
-  - Bạc
-  - Xám Không Gian
+    - Bạc
+    - Xám Không Gian
   storage:
-  - 512GB
-  - 1TB
-  - 2TB
-  - 4TB
-  - 8TB
+    - 512GB
+    - 1TB
+    - 2TB
+    - 4TB
+    - 8TB
   sizes:
-  - 16.2 inch
+    - 16.2 inch
   source: official_combined
 imac_27_intel_2020:
   name: iMac 27 inch (Intel, 2020)
   category: Mac
   url: null
   colors:
-  - Bạc
+    - Bạc
   storage:
-  - 256GB
-  - 512GB
-  - 1TB
-  - 2TB
-  - 4TB
-  - 8TB
+    - 256GB
+    - 512GB
+    - 1TB
+    - 2TB
+    - 4TB
+    - 8TB
   source: official_combined
 mac_studio_m2_max:
   name: Mac Studio (M2 Max hoặc M2 Ultra)
   category: Mac
   url: null
   colors:
-  - Bạc
-  - Cam
-  - Gold
-  - Hồng
-  - Tím
-  - Vàng
-  - Xanh Da Trời
-  - Xanh Dương
-  - Xanh Lá
-  - Xám Không Gian
-  - Ánh Sao
+    - Bạc
+    - Cam
+    - Gold
+    - Hồng
+    - Tím
+    - Vàng
+    - Xanh Da Trời
+    - Xanh Dương
+    - Xanh Lá
+    - Xám Không Gian
+    - Ánh Sao
   storage:
-  - 512GB
-  - 1TB
-  - 2TB
-  - 4TB
-  - 8TB
+    - 512GB
+    - 1TB
+    - 2TB
+    - 4TB
+    - 8TB
   source: official_combined
 mac_studio_m2_ultra:
   name: Mac Studio (M2 Max hoặc M2 Ultra)
   category: Mac
   url: null
   colors:
-  - Bạc
-  - Cam
-  - Gold
-  - Hồng
-  - Tím
-  - Vàng
-  - Xanh Da Trời
-  - Xanh Dương
-  - Xanh Lá
-  - Xám Không Gian
-  - Ánh Sao
+    - Bạc
+    - Cam
+    - Gold
+    - Hồng
+    - Tím
+    - Vàng
+    - Xanh Da Trời
+    - Xanh Dương
+    - Xanh Lá
+    - Xám Không Gian
+    - Ánh Sao
   storage:
-  - 512GB
-  - 1TB
-  - 2TB
-  - 4TB
-  - 8TB
+    - 512GB
+    - 1TB
+    - 2TB
+    - 4TB
+    - 8TB
   source: official_combined
 macbook_pro_14_m4:
   name: MacBook Pro 14 inch (M4)
   category: Mac
   url: null
   colors:
-  - Bạc
+    - Bạc
   storage:
-  - 512GB
-  - 1TB
-  - 2TB
+    - 512GB
+    - 1TB
+    - 2TB
   sizes:
-  - 14.2 inch
+    - 14.2 inch
   source: official_combined
 macbook_pro_14_m2_pro_2023:
   name: MacBook Pro 14 inch (M2 Pro M2
   category: Mac
   url: null
   colors:
-  - Bạc
-  - Xám Không Gian
+    - Bạc
+    - Xám Không Gian
   storage:
-  - 512GB
-  - 1TB
-  - 2TB
-  - 4TB
-  - 8TB
+    - 512GB
+    - 1TB
+    - 2TB
+    - 4TB
+    - 8TB
   sizes:
-  - 14.2 inch
+    - 14.2 inch
   source: official_combined
 macbook_pro_14_m2_max_2023:
   name: MacBook Pro 14 inch (M2 M2 Max, 2023)
   category: Mac
   url: null
   colors:
-  - Bạc
-  - Xám Không Gian
+    - Bạc
+    - Xám Không Gian
   storage:
-  - 512GB
-  - 1TB
-  - 2TB
-  - 4TB
-  - 8TB
+    - 512GB
+    - 1TB
+    - 2TB
+    - 4TB
+    - 8TB
   sizes:
-  - 14.2 inch
+    - 14.2 inch
   source: official_combined
 macbook_air_intel_2020:
   name: MacBook Air (Intel, 2020)
   category: Mac
   url: null
   colors:
-  - Bạc
-  - Gold
-  - Xám Không Gian
+    - Bạc
+    - Gold
+    - Xám Không Gian
   storage:
-  - 256GB
-  - 512GB
-  - 1TB
-  - 2TB
+    - 256GB
+    - 512GB
+    - 1TB
+    - 2TB
   sizes:
-  - 13.3 inch
+    - 13.3 inch
   source: official_combined
 macbook_air_15_m2:
   name: MacBook Air 15 inch (M2)
   category: Mac
   url: null
   colors:
-  - Bạc
-  - Cam
-  - Gold
-  - Hồng
-  - Tím
-  - Vàng
-  - Xanh Da Trời
-  - Xanh Dương
-  - Xanh Lá
-  - Xám Không Gian
-  - Ánh Sao
+    - Bạc
+    - Cam
+    - Gold
+    - Hồng
+    - Tím
+    - Vàng
+    - Xanh Da Trời
+    - Xanh Dương
+    - Xanh Lá
+    - Xám Không Gian
+    - Ánh Sao
   storage:
-  - 256GB
-  - 512GB
-  - 1TB
-  - 2TB
+    - 256GB
+    - 512GB
+    - 1TB
+    - 2TB
   sizes:
-  - 15.3 inch
+    - 15.3 inch
   source: official_combined
 mac_mini_m4:
   name: Mac mini (M4)
   category: Mac
   url: null
   colors:
-  - Bạc
-  - Cam
-  - Gold
-  - Hồng
-  - Tím
-  - Vàng
-  - Xanh Da Trời
-  - Xanh Dương
-  - Xanh Lá
-  - Xám Không Gian
-  - Ánh Sao
+    - Bạc
+    - Cam
+    - Gold
+    - Hồng
+    - Tím
+    - Vàng
+    - Xanh Da Trời
+    - Xanh Dương
+    - Xanh Lá
+    - Xám Không Gian
+    - Ánh Sao
   storage:
-  - 256GB
-  - 512GB
-  - 1TB
-  - 2TB
+    - 256GB
+    - 512GB
+    - 1TB
+    - 2TB
   source: official_combined
 imac_m3_2port:
   name: iMac (M3, hai cổng)
   category: Mac
   url: null
   colors:
-  - Bạc
-  - Hồng
-  - Xanh Dương
-  - Xanh Lá
+    - Bạc
+    - Hồng
+    - Xanh Dương
+    - Xanh Lá
   storage:
-  - 256GB
-  - 512GB
-  - 1TB
+    - 256GB
+    - 512GB
+    - 1TB
   source: official_combined
 macbook_air_13_m3:
   name: MacBook Air 13 inch (M3)
   category: Mac
   url: null
   colors:
-  - Bạc
-  - Xám Không Gian
-  - '{MBA_M3_15}'
-  - Ánh Sao
+    - Bạc
+    - Xám Không Gian
+    - "{MBA_M3_15}"
+    - Ánh Sao
   storage:
-  - 256GB
-  - 512GB
-  - 1TB
-  - 2TB
+    - 256GB
+    - 512GB
+    - 1TB
+    - 2TB
   sizes:
-  - 13.6 inch
+    - 13.6 inch
   source: official_combined
 macbook_pro_13_m2_2022:
   name: MacBook Pro 13 inch (M2, 2022)
   category: Mac
   url: null
   colors:
-  - Bạc
-  - Cam
-  - Gold
-  - Hồng
-  - Tím
-  - Vàng
-  - Xanh Da Trời
-  - Xanh Dương
-  - Xanh Lá
-  - Xám Không Gian
-  - Ánh Sao
+    - Bạc
+    - Cam
+    - Gold
+    - Hồng
+    - Tím
+    - Vàng
+    - Xanh Da Trời
+    - Xanh Dương
+    - Xanh Lá
+    - Xám Không Gian
+    - Ánh Sao
   storage:
-  - 256GB
-  - 512GB
-  - 1TB
-  - 2TB
+    - 256GB
+    - 512GB
+    - 1TB
+    - 2TB
   sizes:
-  - 13.3 inch
+    - 13.3 inch
   source: official_combined
 mac_mini_m1_2020:
   name: Mac mini (M1, 2020)
   category: Mac
   url: null
   colors:
-  - Bạc
+    - Bạc
   storage:
-  - 256GB
-  - 512GB
-  - 1TB
-  - 2TB
+    - 256GB
+    - 512GB
+    - 1TB
+    - 2TB
   source: official_combined
 imac_24_m1_2port_2021:
   name: iMac 24 inch (M1, hai cổng, 2021)
   category: Mac
   url: null
   colors:
-  - Bạc
-  - Hồng
-  - Xanh Dương
-  - Xanh Lá
+    - Bạc
+    - Hồng
+    - Xanh Dương
+    - Xanh Lá
   storage:
-  - 256GB
-  - 512GB
-  - 1TB
+    - 256GB
+    - 512GB
+    - 1TB
   source: official_combined
 macbook_pro_13_intel_4port_2020:
   name: MacBook Pro 13 inch (Intel, bốn cổng, 2020)
   category: Mac
   url: null
   colors:
-  - Bạc
-  - Cam
-  - Gold
-  - Hồng
-  - Tím
-  - Vàng
-  - Xanh Da Trời
-  - Xanh Dương
-  - Xanh Lá
-  - Xám Không Gian
-  - Ánh Sao
+    - Bạc
+    - Cam
+    - Gold
+    - Hồng
+    - Tím
+    - Vàng
+    - Xanh Da Trời
+    - Xanh Dương
+    - Xanh Lá
+    - Xám Không Gian
+    - Ánh Sao
   storage:
-  - 512GB
-  - 1TB
-  - 2TB
-  - 4TB
+    - 512GB
+    - 1TB
+    - 2TB
+    - 4TB
   sizes:
-  - 13.3 inch
+    - 13.3 inch
   source: official_combined
 mac_pro_intel_2019:
   name: Mac Pro (Intel, 2019)
   category: Mac
   url: null
   colors:
-  - Bạc
+    - Bạc
   storage:
-  - 512GB
-  - 1TB
-  - 2TB
-  - 4TB
-  - 8TB
+    - 512GB
+    - 1TB
+    - 2TB
+    - 4TB
+    - 8TB
   source: official_combined
 macbook_air_15_m3:
   name: MacBook Air 15 inch (M3)
   category: Mac
   url: null
   colors:
-  - Bạc
-  - Xám Không Gian
-  - '{MACBOOKAIR_M3_13}'
-  - Ánh Sao
+    - Bạc
+    - Xám Không Gian
+    - "{MACBOOKAIR_M3_13}"
+    - Ánh Sao
   storage:
-  - 256GB
-  - 512GB
-  - 1TB
-  - 2TB
+    - 256GB
+    - 512GB
+    - 1TB
+    - 2TB
   sizes:
-  - 15.3 inch
+    - 15.3 inch
   source: official_combined
 macbook_pro_16_m4_pro:
   name: MacBook Pro 16 inch (M4 Pro)
   category: Mac
   url: null
   colors:
-  - Bạc
+    - Bạc
   storage:
-  - 512GB
-  - 1TB
-  - 2TB
-  - 4TB
+    - 512GB
+    - 1TB
+    - 2TB
+    - 4TB
   sizes:
-  - 16.2 inch
+    - 16.2 inch
   source: official_combined
 macbook_air_13_m2:
   name: MacBook Air 13 inch (M2)
   category: Mac
   url: null
   colors:
-  - Bạc
-  - Cam
-  - Gold
-  - Hồng
-  - Tím
-  - Vàng
-  - Xanh Da Trời
-  - Xanh Dương
-  - Xanh Lá
-  - Xám Không Gian
-  - '{MACBOOKAIR_M2}'
-  - Ánh Sao
+    - Bạc
+    - Cam
+    - Gold
+    - Hồng
+    - Tím
+    - Vàng
+    - Xanh Da Trời
+    - Xanh Dương
+    - Xanh Lá
+    - Xám Không Gian
+    - "{MACBOOKAIR_M2}"
+    - Ánh Sao
   storage:
-  - 256GB
-  - 512GB
-  - 1TB
-  - 2TB
+    - 256GB
+    - 512GB
+    - 1TB
+    - 2TB
   sizes:
-  - 13.6 inch
+    - 13.6 inch
   source: official_combined
 imac_215_intel_2019:
   name: iMac 21,5 inch (Intel, 2019)
   category: Mac
   url: null
   colors:
-  - Bạc
-  - Cam
-  - Gold
-  - Hồng
-  - Tím
-  - Vàng
-  - Xanh Da Trời
-  - Xanh Dương
-  - Xanh Lá
-  - Xám Không Gian
-  - Ánh Sao
+    - Bạc
+    - Cam
+    - Gold
+    - Hồng
+    - Tím
+    - Vàng
+    - Xanh Da Trời
+    - Xanh Dương
+    - Xanh Lá
+    - Xám Không Gian
+    - Ánh Sao
   storage:
-  - 256GB
-  - 1TB
+    - 256GB
+    - 1TB
   source: official_combined
 macbook_air_15_m4:
   name: MacBook Air 15 inch (M4)
   category: Mac
   url: null
   colors:
-  - Bạc
-  - Xanh Da Trời
-  - Ánh Sao
+    - Bạc
+    - Xanh Da Trời
+    - Ánh Sao
   storage:
-  - 256GB
-  - 512GB
-  - 1TB
-  - 2TB
+    - 256GB
+    - 512GB
+    - 1TB
+    - 2TB
   sizes:
-  - 15.3 inch
+    - 15.3 inch
   source: official_combined
 macbook_pro_16_m4_max:
   name: MacBook Pro 16 inch (M4 Max)
   category: Mac
   url: null
   colors:
-  - Bạc
-  - Cam
-  - Gold
-  - Hồng
-  - Tím
-  - Vàng
-  - Xanh Da Trời
-  - Xanh Dương
-  - Xanh Lá
-  - Xám Không Gian
-  - Ánh Sao
+    - Bạc
+    - Cam
+    - Gold
+    - Hồng
+    - Tím
+    - Vàng
+    - Xanh Da Trời
+    - Xanh Dương
+    - Xanh Lá
+    - Xám Không Gian
+    - Ánh Sao
   storage:
-  - 1TB
-  - 2TB
-  - 4TB
-  - 8TB
+    - 1TB
+    - 2TB
+    - 4TB
+    - 8TB
   sizes:
-  - 16.2 inch
+    - 16.2 inch
   source: official_combined
 macbook_pro_14_m1_pro_2021:
   name: MacBook Pro 14 inch (M1 Pro M1
   category: Mac
   url: null
   colors:
-  - Bạc
-  - Xám Không Gian
+    - Bạc
+    - Xám Không Gian
   storage:
-  - 512GB
-  - 1TB
-  - 2TB
-  - 4TB
-  - 8TB
+    - 512GB
+    - 1TB
+    - 2TB
+    - 4TB
+    - 8TB
   sizes:
-  - 14.2 inch
+    - 14.2 inch
   source: official_combined
 macbook_pro_14_m1_max_2021:
   name: MacBook Pro 14 inch (M1 M1 Max, 2021)
   category: Mac
   url: null
   colors:
-  - Bạc
-  - Xám Không Gian
+    - Bạc
+    - Xám Không Gian
   storage:
-  - 512GB
-  - 1TB
-  - 2TB
-  - 4TB
-  - 8TB
+    - 512GB
+    - 1TB
+    - 2TB
+    - 4TB
+    - 8TB
   sizes:
-  - 14.2 inch
+    - 14.2 inch
   source: official_combined
 macbook_pro_14_m3_pro:
   name: MacBook Pro 14 inch (M3 Pro M3
   category: Mac
   url: null
   colors:
-  - Bạc
-  - Cam
-  - Gold
-  - Hồng
-  - Tím
-  - Vàng
-  - Xanh Da Trời
-  - Xanh Dương
-  - Xanh Lá
-  - Xám Không Gian
-  - Ánh Sao
+    - Bạc
+    - Cam
+    - Gold
+    - Hồng
+    - Tím
+    - Vàng
+    - Xanh Da Trời
+    - Xanh Dương
+    - Xanh Lá
+    - Xám Không Gian
+    - Ánh Sao
   storage:
-  - 512GB
-  - 1TB
-  - 2TB
-  - 4TB
-  - 8TB
+    - 512GB
+    - 1TB
+    - 2TB
+    - 4TB
+    - 8TB
   sizes:
-  - 14.2 inch
+    - 14.2 inch
   source: official_combined
 macbook_pro_14_m3_max:
   name: MacBook Pro 14 inch (M3 M3 Max)
   category: Mac
   url: null
   colors:
-  - Bạc
-  - Cam
-  - Gold
-  - Hồng
-  - Tím
-  - Vàng
-  - Xanh Da Trời
-  - Xanh Dương
-  - Xanh Lá
-  - Xám Không Gian
-  - Ánh Sao
+    - Bạc
+    - Cam
+    - Gold
+    - Hồng
+    - Tím
+    - Vàng
+    - Xanh Da Trời
+    - Xanh Dương
+    - Xanh Lá
+    - Xám Không Gian
+    - Ánh Sao
   storage:
-  - 512GB
-  - 1TB
-  - 2TB
-  - 4TB
-  - 8TB
+    - 512GB
+    - 1TB
+    - 2TB
+    - 4TB
+    - 8TB
   sizes:
-  - 14.2 inch
+    - 14.2 inch
   source: official_combined
 imac_m4_2port:
   name: iMac (M4, hai cổng)
   category: Mac
   url: null
   colors:
-  - Bạc
-  - Cam
-  - Hồng
-  - Tím
-  - Vàng
-  - Xanh Dương
-  - Xanh Lá
+    - Bạc
+    - Cam
+    - Hồng
+    - Tím
+    - Vàng
+    - Xanh Dương
+    - Xanh Lá
   storage:
-  - 256GB
-  - 512GB
-  - 1TB
+    - 256GB
+    - 512GB
+    - 1TB
   source: official_combined
 macbook_air_13_m4:
   name: MacBook Air 13 inch (M4)
   category: Mac
   url: null
   colors:
-  - Bạc
-  - Cam
-  - Gold
-  - Hồng
-  - Tím
-  - Vàng
-  - Xanh Da Trời
-  - Xanh Dương
-  - Xanh Lá
-  - Xám Không Gian
-  - Ánh Sao
+    - Bạc
+    - Cam
+    - Gold
+    - Hồng
+    - Tím
+    - Vàng
+    - Xanh Da Trời
+    - Xanh Dương
+    - Xanh Lá
+    - Xám Không Gian
+    - Ánh Sao
   storage:
-  - 256GB
-  - 512GB
-  - 1TB
-  - 2TB
+    - 256GB
+    - 512GB
+    - 1TB
+    - 2TB
   sizes:
-  - 13.6 inch
+    - 13.6 inch
   source: official_combined
 mac_mini_m4_pro:
   name: Mac mini (M4 Pro)
   category: Mac
   url: null
   colors:
-  - Bạc
+    - Bạc
   storage:
-  - 512GB
-  - 1TB
-  - 2TB
-  - 4TB
-  - 8TB
+    - 512GB
+    - 1TB
+    - 2TB
+    - 4TB
+    - 8TB
   source: official_combined
 macbook_pro_13_m1_2020:
   name: MacBook Pro 13 inch (M1, 2020)
   category: Mac
   url: null
   colors:
-  - Bạc
-  - Xám Không Gian
+    - Bạc
+    - Xám Không Gian
   storage:
-  - 256GB
-  - 512GB
-  - 1TB
-  - 2TB
+    - 256GB
+    - 512GB
+    - 1TB
+    - 2TB
   sizes:
-  - 13.3 inch
+    - 13.3 inch
   source: official_combined
 mac_studio_m1_max_2022:
   name: Mac Studio (M1 Max hoặc M1 Ultra, 2022)
   category: Mac
   url: null
   colors:
-  - Bạc
+    - Bạc
   storage:
-  - 512GB
-  - 1TB
-  - 2TB
-  - 4TB
-  - 8TB
+    - 512GB
+    - 1TB
+    - 2TB
+    - 4TB
+    - 8TB
   source: official_combined
 mac_studio_m1_ultra_2022:
   name: Mac Studio (M1 Max hoặc M1 Ultra, 2022)
   category: Mac
   url: null
   colors:
-  - Bạc
+    - Bạc
   storage:
-  - 512GB
-  - 1TB
-  - 2TB
-  - 4TB
-  - 8TB
+    - 512GB
+    - 1TB
+    - 2TB
+    - 4TB
+    - 8TB
   source: official_combined
 apple_watch_series_4_40mm:
   name: Apple Watch Series 4 40mm
   category: Watch
   url: null
   colors: &id083
-  - Gốm Trắng
-  - Nhôm Bạc
-  - Nhôm Vàng Xước
-  - Nhôm Xám Không Gian
-  - Thép Không Gỉ
-  - Thép Không Gỉ Gold
-  - Titan
+    - Gốm Trắng
+    - Nhôm Bạc
+    - Nhôm Vàng Xước
+    - Nhôm Xám Không Gian
+    - Thép Không Gỉ
+    - Thép Không Gỉ Gold
+    - Titan
   sizes:
-  - 40mm
-  connectivity: null
+    - 40mm
+  connectivity:
+    - GPS
+    - GPS + Cellular
   source: official_combined
 apple_watch_series_4_44mm:
   name: Apple Watch Series 4 44mm
@@ -2927,30 +2929,32 @@ apple_watch_series_4_44mm:
   url: null
   colors: *id083
   sizes:
-  - 44mm
-  connectivity: null
+    - 44mm
+  connectivity:
+    - GPS
+    - GPS + Cellular
   source: official_combined
 apple_watch_series_10_titanium_42mm:
   name: Apple Watch Series 10 (Titanium Titan) 42mm
   category: Watch
   colors: &id084
-  - Titan Gold
-  - Titan Tự Nhiên
-  - Titan Xám
+    - Titan Gold
+    - Titan Tự Nhiên
+    - Titan Xám
   sizes:
-  - 42mm
+    - 42mm
   connectivity: &id085
-  - GPS + Cellular
+    - GPS + Cellular
   keywords: &id086
-  - Titan
-  - Titanium
+    - Titan
+    - Titanium
   source: manual_fix
 apple_watch_series_10_titanium_46mm:
   name: Apple Watch Series 10 (Titanium Titan) 46mm
   category: Watch
   colors: *id084
   sizes:
-  - 46mm
+    - 46mm
   connectivity: *id085
   keywords: *id086
   source: manual_fix
@@ -2959,16 +2963,19 @@ apple_watch_series_8_41mm:
   category: Watch
   url: null
   colors: &id087
-  - Nhôm Bạc
-  - Nhôm Product Red
-  - Nhôm Ánh Sao
-  - Thép Không Gỉ Bạc
-  - Thép Không Gỉ Gold
-  - Thép Không Gỉ Than Chì
-  - Titan Tự Nhiên
+    - Nhôm Bạc
+    - Nhôm Product Red
+    - Nhôm Ánh Sao
+    - Thép Không Gỉ Bạc
+    - Thép Không Gỉ Gold
+    - Thép Không Gỉ Than Chì
+    - Titan Tự Nhiên
   sizes:
-  - 41mm
-  connectivity: null
+    - 41mm
+  connectivity:
+    - GPS
+    - GPS + Cellular
+
   source: official_combined
 apple_watch_series_8_45mm:
   name: Apple Watch Series 8 45mm
@@ -2976,25 +2983,29 @@ apple_watch_series_8_45mm:
   url: null
   colors: *id087
   sizes:
-  - 45mm
-  connectivity: null
+    - 45mm
+  connectivity:
+    - GPS
+    - GPS + Cellular
   source: official_combined
 apple_watch_series_9_41mm:
   name: Apple Watch Series 9 41mm
   category: Watch
   url: null
   colors: &id088
-  - Nhôm Bạc
-  - Nhôm Hồng
-  - Nhôm Product Red
-  - Nhôm Ánh Sao
-  - Thép Không Gỉ Bạc
-  - Thép Không Gỉ Gold
-  - Thép Không Gỉ Than Chì
-  - Titan Tự Nhiên
+    - Nhôm Bạc
+    - Nhôm Hồng
+    - Nhôm Product Red
+    - Nhôm Ánh Sao
+    - Thép Không Gỉ Bạc
+    - Thép Không Gỉ Gold
+    - Thép Không Gỉ Than Chì
+    - Titan Tự Nhiên
   sizes:
-  - 41mm
-  connectivity: null
+    - 41mm
+  connectivity:
+    - GPS
+    - GPS + Cellular
   source: official_combined
 apple_watch_series_9_45mm:
   name: Apple Watch Series 9 45mm
@@ -3002,27 +3013,29 @@ apple_watch_series_9_45mm:
   url: null
   colors: *id088
   sizes:
-  - 45mm
-  connectivity: null
+    - 45mm
+  connectivity:
+    - GPS
+    - GPS + Cellular
   source: official_combined
 apple_watch_se_2_gps_40mm:
   name: Apple Watch SE 2 (GPS) 40mm
   category: Watch
   colors: &id089
-  - Đen Xanh
-  - Trắng Starlight
-  - Bạc
+    - Đen Xanh
+    - Trắng Starlight
+    - Bạc
   sizes:
-  - 40mm
+    - 40mm
   connectivity: &id090
-  - GPS
+    - GPS
   source: manual_fix
 apple_watch_se_2_gps_44mm:
   name: Apple Watch SE 2 (GPS) 44mm
   category: Watch
   colors: *id089
   sizes:
-  - 44mm
+    - 44mm
   connectivity: *id090
   source: manual_fix
 apple_watch_se_2_lte_40mm:
@@ -3030,16 +3043,16 @@ apple_watch_se_2_lte_40mm:
   category: Watch
   colors: *id089
   sizes:
-  - 40mm
+    - 40mm
   connectivity: &id091
-  - GPS + Cellular
+    - GPS + Cellular
   source: manual_fix
 apple_watch_se_2_lte_44mm:
   name: Apple Watch SE 2 (GPS + Cellular) 44mm
   category: Watch
   colors: *id089
   sizes:
-  - 44mm
+    - 44mm
   connectivity: *id091
   source: manual_fix
 apple_watch_series_5_40mm:
@@ -3047,16 +3060,18 @@ apple_watch_series_5_40mm:
   category: Watch
   url: null
   colors: &id092
-  - Gốm Trắng
-  - Nhôm Bạc
-  - Nhôm Vàng Xước
-  - Nhôm Xám Không Gian
-  - Thép Không Gỉ
-  - Thép Không Gỉ Gold
-  - Titan
+    - Gốm Trắng
+    - Nhôm Bạc
+    - Nhôm Vàng Xước
+    - Nhôm Xám Không Gian
+    - Thép Không Gỉ
+    - Thép Không Gỉ Gold
+    - Titan
   sizes:
-  - 40mm
-  connectivity: null
+    - 40mm
+  connectivity:
+    - GPS
+    - GPS + Cellular
   source: official_combined
 apple_watch_series_5_44mm:
   name: Apple Watch Series 5 44mm
@@ -3064,25 +3079,29 @@ apple_watch_series_5_44mm:
   url: null
   colors: *id092
   sizes:
-  - 44mm
-  connectivity: null
+    - 44mm
+  connectivity:
+    - GPS
+    - GPS + Cellular
   source: official_combined
 apple_watch_series_2_38mm:
   name: Apple Watch Series 2 38mm
   category: Watch
   url: null
   colors: &id093
-  - Gốm Trắng
-  - Gốm Xám
-  - Nhôm Bạc
-  - Nhôm Gold
-  - Nhôm Vàng Hồng
-  - Nhôm Vàng Xước
-  - Nhôm Xám Không Gian
-  - Thép Không Gỉ
+    - Gốm Trắng
+    - Gốm Xám
+    - Nhôm Bạc
+    - Nhôm Gold
+    - Nhôm Vàng Hồng
+    - Nhôm Vàng Xước
+    - Nhôm Xám Không Gian
+    - Thép Không Gỉ
   sizes:
-  - 38mm
-  connectivity: null
+    - 38mm
+  connectivity:
+    - GPS
+    - GPS + Cellular
   source: official_combined
 apple_watch_series_2_42mm:
   name: Apple Watch Series 2 42mm
@@ -3090,24 +3109,28 @@ apple_watch_series_2_42mm:
   url: null
   colors: *id093
   sizes:
-  - 42mm
-  connectivity: null
+    - 42mm
+  connectivity:
+    - GPS
+    - GPS + Cellular
   source: official_combined
 apple_watch_series_3_38mm:
   name: Apple Watch Series 3 38mm
   category: Watch
   url: null
   colors: &id094
-  - Gốm Trắng
-  - Gốm Xám
-  - Nhôm Bạc
-  - Nhôm Vàng Xước
-  - Nhôm Xám Không Gian
-  - Thép Không Gỉ
-  - Thép Không Gỉ Gold
+    - Gốm Trắng
+    - Gốm Xám
+    - Nhôm Bạc
+    - Nhôm Vàng Xước
+    - Nhôm Xám Không Gian
+    - Thép Không Gỉ
+    - Thép Không Gỉ Gold
   sizes:
-  - 38mm
-  connectivity: null
+    - 38mm
+  connectivity:
+    - GPS
+    - GPS + Cellular
   source: official_combined
 apple_watch_series_3_42mm:
   name: Apple Watch Series 3 42mm
@@ -3115,23 +3138,27 @@ apple_watch_series_3_42mm:
   url: null
   colors: *id094
   sizes:
-  - 42mm
-  connectivity: null
+    - 42mm
+  connectivity:
+    - GPS
+    - GPS + Cellular
   source: official_combined
 apple_watch_series_1_38mm:
   name: Apple Watch Series 1 38mm
   category: Watch
   url: null
   colors: &id095
-  - Gốm Trắng
-  - Nhôm Bạc
-  - Nhôm Gold
-  - Nhôm Vàng Hồng
-  - Nhôm Xám Không Gian
-  - Thép Không Gỉ
+    - Gốm Trắng
+    - Nhôm Bạc
+    - Nhôm Gold
+    - Nhôm Vàng Hồng
+    - Nhôm Xám Không Gian
+    - Thép Không Gỉ
   sizes:
-  - 38mm
-  connectivity: null
+    - 38mm
+  connectivity:
+    - GPS
+    - GPS + Cellular
   source: official_combined
 apple_watch_series_1_42mm:
   name: Apple Watch Series 1 42mm
@@ -3139,28 +3166,32 @@ apple_watch_series_1_42mm:
   url: null
   colors: *id095
   sizes:
-  - 42mm
-  connectivity: null
+    - 42mm
+  connectivity:
+    - GPS
+    - GPS + Cellular
   source: official_combined
 apple_watch_series_6_40mm:
   name: Apple Watch Series 6 40mm
   category: Watch
   url: null
   colors: &id096
-  - Nhôm Bạc
-  - Nhôm Product Red
-  - Nhôm Vàng Xước
-  - Nhôm Xanh Dương
-  - Nhôm Xanh Lá
-  - Nhôm Xám Không Gian
-  - Nhôm Ánh Sao
-  - Thép Không Gỉ Bạc
-  - Thép Không Gỉ Gold
-  - Thép Không Gỉ Than Chì
-  - Titan
+    - Nhôm Bạc
+    - Nhôm Product Red
+    - Nhôm Vàng Xước
+    - Nhôm Xanh Dương
+    - Nhôm Xanh Lá
+    - Nhôm Xám Không Gian
+    - Nhôm Ánh Sao
+    - Thép Không Gỉ Bạc
+    - Thép Không Gỉ Gold
+    - Thép Không Gỉ Than Chì
+    - Titan
   sizes:
-  - 40mm
-  connectivity: null
+    - 40mm
+  connectivity:
+    - GPS
+    - GPS + Cellular
   source: official_combined
 apple_watch_series_6_44mm:
   name: Apple Watch Series 6 44mm
@@ -3168,32 +3199,52 @@ apple_watch_series_6_44mm:
   url: null
   colors: *id096
   sizes:
-  - 44mm
-  connectivity: null
+    - 44mm
+  connectivity:
+    - GPS
+    - GPS + Cellular
   source: official_combined
 apple_watch_ultra_2:
   name: Apple Watch Ultra 2
   category: Watch
   colors:
-  - Titan Tự Nhiên
-  - Titan Đen
+    - Titan Tự Nhiên
+    - Titan Đen
   sizes:
-  - 49mm
+    - 49mm
   connectivity:
-  - GPS + Cellular
+    - GPS + Cellular
   source: manual_fix
+apple_watch_se_38mm:
+  name: Apple Watch SE 38mm
+  category: Watch
+  url: null
+  colors: &id097
+    - Nhôm Bạc
+    - Nhôm Product Red
+    - Nhôm Vàng Xước
+    - Nhôm Xanh Dương
+    - Nhôm Xám Không Gian
+    - Thép Không Gỉ Bạc
+    - Thép Không Gỉ Gold
+    - Thép Không Gỉ Than Chì
+    - Titan
+  sizes:
+    - 38mm
+  connectivity:
+    - GPS
+    - GPS + Cellular
+  source: official_combined
 apple_watch_se_40mm:
   name: Apple Watch SE 40mm
   category: Watch
   url: null
-  colors: &id097
-  - Nhôm Bạc
-  - Nhôm Vàng Hồng
-  - Nhôm Xám Không Gian
-  - Nhôm Ánh Sao
+  colors: *id097
   sizes:
-  - 40mm
-  connectivity: null
+    - 40mm
+  connectivity:
+    - GPS
+    - GPS + Cellular
   source: official_combined
 apple_watch_se_44mm:
   name: Apple Watch SE 44mm
@@ -3201,37 +3252,41 @@ apple_watch_se_44mm:
   url: null
   colors: *id097
   sizes:
-  - 44mm
-  connectivity: null
+    - 44mm
+  connectivity:
+    - GPS
+    - GPS + Cellular
   source: official_combined
 apple_watch_ultra_3:
   name: Apple Watch Ultra 3
   category: Watch
   colors:
-  - Titan Tự Nhiên
-  - Titan Đen
+    - Titan Tự Nhiên
+    - Titan Đen
   sizes:
-  - 49mm
+    - 49mm
   connectivity:
-  - GPS + Cellular
+    - GPS + Cellular
   source: manual_fix
 apple_watch_series_7_41mm:
   name: Apple Watch Series 7 41mm
   category: Watch
   url: null
   colors: &id098
-  - Nhôm Bạc
-  - Nhôm Product Red
-  - Nhôm Xanh Dương
-  - Nhôm Xanh Lá
-  - Nhôm Ánh Sao
-  - Thép Không Gỉ Bạc
-  - Thép Không Gỉ Gold
-  - Thép Không Gỉ Than Chì
-  - Titan
+    - Nhôm Bạc
+    - Nhôm Product Red
+    - Nhôm Xanh Dương
+    - Nhôm Xanh Lá
+    - Nhôm Ánh Sao
+    - Thép Không Gỉ Bạc
+    - Thép Không Gỉ Gold
+    - Thép Không Gỉ Than Chì
+    - Titan
   sizes:
-  - 41mm
-  connectivity: null
+    - 41mm
+  connectivity:
+    - GPS
+    - GPS + Cellular
   source: official_combined
 apple_watch_series_7_45mm:
   name: Apple Watch Series 7 45mm
@@ -3239,29 +3294,31 @@ apple_watch_series_7_45mm:
   url: null
   colors: *id098
   sizes:
-  - 45mm
-  connectivity: null
+    - 45mm
+  connectivity:
+    - GPS
+    - GPS + Cellular
   source: official_combined
 apple_watch_series_10_gps_42mm:
   name: Apple Watch Series 10 (Nhôm) (GPS) 42mm
   category: Watch
   colors: &id099
-  - Nhôm Đen Bóng
-  - Nhôm Vàng Hồng
-  - Nhôm Bạc
+    - Nhôm Đen Bóng
+    - Nhôm Vàng Hồng
+    - Nhôm Bạc
   sizes:
-  - 42mm
+    - 42mm
   connectivity: &id100
-  - GPS
+    - GPS
   keywords: &id101
-  - Series 10
+    - Series 10
   source: manual_fix
 apple_watch_series_10_gps_46mm:
   name: Apple Watch Series 10 (Nhôm) (GPS) 46mm
   category: Watch
   colors: *id099
   sizes:
-  - 46mm
+    - 46mm
   connectivity: *id100
   keywords: *id101
   source: manual_fix
@@ -3270,9 +3327,9 @@ apple_watch_series_10_lte_42mm:
   category: Watch
   colors: *id099
   sizes:
-  - 42mm
+    - 42mm
   connectivity: &id102
-  - GPS + Cellular
+    - GPS + Cellular
   keywords: *id101
   source: manual_fix
 apple_watch_series_10_lte_46mm:
@@ -3280,7 +3337,7 @@ apple_watch_series_10_lte_46mm:
   category: Watch
   colors: *id099
   sizes:
-  - 46mm
+    - 46mm
   connectivity: *id102
   keywords: *id101
   source: manual_fix
@@ -3289,313 +3346,279 @@ airpods_pro_2:
   category: Audio
   url: https://www.apple.com/vn/airpods-pro
   colors:
-  - Trắng
+    - Trắng
   features:
-  - USB-C
-  - 2023
-  - MagSafe
+    - USB-C
+    - 2023
+    - MagSafe
   keywords:
-  - AirPods Pro 2
-  - Pro 2
-  - USB-C
-  - MTJV3
+    - AirPods Pro 2
+    - Pro 2
+    - USB-C
+    - MTJV3
   source: manual_fix
 airpods_pro_3:
   name: AirPods Pro 3
   category: Audio
   url: https://www.apple.com/vn/airpods-pro
   colors:
-  - Trắng
+    - Trắng
   features:
-  - Type-C
-  - 2025
+    - Type-C
+    - 2025
   keywords:
-  - AirPods Pro 3
-  - Pro 3
-  - MFHP4
+    - AirPods Pro 3
+    - Pro 3
+    - MFHP4
   source: manual_fix
 airpods_4:
   name: AirPods 4
   category: Audio
   url: https://www.apple.com/vn/airpods
   colors:
-  - Trắng
+    - Trắng
   features:
-  - Standard
+    - Standard
   keywords:
-  - AirPods 4
-  - MXP63
+    - AirPods 4
+    - MXP63
   source: manual_fix
 airpods_4_anc:
   name: AirPods 4 ANC
   category: Audio
   url: https://www.apple.com/vn/airpods
   colors:
-  - Trắng
+    - Trắng
   features:
-  - Active Noise Cancellation
-  - Chống ồn chủ động
+    - Active Noise Cancellation
+    - Chống ồn chủ động
   keywords:
-  - ANC
-  - chống ồn
-  - Khử ồn
+    - ANC
+    - chống ồn
+    - Khử ồn
   source: manual_fix
 macbook_air_13_2020:
   name: MacBook Air 13 inch (2020)
   category: Mac
   url: https://www.apple.com/vn/macbook-air
   colors:
-  - Bạc
-  - Vàng
-  - Xám Không Gian
+    - Bạc
+    - Vàng
+    - Xám Không Gian
   storage:
-  - 256GB
-  - 512GB
+    - 256GB
+    - 512GB
   sizes:
-  - 13 inch
+    - 13 inch
   processor:
-  - M1
-  - Intel
+    - M1
+    - Intel
   keywords:
-  - MacBook Air 13 256GB 2020
-  - MacBook Air 13 2020
+    - MacBook Air 13 256GB 2020
+    - MacBook Air 13 2020
   source: manual_fix
 imac_m1_2021_24:
   name: iMac M1 2021 24 inch
   category: Mac
   url: https://www.apple.com/vn/imac
   colors:
-  - Bạc
-  - Xanh Dương
-  - Xanh Lá
-  - Vàng
-  - Cam
-  - Hồng
-  - Tím
+    - Bạc
+    - Xanh Dương
+    - Xanh Lá
+    - Vàng
+    - Cam
+    - Hồng
+    - Tím
   storage:
-  - 256GB
-  - 512GB
+    - 256GB
+    - 512GB
   sizes:
-  - 24 inch
+    - 24 inch
   processor:
-  - M1
+    - M1
   ram:
-  - 8GB
-  - 16GB
+    - 8GB
+    - 16GB
   source: manual_fix
 apple_watch_series_11_gps_42mm:
   name: Apple Watch Series 11 (GPS) 42mm
   category: Watch
   colors: &id103
-  - Nhôm Bạc
-  - Nhôm Vàng Hồng
-  - Nhôm Xám Không Gian
-  - Nhôm Ánh Sao
+    - Nhôm Bạc
+    - Nhôm Vàng Hồng
+    - Nhôm Xám Không Gian
+    - Nhôm Ánh Sao
   sizes:
-  - 42mm
+    - 42mm
   connectivity: &id104
-  - GPS
+    - GPS
   keywords: &id105
-  - series 11
-  - gps
-  - nhôm
-  - aluminum
+    - series 11
+    - gps
+    - nhôm
+    - aluminum
 apple_watch_series_11_gps_46mm:
   name: Apple Watch Series 11 (GPS) 46mm
   category: Watch
   colors: *id103
   sizes:
-  - 46mm
+    - 46mm
   connectivity: *id104
   keywords: *id105
 apple_watch_series_11_lte_42mm:
   name: Apple Watch Series 11 (GPS + Cellular) (GPS) 42mm
   category: Watch
   colors: &id106
-  - Nhôm Bạc
-  - Nhôm Vàng Hồng
-  - Nhôm Xám Không Gian
-  - Nhôm Ánh Sao
+    - Nhôm Bạc
+    - Nhôm Vàng Hồng
+    - Nhôm Xám Không Gian
+    - Nhôm Ánh Sao
   sizes:
-  - 42mm
+    - 42mm
   connectivity: &id107
-  - GPS
+    - GPS
   keywords: &id108
-  - series 11
-  - lte
-  - cellular
-  - 5g
-  - 4g
-  - nhôm
-  - aluminum
+    - series 11
+    - lte
+    - cellular
+    - 5g
+    - 4g
+    - nhôm
+    - aluminum
 apple_watch_series_11_lte_46mm:
   name: Apple Watch Series 11 (GPS + Cellular) (GPS) 46mm
   category: Watch
   colors: *id106
   sizes:
-  - 46mm
+    - 46mm
   connectivity: *id107
   keywords: *id108
 ipad_a16_wifi:
   name: iPad A16 WiFi
   category: iPad
   storage:
-  - 128GB
-  - 256GB
+    - 128GB
+    - 256GB
   connectivity:
-  - WiFi
+    - WiFi
   colors:
-  - Xanh
-  - Hồng
-  - Vàng
-  - Bạc
-  - Xanh dương
+    - Xanh
+    - Hồng
+    - Vàng
+    - Bạc
+    - Xanh dương
   keywords:
-  - ipad a16
-  - wifi
-  - '2025'
+    - ipad a16
+    - wifi
+    - "2025"
 ipad_a16_lte_wifi:
   name: iPad A16 5G WiFi
   category: iPad
   storage:
-  - 128GB
-  - 256GB
+    - 128GB
+    - 256GB
   connectivity:
-  - Wi-Fi
+    - Wi-Fi
   colors:
-  - Xanh
-  - Hồng
-  - Vàng
-  - Bạc
-  - Xanh dương
+    - Xanh
+    - Hồng
+    - Vàng
+    - Bạc
+    - Xanh dương
   keywords:
-  - ipad a16
-  - 5g
-  - cellular
-  - lte
-  - '2025'
+    - ipad a16
+    - 5g
+    - cellular
+    - lte
+    - "2025"
 ipad_a16_lte:
   name: iPad A16 5G/LTE
   category: iPad
   url: null
   colors:
-  - Bạc
-  - Xám Không Gian
+    - Bạc
+    - Xám Không Gian
   storage:
-  - 128GB
-  - 256GB
-  - 512GB
+    - 128GB
+    - 256GB
+    - 512GB
   connectivity:
-  - Wi-Fi + Cellular
+    - Wi-Fi + Cellular
   source: manual_fix
 apple_watch_series_7:
   name: Apple Watch Series 7
   category: Watch
   url: null
   colors:
-  - Đen
-  - Bạc
-  - Vàng
+    - Đen
+    - Bạc
+    - Vàng
   sizes:
-  - 41mm
-  - 45mm
+    - 41mm
+    - 45mm
   connectivity:
-  - GPS
-  - GPS + Cellular
+    - GPS
+    - GPS + Cellular
   source: manual_fix
 apple_watch_series_8:
   name: Apple Watch Series 8
   category: Watch
   url: null
   colors:
-  - Đen
-  - Bạc
-  - Vàng
+    - Đen
+    - Bạc
+    - Vàng
   sizes:
-  - 41mm
-  - 45mm
+    - 41mm
+    - 45mm
   connectivity:
-  - GPS
-  - GPS + Cellular
+    - GPS
+    - GPS + Cellular
   source: manual_fix
 macbook_air_13_m1:
   name: MacBook Air 13 inch M1
   category: Mac
   url: null
   colors:
-  - Bạc
-  - Xám Không Gian
-  - Vàng
+    - Bạc
+    - Xám Không Gian
+    - Vàng
   storage:
-  - 256GB
-  - 512GB
+    - 256GB
+    - 512GB
   sizes:
-  - 13 inch
+    - 13 inch
   processor:
-  - M1
+    - M1
   source: manual_fix
 macbook_air_m4:
   name: MacBook Air M4 (Generic)
   category: Mac
   url: null
   colors:
-  - Bạc
-  - Xám Không Gian
-  - Vàng
+    - Bạc
+    - Xám Không Gian
+    - Vàng
   storage:
-  - 256GB
-  - 512GB
-  - 1TB
+    - 256GB
+    - 512GB
+    - 1TB
   processor:
-  - M4
+    - M4
   source: manual_fix
 macbook_pro_m4:
   name: MacBook Pro M4 (Generic)
   category: Mac
   url: null
   colors:
-  - Bạc
-  - Đen Không Gian
+    - Bạc
+    - Đen Không Gian
   storage:
-  - 512GB
-  - 1TB
-  - 2TB
+    - 512GB
+    - 1TB
+    - 2TB
   processor:
-  - M4
-  - M4 Pro
-  - M4 Max
-  source: manual_fix
-ipad_pro_13_m5_wifi_nano:
-  name: iPad Pro 13 inch (M5) WiFi Nano-texture Glass
-  category: iPad
-  url: null
-  colors:
-  - Bạc
-  storage:
-  - 1TB
-  - 2TB
-  connectivity:
-  - Wi-Fi
-  keywords:
-  - Nano-texture
-  - Nano
-  - M5
-  source: manual_fix
-ipad_pro_13_m5_lte_nano:
-  name: iPad Pro 13 inch (M5) 5G/LTE Nano-texture Glass
-  category: iPad
-  url: null
-  colors:
-  - Bạc
-  storage:
-  - 1TB
-  - 2TB
-  connectivity:
-  - Wi-Fi + Cellular
-  keywords:
-  - Nano-texture
-  - Nano
-  - M5
-  - 5G
-  - LTE
+    - M4
+    - M4 Pro
+    - M4 Max
   source: manual_fix
