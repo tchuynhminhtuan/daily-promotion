@@ -6,39 +6,39 @@ import glob
 import re
 import html
 
-import yaml
-import subprocess
-
 # --- Configuration ---
 # Determine the project root directory
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-# SCRIPT_DIR is now src/reporting, so ROOT is ../../
-PROJECT_ROOT = os.path.dirname(os.path.dirname(SCRIPT_DIR))
-BASE_DIR = os.path.join(PROJECT_ROOT, "data", "raw") # This line is kept as it might be used elsewhere, but get_available_dates will use normalized_dir
-
+# src/reporting -> src -> root
+PROJECT_ROOT = os.path.dirname(os.path.dirname(SCRIPT_DIR)) 
+BASE_DIR = os.path.join(PROJECT_ROOT, "data", "raw")
 # --- Date Selection Options ---
 # Option 1: Auto-select the two most recent dates (Default)
 # Option 2: Hardcoded specific dates (Set AUTO_SELECT_DATES = False)
 AUTO_SELECT_DATES = True
 
-def get_available_dates(normalized_dir):
-    """Scan available dates from clean_data_*.csv files"""
-    dates = []
-    pattern = re.compile(r'clean_data_(\d{4}-\d{2}-\d{2})\.csv')
+def get_available_dates(base_dir):
+    """Scans content directory for date-like folders (YYYY-MM-DD) and returns them sorted."""
+    if not os.path.exists(base_dir):
+        return []
     
-    if not os.path.exists(normalized_dir):
+    dates = []
+    date_pattern = re.compile(r'^\d{4}-\d{2}-\d{2}$')
+    
+    try:
+        entries = os.listdir(base_dir)
+        for entry in entries:
+            full_path = os.path.join(base_dir, entry)
+            if os.path.isdir(full_path) and date_pattern.match(entry):
+                dates.append(entry)
+    except OSError:
         return []
         
-    for filename in os.listdir(normalized_dir):
-        match = pattern.match(filename)
-        if match:
-            dates.append(match.group(1))
-            
     return sorted(dates)
 
 # Default DATES logic (can be overridden)
-def get_default_dates(normalized_dir): # Changed base_dir to normalized_dir
-    available_dates = get_available_dates(normalized_dir) # Changed base_dir to normalized_dir
+def get_default_dates(base_dir):
+    available_dates = get_available_dates(base_dir)
     if len(available_dates) >= 2:
         return available_dates[-2:]
     elif available_dates:
@@ -46,23 +46,16 @@ def get_default_dates(normalized_dir): # Changed base_dir to normalized_dir
     return ["2025-12-19", "2025-12-20"] # Fallback
 
 # For backward compatibility with other scripts that use the global DATES
-# DATES will now be based on the normalized directory
-DATES = get_default_dates(os.path.join(PROJECT_ROOT, "catalog", "output"))
+DATES = get_default_dates(BASE_DIR)
 
 # Output Paths
-OUTPUT_DIR = os.path.join(PROJECT_ROOT, "analysis_result") # Keep root analysis_result for now? Or move to data/reports?
-# Plan said data/normalized for intermediate, docs/ for final.
-# generate_report makes 'analysis_result' for CSVs. Let's keep it in data/analysis_result or similar.
-# Let's keep existing logic but relative to PROJECT_ROOT
-OUTPUT_DIR = os.path.join(PROJECT_ROOT, "analysis_result") 
+# Place analysis artifacts in data/analysis instead of inside raw
+OUTPUT_DIR = os.path.join(PROJECT_ROOT, "data", "analysis")
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 # GitHub Pages Directory (Root/docs)
 DOCS_DIR = os.path.join(PROJECT_ROOT, "docs")
 os.makedirs(DOCS_DIR, exist_ok=True)
-
-# Data Source
-LOGS_DIR = os.path.join(PROJECT_ROOT, "data", "logs")
 
 PRICE_MATRIX_FILE = os.path.join(OUTPUT_DIR, "price_matrix.csv")
 PROMO_DIFF_CSV = os.path.join(OUTPUT_DIR, "promo_diff_report.csv")
@@ -85,184 +78,80 @@ COLUMN_MAPPING = {
 }
 
 
-
-# --- Shared Helpers ---
-def clean_price(price):
-    if pd.isna(price): return None
-    if isinstance(price, (int, float)): 
-        val = float(price)
-    else:
-        s = str(price)
-        s_clean = re.sub(r'[.,]', '', s) 
-        matches = re.findall(r'\d+', s_clean)
-        if not matches: return None
-        val = None
-        for m in matches:
-            v = float(m)
-            if v > 100000 and v < 200000000: 
-                 val = v
-                 break
-                 
-    if val and 100000 <= val < 200000000:
-        return val
-    return None
-
-def normalize_text(text):
-    text = str(text).lower()
-    text = re.sub(r'\s+', ' ', text).strip()
-    return text
-    
-def normalize_storage(text):
-    text = str(text).lower()
-    match = re.search(r'(\d+)\s*(gb|tb)', text)
-    if match:
-        val = int(match.group(1))
-        unit = match.group(2)
-        return f"{val}{unit}"
-    return None
-
-class ProductNormalizer:
-    """Enriches product names using Golden Catalog and Specs."""
-    
-    def __init__(self):
-        self.catalog = {}
-        catalog_path = os.path.join(PROJECT_ROOT, "config", "product_catalog.yaml")
-        if os.path.exists(catalog_path):
-            with open(catalog_path, 'r') as f:
-                self.catalog = yaml.safe_load(f)
-        else:
-            print(f"⚠️ Warning: Catalog not found at {catalog_path}")
-
-    def match_product(self, row_name):
-        row_name_norm = normalize_text(row_name)
-        best_match_key = None
-        best_match_len = 0
-        
-        for key, info in self.catalog.items():
-            cat_name = normalize_text(info['name'])
-            if cat_name in row_name_norm:
-                if len(cat_name) > best_match_len:
-                    best_match_len = len(cat_name)
-                    best_match_key = key
-        return best_match_key
-
-    def enrich_name(self, name, specs):
-        if pd.isna(name): return name
-        name_str = str(name)
-        specs_str = str(specs) if pd.notna(specs) else ""
-        
-        # 1. Try to match Catalog
-        key = self.match_product(name_str)
-        if key:
-            golden_name = self.catalog[key]['name']
-            
-            # 2. Extract Storage
-            storage = normalize_storage(name_str)
-            if not storage:
-                storage = normalize_storage(specs_str)
-            
-            if storage:
-                return f"{golden_name} ({storage})"
-            return golden_name
-            
-        # Fallback
-        return name_str.strip()
-
 class DataLoader:
     """Handles loading and normalizing data from multiple CSV sources."""
     
     @staticmethod
     def load_all_data(dates=None, base_dir=None):
-        """
-        Load data from NORMALIZED mapping CSVs instead of raw CSVs.
-        This ensures product names are standardized for accurate comparison.
-        """
-        target_dates = dates if dates else DATES  
+        target_dates = dates if dates else DATES
+        target_base_dir = base_dir if base_dir else BASE_DIR
         all_data = []
-        print("📥 Đang tải dữ liệu từ normalized CSVs...")
-        
-        # Path to normalized directory
-        normalized_dir = os.path.join(PROJECT_ROOT, "catalog", "output")
+        print("📥 Đang tải dữ liệu...")
         
         for date_str in target_dates:
-            # Look for normalized CSV
-            normalized_file = os.path.join(normalized_dir, f"clean_data_{date_str}.csv")
-            
-            if not os.path.exists(normalized_file):
-                print(f"⚠️ Skipping {date_str}: normalized CSV not found at {normalized_file}")
+            day_dir = os.path.join(target_base_dir, date_str)
+            if not os.path.exists(day_dir):
+                print(f"Skipping missing directory: {day_dir}")
                 continue
+                
+            file_patterns = {
+                "FPT": f"1-fpt-{date_str}.csv",
+                "MW": f"2-mw-{date_str}.csv",
+                "Viettel": f"3-viettel-{date_str}.csv",
+                "HoangHa": f"4-hoangha-{date_str}.csv",
+                "DDV": f"5-ddv-{date_str}.csv",
+                "CPS": f"6-cps-{date_str}.csv"
+            }
             
-            try:
-                # Load normalized CSV
-                df = pd.read_csv(normalized_file)
-                
-                # Map normalized columns to legacy column names for compatibility
-                df = df.rename(columns={
-                    'retailer': 'Channel',
-                    'product_name': 'Product Name',  # Use standardized name!
-                    'price': 'Promo Price',
-                    'url': 'Link'
-                })
-                
-                # Add missing columns expected by downstream logic  
-                df['Listed Price'] = df['Promo Price']  # Assume promo price is the price
-                if 'stock' in df.columns:
-                    df['Stock'] = df['stock']
-                else:
-                    df['Stock'] = 'Yes'
-                # Ensure columns exist if missing (e.g. old normalized files)
-                if 'Promotion Details' not in df.columns: df['Promotion Details'] = ''
-                if 'Payment Promo' not in df.columns: df['Payment Promo'] = ''
-                if 'Other Promo' not in df.columns: df['Other Promo'] = ''
-                
-                # Merge "Other Promo" into "Payment Promo"
-                df["Payment Promo"] = df["Payment Promo"].fillna("").astype(str)
-                df["Other Promo"] = df["Other Promo"].fillna("").astype(str)
-                
-                mask_both = (df["Payment Promo"] != "") & (df["Other Promo"] != "")
-                mask_other_only = (df["Payment Promo"] == "") & (df["Other Promo"] != "")
-                
-                # 1. Both exist: join with " | "
-                df.loc[mask_both, "Payment Promo"] = df.loc[mask_both, "Payment Promo"] + " | " + df.loc[mask_both, "Other Promo"]
-                
-                # 2. Only Other exists: move it to Payment
-                df.loc[mask_other_only, "Payment Promo"] = df.loc[mask_other_only, "Other Promo"]
-                
-                # Drop Other Promo
-                df = df.drop(columns=["Other Promo"])
-                
-                # Logic to clean up Detail/Name for Watch/Audio
-                if 'variant_storage' in df.columns:
-                     # Allow modifying variant_storage in place or create a display column?
-                     # Better to handle it where it's used (Detail Extraction below)
-                     pass
-                
-                # Extract Color from variant_color if exists
-                if 'variant_color' in df.columns:
-                    df['Color'] = df['variant_color']
-                else:
-                    df['Color'] = 'N/A'
-                
-                # Date formatting (match legacy format)
-                dt_obj = pd.to_datetime(date_str)
-                day_suffix = dt_obj.strftime('%a').upper()
-                df['Date'] = f"{date_str}-{day_suffix}"
-                df['_RawDate'] = date_str
-                
-                all_data.append(df)
-                print(f"  ✅ Loaded {len(df)} products from {date_str}")
-                
-            except Exception as e:
-                print(f"❌ Error reading {normalized_file}: {e}")
+            for channel_name, filename in file_patterns.items():
+                file_path = os.path.join(day_dir, filename)
+                if os.path.exists(file_path):
+                    try:
+                        df = pd.read_csv(file_path, sep=None, engine='python')
+                        df = df.rename(columns=COLUMN_MAPPING)
+                        df['Channel'] = channel_name
+                        
+                        # Merge "Other Promo" into "Payment Promo" if it exists (User Request)
+                        if "Other Promo" in df.columns:
+                            if "Payment Promo" not in df.columns:
+                                df["Payment Promo"] = ""
+                            
+                            # Vectorized combination with separator handling
+                            df["Payment Promo"] = df["Payment Promo"].fillna("").astype(str)
+                            df["Other Promo"] = df["Other Promo"].fillna("").astype(str)
+                            
+                            mask_both = (df["Payment Promo"] != "") & (df["Other Promo"] != "")
+                            mask_other_only = (df["Payment Promo"] == "") & (df["Other Promo"] != "")
+                            
+                            # 1. Both exist: join with " | "
+                            df.loc[mask_both, "Payment Promo"] = df.loc[mask_both, "Payment Promo"] + " | " + df.loc[mask_both, "Other Promo"]
+                            
+                            # 2. Only Other exists: move it to Payment
+                            df.loc[mask_other_only, "Payment Promo"] = df.loc[mask_other_only, "Other Promo"]
+                            
+                            # Drop Other Promo to avoid confusion
+                            df = df.drop(columns=["Other Promo"])
+
+                        # Date formatting
+                        dt_obj = pd.to_datetime(date_str)
+                        day_suffix = dt_obj.strftime('%a').upper()
+                        df['Date'] = f"{date_str}-{day_suffix}"
+                        df['_RawDate'] = date_str # Keep sortable date
+                        
+                        # Normalize numeric columns
+                        for col in ['Listed Price', 'Promo Price']:
+                            if col in df.columns:
+                                df[col] = pd.to_numeric(df[col], errors='coerce')
+                                
+                        all_data.append(df)
+                    except Exception as e:
+                        print(f"Error reading {file_path}: {e}")
         
         if not all_data:
-            print("⚠️ No normalized data loaded!")
-            print(f"   Expected location: {normalized_dir}/normalized_mapping_YYYY-MM-DD.csv")
+            print("No data loaded!")
             return pd.DataFrame()
-        
-        combined = pd.concat(all_data, ignore_index=True)
-        print(f"📊 Total loaded: {len(combined)} records from {len(all_data)} date(s)")
-        return combined
+            
+        return pd.concat(all_data, ignore_index=True)
 
 class PriceMatrixGenerator:
     """Generates the Price Matrix CSV and provides a Price Lookup Service."""
@@ -410,55 +299,10 @@ class PromoDiffGenerator:
             
         # Ensure we have unique rows per Channel/Product/Color/Date
         # In case raw data had duplicates.
-        # FIX: Aggregating content from duplicates instead of just dropping
-        # Some retailers (CellphoneS, Viettel) split promo and payment info across duplicate rows.
-        # We want to keep the LONGEST text for each column within the group.
-
-        # 1. Fill NaNs
-        df_filled['Promotion Details'] = df_filled['Promotion Details'].fillna("")
-        df_filled['Payment Promo'] = df_filled['Payment Promo'].fillna("")
-
-        # 2. Define aggregation: Max length string
-        def get_longest(series):
-            # Return unique items joined? Or just longest?
-            # CellphoneS might match on ID but have different content. 
-            # Safest is longest string.
-            series = series.astype(str)
-            if series.empty: return ""
-            return max(series, key=len)
-
-        # 3. Calculate best text for each group
-        # This is expensive but necessary.
-        # Strategy: Sort by overall length first (to keep best 'Price'/'Link' associate with best data)
-        df_filled['ContentScore'] = df_filled['Promotion Details'].str.len() + df_filled['Payment Promo'].str.len()
-        df_filled = df_filled.sort_values('ContentScore', ascending=False)
-        
-        # 4. Group and aggregate specific columns
-        # We can't use simple groupby().agg() for everything because we want to preserve the "Whole Row" structure of the best entry
-        # Just update the text columns.
-        
-        group_cols = ['Channel', 'Date', 'Product Name', 'Color']
-        grouped = df_filled.groupby(group_cols)
-        
-        best_promos = grouped['Promotion Details'].apply(get_longest)
-        best_payment = grouped['Payment Promo'].apply(get_longest)
-        
-        # 5. Drop duplicates to get unique rows (keeping the one with highest ContentScore)
-        df_unique = df_filled.drop_duplicates(subset=group_cols).copy()
-        
-        # 6. Map the best text back to the unique rows
-        # Set index to facilitate update
-        df_unique = df_unique.set_index(group_cols)
-        
-        # Update columns (pandas aligns by index)
-        # Note: best_promos index matches df_unique index
-        df_unique['Promotion Details'] = best_promos
-        df_unique['Payment Promo'] = best_payment
-        
-        df_unique = df_unique.reset_index()
-        df_unique = df_unique.drop(columns=['ContentScore'])
+        # Include Link in subset? Just keep the first valid link if duplicates exist.
+        df_filled = df_filled.drop_duplicates(subset=['Channel', 'Date', 'Product Name', 'Color'])
             
-        return df_unique
+        return df_filled
 
     def _normalize_text(self, text):
         if pd.isna(text) or str(text).strip() == "":
@@ -638,32 +482,7 @@ class HTMLGenerator:
         self.df = df
         self.output_file = output_file
         
-    def _get_latest_insights_html(self):
-        """Scans reports dir for latest markdown and converts to HTML."""
-        try:
-            # Updated to read from docs/insights
-            reports_dir = os.path.join(PROJECT_ROOT, 'docs/insights')
-            files = glob.glob(os.path.join(reports_dir, '*insights*.md'))
-            if not files:
-                return ""
-            
-            latest_file = max(files, key=os.path.getmtime)
-            with open(latest_file, 'r', encoding='utf-8') as f:
-                md_content = f.read()
-                
-            html_content = markdown.markdown(md_content)
-            
-            return f"""
-            <div id="ai-insights-wrapper" style="text-align: center; margin-bottom: 10px;">
-                <button id="toggleInsights" onclick="toggleInsights()">📊 Xem Phân Tích AI</button>
-            </div>
-            <div id="insightsPanel" class="insights-container hidden">
-                {html_content}
-            </div>
-            """
-        except Exception as e:
-            print(f"Error loading insights: {e}")
-            return ""
+
 
     def generate(self):
         channels = sorted(self.df['Channel'].unique().tolist())
@@ -903,8 +722,7 @@ class HTMLGenerator:
                 {comparison_line}
             </div>
             
-            <!-- AI Insights Section -->
-            {self._get_latest_insights_html()}
+
             
             <script>
                 function toggleInsights() {{
@@ -1297,7 +1115,7 @@ class HTMLGenerator:
                 <div class="product-title">
                     {icon_html}
                     <span>{product}</span>
-                    <!-- Color removed to avoid redundancy with Product Name -->
+                    <span style="opacity: 0.6; font-weight: 400; font-size: 0.9em;">({color})</span>
                     {badge_html} 
                     {stock_badge}
                 </div>
@@ -1478,49 +1296,13 @@ def select_dates(available_dates):
         return None, None
 
 
-def run_ai_mapping_pipeline():
-    """Execution of the AI Mapping Pipeline: Suggest -> Merge -> Normalize"""
-    print("\n" + "="*50)
-    print("🤖 --- KÍCH HOẠT QUY TRÌNH AI MAPPING TỰ ĐỘNG ---")
-    print("="*50)
-    
-    try:
-        # 1. Run Suggest Mapping
-        print("\n🔮 [Bước 1/3] Đang tìm kiếm sản phẩm chưa map (AI Qwen)...")
-        suggest_script = os.path.join(PROJECT_ROOT, "src", "processing", "suggest_mapping_ai.py")
-        subprocess.run(["python3", suggest_script], check=True)
-        
-        # 2. Run Merge Mappings
-        print("\n🔗 [Bước 2/3] Đang hợp nhất và sửa lỗi mapping...")
-        merge_script = os.path.join(PROJECT_ROOT, "scripts", "merge_mappings.py")
-        subprocess.run(["python3", merge_script], check=True)
-        
-        # 3. Re-run Normalization
-        print("\n🔄 [Bước 3/3] Đang chuẩn hóa lại dữ liệu với mapping mới...")
-        normalize_script = os.path.join(PROJECT_ROOT, "src", "processing", "normalize.py")
-        subprocess.run(["python3", normalize_script], check=True)
-        
-        print("\n✅ Quy trình AI Mapping hoàn tất! Tiếp tục tạo báo cáo...")
-        print("="*50 + "\n")
-        
-    except subprocess.CalledProcessError as e:
-        print(f"\n❌ Lỗi trong quy trình AI: {e}")
-        print("➡️ Đang tiếp tục tạo báo cáo với dữ liệu hiện có...\n")
-    except Exception as e:
-        print(f"\n❌ Lỗi không xác định: {e}")
-
 def main():
     parser = argparse.ArgumentParser(description="Daily Promotion Report Generator")
     parser.add_argument("--interactive", action="store_true", help="Run in interactive mode (prompt for dates)")
-    parser.add_argument("--fix-mappings", action="store_true", help="Auto-run AI mapping pipeline before reporting")
     args = parser.parse_args()
 
     # Determine Base Directory
     base_dir = BASE_DIR
-    
-    # 0. Run AI Pipeline if requested
-    if args.fix_mappings:
-        run_ai_mapping_pipeline()
     
     target_dates = DATES
     is_interactive = args.interactive
