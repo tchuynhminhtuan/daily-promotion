@@ -11,6 +11,7 @@ venv/
 
 # Raw Data (Don't commit massive scrape history)
 !data/raw/.gitkeep
+data/raw/**/*.png
 data/raw_legacy/
 Market Promotion/
 legacy/data_archive/

@@ -120,8 +120,8 @@ def load_retailer_mapping():
         return yaml.safe_load(f)
 
 # AI Configuration
-AI_MODEL_PATH = BASE_DIR / "experiments/fine_tuning/adapters"
-BASE_MODEL_ID = "Qwen/Qwen2.5-0.5B-Instruct"
+AI_MODEL_PATH = BASE_DIR / "experiments/fine_tuning/adapters_llama"
+BASE_MODEL_ID = "mlx-community/Llama-3.2-3B-Instruct-4bit"
 _AI_MODEL = None
 _AI_TOKENIZER = None
 _AI_CACHE = {} # Cache for AI predictions to improve speed
