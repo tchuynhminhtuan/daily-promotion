@@ -1,0 +1,548 @@
+Raw Name,Rule Key,AI Key,Match
+AirPods 4 (chống ồn),airpods_4_anc,airpods_4_anc,True
+AirPods 4 MXP63,airpods_4,airpods_4,True
+Apple Mac Studio M4 Max 2025 14CPU 32GPU 36GB 512GB,ipad_a16_lte_wifi,mac_studio_m4_max,False
+Apple MacBook Air 13 256GB 2020,macbook_air_13_2020,macbook_air_13_m1,False
+Apple MacBook Air M2 2024 8CPU 8GPU 16GB 256GB,macbook_air_13_m2,macbook_air_13_m2,True
+Apple Macbook Air M2 16GB 256GB - Giá rẻ,macbook_air_13_m2,macbook_air_13_m2,True
+Apple Watch SE 2 (2024) 40mm (GPS) Viền nhôm - Dây cao su S/M,apple_watch_series_11_lte_42mm,apple_watch_se_2_gps_40mm,False
+Apple Watch SE 2 (2024) 40mm (LTE) Viền nhôm - Dây cao su S/M,apple_watch_se_3_lte_40mm,apple_watch_se_2_lte_40mm,False
+Apple Watch SE 2 (2024) 44mm (GPS) Viền nhôm - Dây cao su size S/M,apple_watch_series_11_lte_42mm,apple_watch_se_2_gps_44mm,False
+Apple Watch SE 2 (2024) 44mm (LTE) Viền nhôm - Dây cao su size S/M,apple_watch_se_3_lte_40mm,apple_watch_se_2_lte_44mm,False
+Apple Watch SE 2 2024 40mm (GPS) Viền Nhôm Dây Cao Su,apple_watch_series_11_lte_42mm,apple_watch_se_2_gps_40mm,False
+Apple Watch SE 2 2024 44mm (GPS) Viền Nhôm Dây Cao Su,apple_watch_series_11_lte_42mm,apple_watch_se_2_gps_44mm,False
+Apple Watch SE 2 Cellular 40mm Sport Loop,apple_watch_se_3_lte_40mm,apple_watch_se_2_lte_40mm,False
+Apple Watch SE 2 Cellular 44mm Sport Band S/M,apple_watch_se_3_lte_40mm,apple_watch_se_2_lte_44mm,False
+Apple Watch SE 2 GPS 40mm Sport Band S/M,apple_watch_se_3_gps_40mm,apple_watch_se_2_gps_40mm,False
+Apple Watch SE 2 GPS 40mm Sport Loop,apple_watch_se_3_gps_40mm,apple_watch_se_2_gps_40mm,False
+Apple Watch SE 2 GPS 44mm Sport Band S/M,apple_watch_se_3_gps_40mm,apple_watch_se_2_gps_44mm,False
+Apple Watch SE 2 GPS 44mm viền nhôm dây thể thao,apple_watch_series_11_lte_42mm,apple_watch_se_2_gps_44mm,False
+Apple Watch SE 2 GPS 44mm viền nhôm dây vải,apple_watch_series_11_lte_42mm,apple_watch_se_2_gps_44mm,False
+Apple Watch SE 2023,Unmatched,apple_watch_se_2,False
+Apple Watch SE 2024,Unmatched,apple_watch_se_2,False
+Apple Watch SE 2024 GPS 40mm Viền Nhôm Dây Cao Su S/M,apple_watch_series_11_lte_42mm,apple_watch_se_2_gps_40mm,False
+Apple Watch SE 2024 GPS 40mm Viền Nhôm Dây Vải,apple_watch_series_11_lte_42mm,apple_watch_se_2_gps_40mm,False
+Apple Watch SE 2024 GPS 44mm Viền Nhôm Dây Cao Su S/M,apple_watch_series_11_lte_42mm,apple_watch_se_2_gps_44mm,False
+Apple Watch SE 3,Unmatched,apple_watch_se_3,False
+Apple Watch SE 3 (2025) 40mm (GPS) Viền nhôm - Dây cao su S/M,apple_watch_series_11_lte_42mm,apple_watch_se_3_lte_40mm,False
+Apple Watch SE 3 (2025) 44mm (5G) Viền nhôm - Dây cao su S/M,apple_watch_se_3_lte_40mm,apple_watch_se_3_lte_44mm,False
+Apple Watch SE 3 (2025) 44mm (GPS) Viền nhôm - Dây cao su S/M,apple_watch_series_11_lte_42mm,apple_watch_se_3_lte_44mm,False
+Apple Watch SE 3 40mm (5G) Viền Nhôm Dây Cao Su Size M/L,apple_watch_se_3_lte_40mm,apple_watch_se_3_lte_40mm,True
+Apple Watch SE 3 40mm (5G) Viền Nhôm Dây Cao Su Size S/M,apple_watch_se_3_lte_40mm,apple_watch_se_3_lte_40mm,True
+Apple Watch SE 3 40mm (GPS) Viền Nhôm Dây Cao Su Size M/L,apple_watch_series_11_lte_42mm,apple_watch_se_3_gps_40mm,False
+Apple Watch SE 3 40mm (GPS) Viền Nhôm Dây Cao Su Size S/M,apple_watch_series_11_lte_42mm,apple_watch_se_3_gps_40mm,False
+Apple Watch SE 3 44mm (5G) Viền Nhôm Dây Cao Su Size M/L,apple_watch_se_3_lte_40mm,apple_watch_se_3_lte_44mm,False
+Apple Watch SE 3 44mm (5G) Viền Nhôm Dây Cao Su Size S/M,apple_watch_se_3_lte_40mm,apple_watch_se_3_lte_44mm,False
+Apple Watch SE 3 44mm (GPS) Viền Nhôm Dây Cao Su Size M/L,apple_watch_series_11_lte_42mm,apple_watch_se_3_gps_44mm,False
+Apple Watch SE 3 44mm (GPS) Viền Nhôm Dây Cao Su Size S/M,apple_watch_series_11_lte_42mm,apple_watch_se_3_gps_44mm,False
+Apple Watch SE 3 GPS + Cellular 40mm Viền nhôm dây cao su,apple_watch_se_3_lte_40mm,apple_watch_se_3_lte_40mm,True
+Apple Watch SE 3 GPS + Cellular 40mm viền nhôm dây thể thao,apple_watch_se_3_lte_40mm,apple_watch_se_3_lte_40mm,True
+Apple Watch SE 3 GPS + Cellular 44mm Viền nhôm dây cao su,apple_watch_se_3_lte_40mm,apple_watch_se_3_lte_44mm,False
+Apple Watch SE 3 GPS + Cellular 44mm viền nhôm dây thể thao,apple_watch_se_3_lte_40mm,apple_watch_se_3_lte_44mm,False
+Apple Watch SE 3 GPS 40mm Viền nhôm dây cao su,apple_watch_series_11_lte_42mm,apple_watch_se_3_gps_40mm,False
+Apple Watch SE 3 GPS 40mm viền nhôm dây thể thao,apple_watch_series_11_lte_42mm,apple_watch_se_3_gps_40mm,False
+Apple Watch SE 3 GPS 44mm Viền nhôm Ánh sao Dây cao su Ánh sao - S/M,apple_watch_series_11_lte_42mm,apple_watch_se_3_gps_44mm,False
+Apple Watch SE 3 GPS 44mm viền nhôm dây thể thao,apple_watch_series_11_lte_42mm,apple_watch_se_3_gps_44mm,False
+Apple Watch SE 3 Viền Nhôm Cellular 40mm Dây cao su S/M,apple_watch_se_3_lte_40mm,apple_watch_se_3_lte_40mm,True
+Apple Watch SE 3 Viền Nhôm GPS 44mm Dây cao su S/M,apple_watch_series_11_lte_42mm,apple_watch_se_3_gps_44mm,False
+Apple Watch Series 10,apple_watch_series_10_lte_42mm,apple_watch_series_10,False
+Apple Watch Series 10 42mm (GPS) Viền Nhôm - Dây Vải,apple_watch_series_10_lte_42mm,apple_watch_series_10_gps_42mm,False
+Apple Watch Series 10 42mm (GPS) Viền Nhôm Dây Cao Su Size S/M,apple_watch_series_10_lte_42mm,apple_watch_series_10_gps_42mm,False
+Apple Watch Series 10 42mm 4G Viền Titan Dây Cao Su Size S/M,apple_watch_series_10_lte_42mm,apple_watch_series_10_titanium_42mm,False
+Apple Watch Series 10 42mm 4G Viền Titan Dây Thép,apple_watch_series_10_lte_42mm,apple_watch_series_10_titanium_42mm,False
+Apple Watch Series 10 42mm 4G Viền Titan Dây Thép giá tốt,apple_watch_series_10_lte_42mm,apple_watch_series_10_titanium_42mm,False
+Apple Watch Series 10 42mm 4G viền titan dây cao su giá tốt,apple_watch_series_10_lte_42mm,apple_watch_series_10_titanium_42mm,False
+Apple Watch Series 10 46mm (GPS) Viền Nhôm - Dây Vải,apple_watch_series_10_lte_42mm,apple_watch_series_10_gps_46mm,False
+Apple Watch Series 10 46mm (GPS) Viền Nhôm Dây Cao Su Size S/M,apple_watch_series_10_lte_42mm,apple_watch_series_10_gps_46mm,False
+Apple Watch Series 10 46mm 4G Viền Titan Dây Cao Su Size M/L,apple_watch_series_10_lte_42mm,apple_watch_series_10_titanium_46mm,False
+Apple Watch Series 10 46mm 4G Viền Titan Dây Cao Su Size S/M,apple_watch_series_10_lte_42mm,apple_watch_series_10_titanium_46mm,False
+Apple Watch Series 10 46mm 4G Viền Titan Dây Thép Size M/L,apple_watch_series_10_lte_42mm,apple_watch_series_10_titanium_46mm,False
+Apple Watch Series 10 46mm 4G Viền Titan Dây Thép Size S/M,apple_watch_series_10_lte_42mm,apple_watch_series_10_titanium_46mm,False
+Apple Watch Series 10 GPS + Cellular 42mm viền nhôm dây vải,apple_watch_series_10_lte_42mm,apple_watch_series_10_lte_42mm,True
+Apple Watch Series 10 GPS + Cellular 46mm viền Titanium dây Milan,apple_watch_series_10_lte_42mm,apple_watch_series_10_titanium_46mm,False
+Apple Watch Series 10 GPS + Cellular 46mm viền Titanium dây thể thao,apple_watch_series_10_lte_42mm,apple_watch_series_10_titanium_46mm,False
+Apple Watch Series 10 GPS 42mm viền nhôm dây vải,apple_watch_series_10_lte_42mm,apple_watch_series_10_gps_42mm,False
+Apple Watch Series 10 Viền Titan Cellular 42mm Dây Cao Su S/M,apple_watch_series_10_lte_42mm,apple_watch_series_10_titanium_42mm,False
+Apple Watch Series 10 Viền Titan Dây Milanese Loop Cellular 42mm,apple_watch_series_10_lte_42mm,apple_watch_series_10_titanium_42mm,False
+Apple Watch Series 11,apple_watch_series_11_lte_42mm,apple_watch_series_11,False
+Apple Watch Series 11 42mm (5G) Viền Nhôm Dây Cao Su Size M/L,apple_watch_se_3_lte_40mm,apple_watch_series_11_lte_42mm,False
+Apple Watch Series 11 42mm (5G) Viền Nhôm Dây Cao Su Size S/M,apple_watch_se_3_lte_40mm,apple_watch_series_11_lte_42mm,False
+Apple Watch Series 11 42mm (5G) Viền Titan Dây Cao Su Size M/L,apple_watch_series_11_titanium_42mm,apple_watch_series_11_titanium_42mm,True
+Apple Watch Series 11 42mm (5G) Viền Titan Dây Cao Su Size S/M,apple_watch_series_11_titanium_42mm,apple_watch_series_11_titanium_42mm,True
+Apple Watch Series 11 42mm (GPS) Viền Nhôm Dây Cao Su Size M/L,apple_watch_series_11_lte_42mm,apple_watch_series_11_gps_42mm,False
+Apple Watch Series 11 42mm (GPS) Viền Nhôm Dây Cao Su Size S/M,apple_watch_series_11_lte_42mm,apple_watch_series_11_gps_42mm,False
+Apple Watch Series 11 42mm (GPS) Viền nhôm - Dây cao su S/M,apple_watch_series_11_lte_42mm,apple_watch_series_11_lte_42mm,True
+Apple Watch Series 11 46mm (5G) Viền Nhôm Dây Cao Su Size M/L,apple_watch_se_3_lte_40mm,apple_watch_series_11_lte_46mm,False
+Apple Watch Series 11 46mm (5G) Viền Nhôm Dây Cao Su Size S/M,apple_watch_se_3_lte_40mm,apple_watch_series_11_lte_46mm,False
+Apple Watch Series 11 46mm (5G) Viền Titan Dây Cao Su Size M/L,apple_watch_series_11_titanium_42mm,apple_watch_series_11_titanium_46mm,False
+Apple Watch Series 11 46mm (5G) Viền Titan Dây Cao Su Size S/M,apple_watch_series_11_titanium_42mm,apple_watch_series_11_titanium_46mm,False
+Apple Watch Series 11 46mm (GPS) Viền Nhôm Dây Cao Su Size M/L,apple_watch_series_11_lte_42mm,apple_watch_series_11_gps_46mm,False
+Apple Watch Series 11 46mm (GPS) Viền Nhôm Dây Cao Su Size S/M,apple_watch_series_11_lte_42mm,apple_watch_series_11_gps_46mm,False
+Apple Watch Series 11 46mm (GPS) Viền nhôm - Dây cao su M/L,apple_watch_series_11_lte_42mm,apple_watch_series_11_lte_46mm,False
+Apple Watch Series 11 46mm (GPS) Viền nhôm - Dây cao su S/M,apple_watch_series_11_lte_42mm,apple_watch_series_11_lte_46mm,False
+Apple Watch Series 11 GPS + Cellular 42m viền Titanium dây thể thao,apple_watch_series_11_titanium_42mm,apple_watch_series_11_titanium_42mm,True
+Apple Watch Series 11 GPS + Cellular 42mm Viền nhôm dây cao su,apple_watch_se_3_lte_40mm,apple_watch_series_11_lte_42mm,False
+Apple Watch Series 11 GPS + Cellular 42mm Viền titan dây Milan,apple_watch_series_11_titanium_42mm,apple_watch_series_11_titanium_42mm,True
+Apple Watch Series 11 GPS + Cellular 42mm viền Titanium dây Milan,apple_watch_series_11_titanium_42mm,apple_watch_series_11_titanium_42mm,True
+Apple Watch Series 11 GPS + Cellular 42mm viền nhôm dây thể thao,apple_watch_se_3_lte_40mm,apple_watch_series_11_lte_42mm,False
+Apple Watch Series 11 GPS + Cellular 46mm Viền nhôm dây cao su,apple_watch_se_3_lte_40mm,apple_watch_series_11_lte_46mm,False
+Apple Watch Series 11 GPS + Cellular 46mm Viền titan dây Milan,apple_watch_series_11_titanium_42mm,apple_watch_series_11_titanium_46mm,False
+Apple Watch Series 11 GPS + Cellular 46mm viền Titanium dây Milan,apple_watch_series_11_titanium_42mm,apple_watch_series_11_titanium_46mm,False
+Apple Watch Series 11 GPS + Cellular 46mm viền Titanium dây thể thao,apple_watch_series_11_titanium_42mm,apple_watch_series_11_titanium_46mm,False
+Apple Watch Series 11 GPS 42mm Viền nhôm dây cao su,apple_watch_series_11_lte_42mm,apple_watch_series_11_gps_42mm,False
+Apple Watch Series 11 GPS 42mm viền nhôm dây thể thao,apple_watch_series_11_lte_42mm,apple_watch_series_11_gps_42mm,False
+Apple Watch Series 11 GPS 46mm Viền nhôm dây cao su,apple_watch_series_11_lte_42mm,apple_watch_series_11_gps_46mm,False
+Apple Watch Series 11 GPS 46mm viền nhôm dây thể thao,apple_watch_series_11_lte_42mm,apple_watch_series_11_gps_46mm,False
+Apple Watch Series 11 Viền Nhôm Cellular 42mm Dây cao su S/M,apple_watch_se_3_lte_40mm,apple_watch_series_11_lte_42mm,False
+Apple Watch Series 11 Viền Nhôm Cellular 46mm Dây cao su S/M,apple_watch_se_3_lte_40mm,apple_watch_series_11_lte_46mm,False
+Apple Watch Series 11 Viền Nhôm GPS 42mm Dây cao su S/M,apple_watch_series_11_lte_42mm,apple_watch_series_11_gps_42mm,False
+Apple Watch Series 11 Viền Titan Cellular 42mm Dây Milanese,apple_watch_series_11_titanium_42mm,apple_watch_series_11_titanium_42mm,True
+Apple Watch Series 7,apple_watch_series_7,apple_watch_series_7,True
+Apple Watch Series 8,apple_watch_series_8,apple_watch_series_8,True
+Apple Watch Series 9,Unmatched,apple_watch_series_9,False
+Apple Watch Series 9 45mm (GPS) Viền nhôm - Dây cao su size M/L,apple_watch_series_11_lte_42mm,apple_watch_series_9_gps_45mm,False
+Apple Watch Ultra 2 (2024),apple_watch_ultra_2,apple_watch_ultra_2,True
+Apple Watch Ultra 2 2024 49mm 4G Viền Titan Dây Alpine Size L,apple_watch_series_11_titanium_42mm,apple_watch_ultra_2,False
+Apple Watch Ultra 2 2024 49mm 4G Viền Titan Dây Alpine Size M,apple_watch_series_11_titanium_42mm,apple_watch_ultra_2,False
+Apple Watch Ultra 2 2024 49mm 4G Viền Titan Dây Alpine Size S,apple_watch_series_11_titanium_42mm,apple_watch_ultra_2,False
+"Apple Watch Ultra 2 2024 49mm 4G Viền Titan Dây AlpineGiá tốt 02/2026, trả góp 0%",apple_watch_series_11_titanium_42mm,apple_watch_ultra_2,False
+Apple Watch Ultra 2 2024 49mm 4G Viền Titan Dây Titan Size L,apple_watch_series_11_titanium_42mm,apple_watch_ultra_2,False
+Apple Watch Ultra 2 2024 49mm 4G Viền Titan Dây Titan Size M,apple_watch_series_11_titanium_42mm,apple_watch_ultra_2,False
+Apple Watch Ultra 2 2024 49mm 4G Viền Titan Dây Titan Size S,apple_watch_series_11_titanium_42mm,apple_watch_ultra_2,False
+Apple Watch Ultra 2 2024 49mm 4G Viền Titan Dây Trail Size M/L,apple_watch_series_11_titanium_42mm,apple_watch_ultra_2,False
+Apple Watch Ultra 2 2024 49mm 4G Viền Titan Dây Trail Size S/M,apple_watch_series_11_titanium_42mm,apple_watch_ultra_2,False
+Apple Watch Ultra 2 2024 49mm 4G Viền Titan Đen Dây Alpine Size L,apple_watch_series_11_titanium_42mm,apple_watch_ultra_2,False
+Apple Watch Ultra 2 2024 49mm 4G Viền Titan Đen Dây Alpine Size S,apple_watch_series_11_titanium_42mm,apple_watch_ultra_2,False
+Apple Watch Ultra 2 2024 49mm 4G Viền Titan Đen Dây Cao Su,apple_watch_series_11_titanium_42mm,apple_watch_ultra_2,False
+Apple Watch Ultra 2 2024 49mm 4G Viền Titan Đen Dây Titan Size L,apple_watch_series_11_titanium_42mm,apple_watch_ultra_2,False
+Apple Watch Ultra 2 2024 49mm 4G Viền Titan Đen Dây Titan Size M,apple_watch_series_11_titanium_42mm,apple_watch_ultra_2,False
+Apple Watch Ultra 2 2024 49mm 4G Viền Titan Đen Dây Titan Size S,apple_watch_series_11_titanium_42mm,apple_watch_ultra_2,False
+Apple Watch Ultra 2 2024 49mm 4G Viền Titan Đen Dây Trail Size M/L,apple_watch_series_11_titanium_42mm,apple_watch_ultra_2,False
+Apple Watch Ultra 2 2024 49mm 4G Viền Titan Đen Dây Trail Size S/M,apple_watch_series_11_titanium_42mm,apple_watch_ultra_2,False
+Apple Watch Ultra 2 Cellular 49mm Alpine Loop S,apple_watch_se_3_lte_40mm,apple_watch_ultra_2,False
+Apple Watch Ultra 2 GPS + Cellular 49mm viền Titanium dây Ocean,apple_watch_series_11_titanium_42mm,apple_watch_ultra_2,False
+Apple Watch Ultra 2 GPS + Cellular 49mm viền Titanium đen dây Alpine,apple_watch_series_11_titanium_42mm,apple_watch_ultra_2,False
+Apple Watch Ultra 2 GPS + Cellular 49mm viền Titanium đen dây Ocean,apple_watch_series_11_titanium_42mm,apple_watch_ultra_2,False
+Apple Watch Ultra 3,apple_watch_ultra_3,apple_watch_ultra_3,True
+Apple Watch Ultra 3 49mm (5G) Viền Titan Dây Alpine Size L,apple_watch_series_11_titanium_42mm,apple_watch_ultra_3,False
+Apple Watch Ultra 3 49mm (5G) Viền Titan Dây Alpine Size M,apple_watch_series_11_titanium_42mm,apple_watch_ultra_3,False
+Apple Watch Ultra 3 49mm (5G) Viền Titan Dây Alpine Size S,apple_watch_series_11_titanium_42mm,apple_watch_ultra_3,False
+Apple Watch Ultra 3 49mm (5G) Viền Titan Dây Cao Su Size S/M,apple_watch_series_11_titanium_42mm,apple_watch_ultra_3,False
+Apple Watch Ultra 3 49mm (5G) Viền Titan Dây Thép Size L,apple_watch_series_11_titanium_42mm,apple_watch_ultra_3,False
+Apple Watch Ultra 3 49mm (5G) Viền Titan Dây Thép Size M,apple_watch_series_11_titanium_42mm,apple_watch_ultra_3,False
+Apple Watch Ultra 3 49mm (5G) Viền Titan Dây Trail Size M/L,apple_watch_series_11_titanium_42mm,apple_watch_ultra_3,False
+Apple Watch Ultra 3 49mm (5G) Viền Titan Dây Trail Size S/M,apple_watch_series_11_titanium_42mm,apple_watch_ultra_3,False
+Apple Watch Ultra 3 GPS + Cellular 49mm Viền titan Dây Ocean,apple_watch_series_11_titanium_42mm,apple_watch_ultra_3,False
+Apple Watch Ultra 3 GPS + Cellular 49mm Viền titan Dây quấn Alpine,apple_watch_series_11_titanium_42mm,apple_watch_ultra_3,False
+Apple Watch Ultra 3 GPS + Cellular 49mm Viền titan Dây quấn Milan Titan,apple_watch_series_11_titanium_42mm,apple_watch_ultra_3,False
+Apple Watch Ultra 3 GPS + Cellular 49mm viền Titanium dây Alpine,apple_watch_series_11_titanium_42mm,apple_watch_ultra_3,False
+Apple Watch Ultra 3 GPS + Cellular 49mm viền Titanium dây Milan,apple_watch_series_11_titanium_42mm,apple_watch_ultra_3,False
+Apple Watch Ultra 3 GPS + Cellular 49mm viền Titanium dây Milan - giá rẻ,apple_watch_series_11_titanium_42mm,apple_watch_ultra_3,False
+Apple Watch Ultra 3 GPS + Cellular 49mm viền Titanium dây Ocean,apple_watch_series_11_titanium_42mm,apple_watch_ultra_3,False
+Apple Watch Ultra 3 GPS + Cellular 49mm viền Titanium dây Trail,apple_watch_series_11_titanium_42mm,apple_watch_ultra_3,False
+Apple Watch Ultra 3 Viền Titan Cellular 49mm Dây Milanese M,apple_watch_series_11_titanium_42mm,apple_watch_ultra_3,False
+Apple Watch Ultra 3 Viền Titan Cellular 49mm Dây quấn Alpine L,apple_watch_series_11_titanium_42mm,apple_watch_ultra_3,False
+Apple iPad Air 11 M3 5G 128GB 2025,apple_watch_se_3_lte_40mm,ipad_air_11_m3_lte,False
+Error getting name,Unmatched,product_name_error_getting,False
+"Giá iPhone 17 Pro 512GB chính thức, ưu đãi đến 7 triệu",iphone_17_pro,iphone_17_pro,True
+Laptop iMac M4 24 inch 2024 16GB/512GB,imac_m4,imac_m4,True
+Mac Mini M4 2024 10CPU 10GPU 16GB/256GB,mac_mini_m4,mac_mini_m4,True
+Mac Mini M4 2024 10CPU 10GPU 16GB/512GB,mac_mini_m4,mac_mini_m4,True
+Mac Mini M4 2024 10CPU 10GPU 24GB/512GB,apple_watch_series_11_lte_42mm,mac_mini_m4,False
+Mac Mini M4 Pro 2024 12CPU 16GPU 24GB/512GB,apple_watch_series_11_lte_42mm,mac_mini_m4_pro,False
+Mac Studio Chip M3 Ultra (28CPU,mac_studio_m3_ultra,mac_studio_m3_ultra,True
+Mac Studio Chip M3 Ultra (32CPU,mac_studio_m3_ultra,mac_studio_m3_ultra,True
+Mac Studio Chip M4 Max (14CPU,mac_studio_m4_max,mac_studio_m4_max,True
+Mac Studio Chip M4 Max (16CPU,mac_studio_m4_max,mac_studio_m4_max,True
+Mac mini M2 2023 (8 CPU - 10 GPU - 16GB - 512GB),mac_mini_m2,mac_mini_m2,True
+Mac mini M4 10‑Core CPU | 10‑Core GPU 16GB/512GB Chính Hãng,mac_mini_m4,mac_mini_m4,True
+Mac mini M4 2024 10CPU 10GPU 16GB 256GB,mac_mini_m4,mac_mini_m4,True
+Mac mini M4 2024 10CPU 10GPU 16GB 512GB,mac_mini_m4,mac_mini_m4,True
+Mac mini M4 2024 10CPU 10GPU 24GB 1TB,apple_watch_series_11_lte_42mm,mac_mini_m4,False
+Mac mini M4 2024 10CPU 10GPU 24GB 256GB,apple_watch_series_11_lte_42mm,mac_mini_m4,False
+Mac mini M4 2024 10CPU 10GPU 24GB 512GB,apple_watch_series_11_lte_42mm,mac_mini_m4,False
+Mac mini M4 2024 10CPU 10GPU 32GB 512GB,mac_mini_m4,mac_mini_m4,True
+Mac mini M4 Pro 2024 12CPU 16GPU 48GB 512GB,airpods_pro_2,mac_mini_m4_pro,False
+MacBook Air 13 inch M2 16GB/256GB,macbook_air_13_m2,macbook_air_13_m2,True
+MacBook Air 13 inch M4 16GB/256GB,macbook_air_13_m4,macbook_air_13_m4,True
+MacBook Air 13 inch M4 16GB/256GB Sạc 70W,macbook_air_13_m4,macbook_air_13_m4,True
+"MacBook Air 13 inch M4 24GB 1TB chính hãng, giá rẻ, có góp",apple_watch_series_11_lte_42mm,macbook_air_13_m4,False
+"MacBook Air 13 inch M4 24GB 512GB chính hãng, giá tốt, có góp",apple_watch_series_11_lte_42mm,macbook_air_13_m4,False
+MacBook Air 13 inch M4 24GB/1TB,apple_watch_series_11_lte_42mm,macbook_air_13_m4,False
+MacBook Air 13 inch M4 24GB/256GB,apple_watch_series_11_lte_42mm,macbook_air_13_m4,False
+MacBook Air 13 inch M4 24GB/512GB,apple_watch_series_11_lte_42mm,macbook_air_13_m4,False
+"MacBook Air 13 inch M4 32GB 1TB giá tốt, chính hãng, góp 0%",macbook_air_13_m4,macbook_air_13_m4,True
+"MacBook Air 13 inch M4 32GB 256GB mới, giá rẻ, trả góp 0%",macbook_air_13_m4,macbook_air_13_m4,True
+MacBook Air 13 inch M4 32GB/1TB,macbook_air_13_m4,macbook_air_13_m4,True
+MacBook Air 13 inch M4 32GB/256GB,macbook_air_13_m4,macbook_air_13_m4,True
+MacBook Air 15 inch M2 2023 8CPU 10GPU/8GB/512GB/Sạc 70W,macbook_air_15_m2,macbook_air_15_m2,True
+MacBook Air 15 inch M4 16GB/256GB,macbook_air_15_m4,macbook_air_15_m4,True
+MacBook Air 15 inch M4 24GB/512GB,apple_watch_series_11_lte_42mm,macbook_air_15_m4,False
+MacBook Air M1 13 inch (8GB/256GB),macbook_air_13_m1,macbook_air_13_m1,True
+MacBook Air M2 13.6 inch 8CPU 8GPU 16GB/256GB,macbook_air_13_m2,macbook_air_13_m2,True
+MacBook Air M2 2024 13-inch 16GB/256GB Chính Hãng,macbook_air_13_m2,macbook_air_13_m2,True
+MacBook Air M2 2024 8CPU 10GPU 16GB 256GB Sạc 30W,macbook_air_13_m2,macbook_air_13_m2,True
+MacBook Air M3 13.6 inch 8CPU 10GPU 16GB/512GB,macbook_air_13_m3,macbook_air_13_m3,True
+MacBook Air M3 13.6 inch 8CPU 10GPU 24GB/512GB,apple_watch_series_11_lte_42mm,macbook_air_13_m3,False
+MacBook Air M3 13.6 inch 8CPU 8GPU 16GB/256GB,macbook_air_13_m3,macbook_air_13_m3,True
+MacBook Air M3 15.3 inch 8CPU 10GPU 16GB/256GB,macbook_air_15_m3,macbook_air_15_m3,True
+MacBook Air M3 15.3 inch 8CPU 10GPU 8GB/256GB,macbook_air_15_m3,macbook_air_15_m3,True
+MacBook Air M4 13 inch 2025 10CPU 10GPU 16GB 512GB,ipad_a16_lte_wifi,macbook_air_13_m4,False
+MacBook Air M4 13 inch 2025 10CPU 10GPU 16GB 512GB Sạc 70W,ipad_a16_lte_wifi,macbook_air_13_m4,False
+MacBook Air M4 13 inch 2025 10CPU 10GPU 24GB 512GB,apple_watch_series_11_lte_42mm,macbook_air_13_m4,False
+MacBook Air M4 13 inch 2025 10CPU 10GPU 24GB 512GB Sạc 70W,apple_watch_series_11_lte_42mm,macbook_air_13_m4,False
+MacBook Air M4 13 inch 2025 10CPU 8GPU 16GB 256GB,ipad_a16_lte_wifi,macbook_air_13_m4,False
+MacBook Air M4 13 inch 2025 10CPU 8GPU 16GB 256GB Sạc 70W,ipad_a16_lte_wifi,macbook_air_13_m4,False
+MacBook Air M4 13-inch 16GB/256GB Chính Hãng,macbook_air_13_m4,macbook_air_13_m4,True
+MacBook Air M4 13-inch 16GB/512GB Chính Hãng,macbook_air_13_m4,macbook_air_13_m4,True
+MacBook Air M4 13-inch 24GB/512GB Chính Hãng,apple_watch_series_11_lte_42mm,macbook_air_13_m4,False
+MacBook Air M4 13.6 inch 10CPU 10GPU 16GB/512GB,macbook_air_13_m4,macbook_air_13_m4,True
+MacBook Air M4 13.6 inch 10CPU 10GPU 24GB/512GB,apple_watch_series_11_lte_42mm,macbook_air_13_m4,False
+MacBook Air M4 13.6 inch 10CPU 8GPU 16GB/256GB,macbook_air_13_m4,macbook_air_13_m4,True
+MacBook Air M4 15 inch 2025 10CPU 10GPU 16GB 256GB,ipad_a16_lte_wifi,macbook_air_15_m4,False
+MacBook Air M4 15 inch 2025 10CPU 10GPU 16GB 256GB Sạc 70W,ipad_a16_lte_wifi,macbook_air_15_m4,False
+"MacBook Air M4 15 inch 2025 10CPU 10GPU 16GB 256GBGiá rẻ, trả góp 0%",ipad_a16_lte_wifi,macbook_air_15_m4,False
+MacBook Air M4 15 inch 2025 10CPU 10GPU 16GB 512GB,ipad_a16_lte_wifi,macbook_air_15_m4,False
+MacBook Air M4 15 inch 2025 10CPU 10GPU 16GB 512GB Sạc 70W,ipad_a16_lte_wifi,macbook_air_15_m4,False
+"MacBook Air M4 15 inch 2025 10CPU 10GPU 16GB 512GB Sạc 70WGiá rẻ, trả góp 0%",ipad_a16_lte_wifi,macbook_air_15_m4,False
+MacBook Air M4 15 inch 2025 10CPU 10GPU 24GB 256GB Sạc 70W,apple_watch_series_11_lte_42mm,macbook_air_15_m4,False
+MacBook Air M4 15 inch 2025 10CPU 10GPU 24GB 512GB Sạc 70W,apple_watch_series_11_lte_42mm,macbook_air_15_m4,False
+MacBook Air M4 15.3 inch 10CPU 10GPU 16GB/256GB,macbook_air_15_m4,macbook_air_15_m4,True
+MacBook Air M4 15.3 inch 10CPU 10GPU 16GB/512GB,macbook_air_15_m4,macbook_air_15_m4,True
+MacBook Air M4 15.3 inch 10CPU 10GPU 24GB/512GB,apple_watch_series_11_lte_42mm,macbook_air_15_m4,False
+MacBook Pro 14 2023 M3 Pro 12 CPU/18 GPU/18GB/1TB,macbook_pro_14_m3_pro_max,macbook_pro_14_m3_pro,False
+MacBook Pro 14 M4 10CPU 10GPU 16GB 1TB,macbook_pro_14_m4,macbook_pro_14_m4,True
+MacBook Pro 14 M4 10CPU 10GPU 24GB 1TB,apple_watch_series_11_lte_42mm,macbook_pro_14_m4,False
+MacBook Pro 14 M4 Max 14CPU 32GPU 36GB 1TB Nano,ipad_pro_11_m4_lte_nano,macbook_pro_14_m4_max_nano,False
+MacBook Pro 14 M4 Pro 12CPU 16GPU 24GB 512GB,apple_watch_series_11_lte_42mm,macbook_pro_14_m4_pro,False
+MacBook Pro 14 M4 Pro 12CPU 16GPU 24GB 512GB Nano,ipad_pro_11_m4_lte_nano,macbook_pro_14_m4_pro_nano,False
+MacBook Pro 14 M4 Pro 12CPU 16GPU 24GB 512GB Sạc 96W,apple_watch_series_11_lte_42mm,macbook_pro_14_m4_pro,False
+MacBook Pro 14 M4 Pro 14CPU 20GPU 24GB 1TB Nano,ipad_pro_11_m4_lte_nano,macbook_pro_14_m4_pro_nano,False
+MacBook Pro 14 M4 Pro 14CPU 20GPU 24GB 512GB Nano,ipad_pro_11_m4_lte_nano,macbook_pro_14_m4_pro_nano,False
+MacBook Pro 14 M4 Pro 14CPU 20GPU 48GB 512GB Sạc 96W,macbook_pro_14_m4_pro,macbook_pro_14_m4_pro,True
+MacBook Pro 14 M4 Pro 2024 12CPU/16GPU/24GB/512GB,apple_watch_series_11_lte_42mm,macbook_pro_14_m4_pro,False
+MacBook Pro 14 M5 10CPU 10GPU 16GB 1TB,macbook_pro_14_m5,macbook_pro_14_m5,True
+MacBook Pro 14 M5 10CPU 10GPU 16GB 512GB,macbook_pro_14_m5,macbook_pro_14_m5,True
+MacBook Pro 14 M5 10CPU 10GPU 16GB 512GB Nano,ipad_pro_11_m4_lte_nano,macbook_pro_14_m5_nano,False
+"MacBook Pro 14 M5 10CPU 10GPU 16GB 512GBGiá rẻ, trả góp 0%",macbook_pro_14_m5,macbook_pro_14_m5,True
+MacBook Pro 14 M5 10CPU 10GPU 24GB 512GB,apple_watch_series_11_lte_42mm,macbook_pro_14_m5,False
+MacBook Pro 14 M5 10CPU 10GPU 24GB 512GB Nano,ipad_pro_11_m4_lte_nano,macbook_pro_14_m5_nano,False
+MacBook Pro 14 M5 10CPU 10GPU 32GB 512GB,macbook_pro_14_m5,macbook_pro_14_m5,True
+MacBook Pro 14 M5 10CPU 10GPU 32GB 512GB Nano,ipad_pro_11_m4_lte_nano,macbook_pro_14_m5_nano,False
+MacBook Pro 14 inch M4 10CPU 10GPU 16GB/1TB,macbook_pro_14_m4_pro,macbook_pro_14_m4,False
+MacBook Pro 14 inch M4 10CPU 10GPU 16GB/512GB,macbook_pro_14_m4_pro,macbook_pro_14_m4,False
+MacBook Pro 14 inch M4 Max 14CPU 32GPU 36GB/1TB,macbook_pro_14_m4_max,macbook_pro_14_m4_max,True
+MacBook Pro 14 inch M4 Pro 12CPU 16GPU 24GB/512GB,apple_watch_series_11_lte_42mm,macbook_pro_14_m4_pro,False
+MacBook Pro 14 inch M4 Pro 24GB/512GB,apple_watch_series_11_lte_42mm,macbook_pro_14_m4_pro,False
+MacBook Pro 14 inch M5 10CPU 10GPU (16GB/1TB),macbook_pro_14_m5,macbook_pro_14_m5,True
+MacBook Pro 14 inch M5 10CPU 10GPU (16GB/512GB),macbook_pro_14_m5,macbook_pro_14_m5,True
+MacBook Pro 14 inch M5 10CPU 10GPU (24GB/1TB),apple_watch_series_11_lte_42mm,macbook_pro_14_m5,False
+MacBook Pro 14 inch M5 16GB/512GB,macbook_pro_14_m5,macbook_pro_14_m5,True
+MacBook Pro 16 M4 Max 16CPU 40GPU 48GB 1TB,macbook_pro_16_m4_max,macbook_pro_16_m4_max,True
+MacBook Pro 16 M4 Max 2024 16CPU/40GPU/48GB/1TB,macbook_pro_16_m4_max,macbook_pro_16_m4_max,True
+MacBook Pro 16 M4 Pro 14CPU 20GPU 24GB 1TB Sạc 140W,apple_watch_series_11_lte_42mm,macbook_pro_16_m4_pro,False
+MacBook Pro 16 M4 Pro 14CPU 20GPU 24GB 512GB,apple_watch_series_11_lte_42mm,macbook_pro_16_m4_pro,False
+MacBook Pro 16 M4 Pro 14CPU 20GPU 48GB 512GB,macbook_pro_16_m4_pro,macbook_pro_16_m4_pro,True
+MacBook Pro 16 inch M4 Max 16CPU 40GPU 48GB/1TB,macbook_pro_16_m4_max,macbook_pro_16_m4_max,True
+MacBook Pro 16 inch M4 Pro 14CPU 20GPU 24GB/512GB,apple_watch_series_11_lte_42mm,macbook_pro_16_m4_pro,False
+MacBook Pro 16 inch M4 Pro 14CPU 20GPU 48GB/512GB,macbook_pro_16_m4_pro,macbook_pro_16_m4_pro,True
+MacBook Pro 16 inch M4 Pro 48GB/1TB,macbook_pro_16_m4_pro,macbook_pro_16_m4_pro,True
+MacBook Pro 2025 14 inch M5 10‑core CPU | 10‑core GPU 16GB/512GB Chính Hãng,ipad_a16_lte_wifi,macbook_pro_14_m5,False
+MacBook Pro M3 Pro 16 inch 18GB/512GB Chính Hãng,macbook_pro_16_m3_pro,macbook_pro_16_m3_pro_max,False
+Macbook Air 13 M2 2024 8CPU/8GPU/16GB/256GB,macbook_air_13_m2,macbook_air_13_m2,True
+Macbook Air 13 M4 2025 10CPU/10GPU/16GB/512GB,ipad_a16_lte_wifi,macbook_air_13_m4,False
+Macbook Air 13 M4 2025 10CPU/10GPU/24GB/512GB,apple_watch_series_11_lte_42mm,macbook_air_13_m4,False
+Macbook Air 13 M4 2025 10CPU/8GPU/16GB/256GB,ipad_a16_lte_wifi,macbook_air_13_m4,False
+Macbook Air 15 M4 2025 10CPU/ 10GPU/ 24GB/ 512GB,apple_watch_series_11_lte_42mm,macbook_air_15_m4,False
+Macbook Air 15 M4 2025 10CPU/10GPU/16GB/256GB,ipad_a16_lte_wifi,macbook_air_15_m4,False
+Macbook Air 15 M4 2025 10CPU/10GPU/16GB/512GB,ipad_a16_lte_wifi,macbook_air_15_m4,False
+Macbook Pro 14 M5 2025 10CPU/10GPU/16GB/1TB,ipad_a16_lte_wifi,macbook_pro_14_m5,False
+Macbook Pro 14 M5 2025 10CPU/10GPU/16GB/512GB,ipad_a16_lte_wifi,macbook_pro_14_m5,False
+Macbook Pro 14 M5 2025 10CPU/10GPU/16GB/512GB Nano,ipad_pro_11_m4_lte_nano,macbook_pro_14_m5_nano,False
+Macbook Pro 14 M5 2025 10CPU/10GPU/24GB/1TB Nano,ipad_pro_11_m4_lte_nano,macbook_pro_14_m5_nano,False
+Macbook Pro 14 inch M5 2025 10CPU/10GPU/16GB/1TB Nano,ipad_pro_11_m4_lte_nano,macbook_pro_14_m5_nano,False
+Máy tính bảng iPad Pro M5 11 inch 5G (256GB),apple_watch_se_3_lte_40mm,ipad_pro_11_m5_lte,False
+Máy tính bảng iPad Pro M5 11 inch 5G (512GB),apple_watch_se_3_lte_40mm,ipad_pro_11_m5_lte,False
+Máy tính bảng iPad Pro M5 11 inch Wi-Fi (256GB),ipad,ipad_pro_11_m5_wifi,False
+Máy tính bảng iPad Pro M5 11 inch Wifi (512GB),ipad_a16_wifi,ipad_pro_11_m5_wifi,False
+Máy tính bảng iPad Pro M5 13 inch 5G (256GB),apple_watch_se_3_lte_40mm,ipad_pro_13_m5_lte,False
+Máy tính bảng iPad Pro M5 13 inch 5G (512GB),apple_watch_se_3_lte_40mm,ipad_pro_13_m5_lte,False
+Máy tính bảng iPad Pro M5 13 inch Wi-Fi (256GB),ipad,ipad_pro_13_m5_wifi,False
+Máy tính bảng iPad Pro M5 13 inch Wi-Fi (512GB),ipad,ipad_pro_13_m5_wifi,False
+Tai nghe AirPods 4,airpods_4,airpods_4,True
+Tai nghe AirPods 4 bản Chủ Động Khử Tiếng Ồn,airpods_4,airpods_4_anc,False
+Tai nghe AirPods Pro 2 (USB-C),airpods_pro_2,airpods_pro_2,True
+Tai nghe AirPods Pro 3,airpods_pro_3,airpods_pro_3,True
+Tai nghe Apple AirPods 4 Chính Hãng,airpods_4,airpods_4,True
+Tai nghe Apple AirPods 4 Chống ồn chủ động Chính Hãng,airpods_4_anc,airpods_4_anc,True
+Tai nghe Apple AirPods Pro 2 2023 (USB-C) Chính Hãng,airpods_pro_2,airpods_pro_2,True
+Tai nghe Apple AirPods Pro 3 Chính Hãng,airpods_pro_3,airpods_pro_3,True
+Tai nghe Bluetooth AirPods Pro Gen 2 MagSafe Charge (USB-C) Apple MTJV3,airpods_pro_2,airpods_pro_2,True
+Tai nghe Bluetooth Apple AirPods 4,airpods_4,airpods_4,True
+Tai nghe Bluetooth Apple AirPods 4 chống ồn chủ động,airpods_4_anc,airpods_4_anc,True
+Tai nghe Bluetooth Apple AirPods Pro 2 2023 USB-C,airpods_pro_2,airpods_pro_2,True
+Tai nghe Bluetooth Apple AirPods Pro 3 2025 Type-C (MFHP4ZP/A),ipad_a16_lte_wifi,airpods_pro_3,False
+Tai nghe Bluetooth Apple AirPods Pro 3 Trắng MFHP4,airpods_pro_3,airpods_pro_3,True
+iMac M1 2021 24 inch (8GB/512GB),ipad_mini_gen6_lte,imac_m1_2021_24,False
+iMac M4 2024 24 inch 10CPU 10GPU 16GB 1TB,imac_m4,imac_m4,True
+iMac M4 2024 24 inch 10CPU 10GPU 16GB 256GB,imac_m4,imac_m4,True
+iMac M4 2024 24 inch 10CPU 10GPU 16GB 512GB,imac_m4,imac_m4,True
+iMac M4 2024 24 inch 10CPU 10GPU 24GB 256GB,apple_watch_series_11_lte_42mm,imac_m4,False
+iMac M4 2024 24 inch 10CPU 10GPU 24GB 512GB,apple_watch_series_11_lte_42mm,imac_m4,False
+iMac M4 2024 24 inch 8CPU 8GPU 16GB 256GB,imac_m4,imac_m4,True
+iMac M4 24 inch 2024 8CPU 8GPU 16GB/256GB,imac_m4,imac_m4,True
+iPad A16 11 inch (2025) | 128GB Wifi & 5G Chính Hãng,apple_watch_se_3_lte_40mm,ipad_a16_lte,False
+iPad A16 11 inch (2025) | 128GB Wifi Chính Hãng,ipad_a16_lte_wifi,ipad_a16_lte,False
+iPad A16 11 inch 2025 256GB Wifi Chính hãng,ipad_a16_lte_wifi,ipad_a16_lte,False
+iPad A16 11 inch 5G (128GB),apple_watch_se_3_lte_40mm,ipad_a16_lte,False
+iPad A16 11 inch 5G (256GB),apple_watch_se_3_lte_40mm,ipad_a16_lte,False
+iPad A16 11 inch 5G (512GB),apple_watch_se_3_lte_40mm,ipad_a16_lte,False
+iPad A16 11 inch Wifi (128GB),ipad_a16_lte_wifi,ipad_a16_wifi,False
+iPad A16 11 inch Wifi (256GB),ipad_a16_lte_wifi,ipad_a16_wifi,False
+iPad A16 11 inch Wifi (512GB),ipad_a16_lte_wifi,ipad_a16_wifi,False
+iPad A16 5G 128GB,apple_watch_se_3_lte_40mm,ipad_a16_lte,False
+iPad A16 5G 128GB 2025,apple_watch_se_3_lte_40mm,ipad_a16_lte,False
+"iPad A16 5G 128GB giá tốt, góp 0%, HSSV giảm thêm 300K",apple_watch_se_3_lte_40mm,ipad_a16_lte,False
+iPad A16 5G 256GB 2025,apple_watch_se_3_lte_40mm,ipad_a16_lte,False
+iPad A16 WiFi 128GB,ipad_a16_lte_wifi,ipad_a16_wifi,False
+iPad A16 WiFi 256GB,ipad_a16_lte_wifi,ipad_a16_wifi,False
+iPad A16 Wifi 128GB 2025,ipad_a16_lte_wifi,ipad_a16_wifi,False
+iPad A16 Wifi 256GB 2025,ipad_a16_lte_wifi,ipad_a16_wifi,False
+iPad Air (Gen 6) M2 11 inch WIFI 5G 512GB,apple_watch_se_3_lte_40mm,ipad_air_11_m2_lte,False
+iPad Air (Gen 6) M2 13 inch WIFI 5G 512GB,apple_watch_se_3_lte_40mm,ipad_air_13_m2_lte,False
+iPad Air (M3) 11 inch WIFI 128GB,ipad_a16_wifi,ipad_air_11_m3_wifi,False
+iPad Air (M3) 11 inch WIFI 1TB,ipad_a16_wifi,ipad_air_11_m3_wifi,False
+iPad Air (M3) 11 inch WIFI 5G 256GB,apple_watch_se_3_lte_40mm,ipad_air_11_m3_lte,False
+iPad Air (M3) 11 inch WIFI 5G 512GB,apple_watch_se_3_lte_40mm,ipad_air_11_m3_lte,False
+iPad Air (M3) 13 inch WIFI 5G 512GB,apple_watch_se_3_lte_40mm,ipad_air_13_m3_lte,False
+iPad Air 11 inch M2 2024 Wifi + Cellular 128GB,apple_watch_se_3_lte_40mm,ipad_air_11_m2_lte,False
+iPad Air 11 inch M2 2024 Wifi 128GB,ipad_a16_wifi,ipad_air_11_m2_wifi,False
+iPad Air 11 inch M2 2024 Wifi 1TB,ipad_a16_wifi,ipad_air_11_m2_wifi,False
+iPad Air 11 inch M2 2024 Wifi 256GB,ipad_a16_wifi,ipad_air_11_m2_wifi,False
+iPad Air 11 inch M2 2024 Wifi 512GB,ipad_a16_wifi,ipad_air_11_m2_wifi,False
+iPad Air 11 inch M3 2025 WiFi + Cellular 128GB,apple_watch_se_3_lte_40mm,ipad_air_11_m3_lte,False
+iPad Air 11 inch M3 2025 WiFi 128GB,ipad_a16_lte_wifi,ipad_air_11_m3_wifi,False
+iPad Air 11 inch M3 5G 128GB 2025,apple_watch_se_3_lte_40mm,ipad_air_11_m3_lte,False
+iPad Air 11 inch M3 5G 256GB 2025,apple_watch_se_3_lte_40mm,ipad_air_11_m3_lte,False
+iPad Air 11 inch M3 Wifi 128GB 2025,ipad_a16_lte_wifi,ipad_air_11_m3_wifi,False
+iPad Air 11 inch M3 Wifi 256GB 2025,ipad_a16_lte_wifi,ipad_air_11_m3_wifi,False
+iPad Air 11 inch M3 Wifi 512GB 2025,ipad_a16_lte_wifi,ipad_air_11_m3_wifi,False
+iPad Air 13 inch M3 2025 WiFi + Cellular 128GB,apple_watch_se_3_lte_40mm,ipad_air_13_m3_lte,False
+iPad Air 13 inch M3 2025 WiFi 128GB,ipad_a16_lte_wifi,ipad_air_13_m3_wifi,False
+iPad Air 13 inch M3 5G 128GB 2025,apple_watch_se_3_lte_40mm,ipad_air_13_m3_lte,False
+iPad Air 13 inch M3 5G 512GB 2025,apple_watch_se_3_lte_40mm,ipad_air_13_m3_lte,False
+iPad Air 13 inch M3 Wifi 128GB 2025,ipad_a16_lte_wifi,ipad_air_13_m3_wifi,False
+iPad Air 13 inch M3 Wifi 256GB 2025,ipad_a16_lte_wifi,ipad_air_13_m3_wifi,False
+iPad Air 5 10.9 inch (2022) WIFI 64GB,apple_watch_series_11_lte_42mm,ipad_air_5_wifi,False
+iPad Air 5 2022 10.9 inch M1 WiFi 5G 256GB,apple_watch_se_3_lte_40mm,ipad_air_5_lte,False
+iPad Air 5 2022 10.9 inch M1 WiFi 5G 64GB,apple_watch_se_3_lte_40mm,ipad_air_5_lte,False
+iPad Air 6 M2 11 inch 5G (128GB),apple_watch_se_3_lte_40mm,ipad_air_11_m2_lte,False
+iPad Air 6 M2 11 inch 5G (256GB),apple_watch_se_3_lte_40mm,ipad_air_11_m2_lte,False
+iPad Air 6 M2 11 inch 5G (512GB),apple_watch_se_3_lte_40mm,ipad_air_11_m2_lte,False
+iPad Air 6 M2 11 inch WiFi (128GB),ipad_a16_wifi,ipad_air_11_m2_wifi,False
+iPad Air 6 M2 11 inch WiFi (256GB),ipad_a16_wifi,ipad_air_11_m2_wifi,False
+iPad Air 6 M2 11 inch WiFi (512GB),ipad_a16_wifi,ipad_air_11_m2_wifi,False
+iPad Air 6 M2 13 inch 5G (128GB),apple_watch_se_3_lte_40mm,ipad_air_13_m2_lte,False
+iPad Air 6 M2 13 inch 5G (256GB),apple_watch_se_3_lte_40mm,ipad_air_13_m2_lte,False
+iPad Air 6 M2 13 inch 5G (512GB),apple_watch_se_3_lte_40mm,ipad_air_13_m2_lte,False
+iPad Air 6 M2 13 inch WiFi (128GB),ipad_a16_wifi,ipad_air_13_m2_wifi,False
+iPad Air 6 M2 13 inch WiFi (256GB),ipad_a16_wifi,ipad_air_13_m2_wifi,False
+iPad Air 6 M2 13 inch WiFi (512GB),ipad_a16_wifi,ipad_air_13_m2_wifi,False
+iPad Air M3 11 inch 5G (128GB),apple_watch_se_3_lte_40mm,ipad_air_11_m3_lte,False
+iPad Air M3 11 inch 5G (256GB),apple_watch_se_3_lte_40mm,ipad_air_11_m3_lte,False
+iPad Air M3 11 inch 5G (512GB),apple_watch_se_3_lte_40mm,ipad_air_11_m3_lte,False
+iPad Air M3 11 inch 5G 128GB,apple_watch_se_3_lte_40mm,ipad_air_11_m3_lte,False
+iPad Air M3 11 inch 5G 256GB,apple_watch_se_3_lte_40mm,ipad_air_11_m3_lte,False
+"iPad Air M3 11 inch 5G 256GB giá tốt, thu cũ giảm đến 2tr",apple_watch_se_3_lte_40mm,ipad_air_11_m3_lte,False
+iPad Air M3 11 inch WiFi 128GB,ipad_a16_wifi,ipad_air_11_m3_wifi,False
+"iPad Air M3 11 inch WiFi 128GB chính hãng Apple, trả chậm 0% lãi suất",ipad_a16_wifi,ipad_air_11_m3_wifi,False
+iPad Air M3 11 inch Wifi (128GB),ipad_a16_wifi,ipad_air_11_m3_wifi,False
+iPad Air M3 11 inch Wifi (256GB),ipad_a16_wifi,ipad_air_11_m3_wifi,False
+iPad Air M3 11 inch Wifi (512GB),ipad_a16_wifi,ipad_air_11_m3_wifi,False
+iPad Air M3 11 inch | 128GB Wifi Chính Hãng,ipad_a16_wifi,ipad_air_11_m3_wifi,False
+iPad Air M3 13 inch 5G (128GB),apple_watch_se_3_lte_40mm,ipad_air_13_m3_lte,False
+iPad Air M3 13 inch 5G (256GB),apple_watch_se_3_lte_40mm,ipad_air_13_m3_lte,False
+iPad Air M3 13 inch 5G (512GB),apple_watch_se_3_lte_40mm,ipad_air_13_m3_lte,False
+iPad Air M3 13 inch 5G 128GB,apple_watch_se_3_lte_40mm,ipad_air_13_m3_lte,False
+iPad Air M3 13 inch WiFi 128GB,ipad_a16_wifi,ipad_air_13_m3_wifi,False
+iPad Air M3 13 inch Wifi (128GB),ipad_a16_wifi,ipad_air_13_m3_wifi,False
+iPad Air M3 13 inch Wifi (256GB),ipad_a16_wifi,ipad_air_13_m3_wifi,False
+iPad Air M3 13 inch Wifi (512GB),ipad_a16_wifi,ipad_air_13_m3_wifi,False
+"iPad Mini 7 2024 5G 256GBGiá rẻ, hỗ trợ trả góp 0%",apple_watch_se_3_lte_40mm,ipad_mini_a17_pro_lte,False
+iPad Mini 7 8.3 inch 5G (128GB),apple_watch_se_3_lte_40mm,ipad_mini_a17_pro_lte,False
+iPad Mini 7 8.3 inch 5G (256GB),apple_watch_se_3_lte_40mm,ipad_mini_a17_pro_lte,False
+iPad Mini 7 8.3 inch WiFi (128GB),ipad_mini_a17_pro_wifi,ipad_mini_a17_pro_wifi,True
+iPad Mini 7 8.3 inch WiFi (256GB),ipad_mini_a17_pro_wifi,ipad_mini_a17_pro_wifi,True
+iPad Mini 7 WIFI 256GB,ipad_mini_a17_pro_wifi,ipad_mini_a17_pro_wifi,True
+"iPad Mini 7 Wifi 256GB giá rẻ, giảm ngay 2tr, góp 0%",ipad_mini_a17_pro_wifi,ipad_mini_a17_pro_wifi,True
+iPad Pro 11 M5 2025 WiFi + Cellular 12GB 256GB,apple_watch_se_3_lte_40mm,ipad_pro_11_m5_lte,False
+iPad Pro 11 M5 2025 WiFi 12GB 256GB,ipad_a16_lte_wifi,ipad_pro_11_m5_wifi,False
+iPad Pro 11 inch M4 2024 Wifi 256GB,ipad_a16_wifi,ipad_pro_11_m4_wifi,False
+iPad Pro 13 M5 2025 WiFi + Cellular 12GB 256GB,apple_watch_se_3_lte_40mm,ipad_pro_13_m5_lte,False
+iPad Pro 13 M5 2025 WiFi 12GB 256GB,ipad_a16_lte_wifi,ipad_pro_13_m5_wifi,False
+iPad Pro M4 11 inch 5G (256GB),apple_watch_se_3_lte_40mm,ipad_pro_11_m4_lte,False
+iPad Pro M4 11 inch 5G (512GB),apple_watch_se_3_lte_40mm,ipad_pro_11_m4_lte,False
+iPad Pro M4 11 inch 5G 1TB,apple_watch_se_3_lte_40mm,ipad_pro_11_m4_lte,False
+iPad Pro M4 11 inch 5G 1TB Nano,ipad_pro_11_m4_lte_nano,ipad_pro_11_m4_lte_nano,True
+"iPad Pro M4 11 inch 5G 1TB chính hãngGiá rẻ, ưu đãi lớn",apple_watch_se_3_lte_40mm,ipad_pro_11_m4_lte,False
+iPad Pro M4 11 inch 5G 256GB,apple_watch_se_3_lte_40mm,ipad_pro_11_m4_lte,False
+"iPad Pro M4 11 inch 5G 256GBGiá rẻ 02/2026, đăng kí ngay",apple_watch_se_3_lte_40mm,ipad_pro_11_m4_lte,False
+iPad Pro M4 11 inch 5G 2TB,apple_watch_se_3_lte_40mm,ipad_pro_11_m4_lte,False
+iPad Pro M4 11 inch 5G 2TB Nano,ipad_pro_11_m4_lte_nano,ipad_pro_11_m4_lte_nano,True
+iPad Pro M4 11 inch 5G 512GB,apple_watch_se_3_lte_40mm,ipad_pro_11_m4_lte,False
+iPad Pro M4 11 inch Standard Glass WIFI 1TB,ipad_a16_wifi,ipad_pro_11_m4_wifi,False
+iPad Pro M4 11 inch WiFi (256GB),ipad_a16_wifi,ipad_pro_11_m4_wifi,False
+iPad Pro M4 11 inch WiFi (512GB),ipad_a16_wifi,ipad_pro_11_m4_wifi,False
+iPad Pro M4 11 inch Wifi 1TB,ipad_a16_wifi,ipad_pro_11_m4_wifi,False
+iPad Pro M4 11 inch Wifi 1TB Nano,ipad_pro_11_m4_lte_nano,ipad_pro_11_m4_wifi_nano,False
+iPad Pro M4 11 inch Wifi 2TB,ipad_a16_wifi,ipad_pro_11_m4_wifi,False
+iPad Pro M4 11 inch Wifi 2TB Nano,ipad_pro_11_m4_lte_nano,ipad_pro_11_m4_wifi_nano,False
+"iPad Pro M4 11 inch Wifi 2TB chính hãngGiá rẻ, ưu đãi lớn",ipad_a16_wifi,ipad_pro_11_m4_wifi,False
+iPad Pro M4 13 inch 5G (256GB),apple_watch_se_3_lte_40mm,ipad_pro_13_m4_lte,False
+iPad Pro M4 13 inch 5G (512GB),apple_watch_se_3_lte_40mm,ipad_pro_13_m4_lte,False
+iPad Pro M4 13 inch 5G 1TB,apple_watch_se_3_lte_40mm,ipad_pro_13_m4_lte,False
+iPad Pro M4 13 inch 5G 1TB Nano,ipad_pro_11_m4_lte_nano,ipad_pro_13_m4_lte_nano,False
+iPad Pro M4 13 inch 5G 256GB,apple_watch_se_3_lte_40mm,ipad_pro_13_m4_lte,False
+iPad Pro M4 13 inch 5G 2TB,apple_watch_se_3_lte_40mm,ipad_pro_13_m4_lte,False
+iPad Pro M4 13 inch 5G 2TB Nano,ipad_pro_11_m4_lte_nano,ipad_pro_13_m4_lte_nano,False
+iPad Pro M4 13 inch 5G 512GB,apple_watch_se_3_lte_40mm,ipad_pro_13_m4_lte,False
+iPad Pro M4 13 inch Standard Glass WIFI 256GB,ipad_a16_wifi,ipad_pro_13_m4_wifi,False
+iPad Pro M4 13 inch WiFi (256GB),ipad_a16_wifi,ipad_pro_13_m4_wifi,False
+iPad Pro M4 13 inch WiFi (512GB),ipad_a16_wifi,ipad_pro_13_m4_wifi,False
+iPad Pro M4 13 inch Wifi 1TB,ipad_a16_wifi,ipad_pro_13_m4_wifi,False
+iPad Pro M4 13 inch Wifi 1TB Nano,ipad_pro_11_m4_lte_nano,ipad_pro_13_m4_wifi_nano,False
+iPad Pro M4 13 inch Wifi 256GB,ipad_a16_wifi,ipad_pro_13_m4_wifi,False
+iPad Pro M4 13 inch Wifi 2TB,ipad_a16_wifi,ipad_pro_13_m4_wifi,False
+iPad Pro M4 13 inch Wifi 512GB,ipad_a16_wifi,ipad_pro_13_m4_wifi,False
+iPad Pro M5 11 inch 256GB Wifi Chính Hãng,ipad_a16_wifi,ipad_pro_11_m5_wifi,False
+iPad Pro M5 11 inch 5G 256GB,apple_watch_se_3_lte_40mm,ipad_pro_11_m5_lte,False
+iPad Pro M5 11 inch WIFI 5G 1TB Nano,ipad_pro_11_m4_lte_nano,ipad_pro_11_m5_lte_nano,False
+iPad Pro M5 11 inch WiFi 1TB,ipad_a16_wifi,ipad_pro_11_m5_wifi,False
+"iPad Pro M5 11 inch WiFi 1TB chính hãng, trả chậm 0% lãi suất",ipad_a16_wifi,ipad_pro_11_m5_wifi,False
+iPad Pro M5 11 inch WiFi 256GB,ipad_a16_wifi,ipad_pro_11_m5_wifi,False
+iPad Pro M5 11 inch WiFi 512GB,ipad_a16_wifi,ipad_pro_11_m5_wifi,False
+iPad Pro M5 13 inch WIFI 5G 512GB,apple_watch_se_3_lte_40mm,ipad_pro_13_m5_lte,False
+iPad Pro M5 13 inch WiFi 256GB,ipad_a16_wifi,ipad_pro_13_m5_wifi,False
+iPad Pro M5 13 inch WiFi 2TB,ipad_a16_wifi,ipad_pro_13_m5_wifi,False
+iPad Pro M5 13 inch WiFi 512GB,ipad_a16_wifi,ipad_pro_13_m5_wifi,False
+iPad Pro chip M5 11 inch 5G 256GB,apple_watch_se_3_lte_40mm,ipad_pro_11_m5_lte,False
+iPad Pro chip M5 11 inch Wifi 256GB,ipad_a16_wifi,ipad_pro_11_m5_wifi,False
+iPad Pro chip M5 11 inch Wifi 512GB,ipad_a16_wifi,ipad_pro_11_m5_wifi,False
+iPad Pro chip M5 13 inch 5G 256GB,apple_watch_se_3_lte_40mm,ipad_pro_13_m5_lte,False
+iPad Pro chip M5 13 inch Wifi 256GB,ipad_a16_wifi,ipad_pro_13_m5_wifi,False
+iPad Pro chip M5 13 inch Wifi 512GB,ipad_a16_wifi,ipad_pro_13_m5_wifi,False
+iPad mini 7 2024 128GB Wifi Chính Hãng,ipad_mini_a17_pro_wifi,ipad_mini_a17_pro_wifi,True
+iPad mini 7 2024 5G 128GB,apple_watch_se_3_lte_40mm,ipad_mini_a17_pro_lte,False
+iPad mini 7 2024 5G 256GB,apple_watch_se_3_lte_40mm,ipad_mini_a17_pro_lte,False
+iPad mini 7 2024 Wifi + Cellular 128GB,apple_watch_se_3_lte_40mm,ipad_mini_a17_pro_lte,False
+iPad mini 7 2024 Wifi 128GB,ipad_mini_a17_pro_wifi,ipad_mini_a17_pro_wifi,True
+iPad mini 7 2024 Wifi 256GB,ipad_mini_a17_pro_wifi,ipad_mini_a17_pro_wifi,True
+iPad mini 7 5G 128GB,apple_watch_se_3_lte_40mm,ipad_mini_a17_pro_lte,False
+"iPad mini 7 5G 128GB giá tốt, giảm ngay 2.2tr, trả chậm 0% lãi suất",apple_watch_se_3_lte_40mm,ipad_mini_a17_pro_lte,False
+iPad mini 7 5G 256GB,apple_watch_se_3_lte_40mm,ipad_mini_a17_pro_lte,False
+"iPad mini 7 5G 256GB giá tốt, thu cũ giảm đến 2tr, trả chậm 0%",apple_watch_se_3_lte_40mm,ipad_mini_a17_pro_lte,False
+iPad mini 7 WiFi 128GB,ipad_mini_a17_pro_wifi,ipad_mini_a17_pro_wifi,True
+iPad mini 7 WiFi 256GB,ipad_mini_a17_pro_wifi,ipad_mini_a17_pro_wifi,True
+iPad mini 7 WiFi 512GB,ipad_mini_a17_pro_wifi,ipad_mini_a17_pro_wifi,True
+"iPad mini 7 WiFi 512GB - Chính hãng, thu cũ trợ giá đến 2 triệu",ipad_mini_a17_pro_wifi,ipad_mini_a17_pro_wifi,True
+"iPhone 12 Pro Max (128GB, 256GB, 512GB)Lên đời giá tốt",iphone_12_pro_max,iphone_12_pro_max,True
+iPhone 12 Pro Max 128GB,iphone_12_pro_max,iphone_12_pro_max,True
+iPhone 13 (128GB),iphone_13,iphone_13,True
+iPhone 13 128GB,iphone_13,iphone_13,True
+iPhone 13 128GB Chính Hãng (VN/A),iphone_13,iphone_13,True
+iPhone 13 256GB,iphone_13,iphone_13,True
+iPhone 13 512GB,iphone_13,iphone_13,True
+iPhone 14 (128GB),iphone_14,iphone_14,True
+iPhone 14 128GB,iphone_14,iphone_14,True
+iPhone 14 128GB Chính hãng (VN/A),iphone_14,iphone_14,True
+iPhone 14 256GB,iphone_14,iphone_14,True
+iPhone 14 256GB Chính Hãng (VN/A),iphone_14,iphone_14,True
+iPhone 14 512GB,iphone_14,iphone_14,True
+iPhone 14 Plus (128GB),iphone_14_plus,iphone_14_plus,True
+iPhone 14 Pro Max 128GB,iphone_14_pro_max,iphone_14_pro_max,True
+iPhone 15 (128GB),iphone_15,iphone_15,True
+iPhone 15 (256GB),iphone_15,iphone_15,True
+iPhone 15 (512GB),iphone_15,iphone_15,True
+iPhone 15 128GB,iphone_15,iphone_15,True
+iPhone 15 128GB Chính hãng (VN/A),iphone_15,iphone_15,True
+iPhone 15 256GB,iphone_15,iphone_15,True
+iPhone 15 256GB Chính hãng (VN/A),iphone_15,iphone_15,True
+iPhone 15 512GB,iphone_15,iphone_15,True
+iPhone 15 Plus (128GB),iphone_15_plus,iphone_15_plus,True
+iPhone 15 Plus (256GB),iphone_15_plus,iphone_15_plus,True
+iPhone 15 Plus 128GB,iphone_15_plus,iphone_15_plus,True
+iPhone 15 Plus 256GB,iphone_15_plus,iphone_15_plus,True
+iPhone 15 Plus 512GB,iphone_15_plus,iphone_15_plus,True
+iPhone 15 Pro (128GB),iphone_15_pro,iphone_15_pro,True
+iPhone 15 Pro (1TB),iphone_15_pro,iphone_15_pro,True
+iPhone 15 Pro (256GB),airpods_pro_2,iphone_15_pro,False
+iPhone 15 Pro (512GB),iphone_15_pro,iphone_15_pro,True
+iPhone 15 Pro 128GB,iphone_15_pro,iphone_15_pro,True
+iPhone 15 Pro Max (1TB),iphone_15_pro_max,iphone_15_pro_max,True
+iPhone 15 Pro Max (256GB),iphone_15_pro_max,iphone_15_pro_max,True
+iPhone 15 Pro Max (512GB),iphone_15_pro_max,iphone_15_pro_max,True
+iPhone 16 (128GB),iphone_16,iphone_16,True
+iPhone 16 (256GB),iphone_16,iphone_16,True
+iPhone 16 (512GB),iphone_16,iphone_16,True
+iPhone 16 128GB,iphone_16,iphone_16,True
+iPhone 16 128GB Chính Hãng (VN/A),iphone_16,iphone_16,True
+iPhone 16 512GB,iphone_16,iphone_16,True
+iPhone 16 Plus (128GB),iphone_16_plus,iphone_16_plus,True
+iPhone 16 Plus (256GB),iphone_16_plus,iphone_16_plus,True
+iPhone 16 Plus (512GB),iphone_16_plus,iphone_16_plus,True
+iPhone 16 Plus 128GB,iphone_16_plus,iphone_16_plus,True
+iPhone 16 Plus 128GB Chính hãng (VN/A),iphone_16_plus,iphone_16_plus,True
+iPhone 16 Plus 256GB,iphone_16_plus,iphone_16_plus,True
+iPhone 16 Plus 256GB Chính hãng (VN/A),iphone_16_plus,iphone_16_plus,True
+iPhone 16 Pro (128GB),iphone_16_pro,iphone_16_pro,True
+iPhone 16 Pro (1TB),iphone_16_pro,iphone_16_pro,True
+iPhone 16 Pro (256GB),airpods_pro_2,iphone_16_pro,False
+iPhone 16 Pro (512GB),iphone_16_pro,iphone_16_pro,True
+iPhone 16 Pro 128GB,iphone_16_pro,iphone_16_pro,True
+iPhone 16 Pro 1TB,iphone_16_pro,iphone_16_pro,True
+iPhone 16 Pro 256GB,airpods_pro_2,iphone_16_pro,False
+iPhone 16 Pro 512GB,iphone_16_pro,iphone_16_pro,True
+iPhone 16 Pro Max (1TB),iphone_16_pro_max,iphone_16_pro_max,True
+iPhone 16 Pro Max (256GB),iphone_16_pro_max,iphone_16_pro_max,True
+iPhone 16 Pro Max (512GB),iphone_16_pro_max,iphone_16_pro_max,True
+iPhone 16 Pro Max 1TB,iphone_16_pro_max,iphone_16_pro_max,True
+iPhone 16 Pro Max 1TB Chính Hãng (VN/A),iphone_16_pro_max,iphone_16_pro_max,True
+iPhone 16 Pro Max 256GB,iphone_16_pro_max,iphone_16_pro_max,True
+iPhone 16 Pro Max 256GB Chính Hãng (VN/A),iphone_16_pro_max,iphone_16_pro_max,True
+iPhone 16 Pro Max 512GB,iphone_16_pro_max,iphone_16_pro_max,True
+iPhone 16e (128GB),iphone_16e,iphone_16e,True
+iPhone 16e (256GB),iphone_16e,iphone_16e,True
+iPhone 16e 128GB,iphone_16e,iphone_16e,True
+iPhone 16e 128GB Chính Hãng (VN/A),iphone_16e,iphone_16e,True
+iPhone 16e 256GB,iphone_16e,iphone_16e,True
+iPhone 16e 512GB,iphone_16e,iphone_16e,True
+"iPhone 16e 512GB chính hãng, góp 0%, thu cũ trợ giá 2tr",iphone_16e,iphone_16e,True
+iPhone 17 256GB,iphone_17,iphone_17,True
+iPhone 17 256GB Chính Hãng,iphone_17,iphone_17,True
+iPhone 17 512GB,iphone_17,iphone_17,True
+"iPhone 17 512GB giá giảm đến 7 triệu, đủ màu mới",iphone_17,iphone_17,True
+iPhone 17 Pro 1TB,iphone_17_pro,iphone_17_pro,True
+iPhone 17 Pro 1TB Chính Hãng,iphone_17_pro,iphone_17_pro,True
+iPhone 17 Pro 256GB,airpods_pro_2,iphone_17_pro,False
+iPhone 17 Pro 256GB Chính Hãng,airpods_pro_2,iphone_17_pro,False
+iPhone 17 Pro 512GB,iphone_17_pro,iphone_17_pro,True
+iPhone 17 Pro 512GB Chính Hãng,iphone_17_pro,iphone_17_pro,True
+"iPhone 17 Pro 512GB | Giá tốt, thu cũ giảm đến 3tr, góp 0%",iphone_17_pro,iphone_17_pro,True
+iPhone 17 Pro Max 1TB,iphone_17_pro_max,iphone_17_pro_max,True
+iPhone 17 Pro Max 1TB Chính Hãng,iphone_17_pro_max,iphone_17_pro_max,True
+iPhone 17 Pro Max 256GB,iphone_17_pro_max,iphone_17_pro_max,True
+iPhone 17 Pro Max 256GB Chính Hãng,iphone_17_pro_max,iphone_17_pro_max,True
+iPhone 17 Pro Max 2TB,iphone_17_pro_max,iphone_17_pro_max,True
+iPhone 17 Pro Max 512GB,iphone_17_pro_max,iphone_17_pro_max,True
+iPhone 17 Pro Max 512GB Chính Hãng,iphone_17_pro_max,iphone_17_pro_max,True
+iPhone Air 1TB,iphone_air,iphone_air,True
+iPhone Air 1TB Chính Hãng,iphone_air,iphone_air,True
+iPhone Air 256GB,iphone_air,iphone_air,True
+iPhone Air 256GB Chính Hãng,iphone_air,iphone_air,True
+iPhone Air 512GB,iphone_air,iphone_air,True
+iPhone Air 512GB Chính Hãng,iphone_air,iphone_air,True
+nan,Unmatched,nan,False
+Điện thoại iPhone 16 Pro Max 256GB,iphone_16_pro_max,iphone_16_pro_max,True
+Điện thoại iPhone 16e (512GB),iphone_16e,iphone_16e,True
+Địa chỉ hệ thống cửa hàng điện thoại CellphoneS gần đây,Unmatched,cellphone_s,False
+Đồng hồ thông minh Apple Watch Ultra 2,apple_watch_ultra_2,apple_watch_ultra_2,True
