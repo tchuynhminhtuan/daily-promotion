@@ -59,6 +59,25 @@ jobs:
 
           echo "All scrapers completed."
 
+      - name: Commit Raw Data
+        if: success() || failure()
+        run: |
+          git config --global user.name "GitHub Action Scraper"
+          git config --global user.email "action@github.com"
+
+          # Get current date (UTC)
+          TODAY=$(date +'%Y-%m-%d')
+
+          # Add new content files (data) for today only
+          if [ -d "data/raw/$TODAY" ]; then
+            git add -f "data/raw/$TODAY/"
+            git commit -m "Auto: Update Raw Scraped Data [skip ci]" || echo "No changes to commit"
+            git pull --rebase origin main
+            git push
+          else
+            echo "⚠️ Data folder data/raw/$TODAY not found!"
+          fi
+
       - name: Normalize Data & Generate Insights
         run: |
           echo "Run Normalization (AI disabled on Linux)..."
@@ -74,10 +93,7 @@ jobs:
 
           # Add new content files (data) for today only
           if [ -d "data/raw/$TODAY" ]; then
-            git add -f "data/raw/$TODAY/"
-          else
-            echo "⚠️ Data folder data/raw/$TODAY not found!"
-            ls -R data/raw/
+             echo "Raw data already committed."
           fi
 
           # Add normalized clean data
@@ -87,7 +103,8 @@ jobs:
           git add docs/
 
           # Commit if there are changes
-          git commit -m "Auto: Update Raw Scraped Data [skip ci]" || echo "No changes to commit"
+          # Commit if there are changes
+          git commit -m "Auto: Update Normalized Catalog [skip ci]" || echo "No changes to commit"
 
           # Pull latest changes to avoid conflicts
           git pull --rebase origin main
