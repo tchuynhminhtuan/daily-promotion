@@ -83,26 +83,26 @@ jobs:
       #     echo "Run Normalization (AI disabled on Linux)..."
       #     python3 src/processing/normalize.py --no-ai
 
-      - name: Commit Processed Data & Report
-        if: success() || failure()
-        run: |
-          git config --global user.name "GitHub Action Scraper"
-          git config --global user.email "action@github.com"
-
-          # Add normalized clean data (Critical for Analytics/History)
-          git add -f catalog/output/
-
-          # Add updated reports
-          git add docs/
-
-          # Commit if there are changes
-          git commit -m "Auto: Update Normalized Catalog & Report [skip ci]" || echo "No changes to commit"
-
-          # Pull latest changes to avoid conflicts
-          git pull --rebase origin main
-
-          # Push changes
-          git push
+      # - name: Commit Processed Data & Report
+      #   if: success() || failure()
+      #   run: |
+      #     git config --global user.name "GitHub Action Scraper"
+      #     git config --global user.email "action@github.com"
+      #
+      #     # Add normalized clean data (Critical for Analytics/History)
+      #     git add -f catalog/output/
+      #
+      #     # Add updated reports
+      #     git add docs/
+      #
+      #     # Commit if there are changes
+      #     git commit -m "Auto: Update Normalized Catalog & Report [skip ci]" || echo "No changes to commit"
+      #
+      #     # Pull latest changes to avoid conflicts
+      #     git pull --rebase origin main
+      #
+      #     # Push changes
+      #     git push
 
       - name: Generate Report
         run: |
