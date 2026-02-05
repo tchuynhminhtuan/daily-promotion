@@ -459,6 +459,28 @@ class PromoDiffGenerator:
                          record[f"New_{col}"] = row[col]
                      
                      changes.append(record)
+                 else:
+                     # It's a product from older date only (no new data today)
+                     # Show it as UNCHANGED with old data preserved
+                     record = {
+                        "Channel": row['Channel'],
+                        "Product Name": row['Product Name'],
+                        "Color": row['Color'],
+                        "Date": row['Date'],  # Use original date
+                        "Prev_Date": "N/A",
+                        "New_Price": row.get('Promo Price'),
+                        "Old_Price": row.get('Promo Price'),  # Same price (no change)
+                        "Link": row.get('Link', ''),
+                        "Stock": row.get('Stock', 'Unknown'),
+                        "Status": "UNCHANGED"  # Mark as unchanged (old data still valid)
+                     }
+                     # Fill text cols with old data as both old and new
+                     for col in valid_cols:
+                         record[f"Changed_{col}"] = "NO"
+                         record[f"Old_{col}"] = row[col]
+                         record[f"New_{col}"] = row[col]
+                     
+                     changes.append(record)
 
         return pd.DataFrame(changes)
 
