@@ -1,9 +1,6 @@
 apple_watch_series_9_gps_45mm
 apple_watch_ultra_2
-
-
 ipad_pro_11_m5_lte_nano
 macbook_pro_14_m4_max_nano
 macbook_pro_14_m4_pro_nano
 macbook_pro_14_m5_nano
-macbook_pro_14_m6
