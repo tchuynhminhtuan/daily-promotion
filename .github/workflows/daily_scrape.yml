@@ -78,33 +78,25 @@ jobs:
             echo "⚠️ Data folder data/raw/$TODAY not found!"
           fi
 
-      - name: Normalize Data & Generate Insights
-        run: |
-          echo "Run Normalization (AI disabled on Linux)..."
-          python3 src/processing/normalize.py --no-ai
+      # - name: Normalize Data & Generate Insights
+      #   run: |
+      #     echo "Run Normalization (AI disabled on Linux)..."
+      #     python3 src/processing/normalize.py --no-ai
 
-      - name: Commit Scraped Data
+      - name: Commit Processed Data & Report
+        if: success() || failure()
         run: |
           git config --global user.name "GitHub Action Scraper"
           git config --global user.email "action@github.com"
 
-          # Get current date (UTC)
-          TODAY=$(date +'%Y-%m-%d')
-
-          # Add new content files (data) for today only
-          if [ -d "data/raw/$TODAY" ]; then
-             echo "Raw data already committed."
-          fi
-
-          # Add normalized clean data
+          # Add normalized clean data (Critical for Analytics/History)
           git add -f catalog/output/
 
-          # Add normalized docs (insights/report) to update HEAD
+          # Add updated reports
           git add docs/
 
           # Commit if there are changes
-          # Commit if there are changes
-          git commit -m "Auto: Update Normalized Catalog [skip ci]" || echo "No changes to commit"
+          git commit -m "Auto: Update Normalized Catalog & Report [skip ci]" || echo "No changes to commit"
 
           # Pull latest changes to avoid conflicts
           git pull --rebase origin main
