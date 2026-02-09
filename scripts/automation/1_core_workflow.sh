@@ -62,12 +62,12 @@ python3 "$PROJECT_ROOT/src/crawlers/2-Apple_MW_playwright.py"
 osascript -e 'display notification "Scrapers Completed: FPT & MW" with title "Daily Promotion"'
 echo "✅ FPT & MW Scrapers Completed."
 
-# 3. Handle Normalization & Data Versioning
-echo "🧠 Normalizing Data..."
-python3 "$PROJECT_ROOT/src/processing/normalize.py"
+# # 3. Handle Normalization & Data Versioning
+# echo "🧠 Normalizing Data..."
+# python3 "$PROJECT_ROOT/src/processing/normalize.py"
 
-echo "📊 Generating Report..."
-python3 "$PROJECT_ROOT/src/reporting/generate_report.py"
+# echo "📊 Generating Report..."
+# python3 "$PROJECT_ROOT/src/reporting/generate_report.py"
 
 # 4. Push Results to GitHub (STRICT SCOPE)
 echo "🚀 Pushing results to GitHub..."
