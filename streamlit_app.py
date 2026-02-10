@@ -7,7 +7,7 @@ import streamlit.components.v1 as components
 
 # Add the 'code' directory to path so we can import generate_report
 # We assume the script is running from the root of the repo
-sys.path.append(os.path.join(os.path.dirname(__file__), 'code'))
+sys.path.append(os.path.join(os.path.dirname(__file__), 'src/reporting'))
 from generate_report import DataLoader, PriceMatrixGenerator, PromoDiffGenerator, get_available_dates, BASE_DIR
 
 # --- Page Config ---
