@@ -6,3 +6,4 @@ markdown
 PyYAML
 scipy
 numpy
+altair<5
