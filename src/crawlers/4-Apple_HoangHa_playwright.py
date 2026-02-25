@@ -76,7 +76,7 @@ class HoangHaScraper(BaseScraper):
         product_name = await self.get_element_text_with_fallbacks(page, PRODUCT_NAME_SELECTORS)
         
         if product_name:
-            product_name = product_name.strip().split(" - ")[0]
+            product_name = product_name.strip()
 
         # 2. Stock (Ton_Kho)
         ton_kho = "Yes"
