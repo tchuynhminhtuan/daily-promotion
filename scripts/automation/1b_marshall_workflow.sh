@@ -4,6 +4,9 @@
 # Specialized automation for Marshall Tracker.
 # Handles scraping, dashboard updates, and Git.
 
+# Ensure PATH includes Homebrew binaries (for python3, git, etc.) so cron runs correctly
+export PATH=/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
+
 echo "🚀 Starting Marshall Daily Workflow..."
 
 # ENSURE WE ARE IN THE PROJECT ROOT

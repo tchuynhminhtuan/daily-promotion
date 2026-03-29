@@ -3,6 +3,9 @@
 # --- 1_core_workflow.sh ---
 # The heart of the automation. Handles scraping, DB updates, and Git pushing.
 
+# Ensure PATH includes Homebrew binaries (for python3, git, etc.) so cron runs correctly
+export PATH=/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
+
 echo "🚀 Starting Hybrid Scraper Workflow..."
 
 # ENSURE WE ARE IN THE PROJECT ROOT
