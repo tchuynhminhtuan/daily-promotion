@@ -1,9 +1,0 @@
-🚀 Promo Extraction Experiment
-📅 Date: 2026-02-04
-📁 Source: data/raw/2026-02-04
-🔢 Limit: 0 rows/file
-
-📄 Processing 1-fpt-2026-02-04.csv (362 rows)...
-🤖 Loading Llama 3B from experiments/fine_tuning/adapters_llama...
-Fetching 6 files:   0%|          | 0/6 [00:00<?, ?it/s]Fetching 6 files: 100%|██████████| 6/6 [00:00<00:00, 10600.60it/s]
-mx.metal.device_info is deprecated and will be removed in a future version. Use mx.device_info instead.
