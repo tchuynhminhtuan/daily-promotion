@@ -16,6 +16,12 @@ cd "$PROJECT_ROOT" || exit
 
 echo "📍 Working Directory: $PROJECT_ROOT"
 
+# Activate Virtual Environment if it exists
+if [ -d "$PROJECT_ROOT/.venv" ]; then
+    echo "🐍 Activating virtual environment..."
+    source "$PROJECT_ROOT/.venv/bin/activate"
+fi
+
 # --- INTERNET CHECK ---
 check_internet() {
     echo "📡 Checking internet connection..."
@@ -52,7 +58,7 @@ fi
 # 1. Install/Update Dependencies
 echo "📦 Checking dependencies..."
 pip3 install -r requirements.txt --quiet || echo "⚠️ Warning: Pip install failed. Continuing..."
-python3 -m playwright install chromium --quiet
+python3 -m playwright install chromium > /dev/null 2>&1
 
 # 2. Run Local Scrapers (FPT & MW Only - Sequential/Parallel)
 osascript -e 'display notification "Scrapers Running: FPT & MW" with title "Daily Promotion"'

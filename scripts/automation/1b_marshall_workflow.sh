@@ -16,6 +16,12 @@ cd "$PROJECT_ROOT" || exit
 
 echo "📍 Working Directory: $PROJECT_ROOT"
 
+# Activate Virtual Environment if it exists
+if [ -d "$PROJECT_ROOT/.venv" ]; then
+    echo "🐍 Activating virtual environment..."
+    source "$PROJECT_ROOT/.venv/bin/activate"
+fi
+
 # --- INTERNET CHECK ---
 check_internet() {
     echo "📡 Checking internet connection..."
