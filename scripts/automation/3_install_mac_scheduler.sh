@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # --- 3_install_mac_scheduler.sh ---
-# Run this once to set up the daily automated run (8:00 AM) on your Mac.
+# Run this once to set up the daily automated run (7:00 AM) on your Mac.
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PLIST_NAME="com.brucehuynh.dailyscrape.plist"
@@ -24,5 +24,5 @@ cp "$PLIST_PATH" "$TARGET_DIR/"
 # Load the new agent
 launchctl load "$TARGET_DIR/$PLIST_NAME"
 
-echo "✅ Success! The scraper will now run automatically every day at 08:00."
+echo "✅ Success! The scraper will now run automatically every day at 07:00."
 echo "📝 Logs will be saved to /tmp/daily_scrape.out and /tmp/daily_scrape.err"
