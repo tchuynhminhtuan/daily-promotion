@@ -7,7 +7,7 @@ URLS = [
     'https://www.thegioididong.com/may-tinh-bang-apple-ipad',
     'https://www.thegioididong.com/laptop-apple-macbook',
     'https://www.thegioididong.com/dong-ho-thong-minh-apple',
-    'https://www.thegioididong.com/phu-kien/marshall?key=marshall&sc=new'
+    # 'https://www.thegioididong.com/phu-kien/marshall?key=marshall&sc=new'
 
 ]
 

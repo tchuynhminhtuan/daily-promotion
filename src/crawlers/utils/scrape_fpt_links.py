@@ -6,7 +6,8 @@ URLS = [
     "https://fptshop.com.vn/apple/ipad",
     "https://fptshop.com.vn/apple/macbook",
     "https://fptshop.com.vn/apple/watch",
-    'https://fptshop.com.vn/tim-kiem?s=marshall&sort=noi-bat&hang-san-xuat=marshall'
+    'https://fptshop.com.vn/tim-kiem?s=airpods&sort=noi-bat&categories=phu-kien',
+    # 'https://fptshop.com.vn/tim-kiem?s=marshall&sort=noi-bat&hang-san-xuat=marshall'
 ]
 
 # User provided XPath
@@ -16,10 +17,22 @@ CATEGORY_SELECTOR = "//h3[@class='h2-semibold mb:-mx-4 mb:px-4 mb:pt-4']/parent:
 # Broad selector for Search/Filter pages (e.g. Marshall search)
 SEARCH_SELECTOR = "//div[contains(@class, 'grid') and (contains(@class, 'grid-cols-2') or contains(@class, 'grid-cols-3') or contains(@class, 'grid-cols-4'))]//a[@href]"
 
+# Selector for AirPods search page - User specified
+# Filters out cards where the following-sibling div contains "Đăng ký tư vấn" OR "Liên hệ tư vấn"
+# (out-of-stock / consult-only items with no buyable price)
+AIRPODS_SELECTOR = (
+    "//div[contains(@class,'group relative')]/div/a[@href]"
+    "[not(following-sibling::div[contains(., 'Đăng ký tư vấn')])]"
+    "[not(following-sibling::div[contains(., 'Liên hệ tư vấn')])]"
+)
+
 async def scrape_fpt_links():
     async with async_playwright() as p:
         browser = await p.chromium.launch(headless=True)
-        page = await browser.new_page()
+        context = await browser.new_context(
+            user_agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"
+        )
+        page = await context.new_page()
         
         # Anti-bot
         await page.add_init_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
@@ -30,16 +43,23 @@ async def scrape_fpt_links():
             print(f"Navigating to {url}...")
             
             # Determine which selector to use
-            if "tim-kiem" in url or "?s=" in url:
+            if "s=airpods" in url:
+                current_selector = AIRPODS_SELECTOR
+                is_search = True
+                is_airpods = True
+            elif "tim-kiem" in url or "?s=" in url:
                 current_selector = SEARCH_SELECTOR
                 is_search = True
+                is_airpods = False
             else:
                 current_selector = CATEGORY_SELECTOR
                 is_search = False
+                is_airpods = False
 
             try:
                 await page.goto(url, timeout=60000, wait_until="domcontentloaded")
-                await page.wait_for_timeout(3000)
+                # Wait for JS framework to render product grid
+                await page.wait_for_timeout(5000)
 
                 # Load More Loop (Generic "Xem thêm" button)
                 # SKIP for Search Pages (handled better by default load, scrolling might break grid)
@@ -75,7 +95,8 @@ async def scrape_fpt_links():
                 print(f"Found {count} potential link elements on {url}.")
                 
                 for i in range(count):
-                    href = await elements.nth(i).get_attribute("href")
+                    element = elements.nth(i)
+                    href = await element.get_attribute("href")
                     if href:
                         href = href.strip()
                         if not href.startswith("http"):
@@ -83,13 +104,17 @@ async def scrape_fpt_links():
                                 href = "/" + href
                             href = "https://fptshop.com.vn" + href
                         
+                        # AirPods page: fallback filter — check parent container text
+                        # Excludes both "Đăng ký tư vấn" and "Liên hệ tư vấn" (no-price cards)
+                        if is_airpods:
+                            parent_text = await element.evaluate("el => el.parentElement.innerText")
+                            if "Đăng ký tư vấn" in parent_text or "Liên hệ tư vấn" in parent_text:
+                                print(f"  Skipping no-price card: {href}")
+                                continue
+                        
                         # Filter out noise for search selector
                         if is_search:
                             lower_href = href.lower()
-                            
-                            # Forced Includes (Priority) - Keep valid product paths high, 
-                            # BUT ensure they aren't actually news articles disguised (unlikely for FPT but good practice)
-                            # Actually, it's safer to just run the exclusion list FIRST.
                             
                             # Rejection Logic (Strict)
                             # Filter out news, support, policies, etc.
@@ -101,8 +126,6 @@ async def scrape_fpt_links():
                                 continue
 
                             # If it passed rejection, we accept it.
-                            # Optional: We could check if it looks like a product (has 3 components or specific keywords), 
-                            # but keeping it broad (allow list) is safer to not miss items.
 
                         all_links.add(href)
 
