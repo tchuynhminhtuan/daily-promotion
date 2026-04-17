@@ -171,7 +171,7 @@ class MWScraper(BaseScraper):
         # Payment Promo - Iterate over items
         try:
             payment_items = []
-            tt_selector = "//div[@class='campaign c2 dt']"
+            tt_selector = "//div[contains(@class, 'campaign') and contains(@class, 'dt')]" # update 18/4/2026
             payment_container = page.locator(tt_selector)
             if await payment_container.count() > 0:
                 payment_li = payment_container.locator("li, .item")
