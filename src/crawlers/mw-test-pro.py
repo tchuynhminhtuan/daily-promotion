@@ -37,13 +37,39 @@ class MWScraper(BaseScraper):
         return fields
 
     def clean_text_data(self, text):
-        """Hàm xử lý khoảng trắng dư thừa đã tối ưu"""
-        if not text: return ""
-        # Thay thế các ký tự trắng đặc biệt (\xa0...) bằng dấu cách thường
-        text = re.sub(r'[\xa0\t\r\f\v]', ' ', str(text))
-        # Thu gọn khoảng trắng dư thừa (2 dấu cách trở lên thành 1)
-        text = re.sub(r' {2,}', ' ', text)
-        return text.strip()
+        """Hàm xử lý khoảng trắng dư thừa và định dạng dòng (tích hợp trực tiếp từ thuật toán Pandas)"""
+        if not text: 
+            return ""
+        
+        text = str(text)
+        
+        # 1. Thay thế các ký tự khoảng trắng lạ (\xa0, \t...) bằng dấu cách thường
+        text = re.sub(r'[\xa0\t\r\f\v]', ' ', text)
+        
+        # 2. Coi các khoảng trống lớn (>= 5 dấu cách) là dấu hiệu xuống dòng
+        text = re.sub(r' {5,}', '\n', text)
+        
+        # 3. Thay thế các khoảng trắng dư thừa nhỏ (2-4 dấu cách) bằng 1 dấu cách
+        text = re.sub(r' {2,4}', ' ', text)
+        
+        # 4. Tách thành các dòng để xử lý logic "số thứ tự"
+        lines = [line.strip() for line in text.split('\n') if line.strip()]
+        
+        final_lines = []
+        i = 0
+        while i < len(lines):
+            line = lines[i]
+            # Nếu dòng hiện tại là số thứ tự (ví dụ: "1", "2") hoặc rất ngắn
+            is_index = line.isdigit() or (len(line) <= 3 and any(c.isdigit() for c in line))
+            
+            if is_index and i + 1 < len(lines):
+                final_lines.append(f"{line} {lines[i+1]}")
+                i += 2
+            else:
+                final_lines.append(line)
+                i += 1
+                
+        return '\n'.join(final_lines)
 
     async def remove_overlays(self, page):
         try:
@@ -66,23 +92,23 @@ class MWScraper(BaseScraper):
             return "Disabled"
         
         try:
-            # Tạo đường dẫn thư mục: self.output_dir tự động trỏ đến thư mục ngày hiện tại (VD: data/raw/2026-04-17)
-            # Giúp thư mục img_mw luôn đồng cấp với file CSV output.
-            img_path = os.path.join(self.output_dir, "img_mw")
+            if hasattr(self, 'img_dir') and self.img_dir:
+                base_dir = os.path.dirname(self.img_dir)
+                img_path = os.path.join(base_dir, "img_mw")
+            else:
+                img_path = os.path.join("data", "raw", self.date_str, "img_mw")
+                
             os.makedirs(img_path, exist_ok=True)
 
-            # Làm sạch tên file để tránh các ký tự không được hệ điều hành cho phép
             safe_name = re.sub(r'[\\/*?:"<>|]', "", f"{product_name}_{color}")
             filename = f"{safe_name}.png"
             full_path = os.path.join(img_path, filename)
 
-            # Chụp vùng cụ thể
             element = page.locator(SCREENSHOT_SELECTOR).first
             if await element.count() > 0:
                 await element.screenshot(path=full_path)
                 return filename
             else:
-                # Nếu không tìm thấy element đó (ví dụ web đổi giao diện), chụp full page làm backup
                 await page.screenshot(path=full_path, full_page=True)
                 return f"FULL_{filename}"
                 
@@ -121,27 +147,32 @@ class MWScraper(BaseScraper):
             data["Ton_Kho"] = "Yes" if (data["Gia_Khuyen_Mai"] != 0 and buy_btn_count > 0) else "No"
         except: pass
 
-        # Promotions (Cleaned)
+        # Promotions (Cleaned via new algorithm)
         try:
             promo_container = page.locator(PROMO_SELECTOR)
             if await promo_container.count() > 0:
                 texts = await promo_container.locator("li, .item, .promo-item").all_text_contents()
-                cleaned_promos = [self.clean_text_data(t) for t in texts if t.strip()]
-                data["Khuyen_Mai"] = " | ".join(cleaned_promos) if cleaned_promos else self.clean_text_data(await promo_container.text_content())
+                if texts:
+                    raw_promo = "\n".join(texts)
+                else:
+                    raw_promo = await promo_container.text_content()
+                data["Khuyen_Mai"] = self.clean_text_data(raw_promo)
         except: pass
 
-        # Payment Promo (Cleaned & Updated Selector)
+        # Payment Promo (Cleaned via new algorithm)
         try:
             tt_selector = "//div[contains(@class, 'campaign') and contains(@class, 'dt')]"
             payment_container = page.locator(tt_selector)
             if await payment_container.count() > 0:
                 texts = await payment_container.locator("li, .item").all_text_contents()
-                cleaned_payments = [self.clean_text_data(t) for t in texts if t.strip()]
-                data["Thanh_Toan"] = " | ".join(cleaned_payments) if cleaned_payments else self.clean_text_data(await payment_container.text_content())
+                if texts:
+                    raw_payment = "\n".join(texts)
+                else:
+                    raw_payment = await payment_container.text_content()
+                data["Thanh_Toan"] = self.clean_text_data(raw_payment)
         except: pass
 
         # --- CHỤP ẢNH MÀN HÌNH ---
-        # Hàm này được gọi cho TẤT CẢ sản phẩm (không còn bị bọc trong if data["Ton_Kho"] == "No" nữa)
         data['screenshot_name'] = await self.handle_screenshot(page, product_name, color)
         # -------------------------
 

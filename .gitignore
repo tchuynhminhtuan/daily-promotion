@@ -25,6 +25,13 @@ content/
 projects/marshall_daily/content/*/img_fpt/
 projects/marshall_daily/content/*/img_mw/
 
+projects/marshall_daily/content/*/img_fpt/
+
+data/raw/*/img_fpt
+data/raw/*/img_mw
+
+projects/marshall_daily/content/*/img_mw/
+
 # IMPORTANT: Keep AI Experiments & Models
 !experiments/
 !experiments/fine_tuning/data/
