@@ -57,7 +57,7 @@ fi
 
 # 1. Install/Update Dependencies
 echo "📦 Checking dependencies..."
-pip3 install -r requirements.txt --quiet || echo "⚠️ Warning: Pip install failed. Continuing..."
+uv pip install -r requirements.txt --quiet || echo "⚠️ Warning: uv pip install failed. Continuing..."
 python3 -m playwright install chromium > /dev/null 2>&1
 
 # 2. Run Local Scrapers (FPT & MW Only - Sequential/Parallel)
