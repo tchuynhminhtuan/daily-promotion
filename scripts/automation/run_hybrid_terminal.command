@@ -34,6 +34,6 @@ else
 fi
 echo "================================================================================="
 echo ""
-echo "💡 Cửa sổ Terminal sẽ tự động đóng sau 30 giây (hoặc nhấn phím bất kỳ để đóng ngay)..."
-read -t 30 -n 1 -s
+echo "💡 Nhấn phím bất kỳ (hoặc click đóng cửa sổ Terminal) khi bạn đã xem xong kết quả..."
+read -n 1 -s
 exit $RUN_STATUS

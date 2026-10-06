@@ -7,6 +7,7 @@ Thực thi tự động sau mỗi lượt quét snapshot để:
 """
 
 import os
+import re
 import json
 import joblib
 import pandas as pd
@@ -71,7 +72,10 @@ def run_inference(data_json_path: str = None) -> str:
         actual_st = int(row.get("Store_Count", 0))
 
         # Phân loại mức độ rủi ro (Risk Level)
-        if actual_st == 0:
+        is_discontinued = bool(row.get("Is_Discontinued", False))
+        if is_discontinued:
+            risk_level = "DISCONTINUED"
+        elif actual_st == 0:
             risk_level = "OUT_OF_STOCK"
         elif p_stockout >= 0.70 or actual_st <= 5:
             risk_level = "CRITICAL_RISK"
@@ -100,6 +104,7 @@ def run_inference(data_json_path: str = None) -> str:
             "Predicted_Store_Count": pred_st,
             "Stockout_Probability": round(p_stockout, 3),
             "Risk_Level": risk_level,
+            "Is_Discontinued": is_discontinued,
             "Direct_Discount_VND": int(giam_truc_tiep),
             "Trade_In_Subsidy_VND": int(tro_gia_thucu),
             "Min_Monthly_Payment_12M": row.get("Min_Monthly_Payment_12M", 0),
@@ -119,7 +124,9 @@ def run_inference(data_json_path: str = None) -> str:
             "prediction_timestamp": now.isoformat(),
             "source_snapshot": data_json_path,
             "total_skus": len(results),
-            "critical_risk_count": sum(1 for r in results if r["Risk_Level"] in ["CRITICAL_RISK", "OUT_OF_STOCK"]),
+            "discontinued_count": sum(1 for r in results if r["Risk_Level"] == "DISCONTINUED"),
+            "out_of_stock_count": sum(1 for r in results if r["Risk_Level"] == "OUT_OF_STOCK"),
+            "critical_risk_count": sum(1 for r in results if r["Risk_Level"] == "CRITICAL_RISK"),
             "safe_count": sum(1 for r in results if r["Risk_Level"] == "SAFE")
         },
         "predictions": results
@@ -138,22 +145,102 @@ def run_inference(data_json_path: str = None) -> str:
     print(f"📁 Tệp kết quả: {out_json}")
     print(f"🔗 Tệp mới nhất: {latest_json} & {latest_csv}")
 
-    # 5. In tóm tắt cảnh báo kinh doanh
-    print("\n🚨 TOP SẢN PHẨM CẢNH BÁO NGUY CƠ ĐỨT HÀNG CAO (CRITICAL RISK):")
-    print("-" * 80)
-    crit_df = df_res[df_res['Risk_Level'] == 'CRITICAL_RISK'][['Product_Name', 'Color', 'Actual_Store_Count', 'Stockout_Probability', 'Gia_Khuyen_Mai']].head(6)
-    if not crit_df.empty:
-        print(crit_df.to_string(index=False))
-    else:
-        print("  Không có sản phẩm nào chạm ngưỡng rủi ro nghiêm trọng.")
+    # 5. In tóm tắt cảnh báo kinh doanh theo từng danh mục
+    def format_sku_name(name: str, color: str, max_len: int = 34) -> str:
+        color_str = f" ({color})" if color and color != "Default" else ""
+        full = f"{name}{color_str}"
+        full = re.sub(r'^(?:Điện thoại|Máy tính bảng|Laptop|Tai nghe Bluetooth|Đồng hồ thông minh)\s+', '', full)
+        if len(full) > max_len:
+            return full[:max_len-3] + "..."
+        return full
 
-    print("\n🎁 TOP SẢN PHẨM CÓ TRỢ LỰC TÀI CHÍNH (AFFORDABILITY) HẤP DẪN NHẤT:")
-    print("-" * 80)
-    deal_df = df_res.sort_values(by='Affordability_Benefit_Pct', ascending=False)[['Product_Name', 'Color', 'Gia_Khuyen_Mai', 'Direct_Discount_VND', 'Trade_In_Subsidy_VND', 'Affordability_Benefit_Pct']].head(5)
-    print(deal_df.to_string(index=False))
-    print("=" * 80)
+    categories = ["iPhone", "MacBook", "iPad", "Apple Watch", "AirPods"]
+    cat_display_names = {
+        "iPhone": "📱 iPhone",
+        "MacBook": "💻 Mac / MacBook",
+        "iPad": "📱 iPad",
+        "Apple Watch": "⌚ Apple Watch",
+        "AirPods": "🎧 AirPods"
+    }
+
+    print("\n" + "=" * 98)
+    print("🚨 [1] CẢNH BÁO NGUY CƠ ĐỨT HÀNG THEO TỪNG DANH MỤC (STOCK-OUT RISK BY CATEGORY)")
+    print("    (Chỉ xét các sản phẩm còn đang lưu hành và còn dưới 20 điểm bán toàn quốc)")
+    print("=" * 98)
+
+    for cat in categories:
+        cat_df = df_res[df_res['Category'] == cat]
+        risk_df = cat_df[
+            (cat_df['Actual_Store_Count'] > 0) & 
+            (cat_df['Risk_Level'].isin(['CRITICAL_RISK', 'WARNING']) | (cat_df['Actual_Store_Count'] <= 15))
+        ].sort_values(by=['Actual_Store_Count', 'Stockout_Probability'], ascending=[True, False]).head(3)
+
+        label = cat_display_names.get(cat, cat)
+        print(f"\n{label} ({len(cat_df)} SKUs):")
+        if not risk_df.empty:
+            for _, r in risk_df.iterrows():
+                name_str = format_sku_name(r['Product_Name'], r['Color'], 34)
+                stores_str = f"{r['Actual_Store_Count']} shop"
+                pred_str = f"{r['Predicted_Store_Count']} shop"
+                prob_str = f"{r['Stockout_Probability']*100:.1f}%"
+                price_str = f"{int(r['Gia_Khuyen_Mai']):,}đ"
+                risk_icon = "🔴 CRITICAL" if r['Risk_Level'] == 'CRITICAL_RISK' or r['Actual_Store_Count'] <= 5 else "🟡 WARNING"
+                print(f"  • {name_str:<35} | Tồn: {stores_str:<8} | AI đoán: {pred_str:<7} | Xác suất cạn: {prob_str:<6} | Giá: {price_str:<12} | {risk_icon}")
+        else:
+            print("  ✅ Toàn bộ tồn kho trong danh mục đang ở mức an toàn (Safe stock level).")
+
+    print("\n" + "=" * 98)
+    print("🎁 [2] TOP SẢN PHẨM CÓ TRỢ LỰC TÀI CHÍNH (AFFORDABILITY) HỜI NHẤT THEO TỪNG DANH MỤC")
+    print("    (🟢 Chỉ lọc các sản phẩm ĐANG KINH DOANH và CÒN HÀNG tại hệ thống siêu thị)")
+    print("=" * 98)
+
+    for cat in categories:
+        cat_df = df_res[df_res['Category'] == cat]
+        in_stock_deals = cat_df[
+            (cat_df['Actual_Store_Count'] > 0) & 
+            (~cat_df['Risk_Level'].isin(['DISCONTINUED', 'OUT_OF_STOCK']))
+        ]
+        
+        with_pct = in_stock_deals[in_stock_deals['Affordability_Benefit_Pct'] > 0]
+        if not with_pct.empty:
+            deals_sorted = with_pct.sort_values(
+                by=['Affordability_Benefit_Pct', 'Actual_Store_Count'], 
+                ascending=[False, False]
+            ).head(3)
+        else:
+            deals_sorted = in_stock_deals.sort_values(
+                by=['Actual_Store_Count', 'Gia_Khuyen_Mai'], 
+                ascending=[False, True]
+            ).head(2)
+
+        label = cat_display_names.get(cat, cat)
+        print(f"\n{label}:")
+        if not deals_sorted.empty:
+            for _, r in deals_sorted.iterrows():
+                name_str = format_sku_name(r['Product_Name'], r['Color'], 34)
+                price_str = f"{int(r['Gia_Khuyen_Mai']):,}đ"
+                stores_str = f"{r['Actual_Store_Count']} shop"
+                disc_val = int(r['Direct_Discount_VND'])
+                trade_val = int(r['Trade_In_Subsidy_VND'])
+                pct_val = r['Affordability_Benefit_Pct']
+                
+                if pct_val > 0:
+                    disc_str = f"Giảm: {disc_val:,}đ" if disc_val >= 50000 else ""
+                    trade_str = f"Thu cũ: +{trade_val:,}đ" if trade_val >= 100000 else ""
+                    promo_details = " | ".join(filter(None, [disc_str, trade_str])) or "Ưu đãi tài chính đặc biệt"
+                    print(f"  • {name_str:<35} | Giá: {price_str:<12} | Còn: {stores_str:<8} | Tiết kiệm: {pct_val:>4.1f}% ({promo_details})")
+
+                else:
+                    monthly = int(r.get('Min_Monthly_Payment_12M', 0))
+                    monthly_str = f"Trả chậm 0%: ~{monthly:,}đ/tháng" if monthly > 0 else "Giá niêm yết chuẩn"
+                    print(f"  • {name_str:<35} | Giá: {price_str:<12} | Còn: {stores_str:<8} | {monthly_str}")
+        else:
+            print("  ⚠️ Không có sản phẩm nào trong danh mục còn hàng tại siêu thị.")
+
+    print("\n" + "=" * 98 + "\n")
 
     return out_json
+
 
 
 if __name__ == "__main__":

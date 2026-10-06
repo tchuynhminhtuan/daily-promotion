@@ -15,16 +15,26 @@ echo "[$(date '+%Y-%m-%d %H:%M:%S')] 🚀 Bắt đầu quét tồn kho & Afforda
 
 # Ưu tiên sử dụng uv nếu có, fallback về python3
 if command -v uv &> /dev/null; then
-    uv run src/hybrid/tgdd_hybrid_pipeline.py --sync-raw 2>&1 | tee -a "$LOG_FILE"
+    uv run -m src.intelligence.pipeline.crawler --sync-raw 2>&1 | tee -a "$LOG_FILE"
 elif [ -f "$PROJECT_DIR/.venv/bin/python" ]; then
-    "$PROJECT_DIR/.venv/bin/python" src/hybrid/tgdd_hybrid_pipeline.py --sync-raw 2>&1 | tee -a "$LOG_FILE"
+    "$PROJECT_DIR/.venv/bin/python" -m src.intelligence.pipeline.crawler --sync-raw 2>&1 | tee -a "$LOG_FILE"
 else
-    python3 src/hybrid/tgdd_hybrid_pipeline.py --sync-raw 2>&1 | tee -a "$LOG_FILE"
+    python3 -m src.intelligence.pipeline.crawler --sync-raw 2>&1 | tee -a "$LOG_FILE"
 fi
 
 EXIT_CODE=$?
 if [ $EXIT_CODE -eq 0 ]; then
     echo "[$(date '+%Y-%m-%d %H:%M:%S')] ✅ Quét dữ liệu thành công!" | tee -a "$LOG_FILE"
+    
+    echo "[$(date '+%Y-%m-%d %H:%M:%S')] 🧠 Tự động huấn luyện & cập nhật Model AI/ML (Continuous Learning)..." | tee -a "$LOG_FILE"
+    if command -v uv &> /dev/null; then
+        uv run -m src.intelligence.models.trainer 2>&1 | tee -a "$LOG_FILE"
+    elif [ -f "$PROJECT_DIR/.venv/bin/python" ]; then
+        "$PROJECT_DIR/.venv/bin/python" -m src.intelligence.models.trainer 2>&1 | tee -a "$LOG_FILE"
+    else
+        python3 -m src.intelligence.models.trainer 2>&1 | tee -a "$LOG_FILE"
+    fi
+
     echo "[$(date '+%Y-%m-%d %H:%M:%S')] 🔮 Bắt đầu chạy mô hình AI/ML dự báo rủi ro đứt hàng & chấm điểm tài chính..." | tee -a "$LOG_FILE"
     if command -v uv &> /dev/null; then
         uv run -m src.intelligence.inference.daily_inference 2>&1 | tee -a "$LOG_FILE"

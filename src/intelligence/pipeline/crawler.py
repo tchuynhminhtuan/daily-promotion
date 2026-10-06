@@ -80,7 +80,7 @@ def discover_category_links(cat_name: str, cat_url: str) -> List[str]:
         return []
 
 
-def parse_affordability(soup: BeautifulSoup, price: int) -> Dict[str, Any]:
+def parse_affordability(soup: BeautifulSoup, price: int, raw_html: str = "") -> Dict[str, Any]:
     """Bóc tách các chỉ số Affordability, Trợ giá thu cũ đổi mới, Trả góp 0%, và Ưu đãi tài chính."""
     res = {
         "Direct_Discount_VND": 0,
@@ -97,8 +97,12 @@ def parse_affordability(soup: BeautifulSoup, price: int) -> Dict[str, Any]:
     promo_text = promo_block.get_text(separator=' | ', strip=True) if promo_block else ''
     full_text = soup.get_text(separator=' ', strip=True)
     
-    # 1. Giảm giá trực tiếp
+    # 1. Giảm giá trực tiếp (kiểm tra promo_text, full_text và raw_html)
     m_direct = re.search(r'Giảm giá\s+([\d.,]+)\s*đ', promo_text, re.I)
+    if not m_direct:
+        m_direct = re.search(r'Giảm giá\s+([\d.,]+)\s*đ', full_text, re.I)
+    if not m_direct and raw_html:
+        m_direct = re.search(r'Giảm giá\s+([\d.,]+)\s*đ', raw_html, re.I)
     if m_direct:
         val = int(m_direct.group(1).replace('.', '').replace(',', ''))
         res["Direct_Discount_VND"] = val
@@ -106,33 +110,44 @@ def parse_affordability(soup: BeautifulSoup, price: int) -> Dict[str, Any]:
 
     # 2. Phiếu mua hàng phụ kiện
     m_vouch = re.search(r'Phiếu mua hàng[^\d]+([\d.,]+)\s*đ', promo_text, re.I)
+    if not m_vouch:
+        m_vouch = re.search(r'Phiếu mua hàng[^\d]+([\d.,]+)\s*đ', full_text, re.I)
+    if not m_vouch and raw_html:
+        m_vouch = re.search(r'Phiếu mua hàng[^\d]+([\d.,]+)\s*đ', raw_html, re.I)
     if m_vouch:
         val = int(m_vouch.group(1).replace('.', '').replace(',', ''))
         res["Accessory_Voucher_VND"] = val
         res["Affordability_Programs"].append(f"Voucher phụ kiện {val:,}đ")
 
     # 3. Trợ giá thu cũ đổi mới (Trade-In Subsidy)
-    m_trade = re.search(r'Thu cũ đổi mới[^\d]+([\d.,]+)\s*đ', promo_text, re.I)
-    if not m_trade:
-        m_trade = re.search(r'thu cũ trợ giá đến\s+([\d.,]+)\s*([trm]+)', full_text, re.I)
-    if m_trade:
-        matched_str = m_trade.group(0)
-        if 'đ' in matched_str or 'vnđ' in matched_str.lower():
-            val = int(m_trade.group(1).replace('.', '').replace(',', ''))
-        else:
-            val = int(float(m_trade.group(1).replace(',', '.')) * 1e6)
-        res["Trade_In_Subsidy_VND"] = val
-        res["Affordability_Programs"].append(f"Trợ giá thu cũ đổi mới {val:,}đ")
+    trade_sources = [promo_text, full_text, raw_html]
+    for src in trade_sources:
+        if not src:
+            continue
+        m_trade = re.search(r'thu cũ(?:[^\d]{1,30})?(?:giảm|trợ giá)?\s*(?:đến\s+)?([\d.,]+)\s*(triệu|tr|đ)', src, re.I)
+        if m_trade:
+            num_clean = m_trade.group(1).replace('.', '').replace(',', '')
+            unit = m_trade.group(2).lower()
+            val = int(float(num_clean) * 1e6) if 'tr' in unit else int(num_clean)
+            if val >= 100000:
+                res["Trade_In_Subsidy_VND"] = val
+                res["Affordability_Programs"].append(f"Trợ giá thu cũ đổi mới {val:,}đ")
+                break
+
 
     # 4. Hoàn tiền mở thẻ ngân hàng đối tác
     m_bank = re.search(r'hoàn\s+(?:ngay\s+)?đến\s+([\d.,]+)\s*đ', promo_text, re.I)
+    if not m_bank:
+        m_bank = re.search(r'hoàn\s+(?:ngay\s+)?đến\s+([\d.,]+)\s*đ', full_text, re.I)
+    if not m_bank and raw_html:
+        m_bank = re.search(r'hoàn\s+(?:ngay\s+)?đến\s+([\d.,]+)\s*đ', raw_html, re.I)
     if m_bank:
         val = int(m_bank.group(1).replace('.', '').replace(',', ''))
         res["Bank_Cashback_VND"] = val
         res["Affordability_Programs"].append(f"Hoàn tiền mở thẻ {val:,}đ")
 
     # 5. Trả chậm / Trả góp 0%
-    if re.search(r'trả (?:chậm|góp)\s+0%', full_text, re.I):
+    if re.search(r'trả (?:chậm|góp)\s+0%', full_text, re.I) or (raw_html and re.search(r'trả (?:chậm|góp)\s+0%', raw_html, re.I)):
         res["Installment_0_Percent"] = True
         res["Affordability_Programs"].append("Trả chậm 0% lãi suất")
 
@@ -144,6 +159,7 @@ def parse_affordability(soup: BeautifulSoup, price: int) -> Dict[str, Any]:
     return res
 
 
+
 def extract_product_data(product_url: str, category: str) -> List[Dict[str, Any]]:
     """Bóc tách thông tin chi tiết và tất cả biến thể của sản phẩm từ JSON-LD & DOM."""
     try:
@@ -152,10 +168,20 @@ def extract_product_data(product_url: str, category: str) -> List[Dict[str, Any]
             return []
 
         soup = BeautifulSoup(resp.text, 'html.parser')
+        raw_html = resp.text
         h1 = soup.find('h1')
         main_title = h1.get_text(strip=True) if h1 else ""
         if not main_title:
             return []
+
+        # Kiểm tra trạng thái ngừng kinh doanh / không còn kinh doanh
+        is_discontinued = bool(
+            re.search(r'pageStatus[\'\"]?\s*:\s*[\'\"]Không kinh doanh[\'\"]', raw_html, re.I) or
+            re.search(r'item_web_status[\'\"]?\s*:\s*[\'\"]Ngừng kinh doanh[\'\"]', raw_html, re.I) or
+            ('sản phẩm ngừng kinh doanh' in raw_html.lower()) or
+            ('ngừng kinh doanh' in raw_html.lower()) or
+            ('không kinh doanh' in raw_html.lower() and 'hết hàng tạm thời' in raw_html.lower())
+        )
 
         description = ""
         rating_score = None
@@ -190,7 +216,7 @@ def extract_product_data(product_url: str, category: str) -> List[Dict[str, Any]
                             price = int(float(price_raw)) if price_raw else 0
                             
                             storage = parse_storage_and_specs(name, category)
-                            affordability = parse_affordability(soup, price)
+                            affordability = parse_affordability(soup, price, raw_html)
 
                             variants.append({
                                 "Product_Name": name,
@@ -210,6 +236,7 @@ def extract_product_data(product_url: str, category: str) -> List[Dict[str, Any]
                                 "Rating_Score": rating_score,
                                 "Rating_Count": rating_count,
                                 "Promotions": promotions[:5],
+                                "Is_Discontinued": is_discontinued,
                                 "Link": product_url
                             })
                         break
@@ -227,7 +254,7 @@ def extract_product_data(product_url: str, category: str) -> List[Dict[str, Any]
                         price = int(float(price_raw)) if price_raw else 0
                         storage = parse_storage_and_specs(name, category)
                         description = data.get('description', '')
-                        affordability = parse_affordability(soup, price)
+                        affordability = parse_affordability(soup, price, raw_html)
 
                         variants.append({
                             "Product_Name": name,
@@ -247,11 +274,13 @@ def extract_product_data(product_url: str, category: str) -> List[Dict[str, Any]
                             "Rating_Score": None,
                             "Rating_Count": None,
                             "Promotions": promotions[:5],
+                            "Is_Discontinued": is_discontinued,
                             "Link": product_url
                         })
                         break
                 except:
                     pass
+
 
         return variants
     except Exception:
@@ -291,8 +320,16 @@ def query_store_inventory_deep(sku: str) -> Dict[str, Any]:
         if resp.status_code == 200:
             res_data = resp.json()
             if res_data.get("code") == 0 and res_data.get("data"):
-                items = res_data["data"]
-                total = len(items)
+                data_obj = res_data["data"]
+                if isinstance(data_obj, dict):
+                    total = data_obj.get("total", 0)
+                    items = data_obj.get("storeList", [])
+                elif isinstance(data_obj, list):
+                    total = len(data_obj)
+                    items = data_obj
+                else:
+                    total = 0
+                    items = []
 
                 store_hcm = 0
                 store_hn = 0
@@ -459,7 +496,7 @@ def run_pipeline(output_csv: str = None, output_json: str = None, sync_raw: bool
         "Direct_Discount_VND", "Trade_In_Subsidy_VND", "Min_Monthly_Payment_12M",
         "Installment_0_Percent", "Affordability_Effective_Price",
         "Ton_Kho", "Store_Count", "Store_HCM", "Store_Hanoi",
-        "Top_Provinces_Stock", "Date", "Link"
+        "Top_Provinces_Stock", "Is_Discontinued", "Date", "Link"
     ]
     with open(output_csv, mode="w", encoding="utf-8-sig", newline="") as cf:
         writer = csv.DictWriter(cf, fieldnames=csv_fields, delimiter=";")

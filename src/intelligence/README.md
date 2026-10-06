@@ -44,35 +44,39 @@ Hệ thống được cấu hình chạy tự động **3 lần / ngày** (`08:3
 graph TD
     A[LaunchAgent / Cron Scheduler] -->|08:30, 14:00, 22:30| B[crawler.py]
     B -->|Tải 140 URLs + API 3000 shop| C[data/hybrid/tgdd_inventory_deep_*.json]
-    C -->|Trigger tự động| D[daily_inference.py]
-    D -->|Nạp Model Artifacts| E[feature_engineering.py]
-    E --> F[Scoring: Stockout Prob & Shelf Capacity]
-    F --> G[data/predictions/predictions_*.json]
-    F --> H[Cảnh báo Rủi ro & Deal hấp dẫn ra Terminal/Log]
+    C -->|Trigger tự động| D[trainer.py - Continuous Learning]
+    D -->|Cập nhật trọng số & Artifacts| E[feature_engineering.pkl & models]
+    E -->|Trigger tự động| F[daily_inference.py]
+    F -->|Dự báo Stockout & Lọc chỉ hàng Còn Kinh Doanh| G[data/predictions/predictions_*.json]
+    G --> H[Hiển thị Cảnh báo & Top Deal còn hàng ra Terminal / macOS Alert]
 ```
 
 ---
 
 ## 🚀 3. Hướng dẫn sử dụng CLI
 
-### 1. Quét dữ liệu mới:
+Hệ thống **hoàn toàn tự động 100%**, người dùng không cần phải gõ lệnh huấn luyện hay suy luận bằng tay. Tuy nhiên bạn vẫn có thể kích hoạt độc lập từng module:
+
+### 1. Kích hoạt toàn bộ chu trình Quét + Retrain + Dự báo:
+```bash
+./scripts/automation/run_hybrid_tgdd.sh
+```
+
+### 2. Quét dữ liệu thủ công:
 ```bash
 python3 -m src.intelligence.pipeline.crawler --sync-raw
 ```
 
-### 2. Huấn luyện lại mô hình (Weekly Retraining):
+### 3. Huấn luyện lại mô hình độc lập (Retraining):
 ```bash
 python3 -m src.intelligence.models.trainer
 ```
 
-### 3. Chạy dự báo AI ngay lập tức:
+### 4. Chạy dự báo AI trên dữ liệu hiện có:
 ```bash
 python3 -m src.intelligence.inference.daily_inference
 ```
 
-### 4. Chạy toàn bộ chu trình Quét + Dự báo:
-```bash
-./scripts/automation/run_hybrid_tgdd.sh
 ```
 
 ---
