@@ -32,17 +32,21 @@ def analyze(csv_path: str):
     print("\n" + "-" * 70)
     print("2. TOP 10 SẢN PHẨM CÒN TỒN KHO NHIỀU NHẤT TRÊN TOÀN QUỐC")
     print("-" * 70)
+    price_col = 'Gia_Khuyen_Mai' if 'Gia_Khuyen_Mai' in df.columns else 'Price'
     top_stock = df.sort_values(by='Store_Count', ascending=False).head(10)
     for idx, (_, r) in enumerate(top_stock.iterrows(), 1):
-        print(f"  {idx:2d}. {r['Product_Name']} | Màu: {r['Color']:<16} | Giá: {r['Price']:,} đ")
-        print(f"      🏪 {r['Store_Count']} shop toàn quốc (TP.HCM: {r['Store_HCM']}, Hà Nội: {r['Store_Hanoi']})")
+        price_val = r.get(price_col, 0)
+        price_str = f"{int(price_val):,} đ" if pd.notnull(price_val) and price_val > 0 else "N/A"
+        print(f"  {idx:2d}. {r['Product_Name']} | Màu: {r['Color']:<16} | Giá: {price_str}")
+        print(f"      🏪 {r['Store_Count']} shop toàn quốc (TP.HCM: {r.get('Store_HCM', 0)}, Hà Nội: {r.get('Store_Hanoi', 0)})")
 
     print("\n" + "-" * 70)
     print("3. CÁC DÒNG MÁY ĐANG HẾT HÀNG TẠI TẤT CẢ SIÊU THỊ (Cháy hàng / Chưa mở bán)")
     print("-" * 70)
     out_of_stock = df[df['Store_Count'] == 0].drop_duplicates(subset=['Product_Name']).head(8)
     for idx, (_, r) in enumerate(out_of_stock.iterrows(), 1):
-        price_str = f"{r['Price']:,} đ" if r['Price'] > 0 else "Chưa có giá chính thức"
+        price_val = r.get(price_col, 0)
+        price_str = f"{int(price_val):,} đ" if pd.notnull(price_val) and price_val > 0 else "Chưa có giá chính thức"
         print(f"  ❌ {r['Product_Name']} ({r['Category']}) | Giá: {price_str}")
 
 if __name__ == "__main__":
