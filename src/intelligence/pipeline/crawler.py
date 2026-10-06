@@ -1,82 +1,80 @@
-#!/usr/bin/env python3
 """
-TGDD Hybrid Intelligence & Deep Inventory Pipeline
-===================================================
-Định dạng kép (Dual Storage):
-1. CSV (Flat View): Dành cho bảng biểu, so sánh giá, nạp vào pipeline báo cáo hàng ngày (normalize.py / generate_report.py)
-2. JSON (Deep Intelligence Snapshot): Dành cho nghiên cứu sâu, phân tích chuỗi cung ứng,
-   bản đồ nhiệt tồn kho chi tiết tới từng cửa hàng, từng quận/huyện, máy mẫu trải nghiệm (sampleQuantity).
+Core Hybrid Crawler & Inventory Scanner for Thế Giới Di Động (Apple Ecosystem)
+Tích hợp: Category Discovery + Schema.org JSON-LD + Affordability & Trade-in + Store-level API.
 """
 
 import os
 import sys
 import re
-import csv
 import json
+import csv
 import time
 import argparse
 from datetime import datetime
 from concurrent.futures import ThreadPoolExecutor, as_completed
-from typing import Dict, List, Any, Tuple, Set
+from typing import Dict, List, Any, Set, Tuple
+
 import requests
 from bs4 import BeautifulSoup
 
-HEADERS = {
-    'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
-    'Origin': 'https://www.thegioididong.com',
-    'Referer': 'https://www.thegioididong.com/',
-    'Content-Type': 'application/json'
-}
-
-STORE_API_URL = "https://api.thegioididong.com/gw/bus-tgdd-tmdt/api/Store/GetStoreByDeliveryPolicy"
-
-CATEGORIES = {
-    'iPhone': 'https://www.thegioididong.com/dtdd-apple-iphone',
-    'MacBook': 'https://www.thegioididong.com/laptop-apple-macbook',
-    'Apple Watch': 'https://www.thegioididong.com/dong-ho-thong-minh-apple',
-    'iPad': 'https://www.thegioididong.com/may-tinh-bang-apple-ipad',
-    'AirPods': 'https://www.thegioididong.com/tai-nghe-apple'
-}
+from ..config import (
+    CATEGORIES,
+    STORE_API_URL,
+    HEADERS,
+    HYBRID_DATA_DIR,
+    PROJECT_ROOT
+)
 
 
-def parse_storage_and_specs(name: str, category: str) -> str:
-    """Bóc tách chính xác dung lượng (SSD / Storage) hoặc kích thước (Watch)."""
-    if category == 'MacBook':
-        ram_ssd = re.search(r'(\d+GB\/\d+(?:GB|TB))', name, re.IGNORECASE)
-        if ram_ssd:
-            return ram_ssd.group(1).upper()
-        ssd = re.search(r'\b(\d+(?:GB|TB))\b', name, re.IGNORECASE)
-        return ssd.group(1).upper() if ssd else "Standard"
+def parse_storage_and_specs(product_name: str, category: str) -> str:
+    """Trích xuất cấu hình bộ nhớ / RAM / kích thước viền phù hợp theo danh mục."""
+    name = product_name.strip()
 
-    elif category == 'Apple Watch':
-        size = re.search(r'(\d+mm)', name, re.IGNORECASE)
-        return size.group(1).lower() if size else "Standard"
+    if category == "MacBook":
+        match = re.search(r'(\d+GB\s*/\s*\d+(?:GB|TB)(?:/\w+)?)', name, re.IGNORECASE)
+        if match:
+            return match.group(1).replace(" ", "")
+        m_ram = re.search(r'(\d+GB)', name, re.IGNORECASE)
+        m_ssd = re.search(r'(\d+(?:GB|TB))', name, re.IGNORECASE)
+        if m_ram and m_ssd:
+            return f"{m_ram.group(1)}/{m_ssd.group(1)}"
 
-    else:
-        m = re.search(r'\b(\d+(?:GB|TB))\b', name, re.IGNORECASE)
-        return m.group(1).upper() if m else "Standard"
+    elif category == "Apple Watch":
+        match = re.search(r'(\d{2}mm)', name, re.IGNORECASE)
+        if match:
+            return match.group(1)
+
+    match_cap = re.search(r'\b(\d+\s*(?:GB|TB))\b', name, re.IGNORECASE)
+    if match_cap:
+        return match_cap.group(1).replace(" ", "")
+
+    return "Standard"
 
 
 def discover_category_links(cat_name: str, cat_url: str) -> List[str]:
-    """Quét trang danh mục để lấy tất cả URL sản phẩm Apple đang kinh doanh."""
+    """Quét trang danh mục để tìm toàn bộ URL sản phẩm đang kinh doanh."""
     try:
-        resp = requests.get(cat_url, headers=HEADERS, timeout=15)
+        resp = requests.get(cat_url, headers=HEADERS, timeout=10)
         if resp.status_code != 200:
-            print(f"⚠️ Không tải được danh mục {cat_name}: HTTP {resp.status_code}")
             return []
-        
+
         soup = BeautifulSoup(resp.text, 'html.parser')
-        links = set()
+        urls: Set[str] = set()
+
         for a in soup.find_all('a', href=True):
-            href = a['href'].split('?')[0].split('#')[0]
-            if not href.startswith('http'):
-                href = 'https://www.thegioididong.com' + href
+            href = a['href']
+            if href.startswith('/'):
+                href = f"https://www.thegioididong.com{href}"
             
-            if any(p in href for p in ['/dtdd/', '/laptop/', '/dong-ho-thong-minh/', '/may-tinh-bang/', '/tai-nghe/']):
-                if cat_name == 'AirPods' and not any(k in href.lower() for k in ['airpod', 'apple', 'earpod']):
-                    continue
-                links.add(href)
-        return sorted(list(links))
+            if href.startswith('https://www.thegioididong.com/'):
+                clean_url = href.split('?')[0].split('#')[0]
+                if any(clean_url.startswith(f"https://www.thegioididong.com/{prefix}/") for prefix in [
+                    "dtdd", "laptop", "dong-ho-thong-minh", "may-tinh-bang", "tai-nghe"
+                ]):
+                    if not any(x in clean_url for x in ["/tin-tuc", "/hoi-dap", "/game-app", "/so-sanh"]):
+                        urls.add(clean_url)
+
+        return sorted(list(urls))
     except Exception as e:
         print(f"❌ Lỗi khi quét {cat_name}: {e}")
         return []
@@ -159,13 +157,11 @@ def extract_product_data(product_url: str, category: str) -> List[Dict[str, Any]
         if not main_title:
             return []
 
-        # Trích xuất mô tả & rating từ schema nếu có
         description = ""
         rating_score = None
         rating_count = None
         promotions = []
 
-        # Tìm các ưu đãi / khuyến mãi
         for promo_el in soup.find_all(['div', 'li', 'p']):
             txt = promo_el.get_text(strip=True)
             if any(k in txt.lower() for k in ['thu cũ đổi mới', 'trả chậm 0%', 'giảm thêm', 'phiếu mua hàng', 'quà tặng']) and 10 < len(txt) < 120:
@@ -176,7 +172,7 @@ def extract_product_data(product_url: str, category: str) -> List[Dict[str, Any]
         for s in soup.find_all('script'):
             txt = s.get_text().strip()
             
-            # 1. Tìm ProductGroup (Đa biến thể màu/dung lượng)
+            # 1. ProductGroup (Đa biến thể)
             if 'ProductGroup' in txt and 'hasVariant' in txt:
                 try:
                     data = json.loads(txt)
@@ -220,7 +216,7 @@ def extract_product_data(product_url: str, category: str) -> List[Dict[str, Any]
                 except:
                     pass
             
-            # 2. Fallback nếu trang chỉ có 1 biến thể duy nhất (Product)
+            # 2. Single Product
             elif '\"@type\":\"Product\"' in txt or '\"@type\": \"Product\"' in txt:
                 try:
                     data = json.loads(txt)
@@ -263,16 +259,7 @@ def extract_product_data(product_url: str, category: str) -> List[Dict[str, Any]
 
 
 def query_store_inventory_deep(sku: str) -> Dict[str, Any]:
-    """
-    Truy vấn thông tin tồn kho chi tiết tới từng cửa hàng:
-    Trả về dữ liệu cấu trúc sâu gồm:
-    - total_stores: Tổng số shop toàn quốc
-    - store_hcm: Số shop tại TP.HCM
-    - store_hn: Số shop tại Hà Nội
-    - province_breakdown: Thống kê số lượng theo từng tỉnh/thành (63 tỉnh)
-    - sample_quantity_total: Tổng số máy mẫu trưng bày trên bàn
-    - store_list: Danh sách chi tiết 100% các cửa hàng (địa chỉ, quận, máy mẫu, google map)
-    """
+    """Truy vấn tồn kho chi tiết tới từng cửa hàng và máy mẫu trưng bày."""
     if not sku:
         return {
             "total_stores": 0,
@@ -286,59 +273,68 @@ def query_store_inventory_deep(sku: str) -> Dict[str, Any]:
 
     payload = {
         "productCode": str(sku),
-        "provinceId": 0,  # Toàn quốc
+        "provinceId": 0,
         "wardId": 0,
+        "isDelivery": False,
         "haveStock": True,
         "haveStore": True,
         "siteId": 2
     }
+
     try:
-        r = requests.post(STORE_API_URL, json=payload, headers=HEADERS, timeout=8)
-        if r.status_code == 200:
-            res = r.json().get('data', {})
-            total = res.get('total', 0)
-            raw_stores = res.get('storeList', [])
-            
-            hcm = 0
-            hn = 0
-            provinces = {}
-            sample_total = 0
-            detailed_stores = []
+        resp = requests.post(
+            STORE_API_URL,
+            headers={**HEADERS, "Content-Type": "application/json"},
+            json=payload,
+            timeout=8
+        )
+        if resp.status_code == 200:
+            res_data = resp.json()
+            if res_data.get("code") == 0 and res_data.get("data"):
+                items = res_data["data"]
+                total = len(items)
 
-            for s in raw_stores:
-                p_name = s.get('provinceName', 'Khác')
-                if 'Hồ Chí Minh' in p_name:
-                    hcm += 1
-                elif 'Hà Nội' in p_name:
-                    hn += 1
-                provinces[p_name] = provinces.get(p_name, 0) + 1
+                store_hcm = 0
+                store_hn = 0
+                sample_qty_total = 0
+                province_counts: Dict[str, int] = {}
+                store_list: List[Dict[str, Any]] = []
 
-                sample_qty = s.get('sampleQuantity', 0)
-                sample_total += sample_qty
+                for s in items:
+                    p_name = s.get("provinceName", "Khác")
+                    province_counts[p_name] = province_counts.get(p_name, 0) + 1
+                    
+                    if "Hồ Chí Minh" in p_name:
+                        store_hcm += 1
+                    elif "Hà Nội" in p_name:
+                        store_hn += 1
 
-                detailed_stores.append({
-                    "store_id": s.get('storeID'),
-                    "store_name": s.get('additionalInfoValue'),
-                    "address": s.get('webAddress'),
-                    "ward": s.get('wardName'),
-                    "province": p_name,
-                    "is_in_stock": s.get('isStockAvailable', True),
-                    "sample_display_quantity": sample_qty,
-                    "google_map_link": s.get('googleMapLink')
-                })
-            
-            top_prov = sorted(provinces.items(), key=lambda x: x[1], reverse=True)[:3]
-            top_str = ", ".join([f"{k}: {v}" for k, v in top_prov])
+                    sample_qty = s.get("sampleDisplayQuantity", 0) or 0
+                    sample_qty_total += sample_qty
 
-            return {
-                "total_stores": total,
-                "store_hcm": hcm,
-                "store_hn": hn,
-                "top_provinces_str": top_str,
-                "province_breakdown": provinces,
-                "sample_quantity_total": sample_total,
-                "store_list": detailed_stores
-            }
+                    store_list.append({
+                        "store_id": s.get("storeId"),
+                        "store_name": s.get("storeName"),
+                        "address": s.get("address"),
+                        "ward": s.get("wardName"),
+                        "province": p_name,
+                        "is_in_stock": s.get("isInStock", False),
+                        "sample_display_quantity": sample_qty,
+                        "google_map_link": s.get("googleMapLink")
+                    })
+
+                top_sorted = sorted(province_counts.items(), key=lambda x: x[1], reverse=True)[:3]
+                top_str = ", ".join([f"{k}: {v}" for k, v in top_sorted])
+
+                return {
+                    "total_stores": total,
+                    "store_hcm": store_hcm,
+                    "store_hn": store_hn,
+                    "top_provinces_str": top_str,
+                    "province_breakdown": province_counts,
+                    "sample_quantity_total": sample_qty_total,
+                    "store_list": store_list
+                }
     except Exception:
         pass
 
@@ -353,19 +349,18 @@ def query_store_inventory_deep(sku: str) -> Dict[str, Any]:
     }
 
 
-def process_variant_inventory(item: Dict[str, Any]) -> Dict[str, Any]:
-    """Bổ sung dữ liệu tồn kho sâu vào từng biến thể."""
-    sku = item.get("SKU", "")
+def process_variant_inventory(variant: Dict[str, Any]) -> Dict[str, Any]:
+    sku = variant.get("SKU", "")
     inv = query_store_inventory_deep(sku)
-    
-    # Dành cho CSV
-    item["Ton_Kho"] = "Yes" if inv["total_stores"] > 0 else "No"
-    item["Store_Count"] = inv["total_stores"]
+
+    item = dict(variant)
+    count = inv["total_stores"]
+    item["Ton_Kho"] = "Yes" if count > 0 else "No"
+    item["Store_Count"] = count
     item["Store_HCM"] = inv["store_hcm"]
     item["Store_Hanoi"] = inv["store_hn"]
     item["Top_Provinces_Stock"] = inv["top_provinces_str"]
 
-    # Dành riêng cho JSON (Dữ liệu sâu)
     item["Sample_Display_Total"] = inv["sample_quantity_total"]
     item["Province_Breakdown"] = inv["province_breakdown"]
     item["Detailed_Stores"] = inv["store_list"]
@@ -373,25 +368,23 @@ def process_variant_inventory(item: Dict[str, Any]) -> Dict[str, Any]:
     return item
 
 
-def run_pipeline(output_csv: str = None, output_json: str = None, sync_raw: bool = False, max_workers: int = 12):
+def run_pipeline(output_csv: str = None, output_json: str = None, sync_raw: bool = False, max_workers: int = 12) -> Tuple[str, str]:
     start_time = time.time()
     now = datetime.now()
     today_str = now.strftime("%Y-%m-%d")
     timestamp_str = now.strftime("%Y-%m-%d_%H%M")
     
-    hybrid_dir = os.path.join(os.path.dirname(__file__), f"../../data/hybrid")
-    os.makedirs(hybrid_dir, exist_ok=True)
+    os.makedirs(HYBRID_DATA_DIR, exist_ok=True)
 
     if not output_csv:
-        output_csv = os.path.join(hybrid_dir, f"tgdd_inventory_{timestamp_str}.csv")
+        output_csv = os.path.join(HYBRID_DATA_DIR, f"tgdd_inventory_{timestamp_str}.csv")
     if not output_json:
-        output_json = os.path.join(hybrid_dir, f"tgdd_inventory_deep_{timestamp_str}.json")
+        output_json = os.path.join(HYBRID_DATA_DIR, f"tgdd_inventory_deep_{timestamp_str}.json")
 
     print("=" * 75)
-    print(f"🚀 KHỞI ĐỘNG HYBRID INTELLIGENCE PIPELINE (DUAL STORAGE) - {timestamp_str}")
+    print(f"🚀 KHỞI ĐỘNG RETAIL INTELLIGENCE PIPELINE - {timestamp_str}")
     print("=" * 75)
 
-    # 1. BƯỚC 1: DISCOVERY TRÊN 5 DANH MỤC
     print("\n[BƯỚC 1] Tự động quét 5 danh mục Apple trên Thế Giới Di Động...")
     all_category_urls = {}
     total_discovered_urls = 0
@@ -404,8 +397,7 @@ def run_pipeline(output_csv: str = None, output_json: str = None, sync_raw: bool
 
     print(f"✨ Tổng cộng {total_discovered_urls} URLs sản phẩm đang niêm yết.")
 
-    # 2. BƯỚC 2: BÓC TÁCH BIẾN THỂ & THÔNG TIN SẢN PHẨM
-    print(f"\n[BƯỚC 2] Bóc tách biến thể (Model, Dung lượng, Màu sắc, SKU) với {max_workers} luồng...")
+    print(f"\n[BƯỚC 2] Bóc tách biến thể & Affordability với {max_workers} luồng...")
     raw_variants = []
     crawl_tasks = []
     
@@ -419,7 +411,6 @@ def run_pipeline(output_csv: str = None, output_json: str = None, sync_raw: bool
             if res:
                 raw_variants.extend(res)
 
-    # Khử trùng lặp SKU
     seen_skus: Set[str] = set()
     unique_variants = []
     for v in raw_variants:
@@ -432,8 +423,7 @@ def run_pipeline(output_csv: str = None, output_json: str = None, sync_raw: bool
 
     print(f"✅ Đã trích xuất {len(raw_variants)} biến thể thô -> Sau khi khử trùng lặp SKU: {len(unique_variants)} biến thể duy nhất.")
 
-    # 3. BƯỚC 3: QUÉT TỒN KHO CHI TIẾT TỚI TỪNG SIÊU THỊ
-    print(f"\n[BƯỚC 3] Quét tồn kho chi tiết (Danh sách shop + máy trưng bày) cho {len(unique_variants)} biến thể...")
+    print(f"\n[BƯỚC 3] Quét tồn kho chi tiết cho {len(unique_variants)} biến thể...")
     processed_records = []
     with ThreadPoolExecutor(max_workers=max_workers) as executor:
         inv_tasks = [executor.submit(process_variant_inventory, v) for v in unique_variants]
@@ -442,12 +432,10 @@ def run_pipeline(output_csv: str = None, output_json: str = None, sync_raw: bool
             if idx % 50 == 0 or idx == len(unique_variants):
                 print(f"  ⚡ Tiến độ: {idx}/{len(unique_variants)} ({idx*100//len(unique_variants)}%)")
 
-    # Sắp xếp
     processed_records.sort(key=lambda x: (x.get("Category", ""), x.get("Product_Name", ""), x.get("Gia_Khuyen_Mai", 0)))
 
-    # 4. BƯỚC 4: XUẤT ĐỊNH DẠNG JSON (DEEP RAW INTELLIGENCE)
+    # Ghi JSON
     print(f"\n[BƯỚC 4.1] Đang ghi dữ liệu phân tích sâu vào file JSON: {output_json}")
-    os.makedirs(os.path.dirname(os.path.abspath(output_json)), exist_ok=True)
     json_payload = {
         "metadata": {
             "source": "thegioididong.com",
@@ -463,7 +451,7 @@ def run_pipeline(output_csv: str = None, output_json: str = None, sync_raw: bool
     with open(output_json, mode="w", encoding="utf-8") as jf:
         json.dump(json_payload, jf, ensure_ascii=False, indent=2)
 
-    # 5. BƯỚC 5: XUẤT ĐỊNH DẠNG CSV (FLAT TABULAR VIEW)
+    # Ghi CSV
     print(f"[BƯỚC 4.2] Đang ghi dữ liệu bảng phẳng vào file CSV: {output_csv}")
     csv_fields = [
         "Product_Name", "Category", "Storage", "Color", "SKU",
@@ -473,7 +461,6 @@ def run_pipeline(output_csv: str = None, output_json: str = None, sync_raw: bool
         "Ton_Kho", "Store_Count", "Store_HCM", "Store_Hanoi",
         "Top_Provinces_Stock", "Date", "Link"
     ]
-    os.makedirs(os.path.dirname(os.path.abspath(output_csv)), exist_ok=True)
     with open(output_csv, mode="w", encoding="utf-8-sig", newline="") as cf:
         writer = csv.DictWriter(cf, fieldnames=csv_fields, delimiter=";")
         writer.writeheader()
@@ -481,13 +468,13 @@ def run_pipeline(output_csv: str = None, output_json: str = None, sync_raw: bool
             r["Date"] = today_str
             writer.writerow({k: r.get(k, "") for k in csv_fields})
 
-    # Tự động cập nhật bản 'latest' và 'daily' để hỗ trợ tương thích ngược
+    # Cập nhật alias
     try:
         import shutil
-        latest_json = os.path.join(hybrid_dir, "tgdd_inventory_deep_latest.json")
-        daily_json = os.path.join(hybrid_dir, f"tgdd_inventory_deep_{today_str}.json")
-        latest_csv = os.path.join(hybrid_dir, "tgdd_inventory_latest.csv")
-        daily_csv = os.path.join(hybrid_dir, f"tgdd_inventory_{today_str}.csv")
+        latest_json = os.path.join(HYBRID_DATA_DIR, "tgdd_inventory_deep_latest.json")
+        daily_json = os.path.join(HYBRID_DATA_DIR, f"tgdd_inventory_deep_{today_str}.json")
+        latest_csv = os.path.join(HYBRID_DATA_DIR, "tgdd_inventory_latest.csv")
+        daily_csv = os.path.join(HYBRID_DATA_DIR, f"tgdd_inventory_{today_str}.csv")
         
         if os.path.abspath(output_json) != os.path.abspath(latest_json):
             shutil.copyfile(output_json, latest_json)
@@ -500,9 +487,9 @@ def run_pipeline(output_csv: str = None, output_json: str = None, sync_raw: bool
     except Exception as e:
         print(f"⚠️ Lưu ý sao chép latest/daily alias: {e}")
 
-    # 6. ĐỒNG BỘ SANG DATA RAW CHO PIPELINE BÁO CÁO CŨ (NẾU CÓ CỜ --sync-raw)
+    # Đồng bộ raw data
     if sync_raw:
-        raw_dir = os.path.join(os.path.dirname(__file__), f"../../data/raw/{today_str}")
+        raw_dir = os.path.join(PROJECT_ROOT, f"data/raw/{today_str}")
         os.makedirs(raw_dir, exist_ok=True)
         raw_csv_path = os.path.join(raw_dir, f"2-mw-{today_str}.csv")
         raw_fields = [

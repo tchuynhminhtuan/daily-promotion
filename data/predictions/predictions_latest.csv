@@ -1,0 +1,210 @@
+﻿Product_Name;Category;Storage;Color;SKU;Gia_Khuyen_Mai;Actual_Store_Count;Predicted_Store_Count;Stockout_Probability;Risk_Level;Direct_Discount_VND;Trade_In_Subsidy_VND;Min_Monthly_Payment_12M;Affordability_Benefit_Pct;Link
+AirPods 4 (chống ồn);AirPods;Standard;Default;329158;4390000;0;0;0.998;OUT_OF_STOCK;0;0;365833;0.0;https://www.thegioididong.com/tai-nghe/airpods-4-chong-on-mxp93
+AirPods 4 MXP63;AirPods;Standard;Default;329154;3390000;0;0;0.998;OUT_OF_STOCK;0;0;282500;0.0;https://www.thegioididong.com/tai-nghe/airpods-4-mxp63
+AirPods 5;AirPods;Standard;Default;371203;3790000;0;0;0.998;OUT_OF_STOCK;0;0;315833;0.0;https://www.thegioididong.com/tai-nghe/airpods-5
+AirPods 5 sạc không dây;AirPods;Standard;Default;371206;4290000;0;0;0.998;OUT_OF_STOCK;0;0;357500;0.0;https://www.thegioididong.com/tai-nghe/airpods-5-sac-khong-day
+AirPods Max 2;AirPods;Standard;Default;0166400000036;14490000;7;8;0.061;WARNING;0;0;1207500;0.0;https://www.thegioididong.com/tai-nghe/airpods-max-2
+AirPods Max 2;AirPods;Standard;Default;0166400000037;14490000;3;8;0.061;CRITICAL_RISK;0;0;1207500;0.0;https://www.thegioididong.com/tai-nghe/airpods-max-2
+AirPods Max 2;AirPods;Standard;Default;0166400000034;14490000;11;8;0.061;WARNING;0;0;1207500;0.0;https://www.thegioididong.com/tai-nghe/airpods-max-2
+AirPods Max 2;AirPods;Standard;Default;0166400000035;14490000;2;8;0.061;CRITICAL_RISK;0;0;1207500;0.0;https://www.thegioididong.com/tai-nghe/airpods-max-2
+AirPods Max 2;AirPods;Standard;Default;0166400000033;14490000;12;8;0.061;WARNING;0;0;1207500;0.0;https://www.thegioididong.com/tai-nghe/airpods-max-2
+EarPods jack cắm USB-C;AirPods;Standard;Default;315072;540000;0;0;0.999;OUT_OF_STOCK;0;0;45000;0.0;https://www.thegioididong.com/tai-nghe/tai-nghe-co-day-apple-mtjy3
+Tai nghe Bluetooth AirPods Pro Gen 2 MagSafe Charge (USB-C) Apple MTJV3;AirPods;Standard;Default;315014;5190000;0;0;0.999;OUT_OF_STOCK;0;0;432500;0.0;https://www.thegioididong.com/tai-nghe/tai-nghe-bluetooth-airpods-pro-gen-2-magsafe-charge-usb-c-apple-mtjv3
+Tai nghe Bluetooth Apple AirPods Pro 3 Trắng MFHP4;AirPods;Standard;Default;344776;6490000;0;0;0.998;OUT_OF_STOCK;0;0;540833;0.0;https://www.thegioididong.com/tai-nghe/tai-nghe-bluetooth-apple-airpods-pro-3-trang-mfhp4
+Tai nghe Có Dây Apple MMTN2;AirPods;Standard;Default;88053;540000;0;0;0.998;OUT_OF_STOCK;0;0;45000;0.0;https://www.thegioididong.com/tai-nghe/tai-nghe-earpods-cong-lightning-apple-mmtn2
+Apple Watch SE 3 GPS + Cellular 40mm viền nhôm dây thể thao;Apple Watch;40mm;Trắng Starlight;0232391002717;8390000;3;10;0.22;CRITICAL_RISK;0;0;699167;0.0;https://www.thegioididong.com/dong-ho-thong-minh/apple-watch-se-3-gps-cellular-40mm-vien-nhom-day-the-thao
+Apple Watch SE 3 GPS + Cellular 40mm viền nhôm dây thể thao;Apple Watch;40mm;Xanh đen;0232391002718;8390000;0;9;0.592;OUT_OF_STOCK;0;0;699167;0.0;https://www.thegioididong.com/dong-ho-thong-minh/apple-watch-se-3-gps-cellular-40mm-vien-nhom-day-the-thao
+Apple Watch SE 3 GPS + Cellular 40mm viền nhôm dây thể thao 2026;Apple Watch;40mm;Vàng đồng;0232391002999;8490000;1;4;0.527;CRITICAL_RISK;0;0;707500;0.0;https://www.thegioididong.com/dong-ho-thong-minh/apple-watch-se-3-gps-cellular-40mm-vien-nhom-day-the-thao-2026
+Apple Watch SE 3 GPS + Cellular 44mm viền nhôm dây thể thao 2026;Apple Watch;44mm;Ghi đen;0232391003002;9350000;1;3;0.274;CRITICAL_RISK;0;0;779167;0.0;https://www.thegioididong.com/dong-ho-thong-minh/apple-watch-se-3-gps-cellular-44mm-vien-nhom-day-the-thao-2026
+Apple Watch SE 3 GPS 40mm viền nhôm dây thể thao;Apple Watch;40mm;Default;344767;6790000;0;1;0.985;OUT_OF_STOCK;0;300000;565833;4.4;https://www.thegioididong.com/dong-ho-thong-minh/apple-watch-se-3-40mm-vien-nhom-day-the-thao
+Apple Watch SE 3 GPS 40mm viền nhôm dây thể thao 2026;Apple Watch;40mm;Default;371332;6990000;0;1;0.985;OUT_OF_STOCK;0;300000;582500;4.3;https://www.thegioididong.com/dong-ho-thong-minh/apple-watch-se-3-gps-40mm-vien-nhom-day-the-thao-2026
+Apple Watch SE 3 GPS 44mm viền nhôm dây thể thao;Apple Watch;44mm;Default;344768;7690000;0;1;0.96;OUT_OF_STOCK;0;300000;640833;3.9;https://www.thegioididong.com/dong-ho-thong-minh/apple-watch-se-3-44mm-vien-nhom-day-the-thao
+Apple Watch SE 3 GPS 44mm viền nhôm dây thể thao 2026;Apple Watch;44mm;Default;371335;7850000;0;1;0.929;OUT_OF_STOCK;0;300000;654167;3.8;https://www.thegioididong.com/dong-ho-thong-minh/apple-watch-se-3-gps-44mm-vien-nhom-day-the-thao-2026
+Apple Watch Series 11 GPS + Cellular 42mm viền Titanium dây Milan;Apple Watch;42mm;Titan tự nhiên;0232391002734;21790000;2;9;0.027;CRITICAL_RISK;0;0;1815833;0.0;https://www.thegioididong.com/dong-ho-thong-minh/apple-watch-series-11-gps-cellular-42mm-vien-titanium-day-milan
+Apple Watch Series 11 GPS + Cellular 42mm viền Titanium dây Milan;Apple Watch;42mm;Titan vàng;0232391002738;21790000;1;4;0.026;CRITICAL_RISK;0;0;1815833;0.0;https://www.thegioididong.com/dong-ho-thong-minh/apple-watch-series-11-gps-cellular-42mm-vien-titanium-day-milan
+Apple Watch Series 11 GPS + Cellular 42mm viền Titanium dây thể thao;Apple Watch;42mm;Default;344758;19490000;0;0;0.908;OUT_OF_STOCK;0;0;1624167;0.0;https://www.thegioididong.com/dong-ho-thong-minh/apple-watch-series-11-gps-cellular-42m-vien-titanium-day-the-thao
+Apple Watch Series 11 GPS + Cellular 46mm viền Titanium dây Milan;Apple Watch;46mm;Titan xám;0232391002746;23590000;7;8;0.024;WARNING;0;0;1965833;0.0;https://www.thegioididong.com/dong-ho-thong-minh/apple-watch-series-11-gps-cellular-42mm-vien-titanium-day-milan
+Apple Watch Series 11 GPS + Cellular 46mm viền Titanium dây thể thao;Apple Watch;46mm;Default;344757;20990000;0;0;0.908;OUT_OF_STOCK;0;0;1749167;0.0;https://www.thegioididong.com/dong-ho-thong-minh/apple-watch-series-11-gps-cellular-46mm-vien-titanium-day-the-thao
+Apple Watch Series 11 GPS + Cellular 46mm viền nhôm dây thể thao;Apple Watch;46mm;Đen bóng;0232391002739;14990000;7;10;0.041;WARNING;0;0;1249167;0.0;https://www.thegioididong.com/dong-ho-thong-minh/apple-watch-series-11-gps-cellular-46mm-vien-nhom-day-the-thao
+Apple Watch Series 11 GPS 42mm viền nhôm dây thể thao;Apple Watch;42mm;Đen bóng;0232391002721;11290000;55;24;0.059;SAFE;0;0;940833;0.0;https://www.thegioididong.com/dong-ho-thong-minh/apple-watch-series-11-42mm-vien-nhom-day-the-thao
+Apple Watch Series 11 GPS 42mm viền nhôm dây thể thao;Apple Watch;42mm;Xám;0232391002722;11290000;1;24;0.059;CRITICAL_RISK;0;0;940833;0.0;https://www.thegioididong.com/dong-ho-thong-minh/apple-watch-series-11-42mm-vien-nhom-day-the-thao
+Apple Watch Series 11 GPS 46mm viền nhôm dây thể thao;Apple Watch;46mm;Đen bóng;0232391002725;11990000;2;28;0.022;CRITICAL_RISK;0;0;999167;0.0;https://www.thegioididong.com/dong-ho-thong-minh/apple-watch-series-11-42mm-vien-nhom-day-the-thao
+Apple Watch Series 11 GPS 46mm viền nhôm dây thể thao;Apple Watch;46mm;Xám;0232391002726;11990000;68;28;0.022;SAFE;0;0;999167;0.0;https://www.thegioididong.com/dong-ho-thong-minh/apple-watch-series-11-42mm-vien-nhom-day-the-thao
+Apple Watch Series 11 GPS 46mm viền nhôm dây thể thao;Apple Watch;46mm;Bạc;0232391002728;11990000;1;28;0.018;CRITICAL_RISK;0;0;999167;0.0;https://www.thegioididong.com/dong-ho-thong-minh/apple-watch-series-11-42mm-vien-nhom-day-the-thao
+Apple Watch Series 11 GPS 46mm viền nhôm dây thể thao;Apple Watch;46mm;Default;344751;11990000;0;0;0.939;OUT_OF_STOCK;0;500000;999167;4.2;https://www.thegioididong.com/dong-ho-thong-minh/apple-watch-series-11-46mm-vien-nhom-day-the-thao
+Apple Watch Series 12 GPS + Cellular 42mm viền Titanium dây silicone;Apple Watch;42mm;Default;371223;20990000;0;1;0.887;OUT_OF_STOCK;0;0;1749167;0.0;https://www.thegioididong.com/dong-ho-thong-minh/apple-watch-series-12-gps-cellular-42mm-vien-titanium-day-silicone
+Apple Watch Ultra 3 GPS + Cellular 49mm viền Titanium dây Milan;Apple Watch;49mm;Default;0232391002756;26490000;13;13;0.069;WARNING;0;0;2207500;0.0;https://www.thegioididong.com/dong-ho-thong-minh/apple-watch-ultra-3-gps-cellular-49mm-vien-titanium-day-milan
+Apple Watch Ultra 3 GPS + Cellular 49mm viền Titanium dây Ocean;Apple Watch;49mm;Default;344764;22490000;0;1;0.846;OUT_OF_STOCK;0;0;1874167;0.0;https://www.thegioididong.com/dong-ho-thong-minh/apple-watch-ultra-3-gps-cellular-49mm-vien-titanium-day-ocean
+Apple Watch Ultra 3 GPS + Cellular 49mm viền Titanium dây Trail;Apple Watch;49mm;Default;0232391002755;23490000;13;9;0.062;WARNING;0;0;1957500;0.0;https://www.thegioididong.com/dong-ho-thong-minh/apple-watch-ultra-3-gps-cellular-49mm-vien-titanium-day-trail
+Laptop MacBook Air 13 inch M2 16GB/256GB (Z16000051);MacBook;16GB/256GB;Default;289472;0;0;0;0.995;OUT_OF_STOCK;0;0;0;0.0;https://www.thegioididong.com/laptop/apple-macbook-air-m2-2022-16gb-256gb
+Laptop MacBook Air 13 inch M4 16GB/256GB;MacBook;16GB/256GB;Default;335362;0;0;0;0.999;OUT_OF_STOCK;0;0;0;0.0;https://www.thegioididong.com/laptop/macbook-air-13-inch-m4-16gb-256gb
+Laptop MacBook Air 13 inch M4 16GB/256GB Sạc 70W;MacBook;16GB/256GB;Default;342024;0;0;0;1.0;OUT_OF_STOCK;0;0;0;0.0;https://www.thegioididong.com/laptop/macbook-air-13-inch-m4-16gb-256gb-sac-70w
+Laptop MacBook Air 13 inch M4 16GB/512GB;MacBook;16GB/512GB;Default;335364;0;0;0;1.0;OUT_OF_STOCK;0;0;0;0.0;https://www.thegioididong.com/laptop/macbook-air-13-inch-m4-16gb-512gb
+Laptop MacBook Air 13 inch M4 24GB/512GB;MacBook;24GB/512GB;Default;335367;36590000;0;0;0.983;OUT_OF_STOCK;500000;300000;3007500;2.2;https://www.thegioididong.com/laptop/macbook-air-13-inch-m4-24gb-512gb
+Laptop MacBook Air 13 inch M5 16GB/1TB/10GPU 35W;MacBook;16GB/1TB;Default;363475;41390000;0;0;0.98;OUT_OF_STOCK;500000;300000;3407500;1.9;https://www.thegioididong.com/laptop/macbook-air-13-inch-m5-16gb-1tb
+Laptop MacBook Air 13 inch M5 16GB/512GB/8GPU 30W;MacBook;16GB/512GB;Default;363474;33690000;0;0;0.978;OUT_OF_STOCK;500000;300000;2765833;2.4;https://www.thegioididong.com/laptop/macbook-air-13-inch-m5-16gb-512gb
+Laptop MacBook Air 13 inch M5 16GB/512GB/8GPU 70W;MacBook;16GB/512GB;Default;363487;33990000;0;0;0.978;OUT_OF_STOCK;500000;300000;2790833;2.4;https://www.thegioididong.com/laptop/macbook-air-13-inch-m5-16gb-512gb-70w
+Laptop MacBook Air 13 inch M5 32GB/1TB 35W;MacBook;32GB/1TB;Default;363506;53990000;0;0;0.994;OUT_OF_STOCK;500000;300000;4457500;1.5;https://www.thegioididong.com/laptop/macbook-air-13-inch-m5-32gb-1tb
+Laptop MacBook Air 13 inch M5 32GB/512GB 35W;MacBook;32GB/512GB;Default;363505;45790000;0;0;0.994;OUT_OF_STOCK;500000;300000;3774167;1.7;https://www.thegioididong.com/laptop/macbook-air-13-inch-m5-32gb-512gb
+Laptop MacBook Air 15 inch M4 16GB/256GB;MacBook;16GB/256GB;Default;335372;0;0;0;1.0;OUT_OF_STOCK;0;0;0;0.0;https://www.thegioididong.com/laptop/macbook-air-15-inch-m4-16gb-256gb
+Laptop MacBook Air 15 inch M4 16GB/512GB;MacBook;16GB/512GB;Default;335373;0;0;0;1.0;OUT_OF_STOCK;0;0;0;0.0;https://www.thegioididong.com/laptop/macbook-air-15-inch-m4-16gb-512gb
+Laptop MacBook Air 15 inch M4 24GB/512GB;MacBook;24GB/512GB;Default;335376;0;0;0;0.999;OUT_OF_STOCK;0;0;0;0.0;https://www.thegioididong.com/laptop/macbook-air-15-inch-m4-24gb-512gb
+Laptop MacBook Air 15 inch M5 16GB/1TB 35W;MacBook;16GB/1TB;Default;363478;47690000;0;0;0.98;OUT_OF_STOCK;500000;300000;3932500;1.7;https://www.thegioididong.com/laptop/macbook-air-15-inch-m5-16gb-1tb
+Laptop MacBook Air 15 inch M5 16GB/512GB 35W;MacBook;16GB/512GB;Default;363477;39490000;0;0;0.978;OUT_OF_STOCK;500000;300000;3249167;2.0;https://www.thegioididong.com/laptop/macbook-air-15-inch-m5-16gb-512gb
+Laptop MacBook Air 15 inch M5 24GB/1TB 35W;MacBook;24GB/1TB;Default;363479;53190000;0;0;0.98;OUT_OF_STOCK;500000;300000;4390833;1.5;https://www.thegioididong.com/laptop/macbook-air-15-inch-m5-24gb-1tb
+Laptop MacBook Air 15 inch M5 32GB/1TB;MacBook;32GB/1TB;Default;363514;60890000;0;0;0.994;OUT_OF_STOCK;500000;300000;5032500;1.3;https://www.thegioididong.com/laptop/macbook-air-15-inch-m5-32gb-1tb
+Laptop MacBook Air 15 inch M5 32GB/512GB;MacBook;32GB/512GB;Default;363513;52290000;0;0;0.994;OUT_OF_STOCK;500000;300000;4315833;1.5;https://www.thegioididong.com/laptop/macbook-air-15-inch-m5-32gb-512gb
+Laptop MacBook Neo 13 inch A18 Pro 8GB/512GB;MacBook;8GB/512GB;Default;363538;21790000;0;0;0.991;OUT_OF_STOCK;500000;1000000;1774167;6.9;https://www.thegioididong.com/laptop/macbook-neo-13-inch-a18-pro-8gb-512gb
+Laptop MacBook Pro 14 inch M4 Pro 24GB/512GB;MacBook;24GB/512GB;Default;331568;0;0;0;1.0;OUT_OF_STOCK;0;0;0;0.0;https://www.thegioididong.com/laptop/macbook-pro-14-inch-m4-pro-24gb-512gb
+Laptop MacBook Pro 14 inch M5 16GB/1TB;MacBook;16GB/1TB;Default;358088;53490000;0;0;0.98;OUT_OF_STOCK;500000;300000;4415833;1.5;https://www.thegioididong.com/laptop/macbook-pro-14-inch-m5-16gb-1tb
+Laptop MacBook Pro 14 inch M5 16GB/512GB;MacBook;16GB/512GB;Default;358086;41990000;0;0;0.98;OUT_OF_STOCK;500000;300000;3457500;1.9;https://www.thegioididong.com/laptop/macbook-pro-14-inch-m5-16gb-512gb
+Laptop MacBook Pro 14 inch M5 24GB/1TB;MacBook;24GB/1TB;Default;358089;57490000;0;0;0.98;OUT_OF_STOCK;500000;300000;4749167;1.4;https://www.thegioididong.com/laptop/macbook-pro-14-inch-m5-24gb-1tb
+Laptop MacBook Pro 14 inch M5 24GB/512GB;MacBook;24GB/512GB;Default;358090;0;0;0;0.982;OUT_OF_STOCK;0;0;0;0.0;https://www.thegioididong.com/laptop/macbook-pro-14-inch-m5-24gb-512gb
+Laptop MacBook Pro 14 inch M5 Max 36GB/2TB;MacBook;36GB/2TB;Default;363490;111490000;0;0;1.0;OUT_OF_STOCK;500000;300000;9249167;0.7;https://www.thegioididong.com/laptop/macbook-pro-14-inch-m5-max-36gb-2tb
+Laptop MacBook Pro 14 inch M5 Pro 24GB/1TB 70W;MacBook;24GB/1TB;Bạc;0220042003765;66990000;3;5;0.047;CRITICAL_RISK;0;0;5582500;0.0;https://www.thegioididong.com/laptop/macbook-pro-14-inch-m5-pro-24gb-2tb
+Laptop MacBook Pro 14 inch M5 Pro 24GB/1TB 70W;MacBook;24GB/1TB;Đen;0220042003766;66990000;22;12;0.016;SAFE;0;0;5582500;0.0;https://www.thegioididong.com/laptop/macbook-pro-14-inch-m5-pro-24gb-2tb
+Laptop MacBook Pro 16 inch M4 Max 36GB/1TB;MacBook;36GB/1TB;Default;331579;0;0;0;1.0;OUT_OF_STOCK;0;0;0;0.0;https://www.thegioididong.com/laptop/macbook-pro-16-inch-m4-max-36gb-1tb
+Laptop MacBook Pro 16 inch M4 Pro 24GB/1TB;MacBook;24GB/1TB;Default;331575;0;0;0;1.0;OUT_OF_STOCK;0;0;0;0.0;https://www.thegioididong.com/laptop/macbook-pro-16-inch-m4-pro-24gb-1tb
+Laptop MacBook Pro 16 inch M4 Pro 48GB/1TB;MacBook;48GB/1TB;Default;331578;0;0;0;1.0;OUT_OF_STOCK;0;0;0;0.0;https://www.thegioididong.com/laptop/macbook-pro-16-inch-m4-pro-48gb-1tb
+Laptop MacBook Pro 16 inch M5 Pro 48GB/1TB;MacBook;48GB/1TB;Default;363492;95990000;0;0;1.0;OUT_OF_STOCK;500000;300000;7957500;0.8;https://www.thegioididong.com/laptop/macbook-pro-16-inch-m5-pro-48gb-1tb
+Laptop Macbook Air 13 inch M5 24GB/512GB 35W;MacBook;24GB/512GB;Default;363503;38790000;0;0;0.978;OUT_OF_STOCK;500000;300000;3190833;2.1;https://www.thegioididong.com/laptop/macbook-air-13-inch-m5-24gb-512gb
+Laptop Macbook Air 13 inch M5 24GB/512GB 70W;MacBook;24GB/512GB;Default;363504;38790000;0;0;0.978;OUT_OF_STOCK;500000;300000;3190833;2.1;https://www.thegioididong.com/laptop/macbook-air-13-inch-m5-24gb-512gb-70w
+Laptop Macbook Pro 16 inch M5 Max 36GB/2TB;MacBook;36GB/2TB;Default;363493;117990000;0;0;1.0;OUT_OF_STOCK;500000;300000;9790833;0.7;https://www.thegioididong.com/laptop/macbook-pro-16-inch-m5-max-36gb-2tb
+MacBook Air 13 inch M5 24GB/1TB 35W;MacBook;24GB/1TB;Vàng;0220042003723;45990000;4;4;0.025;CRITICAL_RISK;0;0;3832500;0.0;https://www.thegioididong.com/laptop/macbook-air-13-inch-m5-24gb-1tb
+MacBook Air 13 inch M5 24GB/1TB 35W;MacBook;24GB/1TB;Xanh da trời nhạt;0220042003721;45990000;12;5;0.023;WARNING;0;0;3832500;0.0;https://www.thegioididong.com/laptop/macbook-air-13-inch-m5-24gb-1tb
+MacBook Air 13 inch M5 24GB/1TB 35W;MacBook;24GB/1TB;Xanh đen;0220042003724;45990000;1;5;0.026;CRITICAL_RISK;0;0;3832500;0.0;https://www.thegioididong.com/laptop/macbook-air-13-inch-m5-24gb-1tb
+MacBook Air 13 inch M5 24GB/1TB 35W;MacBook;24GB/1TB;Bạc;0220042003722;45990000;5;3;0.086;CRITICAL_RISK;0;0;3832500;0.0;https://www.thegioididong.com/laptop/macbook-air-13-inch-m5-24gb-1tb
+MacBook Air 15 inch M5 16GB/1TB 35W;MacBook;16GB/1TB;Xanh da trời nhạt;0220042003741;47190000;2;4;0.013;CRITICAL_RISK;0;0;3932500;0.0;https://www.thegioididong.com/laptop/macbook-air-15-inch-m5-24gb-512gb
+MacBook Air 15 inch M5 16GB/1TB 35W;MacBook;16GB/1TB;Vàng;0220042003743;47190000;4;3;0.01;CRITICAL_RISK;0;0;3932500;0.0;https://www.thegioididong.com/laptop/macbook-air-15-inch-m5-24gb-512gb
+MacBook Air 15 inch M5 16GB/1TB 35W;MacBook;16GB/1TB;Bạc;0220042003742;47190000;4;3;0.019;CRITICAL_RISK;0;0;3932500;0.0;https://www.thegioididong.com/laptop/macbook-air-15-inch-m5-24gb-512gb
+MacBook Air 15 inch M5 16GB/1TB 35W;MacBook;16GB/1TB;Xanh đen;0220042003744;47190000;1;3;0.008;CRITICAL_RISK;0;0;3932500;0.0;https://www.thegioididong.com/laptop/macbook-air-15-inch-m5-24gb-512gb
+MacBook Air 15 inch M5 16GB/512GB 35W;MacBook;16GB/512GB;Xanh đen;0220042003736;38990000;35;17;0.008;SAFE;0;0;3249167;0.0;https://www.thegioididong.com/laptop/macbook-air-15-inch-m5-16gb-512gb-70w
+MacBook Air 15 inch M5 16GB/512GB 35W;MacBook;16GB/512GB;Bạc;0220042003734;38990000;23;13;0.029;SAFE;0;0;3249167;0.0;https://www.thegioididong.com/laptop/macbook-air-15-inch-m5-16gb-512gb-70w
+MacBook Air 15 inch M5 16GB/512GB 35W;MacBook;16GB/512GB;Vàng;0220042003735;38990000;27;14;0.007;SAFE;0;0;3249167;0.0;https://www.thegioididong.com/laptop/macbook-air-15-inch-m5-16gb-512gb-70w
+MacBook Air 15 inch M5 16GB/512GB 35W;MacBook;16GB/512GB;Xanh da trời nhạt;0220042003733;38990000;26;16;0.009;SAFE;0;0;3249167;0.0;https://www.thegioididong.com/laptop/macbook-air-15-inch-m5-16gb-512gb-70w
+MacBook Air 15 inch M5 16GB/512GB 70W;MacBook;16GB/512GB;Vàng;0220042003739;38990000;2;14;0.007;CRITICAL_RISK;0;0;3249167;0.0;https://www.thegioididong.com/laptop/macbook-air-15-inch-m5-16gb-512gb-70w
+MacBook Air 15 inch M5 16GB/512GB 70W;MacBook;16GB/512GB;Xanh đen;0220042003740;38990000;3;17;0.008;CRITICAL_RISK;0;0;3249167;0.0;https://www.thegioididong.com/laptop/macbook-air-15-inch-m5-16gb-512gb-70w
+MacBook Air 15 inch M5 16GB/512GB 70W;MacBook;16GB/512GB;Xanh da trời nhạt;0220042003737;38990000;7;16;0.009;WARNING;0;0;3249167;0.0;https://www.thegioididong.com/laptop/macbook-air-15-inch-m5-16gb-512gb-70w
+MacBook Air 15 inch M5 24GB/1TB 35W;MacBook;24GB/1TB;Xanh đen;0220042003756;52690000;2;3;0.009;CRITICAL_RISK;0;0;4390833;0.0;https://www.thegioididong.com/laptop/macbook-air-15-inch-m5-24gb-512gb-70w
+MacBook Air 15 inch M5 24GB/1TB 35W;MacBook;24GB/1TB;Bạc;0220042003754;52690000;1;3;0.042;CRITICAL_RISK;0;0;4390833;0.0;https://www.thegioididong.com/laptop/macbook-air-15-inch-m5-24gb-512gb-70w
+MacBook Air 15 inch M5 24GB/1TB 35W;MacBook;24GB/1TB;Vàng;0220042003755;52690000;2;3;0.014;CRITICAL_RISK;0;0;4390833;0.0;https://www.thegioididong.com/laptop/macbook-air-15-inch-m5-24gb-512gb-70w
+MacBook Air 15 inch M5 24GB/512GB;MacBook;24GB/512GB;Xanh da trời nhạt;0220042003745;43990000;1;5;0.017;CRITICAL_RISK;0;0;3665833;0.0;https://www.thegioididong.com/laptop/macbook-air-15-inch-m5-24gb-512gb
+MacBook Air 15 inch M5 24GB/512GB 70W;MacBook;24GB/512GB;Xanh da trời nhạt;0220042003749;43990000;4;5;0.017;CRITICAL_RISK;0;0;3665833;0.0;https://www.thegioididong.com/laptop/macbook-air-15-inch-m5-24gb-512gb-70w
+MacBook Air 15 inch M5 24GB/512GB 70W;MacBook;24GB/512GB;Bạc;0220042003750;43990000;3;3;0.082;CRITICAL_RISK;0;0;3665833;0.0;https://www.thegioididong.com/laptop/macbook-air-15-inch-m5-24gb-512gb-70w
+MacBook Air 15 inch M5 24GB/512GB 70W;MacBook;24GB/512GB;Vàng;0220042003751;43990000;6;3;0.015;WARNING;0;0;3665833;0.0;https://www.thegioididong.com/laptop/macbook-air-15-inch-m5-24gb-512gb-70w
+MacBook Neo 13 inch A18 Pro 8GB/256GB;MacBook;8GB/256GB;Vàng nhạt;0220042003781;18790000;90;62;0.005;SAFE;0;0;1565833;0.0;https://www.thegioididong.com/laptop/macbook-neo-13-inch-a18-pro-8gb-256gb
+MacBook Neo 13 inch A18 Pro 8GB/256GB;MacBook;8GB/256GB;Xanh Dương;0220042003782;18790000;245;47;0.005;SAFE;0;0;1565833;0.0;https://www.thegioididong.com/laptop/macbook-neo-13-inch-a18-pro-8gb-256gb
+MacBook Neo 13 inch A18 Pro 8GB/256GB;MacBook;8GB/256GB;Hồng phấn;0220042003780;18990000;7;45;0.005;WARNING;0;0;1582500;0.0;https://www.thegioididong.com/laptop/macbook-neo-13-inch-a18-pro-8gb-256gb
+MacBook Neo 13 inch A18 Pro 8GB/512GB;MacBook;8GB/512GB;Vàng nhạt;0220042003785;21290000;86;54;0.005;SAFE;0;0;1774167;0.0;https://www.thegioididong.com/laptop/macbook-neo-13-inch-a18-pro-8gb-256gb
+MacBook Neo 13 inch A18 Pro 8GB/512GB;MacBook;8GB/512GB;Xanh Dương;0220042003786;21290000;75;54;0.005;SAFE;0;0;1774167;0.0;https://www.thegioididong.com/laptop/macbook-neo-13-inch-a18-pro-8gb-256gb
+MacBook Neo 13 inch A18 Pro 8GB/512GB;MacBook;8GB/512GB;Bạc;0220042003783;21490000;4;26;0.008;CRITICAL_RISK;0;0;1790833;0.0;https://www.thegioididong.com/laptop/macbook-neo-13-inch-a18-pro-8gb-256gb
+MacBook Pro 14 inch M5 Pro 24GB/2TB 70W;MacBook;24GB/2TB;Đen;0220042003768;80490000;1;11;0.015;CRITICAL_RISK;0;0;6707500;0.0;https://www.thegioididong.com/laptop/macbook-pro-14-inch-m5-pro-24gb-2tb
+MacBook Pro 14 inch M5 Pro 24GB/2TB 70W;MacBook;24GB/2TB;Bạc;0220042003767;80490000;2;5;0.046;CRITICAL_RISK;0;0;6707500;0.0;https://www.thegioididong.com/laptop/macbook-pro-14-inch-m5-pro-24gb-2tb
+MacBook Pro 16 inch M5 Pro 24GB/1TB;MacBook;24GB/1TB;Đen;0220042003772;79490000;3;3;0.016;CRITICAL_RISK;0;0;6624167;0.0;https://www.thegioididong.com/laptop/macbook-pro-16-inch-m5-pro-24gb-1tb
+MacBook Pro 16 inch M5 Pro 24GB/1TB;MacBook;24GB/1TB;Bạc;0220042003771;79490000;0;3;0.049;OUT_OF_STOCK;0;0;6624167;0.0;https://www.thegioididong.com/laptop/macbook-pro-16-inch-m5-pro-24gb-1tb
+MacBook Pro 16 inch M5 Pro 48GB/1TB;MacBook;48GB/1TB;Bạc;0220042003773;95990000;3;3;0.132;CRITICAL_RISK;0;0;7999167;0.0;https://www.thegioididong.com/laptop/macbook-pro-16-inch-m5-pro-24gb-1tb
+Macbook Air 13 inch M5 24GB/512GB 35W;MacBook;24GB/512GB;Xanh da trời nhạt;0220042003713;38290000;2;4;0.057;CRITICAL_RISK;0;0;3190833;0.0;https://www.thegioididong.com/laptop/macbook-air-13-inch-m5-24gb-1tb
+Macbook Air 13 inch M5 24GB/512GB 35W;MacBook;24GB/512GB;Bạc;0220042003714;38290000;0;3;0.288;OUT_OF_STOCK;0;0;3190833;0.0;https://www.thegioididong.com/laptop/macbook-air-13-inch-m5-24gb-1tb
+Máy tính bảng iPad Air M3 11 inch 5G 128GB;iPad;128GB;Default;335271;0;0;0;0.999;OUT_OF_STOCK;0;0;0;0.0;https://www.thegioididong.com/may-tinh-bang/ipad-air-m3-11-inch-5g-128gb
+Máy tính bảng iPad Air M3 11 inch WiFi 128GB;iPad;128GB;Default;335267;0;0;0;0.999;OUT_OF_STOCK;0;0;0;0.0;https://www.thegioididong.com/may-tinh-bang/ipad-air-m3-11-inch-wifi-128gb
+Máy tính bảng iPad Air M3 13 inch WiFi 128GB;iPad;128GB;Default;335275;0;0;0;0.999;OUT_OF_STOCK;0;0;0;0.0;https://www.thegioididong.com/may-tinh-bang/ipad-air-m3-13-inch-wifi-128gb
+Máy tính bảng iPad Pro M5 11 inch WiFi 256GB;iPad;256GB;Default;358082;35590000;0;0;0.977;OUT_OF_STOCK;1100000;2000000;2874167;8.7;https://www.thegioididong.com/may-tinh-bang/ipad-pro-m5-11-inch-wifi-256gb
+Máy tính bảng iPad Pro M5 13 inch WiFi 256GB;iPad;256GB;Default;358099;43790000;0;0;0.949;OUT_OF_STOCK;0;2000000;3649167;4.6;https://www.thegioididong.com/may-tinh-bang/ipad-pro-m5-13-inch-wifi-256gb
+Máy tính bảng iPad mini 7 WiFi 128GB;iPad;128GB;Default;331229;16490000;0;0;0.998;OUT_OF_STOCK;300000;2000000;1349167;13.9;https://www.thegioididong.com/may-tinh-bang/ipad-mini-7-wifi
+iPad A16 5G 128GB;iPad;128GB;Vàng;2440931000960;16290000;2;16;0.006;CRITICAL_RISK;0;0;1357500;0.0;https://www.thegioididong.com/may-tinh-bang/ipad-11-5g-128gb
+iPad A16 5G 128GB;iPad;128GB;Hồng;2440931000961;16290000;1;16;0.006;CRITICAL_RISK;0;0;1357500;0.0;https://www.thegioididong.com/may-tinh-bang/ipad-11-5g-128gb
+iPad A16 5G 128GB;iPad;128GB;Bạc;2440931000958;16290000;34;23;0.013;SAFE;0;0;1357500;0.0;https://www.thegioididong.com/may-tinh-bang/ipad-11-5g-128gb
+iPad A16 WiFi 128GB;iPad;128GB;Vàng;2440931000948;12090000;7;259;0.006;WARNING;0;0;1007500;0.0;https://www.thegioididong.com/may-tinh-bang/ipad-11-wifi-128gb
+iPad A16 WiFi 128GB;iPad;128GB;Xanh Dương;2440931000947;12090000;442;259;0.006;SAFE;0;0;1007500;0.0;https://www.thegioididong.com/may-tinh-bang/ipad-11-wifi-128gb
+iPad A16 WiFi 128GB;iPad;128GB;Hồng;2440931000949;12090000;288;259;0.006;SAFE;0;0;1007500;0.0;https://www.thegioididong.com/may-tinh-bang/ipad-11-wifi-128gb
+iPad A16 WiFi 128GB;iPad;128GB;Bạc;2440931000946;12090000;558;400;0.013;SAFE;0;0;1007500;0.0;https://www.thegioididong.com/may-tinh-bang/ipad-11-wifi-128gb
+iPad A16 WiFi 256GB;iPad;256GB;Bạc;2440931000950;14890000;26;111;0.013;SAFE;0;0;1240833;0.0;https://www.thegioididong.com/may-tinh-bang/ipad-11-wifi-128gb
+iPad A16 WiFi 256GB;iPad;256GB;Xanh Dương;2440931000951;14890000;59;74;0.006;SAFE;0;0;1240833;0.0;https://www.thegioididong.com/may-tinh-bang/ipad-11-wifi-128gb
+iPad A16 WiFi 256GB;iPad;256GB;Hồng;2440931000953;14890000;26;74;0.006;SAFE;0;0;1240833;0.0;https://www.thegioididong.com/may-tinh-bang/ipad-11-wifi-128gb
+iPad Air M4 11 inch 5G 128GB;iPad;128GB;Trắng Starlight;2440931001253;23890000;2;5;0.04;CRITICAL_RISK;0;0;1990833;0.0;https://www.thegioididong.com/may-tinh-bang/ipad-air-m4-11-inch-5g-128gb
+iPad Air M4 11 inch 5G 128GB;iPad;128GB;Xanh Dương;2440931001252;23890000;3;4;0.023;CRITICAL_RISK;0;0;1990833;0.0;https://www.thegioididong.com/may-tinh-bang/ipad-air-m4-11-inch-5g-128gb
+iPad Air M4 11 inch WiFi 128GB;iPad;128GB;Trắng Starlight;2440931001221;19690000;28;53;0.055;SAFE;0;0;1640833;0.0;https://www.thegioididong.com/may-tinh-bang/ipad-air-m4-11-inch-wifi-128gb
+iPad Air M4 11 inch WiFi 128GB;iPad;128GB;Tím;2440931001222;19690000;9;70;0.045;WARNING;0;0;1640833;0.0;https://www.thegioididong.com/may-tinh-bang/ipad-air-m4-11-inch-wifi-128gb
+iPad Air M4 11 inch WiFi 128GB;iPad;128GB;Xanh Dương;2440931001220;19690000;54;70;0.045;SAFE;0;0;1640833;0.0;https://www.thegioididong.com/may-tinh-bang/ipad-air-m4-11-inch-wifi-128gb
+iPad Air M4 11 inch WiFi 128GB;iPad;128GB;Đen - Xám;2440931001219;19690000;94;70;0.072;SAFE;0;0;1640833;0.0;https://www.thegioididong.com/may-tinh-bang/ipad-air-m4-11-inch-wifi-128gb
+iPad Air M4 11 inch WiFi 256GB;iPad;256GB;Trắng Starlight;2440931001225;22490000;2;50;0.046;CRITICAL_RISK;0;0;1874167;0.0;https://www.thegioididong.com/may-tinh-bang/ipad-air-m4-11-inch-wifi-128gb
+iPad Air M4 11 inch WiFi 256GB;iPad;256GB;Xanh Dương;2440931001224;22490000;20;65;0.045;WARNING;0;0;1874167;0.0;https://www.thegioididong.com/may-tinh-bang/ipad-air-m4-11-inch-wifi-128gb
+iPad Air M4 11 inch WiFi 256GB;iPad;256GB;Tím;2440931001226;22490000;2;65;0.045;CRITICAL_RISK;0;0;1874167;0.0;https://www.thegioididong.com/may-tinh-bang/ipad-air-m4-11-inch-wifi-128gb
+iPad Air M4 11 inch WiFi 256GB;iPad;256GB;Đen - Xám;2440931001223;22490000;84;67;0.072;SAFE;0;0;1874167;0.0;https://www.thegioididong.com/may-tinh-bang/ipad-air-m4-11-inch-wifi-128gb
+iPad Air M4 13 inch 5G 128GB;iPad;128GB;Xanh Dương;2440931001268;29590000;2;3;0.016;CRITICAL_RISK;0;0;2465833;0.0;https://www.thegioididong.com/may-tinh-bang/ipad-air-m4-13-inch-5g-128gb
+iPad Air M4 13 inch WiFi 128GB;iPad;128GB;Đen - Xám;2440931001235;25390000;28;12;0.049;SAFE;0;0;2115833;0.0;https://www.thegioididong.com/may-tinh-bang/ipad-air-m4-13-inch-wifi-128gb
+iPad Air M4 13 inch WiFi 128GB;iPad;128GB;Xanh Dương;2440931001236;25390000;7;9;0.023;WARNING;0;0;2115833;0.0;https://www.thegioididong.com/may-tinh-bang/ipad-air-m4-13-inch-wifi-128gb
+iPad Air M4 13 inch WiFi 256GB;iPad;256GB;Đen - Xám;2440931001239;28190000;1;13;0.065;CRITICAL_RISK;0;0;2349167;0.0;https://www.thegioididong.com/may-tinh-bang/ipad-air-m4-13-inch-wifi-128gb
+iPad Air M4 13 inch WiFi 256GB;iPad;256GB;Trắng Starlight;2440931001241;28190000;1;11;0.049;CRITICAL_RISK;0;0;2349167;0.0;https://www.thegioididong.com/may-tinh-bang/ipad-air-m4-13-inch-wifi-128gb
+iPad Air M4 13 inch WiFi 256GB;iPad;256GB;Xanh Dương;2440931001240;28190000;0;9;0.039;OUT_OF_STOCK;0;0;2349167;0.0;https://www.thegioididong.com/may-tinh-bang/ipad-air-m4-13-inch-wifi-128gb
+iPhone 15 128GB;iPhone;128GB;Xanh dương nhạt;0131491003784;19990000;475;445;0.003;SAFE;0;0;1665833;0.0;https://www.thegioididong.com/dtdd/iphone-15
+iPhone 15 128GB;iPhone;128GB;Đen;0131491003785;19990000;454;394;0.004;SAFE;0;0;1665833;0.0;https://www.thegioididong.com/dtdd/iphone-15
+iPhone 15 128GB;iPhone;128GB;Hồng nhạt;0131491003786;19990000;502;445;0.003;SAFE;0;0;1665833;0.0;https://www.thegioididong.com/dtdd/iphone-15
+iPhone 15 256GB;iPhone;256GB;Đen;0131491003790;24990000;99;195;0.004;SAFE;0;0;2082500;0.0;https://www.thegioididong.com/dtdd/iphone-15
+iPhone 15 256GB;iPhone;256GB;Hồng nhạt;0131491003791;24990000;346;281;0.004;SAFE;0;0;2082500;0.0;https://www.thegioididong.com/dtdd/iphone-15
+iPhone 15 256GB;iPhone;256GB;Xanh dương nhạt;0131491003789;24990000;196;281;0.004;SAFE;0;0;2082500;0.0;https://www.thegioididong.com/dtdd/iphone-15
+iPhone 16 128GB;iPhone;128GB;Xanh Lưu Ly;0131491004224;22990000;104;48;0.004;SAFE;0;0;1915833;0.0;https://www.thegioididong.com/dtdd/iphone-16
+iPhone 16 128GB;iPhone;128GB;Hồng;0131491004223;22990000;131;72;0.003;SAFE;0;0;1915833;0.0;https://www.thegioididong.com/dtdd/iphone-16
+iPhone 16 128GB;iPhone;128GB;Trắng;0131491004221;22990000;0;85;0.004;OUT_OF_STOCK;0;0;1915833;0.0;https://www.thegioididong.com/dtdd/iphone-16
+iPhone 16 128GB;iPhone;128GB;Xanh mòng két;0131491004222;22990000;85;48;0.004;SAFE;0;0;1915833;0.0;https://www.thegioididong.com/dtdd/iphone-16
+iPhone 16 128GB;iPhone;128GB;Đen;0131491004220;22990000;131;66;0.005;SAFE;0;0;1915833;0.0;https://www.thegioididong.com/dtdd/iphone-16
+iPhone 17 256GB;iPhone;256GB;Đen;0131491004682;25490000;288;307;0.003;SAFE;0;0;2124167;0.0;https://www.thegioididong.com/dtdd/iphone-17
+iPhone 17 256GB;iPhone;256GB;Tím Oải Hương;0131491004684;25490000;455;432;0.003;SAFE;0;0;2124167;0.0;https://www.thegioididong.com/dtdd/iphone-17
+iPhone 17 256GB;iPhone;256GB;Trắng;0131491004683;25490000;411;348;0.004;SAFE;0;0;2124167;0.0;https://www.thegioididong.com/dtdd/iphone-17
+iPhone 17 256GB;iPhone;256GB;Xanh Lá Xô Thơm;0131491004686;25490000;512;432;0.003;SAFE;0;0;2124167;0.0;https://www.thegioididong.com/dtdd/iphone-17
+iPhone 17 256GB;iPhone;256GB;Xanh Lam Khói;0131491004685;25490000;479;388;0.004;SAFE;0;0;2124167;0.0;https://www.thegioididong.com/dtdd/iphone-17
+iPhone 17 512GB;iPhone;512GB;Xanh Lá Xô Thơm;0131491004691;31990000;77;139;0.006;SAFE;0;0;2665833;0.0;https://www.thegioididong.com/dtdd/iphone-17
+iPhone 17 512GB;iPhone;512GB;Xanh Lam Khói;0131491004690;31990000;29;83;0.007;SAFE;0;0;2665833;0.0;https://www.thegioididong.com/dtdd/iphone-17
+iPhone 17 512GB;iPhone;512GB;Tím Oải Hương;0131491004689;31990000;107;139;0.006;SAFE;0;0;2665833;0.0;https://www.thegioididong.com/dtdd/iphone-17
+iPhone 17 512GB;iPhone;512GB;Trắng;0131491004688;35490000;87;70;0.007;SAFE;0;0;2957500;0.0;https://www.thegioididong.com/dtdd/iphone-17
+iPhone 17 Pro 1TB;iPhone;1TB;Cam Vũ Trụ;0131491004720;44990000;1;57;0.008;CRITICAL_RISK;0;0;3749167;0.0;https://www.thegioididong.com/dtdd/iphone-17-pro
+iPhone 17 Pro 1TB;iPhone;1TB;Bạc;0131491004721;44990000;4;19;0.009;CRITICAL_RISK;0;0;3749167;0.0;https://www.thegioididong.com/dtdd/iphone-17-pro
+iPhone 17 Pro 1TB;iPhone;1TB;Xanh Đậm;0131491004719;44990000;4;50;0.006;CRITICAL_RISK;0;0;3749167;0.0;https://www.thegioididong.com/dtdd/iphone-17-pro
+iPhone 17 Pro 256GB;iPhone;256GB;Cam Vũ Trụ;0131491004713;31990000;131;112;0.003;SAFE;0;0;2665833;0.0;https://www.thegioididong.com/dtdd/iphone-17-pro
+iPhone 17 Pro 256GB;iPhone;256GB;Bạc;0131491004714;31990000;198;80;0.004;SAFE;0;0;2665833;0.0;https://www.thegioididong.com/dtdd/iphone-17-pro
+iPhone 17 Pro 256GB;iPhone;256GB;Xanh Đậm;0131491004711;31990000;149;97;0.003;SAFE;0;0;2665833;0.0;https://www.thegioididong.com/dtdd/iphone-17-pro
+iPhone 17 Pro 512GB;iPhone;512GB;Cam Vũ Trụ;0131491004716;38490000;8;68;0.006;WARNING;0;0;3207500;0.0;https://www.thegioididong.com/dtdd/iphone-17-pro
+iPhone 17 Pro 512GB;iPhone;512GB;Xanh Đậm;0131491004715;38490000;23;53;0.006;SAFE;0;0;3207500;0.0;https://www.thegioididong.com/dtdd/iphone-17-pro
+iPhone 17 Pro 512GB;iPhone;512GB;Bạc;0131491004717;38490000;44;29;0.031;SAFE;0;0;3207500;0.0;https://www.thegioididong.com/dtdd/iphone-17-pro
+iPhone 17 Pro Max 1TB;iPhone;1TB;Xanh Đậm;0131491004731;47990000;27;74;0.006;SAFE;0;0;3999167;0.0;https://www.thegioididong.com/dtdd/iphone-17-pro-max
+iPhone 17 Pro Max 1TB;iPhone;1TB;Cam Vũ Trụ;0131491004732;47990000;74;98;0.008;SAFE;0;0;3999167;0.0;https://www.thegioididong.com/dtdd/iphone-17-pro-max
+iPhone 17 Pro Max 1TB;iPhone;1TB;Bạc;0131491004733;47990000;7;21;0.009;WARNING;0;0;3999167;0.0;https://www.thegioididong.com/dtdd/iphone-17-pro-max
+iPhone 17 Pro Max 256GB;iPhone;256GB;Cam Vũ Trụ;0131491004724;34990000;824;591;0.003;SAFE;0;0;2915833;0.0;https://www.thegioididong.com/dtdd/iphone-17-pro-max
+iPhone 17 Pro Max 256GB;iPhone;256GB;Xanh Đậm;0131491004723;34990000;686;488;0.003;SAFE;0;0;2915833;0.0;https://www.thegioididong.com/dtdd/iphone-17-pro-max
+iPhone 17 Pro Max 2TB;iPhone;2TB;Cam Vũ Trụ;0131491004693;60990000;3;49;0.008;CRITICAL_RISK;0;0;5082500;0.0;https://www.thegioididong.com/dtdd/iphone-17-pro-max
+iPhone 17 Pro Max 2TB;iPhone;2TB;Xanh Đậm;0131491004692;60990000;4;37;0.006;CRITICAL_RISK;0;0;5082500;0.0;https://www.thegioididong.com/dtdd/iphone-17-pro-max
+iPhone 17 Pro Max 512GB;iPhone;512GB;Bạc;0131491004729;41490000;33;104;0.009;SAFE;0;0;3457500;0.0;https://www.thegioididong.com/dtdd/iphone-17-pro-max
+iPhone 17 Pro Max 512GB;iPhone;512GB;Cam Vũ Trụ;0131491004728;41490000;406;300;0.008;SAFE;0;0;3457500;0.0;https://www.thegioididong.com/dtdd/iphone-17-pro-max
+iPhone 17 Pro Max 512GB;iPhone;512GB;Xanh Đậm;0131491004727;41490000;320;246;0.006;SAFE;0;0;3457500;0.0;https://www.thegioididong.com/dtdd/iphone-17-pro-max
+iPhone 17e 256GB;iPhone;256GB;Trắng;0131491005122;19990000;37;35;0.003;SAFE;0;0;1665833;0.0;https://www.thegioididong.com/dtdd/iphone-17e-256gb
+iPhone 17e 256GB;iPhone;256GB;Đen;0131491005121;19990000;71;47;0.003;SAFE;0;0;1665833;0.0;https://www.thegioididong.com/dtdd/iphone-17e-256gb
+iPhone 17e 256GB;iPhone;256GB;Hồng nhạt;0131491005120;19990000;129;37;0.002;SAFE;0;0;1665833;0.0;https://www.thegioididong.com/dtdd/iphone-17e-256gb
+iPhone 17e 512GB;iPhone;512GB;Hồng nhạt;0131491005123;26990000;2;22;0.006;CRITICAL_RISK;0;0;2249167;0.0;https://www.thegioididong.com/dtdd/iphone-17e-256gb
+iPhone 18 Pro 1TB;iPhone;1TB;Bạc;0131491005405;58490000;9;32;0.009;WARNING;0;0;4874167;0.0;https://www.thegioididong.com/dtdd/iphone-18-pro
+iPhone 18 Pro 1TB;iPhone;1TB;Đen;0131491005406;58490000;17;32;0.006;WARNING;0;0;4874167;0.0;https://www.thegioididong.com/dtdd/iphone-18-pro
+iPhone 18 Pro 1TB;iPhone;1TB;Băng Thanh;0131491005404;58490000;5;61;0.009;CRITICAL_RISK;0;0;4874167;0.0;https://www.thegioididong.com/dtdd/iphone-18-pro
+iPhone 18 Pro 1TB;iPhone;1TB;Đỏ Burgundy;0131491005403;58490000;31;90;0.007;SAFE;0;0;4874167;0.0;https://www.thegioididong.com/dtdd/iphone-18-pro
+iPhone 18 Pro 256GB;iPhone;256GB;Bạc;0131491005395;38990000;34;66;0.004;SAFE;0;0;3249167;0.0;https://www.thegioididong.com/dtdd/iphone-18-pro
+iPhone 18 Pro 256GB;iPhone;256GB;Băng Thanh;0131491005394;38990000;38;102;0.005;SAFE;0;0;3249167;0.0;https://www.thegioididong.com/dtdd/iphone-18-pro
+iPhone 18 Pro 256GB;iPhone;256GB;Đen;0131491005397;38990000;335;76;0.005;SAFE;0;0;3249167;0.0;https://www.thegioididong.com/dtdd/iphone-18-pro
+iPhone 18 Pro 256GB;iPhone;256GB;Đỏ Burgundy;0131491005393;38990000;201;129;0.003;SAFE;0;0;3249167;0.0;https://www.thegioididong.com/dtdd/iphone-18-pro
+iPhone 18 Pro 2TB;iPhone;2TB;Đen;0131491005410;77990000;5;20;0.006;CRITICAL_RISK;0;0;6499167;0.0;https://www.thegioididong.com/dtdd/iphone-18-pro
+iPhone 18 Pro 2TB;iPhone;2TB;Bạc;0131491005409;77990000;8;20;0.009;WARNING;0;0;6499167;0.0;https://www.thegioididong.com/dtdd/iphone-18-pro
+iPhone Air 256GB;iPhone;256GB;Vàng nhạt;0131491004807;22990000;47;73;0.008;SAFE;0;0;1915833;0.0;https://www.thegioididong.com/dtdd/iphone-air
+iPhone Air 256GB;iPhone;256GB;Trắng Mây;0131491004806;22990000;79;81;0.01;SAFE;0;0;1915833;0.0;https://www.thegioididong.com/dtdd/iphone-air
+iPhone Air 256GB;iPhone;256GB;Đen Không Gian;0131491004805;22990000;81;72;0.01;SAFE;0;0;1915833;0.0;https://www.thegioididong.com/dtdd/iphone-air
+iPhone Air 256GB;iPhone;256GB;Xanh Da Trời;0131491004808;22990000;0;57;0.01;OUT_OF_STOCK;0;0;1915833;0.0;https://www.thegioididong.com/dtdd/iphone-air
+iPhone Air 512GB;iPhone;512GB;Đen Không Gian;0131491004810;28990000;37;65;0.013;SAFE;0;0;2415833;0.0;https://www.thegioididong.com/dtdd/iphone-air
+Điện thoại iPhone 12 128GB;iPhone;128GB;Default;228736;13690000;0;0;0.973;OUT_OF_STOCK;3000000;0;890833;21.9;https://www.thegioididong.com/dtdd/iphone-12-128gb
+Điện thoại iPhone 12 64GB;iPhone;64GB;Default;213031;11790000;0;0;0.985;OUT_OF_STOCK;2000000;0;815833;17.0;https://www.thegioididong.com/dtdd/iphone-12
+Điện thoại iPhone 13 256GB;iPhone;256GB;Default;250258;17590000;0;0;0.991;OUT_OF_STOCK;1500000;2000000;1340833;19.9;https://www.thegioididong.com/dtdd/iphone-13-256gb
+Điện thoại iPhone 15 Plus 128GB;iPhone;128GB;Default;303891;0;0;16;0.99;OUT_OF_STOCK;0;0;0;0.0;https://www.thegioididong.com/dtdd/iphone-15-plus
+Điện thoại iPhone 16 Plus 128GB;iPhone;128GB;Default;329138;25990000;0;0;0.983;OUT_OF_STOCK;1000000;2000000;2082500;11.5;https://www.thegioididong.com/dtdd/iphone-16-plus
+Điện thoại iPhone 16 Plus 256GB;iPhone;256GB;Default;329140;28990000;0;0;0.983;OUT_OF_STOCK;1000000;2000000;2332500;10.3;https://www.thegioididong.com/dtdd/iphone-16-plus-256gb
+Điện thoại iPhone 16e 128GB;iPhone;128GB;Default;334864;16990000;0;0;0.91;OUT_OF_STOCK;0;0;1415833;0.0;https://www.thegioididong.com/dtdd/iphone-16e
+Điện thoại iPhone 17 512GB;iPhone;512GB;Default;342668;35490000;0;0;0.983;OUT_OF_STOCK;3500000;2000000;2665833;15.5;https://www.thegioididong.com/dtdd/iphone-17-512gb
+Điện thoại iPhone 17 Pro 512GB;iPhone;512GB;Default;342677;41490000;0;0;0.986;OUT_OF_STOCK;3000000;2000000;3207500;12.1;https://www.thegioididong.com/dtdd/iphone-17-pro-512gb
+Điện thoại iPhone 17e 512GB;iPhone;512GB;Default;342693;28490000;0;0;0.967;OUT_OF_STOCK;1500000;2000000;2249167;12.3;https://www.thegioididong.com/dtdd/iphone-17e-512gb
+Điện thoại iPhone 18 Pro Max 256GB;iPhone;256GB;Default;370982;41990000;0;14;0.891;OUT_OF_STOCK;0;0;3499167;0.0;https://www.thegioididong.com/dtdd/iphone-18-pro-max
+Điện thoại iPhone Air 1TB;iPhone;1TB;Default;344777;40990000;0;0;0.956;OUT_OF_STOCK;0;2000000;3415833;4.9;https://www.thegioididong.com/dtdd/iphone-air-1tb
+Điện thoại iPhone Air 512GB;iPhone;512GB;Default;342671;28990000;0;0;0.95;OUT_OF_STOCK;0;2000000;2415833;6.9;https://www.thegioididong.com/dtdd/iphone-air-512gb

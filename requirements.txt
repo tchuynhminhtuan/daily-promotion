@@ -10,3 +10,5 @@ altair<5
 standard-imghdr
 requests
 beautifulsoup4
+scikit-learn
+joblib
