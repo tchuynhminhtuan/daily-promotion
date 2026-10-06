@@ -8,3 +8,5 @@ scipy
 numpy
 altair<5
 standard-imghdr
+requests
+beautifulsoup4
