@@ -17,7 +17,91 @@ from ..config import MODELS_DIR, HYBRID_DATA_DIR, PREDICTIONS_DIR
 from ..features.feature_engineering import FeatureEngineer
 
 
+def generate_markdown_report(df_res: pd.DataFrame, output_payload: dict, latest_md: str, out_md: str, timestamp_str: str):
+    """Xuất báo cáo định dạng Markdown trực quan theo từng danh mục."""
+    meta = output_payload.get("metadata", {})
+    categories = ["iPhone", "MacBook", "iPad", "Apple Watch", "AirPods"]
+    cat_display_names = {
+        "iPhone": "📱 iPhone",
+        "MacBook": "💻 Mac / MacBook",
+        "iPad": "📱 iPad",
+        "Apple Watch": "⌚ Apple Watch",
+        "AirPods": "🎧 AirPods"
+    }
+
+    lines = []
+    lines.append(f"# 🧠 Báo Cáo Dự Báo Tồn Kho & Trợ Lực Tài Chính (TGDD Intelligence)")
+    lines.append(f"**Thời gian cập nhật:** `{timestamp_str}` | **Nguồn dữ liệu:** Thế Giới Di Động (3.000 siêu thị)\n")
+    lines.append("## 📌 Tổng Quan Chỉ Số Hệ Thống")
+    lines.append(f"- **Tổng số SKU theo dõi:** `{meta.get('total_skus', 0)}` biến thể")
+    lines.append(f"- **Số SKU còn hàng tại quầy:** `{meta.get('safe_count', 0) + meta.get('critical_risk_count', 0)}`")
+    lines.append(f"- **Số SKU cảnh báo đứt hàng (Critical Risk):** `{meta.get('critical_risk_count', 0)}`")
+    lines.append(f"- **Số SKU hết hàng / ngừng kinh doanh:** `{meta.get('out_of_stock_count', 0) + meta.get('discontinued_count', 0)}`\n")
+    
+    lines.append("---")
+    lines.append("## 🚨 1. Cảnh Báo Nguy Cơ Đứt Hàng Theo Từng Danh Mục")
+    lines.append("> *Chỉ liệt kê các sản phẩm còn đang kinh doanh nhưng có tồn kho dưới 15 cửa hàng toàn quốc.* \n")
+    
+    for cat in categories:
+        cat_df = df_res[df_res['Category'] == cat]
+        risk_df = cat_df[
+            (cat_df['Actual_Store_Count'] > 0) & 
+            (cat_df['Risk_Level'].isin(['CRITICAL_RISK', 'WARNING']) | (cat_df['Actual_Store_Count'] <= 15))
+        ].sort_values(by=['Actual_Store_Count', 'Stockout_Probability'], ascending=[True, False]).head(3)
+        
+        label = cat_display_names.get(cat, cat)
+        lines.append(f"### {label}")
+        if not risk_df.empty:
+            lines.append("| Tên sản phẩm & Màu | Tồn kho thực tế | Dự báo AI | Xác suất cạn | Giá khuyến mãi | Mức rủi ro |")
+            lines.append("|:---|:---:|:---:|:---:|:---:|:---:|")
+            for _, r in risk_df.iterrows():
+                c_str = f" ({r['Color']})" if r['Color'] and r['Color'] != 'Default' else ''
+                name = f"{r['Product_Name']}{c_str}"
+                name_clean = re.sub(r'^(?:Điện thoại|Máy tính bảng|Laptop|Tai nghe Bluetooth|Đồng hồ thông minh)\s+', '', name)
+                icon = "🔴 CRITICAL" if r['Risk_Level'] == 'CRITICAL_RISK' or r['Actual_Store_Count'] <= 5 else "🟡 WARNING"
+                lines.append(f"| **{name_clean}** | {r['Actual_Store_Count']} shop | {r['Predicted_Store_Count']} shop | {r['Stockout_Probability']*100:.1f}% | {int(r['Gia_Khuyen_Mai']):,}đ | {icon} |")
+        else:
+            lines.append("*✅ Toàn bộ tồn kho trong danh mục đang ở mức an toàn.*")
+        lines.append("")
+
+    lines.append("---")
+    lines.append("## 🎁 2. Top Sản Phẩm Có Trợ Lực Tài Chính (Affordability) Hời Nhất")
+    lines.append("> *🟢 Chỉ xét các sản phẩm **ĐANG KINH DOANH** và **CÒN HÀNG** thực tế tại hệ thống siêu thị.* \n")
+
+    for cat in categories:
+        cat_df = df_res[df_res['Category'] == cat]
+        in_stock = cat_df[
+            (cat_df['Actual_Store_Count'] > 0) & 
+            (~cat_df['Risk_Level'].isin(['DISCONTINUED', 'OUT_OF_STOCK']))
+        ]
+        with_pct = in_stock[in_stock['Affordability_Benefit_Pct'] > 0]
+        deals = with_pct.sort_values(by=['Affordability_Benefit_Pct', 'Actual_Store_Count'], ascending=[False, False]).head(3) if not with_pct.empty else in_stock.sort_values(by=['Actual_Store_Count', 'Gia_Khuyen_Mai'], ascending=[False, True]).head(2)
+
+        label = cat_display_names.get(cat, cat)
+        lines.append(f"### {label}")
+        if not deals.empty:
+            lines.append("| Tên sản phẩm & Màu | Giá khuyến mãi | Còn hàng | Giảm trực tiếp | Trợ giá thu cũ | Tiết kiệm (%) |")
+            lines.append("|:---|:---:|:---:|:---:|:---:|:---:|")
+            for _, r in deals.iterrows():
+                c_str = f" ({r['Color']})" if r['Color'] and r['Color'] != 'Default' else ''
+                name = f"{r['Product_Name']}{c_str}"
+                name_clean = re.sub(r'^(?:Điện thoại|Máy tính bảng|Laptop|Tai nghe Bluetooth|Đồng hồ thông minh)\s+', '', name)
+                disc_str = f"{int(r['Direct_Discount_VND']):,}đ" if r['Direct_Discount_VND'] >= 50000 else "-"
+                trade_str = f"{int(r['Trade_In_Subsidy_VND']):,}đ" if r['Trade_In_Subsidy_VND'] >= 100000 else "-"
+                lines.append(f"| **{name_clean}** | {int(r['Gia_Khuyen_Mai']):,}đ | {r['Actual_Store_Count']} shop | {disc_str} | {trade_str} | **{r['Affordability_Benefit_Pct']:.1f}%** |")
+        else:
+            lines.append("*⚠️ Hiện không có sản phẩm nào trong danh mục còn hàng tại siêu thị.*")
+        lines.append("")
+
+    content = "\n".join(lines)
+    with open(latest_md, "w", encoding="utf-8") as f:
+        f.write(content)
+    with open(out_md, "w", encoding="utf-8") as f:
+        f.write(content)
+
+
 def run_inference(data_json_path: str = None) -> str:
+
     now = datetime.now()
     timestamp_str = now.strftime("%Y-%m-%d_%H%M")
 
@@ -118,6 +202,8 @@ def run_inference(data_json_path: str = None) -> str:
     out_json = os.path.join(PREDICTIONS_DIR, f"predictions_{timestamp_str}.json")
     latest_json = os.path.join(PREDICTIONS_DIR, "predictions_latest.json")
     latest_csv = os.path.join(PREDICTIONS_DIR, "predictions_latest.csv")
+    out_md = os.path.join(PREDICTIONS_DIR, f"daily_report_{timestamp_str}.md")
+    latest_md = os.path.join(PREDICTIONS_DIR, "daily_report_latest.md")
 
     output_payload = {
         "metadata": {
@@ -141,9 +227,14 @@ def run_inference(data_json_path: str = None) -> str:
     df_res = pd.DataFrame(results)
     df_res.to_csv(latest_csv, index=False, sep=";", encoding="utf-8-sig")
 
+    # Xuất báo cáo Markdown trực quan
+    generate_markdown_report(df_res, output_payload, latest_md, out_md, timestamp_str)
+
     print(f"✅ Dự báo hoàn tất cho {len(results)} biến thể SKU!")
     print(f"📁 Tệp kết quả: {out_json}")
+    print(f"📄 Báo cáo Markdown: {latest_md}")
     print(f"🔗 Tệp mới nhất: {latest_json} & {latest_csv}")
+
 
     # 5. In tóm tắt cảnh báo kinh doanh theo từng danh mục
     def format_sku_name(name: str, color: str, max_len: int = 34) -> str:
