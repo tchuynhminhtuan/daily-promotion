@@ -2,7 +2,7 @@
 """
 TGDD Hybrid Cross-Platform Scheduler Daemon
 Tự động kích hoạt pipeline quét tồn kho & Affordability vào các khung giờ vàng trong ngày.
-Mặc định: 08:30, 14:00, 22:30 hàng ngày (3 lần / ngày).
+Mặc định: 07:00, 14:00, 22:30 hàng ngày (3 lần / ngày).
 """
 
 import sys
@@ -21,7 +21,7 @@ from src.hybrid.tgdd_hybrid_pipeline import run_pipeline
 def get_seconds_until_next_run(target_times: list) -> tuple:
     """
     Tính số giây còn lại cho đến mốc giờ quét tiếp theo.
-    target_times: danh sách chuỗi dạng ["08:30", "14:00", "22:30"]
+    target_times: danh sách chuỗi dạng ["07:00", "14:00", "22:30"]
     """
     now = datetime.now()
     candidate_dts = []
@@ -81,8 +81,8 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="TGDD Hybrid Scheduler Daemon")
     parser.add_argument(
         "--times",
-        default="08:30,14:00,22:30",
-        help="Các mốc giờ quét hàng ngày, phân tách bằng dấu phẩy (Mặc định: '08:30,14:00,22:30')"
+        default="07:00,14:00,22:30",
+        help="Các mốc giờ quét hàng ngày, phân tách bằng dấu phẩy (Mặc định: '07:00,14:00,22:30')"
     )
     parser.add_argument(
         "--sync-raw",

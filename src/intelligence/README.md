@@ -28,11 +28,11 @@ src/intelligence/
 
 ## 🔄 2. Luồng Xử Lý Dữ Liệu Hằng Ngày (Daily Pipeline)
 
-Hệ thống được cấu hình chạy tự động **3 lần / ngày** (`08:30`, `14:00`, `22:30`) thông qua runner [`scripts/automation/run_hybrid_tgdd.sh`](file:///Users/brucehuynh/GitHub/daily-promotion/scripts/automation/run_hybrid_tgdd.sh):
+Hệ thống được cấu hình chạy tự động **3 lần / ngày** (`07:00`, `14:00`, `22:30`) thông qua runner [`scripts/automation/run_hybrid_tgdd.sh`](file:///Users/brucehuynh/GitHub/daily-promotion/scripts/automation/run_hybrid_tgdd.sh):
 
 ```mermaid
 graph TD
-    A["LaunchAgent (com.brucehuynh.hybrid_tgdd)"] -->|08:30, 14:00, 22:30| B["crawler.py (Hybrid Scanner)"]
+    A["LaunchAgent (com.brucehuynh.hybrid_tgdd)"] -->|07:00, 14:00, 22:30| B["crawler.py (Hybrid Scanner)"]
     B -->|Bóc tách React Query & Gọi API 3.000 shop| C["data/hybrid/tgdd_inventory_deep_*.json (~7.4MB)"]
     C -->|Trigger tự động| D["daily_inference.py (Executive Engine)"]
     D -->|Tổng hợp Ground-Truth Metrics| E["data/predictions/daily_report_latest.md"]

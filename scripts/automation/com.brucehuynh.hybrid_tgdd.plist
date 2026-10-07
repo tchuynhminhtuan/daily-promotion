@@ -11,15 +11,15 @@
     </array>
     <key>RunAtLoad</key>
     <false/>
-    <!-- Quét 3 lần một ngày: 08:30, 14:00, 22:30 -->
+    <!-- Quét 3 lần một ngày: 07:00, 14:00, 22:30 -->
     <key>StartCalendarInterval</key>
     <array>
-        <!-- Khung 1: 08:30 Sáng (Mở cửa quầy & nhận hàng) -->
+        <!-- Khung 1: 07:00 Sáng (Mở cửa quầy & nhận hàng) -->
         <dict>
             <key>Hour</key>
-            <integer>8</integer>
+            <integer>7</integer>
             <key>Minute</key>
-            <integer>30</integer>
+            <integer>0</integer>
         </dict>
         <!-- Khung 2: 14:00 Chiều (Giữa ngày / sau đổi ca) -->
         <dict>
