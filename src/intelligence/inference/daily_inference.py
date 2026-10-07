@@ -1,20 +1,19 @@
 """
-Daily AI Inference & Scoring Pipeline
-Thực thi tự động sau mỗi lượt quét snapshot để:
-1. Dự báo nguy cơ đứt hàng (Stock-Out Probability & Risk Level)
-2. Dự báo độ phủ quầy kệ (Predicted Shelf Distribution)
-3. Chấm điểm trợ lực tài chính (Affordability Attractiveness Score)
+Daily Executive Inventory & Affordability Reporting Engine
+Tổng hợp dữ liệu thực tế (Ground-Truth Intelligence) từ TGDD API:
+1. Giám sát rủi ro cạn hàng quầy thực tế (Critical Stockout: <= 5 shop, Warning: <= 15 shop)
+2. Phân bổ độ phủ thị trường trọng điểm (TP.HCM & Hà Nội)
+3. Chấm điểm trợ lực tài chính (Direct Discount + Trade-in Subsidy)
 """
 
 import os
 import re
 import json
-import joblib
+import csv
 import pandas as pd
 from datetime import datetime
 
-from ..config import MODELS_DIR, HYBRID_DATA_DIR, PREDICTIONS_DIR
-from ..features.feature_engineering import FeatureEngineer
+from ..config import HYBRID_DATA_DIR, REPORTS_DIR
 
 
 def generate_markdown_report(df_res: pd.DataFrame, output_payload: dict, latest_md: str, out_md: str, timestamp_str: str):
@@ -30,38 +29,41 @@ def generate_markdown_report(df_res: pd.DataFrame, output_payload: dict, latest_
     }
 
     lines = []
-    lines.append(f"# 🧠 Báo Cáo Dự Báo Tồn Kho & Trợ Lực Tài Chính (TGDD Intelligence)")
+    lines.append(f"# 📊 Báo Cáo Tình Báo Tồn Kho & Trợ Lực Tài Chính (TGDD Intelligence)")
     lines.append(f"**Thời gian cập nhật:** `{timestamp_str}` | **Nguồn dữ liệu:** Thế Giới Di Động (3.000 siêu thị)\n")
-    lines.append("## 📌 Tổng Quan Chỉ Số Hệ Thống")
+    lines.append("## 📌 Tổng Quan Chỉ Số Hệ Thống (Ground-Truth Data)")
     lines.append(f"- **Tổng số SKU theo dõi:** `{meta.get('total_skus', 0)}` biến thể")
-    lines.append(f"- **Số SKU còn hàng tại quầy:** `{meta.get('safe_count', 0) + meta.get('critical_risk_count', 0)}`")
-    lines.append(f"- **Số SKU cảnh báo đứt hàng (Critical Risk):** `{meta.get('critical_risk_count', 0)}`")
-    lines.append(f"- **Số SKU hết hàng / ngừng kinh doanh:** `{meta.get('out_of_stock_count', 0) + meta.get('discontinued_count', 0)}`\n")
+    lines.append(f"- **Số SKU sẵn hàng tại quầy (>15 shop):** `{meta.get('safe_count', 0)}`")
+    lines.append(f"- **Số SKU báo động đỏ cạn kho (<= 5 shop):** `{meta.get('critical_risk_count', 0)}`")
+    lines.append(f"- **Số SKU khan hiếm (6 - 15 shop):** `{meta.get('warning_count', 0)}`")
+    lines.append(f"- **Số SKU hết hàng / ngừng bán (0 shop):** `{meta.get('out_of_stock_count', 0) + meta.get('discontinued_count', 0)}`\n")
     
     lines.append("---")
     lines.append("## 🚨 1. Cảnh Báo Nguy Cơ Đứt Hàng Theo Từng Danh Mục")
-    lines.append("> *Chỉ liệt kê các sản phẩm còn đang kinh doanh nhưng có tồn kho dưới 15 cửa hàng toàn quốc.* \n")
+    lines.append("> *Chỉ liệt kê các sản phẩm còn đang kinh doanh nhưng có tồn kho thực tế dưới 15 cửa hàng toàn quốc.* \n")
     
     for cat in categories:
         cat_df = df_res[df_res['Category'] == cat]
         risk_df = cat_df[
             (cat_df['Actual_Store_Count'] > 0) & 
-            (cat_df['Risk_Level'].isin(['CRITICAL_RISK', 'WARNING']) | (cat_df['Actual_Store_Count'] <= 15))
-        ].sort_values(by=['Actual_Store_Count', 'Stockout_Probability'], ascending=[True, False]).head(3)
+            (cat_df['Actual_Store_Count'] <= 15)
+        ].sort_values(by=['Actual_Store_Count', 'Gia_Khuyen_Mai'], ascending=[True, False]).head(5)
         
         label = cat_display_names.get(cat, cat)
         lines.append(f"### {label}")
         if not risk_df.empty:
-            lines.append("| Tên sản phẩm & Màu | Tồn kho thực tế | Dự báo AI | Xác suất cạn | Giá khuyến mãi | Mức rủi ro |")
+            lines.append("| Tên sản phẩm & Màu | Tồn kho toàn quốc | TP.HCM | Hà Nội | Giá khuyến mãi | Tình trạng |")
             lines.append("|:---|:---:|:---:|:---:|:---:|:---:|")
             for _, r in risk_df.iterrows():
                 c_str = f" ({r['Color']})" if r['Color'] and r['Color'] != 'Default' else ''
                 name = f"{r['Product_Name']}{c_str}"
                 name_clean = re.sub(r'^(?:Điện thoại|Máy tính bảng|Laptop|Tai nghe Bluetooth|Đồng hồ thông minh)\s+', '', name)
-                icon = "🔴 CRITICAL" if r['Risk_Level'] == 'CRITICAL_RISK' or r['Actual_Store_Count'] <= 5 else "🟡 WARNING"
-                lines.append(f"| **{name_clean}** | {r['Actual_Store_Count']} shop | {r['Predicted_Store_Count']} shop | {r['Stockout_Probability']*100:.1f}% | {int(r['Gia_Khuyen_Mai']):,}đ | {icon} |")
+                icon = "🔴 BÁO ĐỘNG ĐỎ" if r['Actual_Store_Count'] <= 5 else "🟡 KHAN HIẾM"
+                hcm_cnt = f"{r.get('Store_HCM', 0)} shop"
+                hn_cnt = f"{r.get('Store_Hanoi', 0)} shop"
+                lines.append(f"| **{name_clean}** | **{r['Actual_Store_Count']} shop** | {hcm_cnt} | {hn_cnt} | {int(r['Gia_Khuyen_Mai']):,}đ | {icon} |")
         else:
-            lines.append("*✅ Toàn bộ tồn kho trong danh mục đang ở mức an toàn.*")
+            lines.append("*✅ Toàn bộ tồn kho trong danh mục đang ở mức dồi dào (> 15 shop).*")
         lines.append("")
 
     lines.append("---")
@@ -72,7 +74,7 @@ def generate_markdown_report(df_res: pd.DataFrame, output_payload: dict, latest_
         cat_df = df_res[df_res['Category'] == cat]
         in_stock = cat_df[
             (cat_df['Actual_Store_Count'] > 0) & 
-            (~cat_df['Risk_Level'].isin(['DISCONTINUED', 'OUT_OF_STOCK']))
+            (~cat_df['Status'].isin(['DISCONTINUED', 'OUT_OF_STOCK']))
         ]
         with_pct = in_stock[in_stock['Affordability_Benefit_Pct'] > 0]
         deals = with_pct.sort_values(by=['Affordability_Benefit_Pct', 'Actual_Store_Count'], ascending=[False, False]).head(3) if not with_pct.empty else in_stock.sort_values(by=['Actual_Store_Count', 'Gia_Khuyen_Mai'], ascending=[False, True]).head(2)
@@ -101,30 +103,19 @@ def generate_markdown_report(df_res: pd.DataFrame, output_payload: dict, latest_
 
 
 def run_inference(data_json_path: str = None) -> str:
-
+    """Xử lý dữ liệu tồn kho thật và xuất bản báo cáo điều hành chuẩn mực."""
     now = datetime.now()
     timestamp_str = now.strftime("%Y-%m-%d_%H%M")
 
     if not data_json_path:
         data_json_path = os.path.join(HYBRID_DATA_DIR, "tgdd_inventory_deep_latest.json")
 
-    fe_path = os.path.join(MODELS_DIR, "feature_engineer.pkl")
-    clf_path = os.path.join(MODELS_DIR, "stockout_classifier.pkl")
-    reg_path = os.path.join(MODELS_DIR, "store_regressor.pkl")
-
-    # Kiểm tra xem models đã train chưa, nếu chưa thì tự động train lần đầu
-    if not (os.path.exists(fe_path) and os.path.exists(clf_path) and os.path.exists(reg_path)):
-        print("⚠️ Chưa tìm thấy Model đã lưu. Đang kích hoạt huấn luyện tự động lần đầu...")
-        from ..models.trainer import train_models
-        train_models(data_json_path)
-
-    fe = FeatureEngineer.load(fe_path)
-    clf = joblib.load(clf_path)
-    reg = joblib.load(reg_path)
+    if not os.path.exists(data_json_path):
+        raise FileNotFoundError(f"Không tìm thấy tệp dữ liệu tồn kho: {data_json_path}")
 
     print("=" * 80)
-    print(f"🔮 CHẠY MÔ HÌNH DỰ BÁO AI/ML HÀNG NGÀY - {timestamp_str}")
-    print(f"Dữ liệu đầu vào: {data_json_path}")
+    print(f"📊 BÁO CÁO ĐIỀU HÀNH TỒN KHO & AFFORDABILITY THỰC TẾ - {timestamp_str}")
+    print(f"Nguồn dữ liệu: {data_json_path}")
     print("=" * 80)
 
     with open(data_json_path, encoding='utf-8') as f:
@@ -132,43 +123,26 @@ def run_inference(data_json_path: str = None) -> str:
     items = payload.get("data", [])
     df_raw = pd.DataFrame(items)
 
-    # 1. Feature Transformation
-    X = fe.transform(df_raw)
-
-    # 2. Inference: Xác suất Còn hàng vs Hết hàng
-    # Classes: [0: Hết hàng, 1: Còn hàng]
-    probas = clf.predict_proba(X)
-    classes = list(clf.classes_)
-    idx_out_of_stock = classes.index(0) if 0 in classes else None
-
-    if idx_out_of_stock is not None:
-        stockout_probas = probas[:, idx_out_of_stock]
-    else:
-        stockout_probas = [0.0] * len(df_raw)
-
-    predicted_stores = reg.predict(X)
-
-    # 3. Tổng hợp kết quả dự báo
     results = []
-    for idx, row in df_raw.iterrows():
-        p_stockout = float(stockout_probas[idx])
-        pred_st = max(0, int(round(float(predicted_stores[idx]))))
+    for _, row in df_raw.iterrows():
         actual_st = int(row.get("Store_Count", 0))
-
-        # Phân loại mức độ rủi ro (Risk Level)
+        store_hcm = int(row.get("Store_HCM", 0))
+        store_hn = int(row.get("Store_Hanoi", 0))
         is_discontinued = bool(row.get("Is_Discontinued", False))
-        if is_discontinued:
-            risk_level = "DISCONTINUED"
-        elif actual_st == 0:
-            risk_level = "OUT_OF_STOCK"
-        elif p_stockout >= 0.70 or actual_st <= 5:
-            risk_level = "CRITICAL_RISK"
-        elif p_stockout >= 0.35 or actual_st <= 20:
-            risk_level = "WARNING"
-        else:
-            risk_level = "SAFE"
 
-        # Tính chỉ số hấp dẫn tài chính (% giảm trực tiếp + trợ giá thu cũ so với giá niêm yết)
+        # Phân loại trạng thái dựa trên số liệu thực tế 100%
+        if is_discontinued:
+            status = "DISCONTINUED"
+        elif actual_st == 0:
+            status = "OUT_OF_STOCK"
+        elif actual_st <= 5:
+            status = "CRITICAL_RISK"
+        elif actual_st <= 15:
+            status = "WARNING"
+        else:
+            status = "SAFE"
+
+        # Tính toán mức tiết kiệm tài chính thực tế
         gia_goc = float(row.get("Gia_Niem_Yet", 0))
         giam_truc_tiep = float(row.get("Direct_Discount_VND", 0))
         tro_gia_thucu = float(row.get("Trade_In_Subsidy_VND", 0))
@@ -183,12 +157,12 @@ def run_inference(data_json_path: str = None) -> str:
             "Storage": row.get("Storage"),
             "Color": row.get("Color"),
             "SKU": row.get("SKU"),
-            "Gia_Khuyen_Mai": row.get("Gia_Khuyen_Mai"),
+            "Gia_Niem_Yet": int(gia_goc),
+            "Gia_Khuyen_Mai": int(row.get("Gia_Khuyen_Mai", 0)),
             "Actual_Store_Count": actual_st,
-            "Predicted_Store_Count": pred_st,
-            "Stockout_Probability": round(p_stockout, 3),
-            "Risk_Level": risk_level,
-            "Is_Discontinued": is_discontinued,
+            "Store_HCM": store_hcm,
+            "Store_Hanoi": store_hn,
+            "Status": status,
             "Direct_Discount_VND": int(giam_truc_tiep),
             "Trade_In_Subsidy_VND": int(tro_gia_thucu),
             "Min_Monthly_Payment_12M": row.get("Min_Monthly_Payment_12M", 0),
@@ -197,25 +171,26 @@ def run_inference(data_json_path: str = None) -> str:
         }
         results.append(rec)
 
-    # 4. Xuất file dự báo
-    os.makedirs(PREDICTIONS_DIR, exist_ok=True)
-    out_json = os.path.join(PREDICTIONS_DIR, f"predictions_{timestamp_str}.json")
-    latest_json = os.path.join(PREDICTIONS_DIR, "predictions_latest.json")
-    latest_csv = os.path.join(PREDICTIONS_DIR, "predictions_latest.csv")
-    out_md = os.path.join(PREDICTIONS_DIR, f"daily_report_{timestamp_str}.md")
-    latest_md = os.path.join(PREDICTIONS_DIR, "daily_report_latest.md")
+    # Xuất file báo cáo
+    os.makedirs(REPORTS_DIR, exist_ok=True)
+    out_json = os.path.join(REPORTS_DIR, f"predictions_{timestamp_str}.json")
+    latest_json = os.path.join(REPORTS_DIR, "predictions_latest.json")
+    latest_csv = os.path.join(REPORTS_DIR, "predictions_latest.csv")
+    out_md = os.path.join(REPORTS_DIR, f"daily_report_{timestamp_str}.md")
+    latest_md = os.path.join(REPORTS_DIR, "daily_report_latest.md")
 
     output_payload = {
         "metadata": {
-            "prediction_timestamp": now.isoformat(),
+            "report_timestamp": now.isoformat(),
             "source_snapshot": data_json_path,
             "total_skus": len(results),
-            "discontinued_count": sum(1 for r in results if r["Risk_Level"] == "DISCONTINUED"),
-            "out_of_stock_count": sum(1 for r in results if r["Risk_Level"] == "OUT_OF_STOCK"),
-            "critical_risk_count": sum(1 for r in results if r["Risk_Level"] == "CRITICAL_RISK"),
-            "safe_count": sum(1 for r in results if r["Risk_Level"] == "SAFE")
+            "discontinued_count": sum(1 for r in results if r["Status"] == "DISCONTINUED"),
+            "out_of_stock_count": sum(1 for r in results if r["Status"] == "OUT_OF_STOCK"),
+            "critical_risk_count": sum(1 for r in results if r["Status"] == "CRITICAL_RISK"),
+            "warning_count": sum(1 for r in results if r["Status"] == "WARNING"),
+            "safe_count": sum(1 for r in results if r["Status"] == "SAFE")
         },
-        "predictions": results
+        "inventory_data": results
     }
 
     with open(out_json, "w", encoding="utf-8") as jf:
@@ -227,111 +202,24 @@ def run_inference(data_json_path: str = None) -> str:
     df_res = pd.DataFrame(results)
     df_res.to_csv(latest_csv, index=False, sep=";", encoding="utf-8-sig")
 
-    # Xuất báo cáo Markdown trực quan
     generate_markdown_report(df_res, output_payload, latest_md, out_md, timestamp_str)
 
-    print(f"✅ Dự báo hoàn tất cho {len(results)} biến thể SKU!")
-    print(f"📁 Tệp kết quả: {out_json}")
-    print(f"📄 Báo cáo Markdown: {latest_md}")
-    print(f"🔗 Tệp mới nhất: {latest_json} & {latest_csv}")
+    print(f"✅ Hoàn tất xử lý cho {len(results)} biến thể SKU!")
+    print(f"📁 Tệp JSON: {latest_json}")
+    print(f"📁 Tệp CSV:  {latest_csv}")
+    print(f"📄 Tệp Báo Cáo Markdown: {latest_md}")
 
+    # Tóm tắt nhanh ra Terminal
+    print("\n" + "=" * 95)
+    print("📋 TỔNG KẾT TÌNH HÌNH TỒN KHO THỰC TẾ:")
+    print(f"  • Tổng SKU: {len(results)}")
+    print(f"  • Đang sẵn hàng (> 15 shop): {output_payload['metadata']['safe_count']}")
+    print(f"  • Cảnh báo khan hiếm (6 - 15 shop): {output_payload['metadata']['warning_count']}")
+    print(f"  • Báo động đỏ (<= 5 shop): {output_payload['metadata']['critical_risk_count']}")
+    print(f"  • Đã cạn sạch / Ngừng bán: {output_payload['metadata']['out_of_stock_count'] + output_payload['metadata']['discontinued_count']}")
+    print("=" * 95 + "\n")
 
-    # 5. In tóm tắt cảnh báo kinh doanh theo từng danh mục
-    def format_sku_name(name: str, color: str, max_len: int = 34) -> str:
-        color_str = f" ({color})" if color and color != "Default" else ""
-        full = f"{name}{color_str}"
-        full = re.sub(r'^(?:Điện thoại|Máy tính bảng|Laptop|Tai nghe Bluetooth|Đồng hồ thông minh)\s+', '', full)
-        if len(full) > max_len:
-            return full[:max_len-3] + "..."
-        return full
-
-    categories = ["iPhone", "MacBook", "iPad", "Apple Watch", "AirPods"]
-    cat_display_names = {
-        "iPhone": "📱 iPhone",
-        "MacBook": "💻 Mac / MacBook",
-        "iPad": "📱 iPad",
-        "Apple Watch": "⌚ Apple Watch",
-        "AirPods": "🎧 AirPods"
-    }
-
-    print("\n" + "=" * 98)
-    print("🚨 [1] CẢNH BÁO NGUY CƠ ĐỨT HÀNG THEO TỪNG DANH MỤC (STOCK-OUT RISK BY CATEGORY)")
-    print("    (Chỉ xét các sản phẩm còn đang lưu hành và còn dưới 20 điểm bán toàn quốc)")
-    print("=" * 98)
-
-    for cat in categories:
-        cat_df = df_res[df_res['Category'] == cat]
-        risk_df = cat_df[
-            (cat_df['Actual_Store_Count'] > 0) & 
-            (cat_df['Risk_Level'].isin(['CRITICAL_RISK', 'WARNING']) | (cat_df['Actual_Store_Count'] <= 15))
-        ].sort_values(by=['Actual_Store_Count', 'Stockout_Probability'], ascending=[True, False]).head(3)
-
-        label = cat_display_names.get(cat, cat)
-        print(f"\n{label} ({len(cat_df)} SKUs):")
-        if not risk_df.empty:
-            for _, r in risk_df.iterrows():
-                name_str = format_sku_name(r['Product_Name'], r['Color'], 34)
-                stores_str = f"{r['Actual_Store_Count']} shop"
-                pred_str = f"{r['Predicted_Store_Count']} shop"
-                prob_str = f"{r['Stockout_Probability']*100:.1f}%"
-                price_str = f"{int(r['Gia_Khuyen_Mai']):,}đ"
-                risk_icon = "🔴 CRITICAL" if r['Risk_Level'] == 'CRITICAL_RISK' or r['Actual_Store_Count'] <= 5 else "🟡 WARNING"
-                print(f"  • {name_str:<35} | Tồn: {stores_str:<8} | AI đoán: {pred_str:<7} | Xác suất cạn: {prob_str:<6} | Giá: {price_str:<12} | {risk_icon}")
-        else:
-            print("  ✅ Toàn bộ tồn kho trong danh mục đang ở mức an toàn (Safe stock level).")
-
-    print("\n" + "=" * 98)
-    print("🎁 [2] TOP SẢN PHẨM CÓ TRỢ LỰC TÀI CHÍNH (AFFORDABILITY) HỜI NHẤT THEO TỪNG DANH MỤC")
-    print("    (🟢 Chỉ lọc các sản phẩm ĐANG KINH DOANH và CÒN HÀNG tại hệ thống siêu thị)")
-    print("=" * 98)
-
-    for cat in categories:
-        cat_df = df_res[df_res['Category'] == cat]
-        in_stock_deals = cat_df[
-            (cat_df['Actual_Store_Count'] > 0) & 
-            (~cat_df['Risk_Level'].isin(['DISCONTINUED', 'OUT_OF_STOCK']))
-        ]
-        
-        with_pct = in_stock_deals[in_stock_deals['Affordability_Benefit_Pct'] > 0]
-        if not with_pct.empty:
-            deals_sorted = with_pct.sort_values(
-                by=['Affordability_Benefit_Pct', 'Actual_Store_Count'], 
-                ascending=[False, False]
-            ).head(3)
-        else:
-            deals_sorted = in_stock_deals.sort_values(
-                by=['Actual_Store_Count', 'Gia_Khuyen_Mai'], 
-                ascending=[False, True]
-            ).head(2)
-
-        label = cat_display_names.get(cat, cat)
-        print(f"\n{label}:")
-        if not deals_sorted.empty:
-            for _, r in deals_sorted.iterrows():
-                name_str = format_sku_name(r['Product_Name'], r['Color'], 34)
-                price_str = f"{int(r['Gia_Khuyen_Mai']):,}đ"
-                stores_str = f"{r['Actual_Store_Count']} shop"
-                disc_val = int(r['Direct_Discount_VND'])
-                trade_val = int(r['Trade_In_Subsidy_VND'])
-                pct_val = r['Affordability_Benefit_Pct']
-                
-                if pct_val > 0:
-                    disc_str = f"Giảm: {disc_val:,}đ" if disc_val >= 50000 else ""
-                    trade_str = f"Thu cũ: +{trade_val:,}đ" if trade_val >= 100000 else ""
-                    promo_details = " | ".join(filter(None, [disc_str, trade_str])) or "Ưu đãi tài chính đặc biệt"
-                    print(f"  • {name_str:<35} | Giá: {price_str:<12} | Còn: {stores_str:<8} | Tiết kiệm: {pct_val:>4.1f}% ({promo_details})")
-
-                else:
-                    monthly = int(r.get('Min_Monthly_Payment_12M', 0))
-                    monthly_str = f"Trả chậm 0%: ~{monthly:,}đ/tháng" if monthly > 0 else "Giá niêm yết chuẩn"
-                    print(f"  • {name_str:<35} | Giá: {price_str:<12} | Còn: {stores_str:<8} | {monthly_str}")
-        else:
-            print("  ⚠️ Không có sản phẩm nào trong danh mục còn hàng tại siêu thị.")
-
-    print("\n" + "=" * 98 + "\n")
-
-    return out_json
-
+    return latest_md
 
 
 if __name__ == "__main__":

@@ -6,6 +6,13 @@
 # Ensure PATH includes Homebrew binaries (for python3, git, etc.) so cron runs correctly
 export PATH=/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
 
+# ⏸️ PAUSE CHECK: Tạm dừng để tập trung tối ưu hệ thống Hybrid TGDD
+if [ "${FORCE_RUN_LEGACY:-0}" != "1" ]; then
+    echo "⏸️  [THÔNG BÁO] Workflow cũ (Apple Playwright Scraper) hiện đang tạm dừng để ưu tiên hệ thống Hybrid TGDD."
+    echo "💡 Nếu muốn ép buộc chạy thử nghiệm, vui lòng chạy: FORCE_RUN_LEGACY=1 $0"
+    exit 0
+fi
+
 echo "🚀 Starting Hybrid Scraper Workflow..."
 
 # ENSURE WE ARE IN THE PROJECT ROOT

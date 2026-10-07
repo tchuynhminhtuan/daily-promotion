@@ -26,16 +26,7 @@ EXIT_CODE=$?
 if [ $EXIT_CODE -eq 0 ]; then
     echo "[$(date '+%Y-%m-%d %H:%M:%S')] ✅ Quét dữ liệu thành công!" | tee -a "$LOG_FILE"
     
-    echo "[$(date '+%Y-%m-%d %H:%M:%S')] 🧠 Tự động huấn luyện & cập nhật Model AI/ML (Continuous Learning)..." | tee -a "$LOG_FILE"
-    if command -v uv &> /dev/null; then
-        uv run -m src.intelligence.models.trainer 2>&1 | tee -a "$LOG_FILE"
-    elif [ -f "$PROJECT_DIR/.venv/bin/python" ]; then
-        "$PROJECT_DIR/.venv/bin/python" -m src.intelligence.models.trainer 2>&1 | tee -a "$LOG_FILE"
-    else
-        python3 -m src.intelligence.models.trainer 2>&1 | tee -a "$LOG_FILE"
-    fi
-
-    echo "[$(date '+%Y-%m-%d %H:%M:%S')] 🔮 Bắt đầu chạy mô hình AI/ML dự báo rủi ro đứt hàng & chấm điểm tài chính..." | tee -a "$LOG_FILE"
+    echo "[$(date '+%Y-%m-%d %H:%M:%S')] 📊 Đang tổng hợp báo cáo điều hành tồn kho & trợ lực tài chính (Ground-Truth Intelligence)..." | tee -a "$LOG_FILE"
     if command -v uv &> /dev/null; then
         uv run -m src.intelligence.inference.daily_inference 2>&1 | tee -a "$LOG_FILE"
     elif [ -f "$PROJECT_DIR/.venv/bin/python" ]; then
@@ -43,7 +34,7 @@ if [ $EXIT_CODE -eq 0 ]; then
     else
         python3 -m src.intelligence.inference.daily_inference 2>&1 | tee -a "$LOG_FILE"
     fi
-    echo "[$(date '+%Y-%m-%d %H:%M:%S')] 🏁 Hoàn tất toàn bộ chu trình Quét & Dự báo AI/ML! Log: $LOG_FILE"
+    echo "[$(date '+%Y-%m-%d %H:%M:%S')] 🏁 Hoàn tất chu trình Quét & Báo cáo Tồn kho TGDD! Log: $LOG_FILE"
 else
     echo "[$(date '+%Y-%m-%d %H:%M:%S')] ❌ Có lỗi xảy ra trong bước quét dữ liệu (Exit code: $EXIT_CODE). Kiểm tra log: $LOG_FILE"
 fi
