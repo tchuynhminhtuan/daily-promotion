@@ -35,11 +35,12 @@ viettel-inventory-intelligence/
 │   ├── 01_sync_master_provinces.py             # Đồng bộ 63 tỉnh thành & mã ERP Viettel
 │   ├── 02_probe_product_inventory.py           # Dò sâu tồn kho & danh sách siêu thị 1 sản phẩm
 │   ├── 03_scan_catalog_inventory.py            # Quét hàng loạt danh mục sản phẩm (Apple Ecosystem)
-│   └── 04_generate_coverage_report.py          # Xuất báo cáo độ phủ & tồn kho (CSV & JSON)
+│   ├── 04_generate_coverage_report.py          # Xuất báo cáo độ phủ & tồn kho (CSV & JSON)
+│   └── 05_map_stores_to_personnel_tree.py      # Ánh xạ 163 siêu thị vào Cụm Nhân sự & sinh Viewer HTML
 └── data/
-    ├── master/                                 # Danh mục tỉnh thành chuẩn hóa
-    ├── snapshots/                              # Snapshot dữ liệu theo phiên quét
-    └── reports/                                # Báo cáo tổng hợp CSV & Markdown
+    ├── master/                                 # Danh mục tỉnh thành & mapping siêu thị (viettel_store_mapping.json)
+    ├── snapshots/                              # Snapshot dữ liệu theo phiên quét (viettel_inventory_latest.json)
+    └── reports/                                # Báo cáo tổng hợp CSV & Viewer HTML tương tác
 ```
 
 ---
@@ -60,12 +61,9 @@ python3 scripts/02_probe_product_inventory.py --pid 339614
 python3 scripts/02_probe_product_inventory.py --url https://viettelstore.vn/dien-thoai/iphone-16-pro-max-pid339630.html
 ```
 
-### 3. Quét Tồn Kho Hàng Loạt Toàn Hệ Thống
+### 3. Quét Tồn Kho Hàng Loạt Toàn Hệ Thống Apple Ecosystem
 ```bash
-# Quét thử nghiệm 10 sản phẩm Apple với 6 luồng song song
-python3 scripts/03_scan_catalog_inventory.py --limit 10 --concurrency 6
-
-# Quét toàn bộ danh mục Apple
+# Quét toàn bộ 167 sản phẩm - 466 biến thể SKU Apple
 python3 scripts/03_scan_catalog_inventory.py --all --concurrency 8
 ```
 
@@ -74,8 +72,14 @@ python3 scripts/03_scan_catalog_inventory.py --all --concurrency 8
 python3 scripts/04_generate_coverage_report.py
 ```
 
+### 5. Ánh Xạ Siêu Thị Vào Cây Nhân Sự Apple & Mở Viewer HTML
+```bash
+python3 scripts/05_map_stores_to_personnel_tree.py
+```
+
 Dữ liệu sẽ được tự động xuất ra:
-* `data/reports/viettel_inventory_latest.csv`: Dữ liệu bảng phẳng chi tiết từng màu, giá, tồn kho và danh sách siêu thị.
+* `data/reports/viettel_store_inventory_viewer.html`: **Giao diện Web tương tác tra cứu tồn kho theo Apple Store ID, Cụm nhân sự, chỉ số mật độ máy/shop & cấp độ sẵn hàng.**
+* `data/reports/viettel_inventory_latest.csv`: Dữ liệu bảng phẳng chi tiết 466 SKU (màu, giá, tồn kho ERP, danh sách shop).
 * `data/snapshots/viettel_inventory_latest.json`: Cấu trúc JSON phân cấp sâu.
 * `data/reports/viettel_inventory_intelligence_summary.md`: Báo cáo tóm tắt chỉ số điều hành.
 
@@ -84,3 +88,4 @@ Dữ liệu sẽ được tự động xuất ra:
 ## 📖 Tài Liệu Kỹ Thuật Chuyên Sâu
 Vui lòng xem file tài liệu chi tiết tại:  
 [VIETTEL_REVERSE_ENGINEERING_PLAYBOOK.md](file:///Users/brucehuynh/GitHub/daily-promotion/viettel-inventory-intelligence/docs/VIETTEL_REVERSE_ENGINEERING_PLAYBOOK.md)
+

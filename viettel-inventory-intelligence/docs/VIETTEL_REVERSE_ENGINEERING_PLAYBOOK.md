@@ -300,18 +300,54 @@ Viettel Store gom các microservices hiện đại thông qua Gateway `/Site/_Sy
 
 ## 7. SO SÁNH ĐỐI ĐẦU KỸ THUẬT: VIETTEL STORE VS CELLPHONES VS TGDD VS FPT SHOP
 
-| Tiêu chí | Viettel Store (`viettelstore.vn`) | CellphoneS (`cellphones.com.vn`) | Thế Giới Di Động (`thegioididong.com`) | FPT Shop (`fptshop.com.vn`) |
+| Tiêu chí | Viettel Store (`viettelstore.vn`) | FPT Shop (`fptshop.com.vn`) | Thế Giới Di Động (`thegioididong.com`) | CellphoneS (`cellphones.com.vn`) |
 | :--- | :--- | :--- | :--- | :--- |
-| **Kiến trúc cốt lõi** | ASP.NET + ASMX JSON-RPC | Nuxt.js + GraphQL Gateway v2 | Nuxt.js + REST API Internal | Next.js SSR + REST Microservices |
-| **Số lượng tồn kho tuyệt đối** | **CÓ SẴN (`AmounInstock`)** | ❌ Chỉ có cờ Còn/Hết | ❌ Suy luận qua cụm shop | ❌ Chỉ có cờ Còn/Hết |
-| **Tồn kho theo siêu thị** | **CÓ SẴN (Chi tiết từng shop)** | Có API chuỗi chi nhánh | Có API `GetStoreHaveProduct` | Có API cửa hàng khả dụng |
-| **Mã định danh SKU** | ERP Product ID (`3110...`) | Product ID & Variant ID | Product ID & SKU ID | SKU ID & Code |
-| **Cơ chế chống bot / Chặn IP** | Thấp - Trung bình (Headers hợp lệ) | Trung bình (Rate-limit, Cloudflare) | Cao (Chặn IP, mã hóa 34 vùng tỉnh) | Trung bình (Akamai / Cloudflare) |
-| **Tốc độ phản hồi API** | Cực nhanh (< 150ms) | Rất nhanh (< 100ms) | Trung bình (200 - 400ms) | Nhanh (< 200ms) |
+| **Kiến trúc cốt lõi** | ASP.NET + ASMX JSON-RPC | Next.js SSR + REST Microservices | Nuxt.js + REST API Internal | Nuxt.js + GraphQL Gateway v2 |
+| **Tồn kho toàn quốc (ERP)** | ✅ **CÓ SẴN (`AmounInstock`)** | ✅ **CÓ SẴN (`inventory` trong `product/variant`)** | ❌ Ẩn (Chỉ suy luận qua cụm shop) | ❌ Ẩn (Chỉ có cờ Còn/Hết) |
+| **Tồn kho chi tiết từng shop** | ❌ **Chỉ có cờ Còn/Hết** (danh sách shop khả dụng) | ❌ **Chỉ có cờ Còn/Hết** (`pickupType == 0`) | ❌ Chỉ có danh sách shop | ❌ Chỉ có danh sách shop |
+| **Khả năng dò số tồn từng shop** | ❌ **Không khả thi** (Server bỏ qua biến `quantity`) | ✅ **Khả thi 100% (Binary Search qua `pick-up-at-shop`)** | ❌ Không khả thi | ❌ Không khả thi |
+| **Mã định danh SKU** | ERP Product ID (`3110...`) | SKU ID & Code (`009...`) | Product ID & SKU ID | Product ID & Variant ID |
+| **Cơ chế chống bot / Chặn IP** | Thấp - Trung bình (Headers chuẩn) | Trung bình (Akamai / Cloudflare 429) | Cao (Chặn IP, mã hóa 34 vùng tỉnh) | Trung bình (Rate-limit, Cloudflare) |
+| **Tốc độ phản hồi API** | Cực nhanh (< 150ms) | Rất nhanh (< 200ms) | Trung bình (200 - 400ms) | Rất nhanh (< 100ms) |
 
 ---
 
-## 8. HƯỚNG DẪN VẬN HÀNH & KHAI THÁC DỰ ÁN
+## 8. CHUYÊN ĐỀ KỸ THUẬT: BÀI TOÁN DÒ TỒN KHO CHI TIẾT TỪNG SHOP BẰNG BINARY SEARCH (FPT SHOP VS VIETTEL STORE)
+
+### 8.1. Cơ chế Tìm Kiếm Nhị Phân (Binary Search Cart Probing) trên FPT Shop
+Tại sao FPT Shop lại cho phép chúng ta dò ra chính xác từng chiếc máy tại từng siêu thị riêng lẻ (vd: Shop 261 Khánh Hội còn đúng 3 máy)?
+* **Nguyên lý API:** FPT Shop sở hữu Microservice `POST /api-data/checkout/api/Cart/GetShopPickupV2` (hoặc `/order-promising/pick-up-at-shop`).
+* **Logic Backend:** Endpoint nhận mảng `product: [{"id": sku, "quantity": q, "isCheckInventory": true}]`. Backend thực hiện câu lệnh lọc:
+  $$\text{Điều kiện hiển thị shop: } \text{PhysicalStock}_{\text{Shop}} \ge q$$
+* **Thuật toán hội tụ:** Khi tăng $q$ lên vượt quá tồn thực tế của Shop X, Shop X sẽ **biến mất ngay lập tức** khỏi danh sách `pickupType == 0`. Nhờ tính chất đơn điệu (monotonicity), chúng ta áp dụng **Binary Search $O(\log N)$** với dải $[1 \dots 30]$ chỉ mất 4 - 5 request là xác định được số lượng máy tồn kho thực tế của shop.
+
+### 8.2. Tại sao Viettel Store KHÔNG THỂ áp dụng cơ chế Binary Search này?
+Qua quá trình dịch ngược toàn bộ mã nguồn JavaScript giỏ hàng (`Detail.js`, `cart.js`, `ShopCart.js`, `pdp-cart-ext.js`) và kiểm thử API:
+
+1. **API Tồn Kho Siêu Thị (`get-markets-for-erp-checktonkho`):**
+   * Tham số tiếp nhận: `productId` và `specCode` (ERP SKU ID).
+   * Khi thực nghiệm bơm các tham số `quantity`, `amount`, `count`, `qty` từ $1 \to 500$, kết quả trả về **hoàn toàn giống nhau 100%** (`length = 393 bytes`).
+   * **Kết luận:** Backend C# / SQL của Viettel Store chỉ chạy logic kiểm tra nhị phân: `WHERE ErpProductId = ... AND Stock > 0`. Hệ thống hoàn toàn bỏ qua tham số số lượng yêu cầu.
+2. **Luồng Giỏ Hàng & Checkout Viettel Store:**
+   * Viettel Store xây dựng giỏ hàng theo cơ chế **ASP.NET Session** phía server (`AjaxSession.aspx`).
+   * Ở bước chọn siêu thị nhận hàng (`at-market`), hàm `getMarket11()` chỉ gọi `action=get-markets-by-ward` với `provinceId` và `wardId` để **tải danh bạ tất cả các điểm bán trên địa bàn**, hoàn toàn không gửi kèm `productId`, `specCode` hay `quantity` để kiểm tra khả năng đáp ứng theo thời gian thực.
+   * Viettel Store không có cơ chế `order-promising` trên web client-side; việc kiểm tra và điều chuyển máy được thực hiện nội bộ sau khi đơn hàng được tạo.
+
+### 8.3. Giải Pháp Tối Ưu Cho Viettel Store: Trí Tuệ Mật Độ Phân Bổ (Inventory Density & Availability Tiers)
+Không cần tốn hàng ngàn request dò nhị phân (vốn dễ gây quá tải và nghẽn mạng), hệ thống Viettel Store cung cấp trực tiếp 2 giá trị cốt lõi:
+1. **Tổng tồn kho ERP toàn quốc (`AmounInstock`):** Chính xác 100% đến từng máy trên toàn quốc.
+2. **Độ phủ siêu thị (`stores_count`):** Danh sách toàn bộ các shop đang có hàng.
+
+Từ đó, công cụ tính toán:
+* **Mật độ tồn kho trung bình:** $\text{Mật độ} = \frac{\text{AmounInstock}}{\text{stores\_count}}$ (vd: 245 máy / 112 shop $\approx 2.2$ máy/shop).
+* **Cấp độ sẵn hàng (Availability Tier):**
+  * 🟢 **Dồi dào ($\ge 300$ máy toàn quốc):** Sẵn nhiều máy mới nguyên seal tại shop.
+  * 🔵 **Tiêu chuẩn ($50 - 300$ máy toàn quốc):** Phân bổ đều, mỗi shop thường có từ $1 - 3$ máy.
+  * 🔴 **Hàng hiếm ($< 50$ máy hoặc $< 30$ shop):** Rất khan hiếm, mỗi shop trong danh sách thường chỉ còn $1$ máy hoặc phải điều chuyển.
+
+---
+
+## 9. HƯỚNG DẪN VẬN HÀNH & KHAI THÁC DỰ ÁN
 
 Dự án `viettel-inventory-intelligence` được tổ chức độc lập và cung cấp các script thực thi nhanh:
 
@@ -322,9 +358,13 @@ python3 scripts/01_sync_master_provinces.py
 # 2. Dò tồn kho chi tiết 1 sản phẩm (vd: iPhone 16 Pro Max hoặc iPhone 16)
 python3 scripts/02_probe_product_inventory.py --pid 339614
 
-# 3. Quét toàn bộ danh mục Apple Ecosystem Viettel Store
+# 3. Quét toàn bộ danh mục Apple Ecosystem Viettel Store (167 sản phẩm - 466 biến thể SKU)
 python3 scripts/03_scan_catalog_inventory.py --concurrency 8
 
 # 4. Xuất báo cáo tồn kho & độ phủ siêu thị (CSV & JSON)
 python3 scripts/04_generate_coverage_report.py
+
+# 5. Đối soát 163 siêu thị vào Cây nhân sự Apple & sinh Viewer HTML tương tác
+python3 scripts/05_map_stores_to_personnel_tree.py
 ```
+

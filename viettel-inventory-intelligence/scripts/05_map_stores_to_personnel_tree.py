@@ -129,6 +129,10 @@ def load_crawled_stores_and_inventory(snapshot_path: Path) -> Tuple[Dict[str, Di
             rule_id = v.get("rule_id")
             erp_id = v.get("erp_product_id")
 
+            amt_stock = v.get("amount_in_stock", 0)
+            stores_cnt = len(v.get("stores_in_stock", []))
+            density = round(amt_stock / max(1, stores_cnt), 1) if stores_cnt > 0 else 0
+
             item_summary = {
                 "product_id": pid,
                 "product_name": pname,
@@ -139,6 +143,9 @@ def load_crawled_stores_and_inventory(snapshot_path: Path) -> Tuple[Dict[str, Di
                 "rule_id": rule_id,
                 "erp_product_id": erp_id,
                 "url": purl,
+                "nationwide_stock": amt_stock,
+                "stores_count": stores_cnt,
+                "avg_per_store": density,
             }
 
             for s in v.get("stores_in_stock", []):
@@ -978,6 +985,21 @@ def generate_viewer_html(
 
       filtered.forEach(it => {{
         const tr = document.createElement("tr");
+        
+        // Stock tier indicator
+        const stock = Number(it.nationwide_stock) || 0;
+        const stores = Number(it.stores_count) || 0;
+        const avg = it.avg_per_store || (stores > 0 ? (stock / stores).toFixed(1) : 0);
+        
+        let tierBadge = "";
+        if (stock >= 300) {{
+          tierBadge = '<span style="font-size: 10px; background: rgba(16, 185, 129, 0.15); color: #34d399; padding: 2px 6px; border-radius: 4px; font-weight: 700; margin-left: 6px;">Dồi dào</span>';
+        }} else if (stock >= 50) {{
+          tierBadge = '<span style="font-size: 10px; background: rgba(56, 189, 248, 0.15); color: #38bdf8; padding: 2px 6px; border-radius: 4px; font-weight: 700; margin-left: 6px;">Tiêu chuẩn</span>';
+        }} else {{
+          tierBadge = '<span style="font-size: 10px; background: rgba(239, 68, 68, 0.15); color: #f87171; padding: 2px 6px; border-radius: 4px; font-weight: 700; margin-left: 6px;">Hàng hiếm</span>';
+        }}
+
         tr.innerHTML = `
           <td class="product-name-cell">
             ${{it.product_name}}
@@ -986,7 +1008,16 @@ def generate_viewer_html(
           <td>${{it.color_name || "Mặc định"}}</td>
           <td><span style="font-size: 12px; color: var(--accent-apple); font-weight: 600;">${{it.category}}</span></td>
           <td class="price-text">${{Number(it.price).toLocaleString("vi-VN")}} ₫</td>
-          <td><span class="badge-stock">🟢 Còn hàng tại shop</span></td>
+          <td>
+            <div>
+              <span class="badge-stock">🟢 Còn hàng tại shop</span>
+              ${{tierBadge}}
+            </div>
+            <div style="font-size: 11px; color: var(--text-muted); margin-top: 5px; line-height: 1.4;">
+              Kho ERP: <strong style="color: #f8fafc;">${{stock.toLocaleString("vi-VN")}}</strong> máy | Phủ <strong>${{stores}}</strong> shop
+              <span style="color: #cbd5e1;">(~${{avg}} m/shop)</span>
+            </div>
+          </td>
           <td><a href="${{it.url}}" target="_blank" class="btn-link">Xem Viettel ↗</a></td>
         `;
         tbody.appendChild(tr);

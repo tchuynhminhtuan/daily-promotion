@@ -4,9 +4,22 @@ __pycache__/
 *.pyd
 .DS_Store
 .venv/
+logs/
+*.log
+
+# Raw interim files
 data/raw/*
 !data/raw/.gitkeep
+
+# Snapshots - giữ lại snapshot chính thức
 data/snapshots/*
 !data/snapshots/.gitkeep
+!data/snapshots/viettel_inventory_latest.json
+
+# Reports - giữ lại viewer HTML và summary reports
 data/reports/*
 !data/reports/.gitkeep
+!data/reports/viettel_store_inventory_viewer.html
+!data/reports/viettel_inventory_intelligence_summary.md
+!data/reports/viettel_inventory_latest.csv
+
