@@ -1,0 +1,44 @@
+[
+  {
+    "id": 30,
+    "name": "Hồ Chí Minh",
+    "company_id": 1,
+    "region": "Miền Nam"
+  },
+  {
+    "id": 70,
+    "name": "Hà Nội",
+    "company_id": 1,
+    "region": "Miền Bắc"
+  },
+  {
+    "id": 17,
+    "name": "Đà Nẵng",
+    "company_id": 1,
+    "region": "Miền Trung"
+  },
+  {
+    "id": 34,
+    "name": "Hải Phòng",
+    "company_id": 1,
+    "region": "Miền Bắc"
+  },
+  {
+    "id": 18,
+    "name": "Cần Thơ",
+    "company_id": 1,
+    "region": "Miền Nam"
+  },
+  {
+    "id": 11,
+    "name": "Bình Dương",
+    "company_id": 1,
+    "region": "Miền Nam"
+  },
+  {
+    "id": 24,
+    "name": "Đồng Nai",
+    "company_id": 1,
+    "region": "Miền Nam"
+  }
+]
