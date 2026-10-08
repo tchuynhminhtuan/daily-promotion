@@ -110,11 +110,13 @@ def scan_store_inventory_for_sku(
     sku_name: str,
     price: int,
     order_channel: str = "1",
-    max_workers: int = 17
+    max_workers: int = 6,
+    delay_between_calls: float = 0.0
 ) -> List[Dict[str, Any]]:
     """
     Quét tồn kho thực tế tại từng siêu thị trên toàn quốc cho một SKU cụ thể.
     order_channel: "1" cho FPT Shop, "12" cho F.Studio.
+    Có tích hợp auto-retry 3 lần với exponential backoff để chống drop request ngầm.
     """
     headers = HEADERS_FPTSHOP if order_channel == "1" else HEADERS_FSTUDIO
     all_stores = []
@@ -132,12 +134,15 @@ def scan_store_inventory_for_sku(
                 "isCheckInventory": True
             }]
         }
-        try:
-            r = requests.post(PICKUP_API_URL, headers=headers, json=payload, timeout=6)
-            if r.status_code == 200:
-                return r.json().get("data", [])
-        except Exception:
-            pass
+        for attempt in range(3):
+            try:
+                r = requests.post(PICKUP_API_URL, headers=headers, json=payload, timeout=8)
+                if r.status_code == 200:
+                    return r.json().get("data", [])
+                elif r.status_code == 429:
+                    time.sleep(1.0 * (attempt + 1))
+            except Exception:
+                time.sleep(0.5 * (attempt + 1))
         return []
 
     with ThreadPoolExecutor(max_workers=max_workers) as ex:
@@ -147,6 +152,9 @@ def scan_store_inventory_for_sku(
             if stores:
                 all_stores.extend(stores)
 
+    if delay_between_calls > 0:
+        time.sleep(delay_between_calls)
+
     return all_stores
 
 
@@ -155,12 +163,15 @@ def run_pipeline(
     output_json: Optional[str] = None,
     max_workers: int = 12,
     mode: str = "deep",
-    target_category: Optional[str] = None
+    target_category: Optional[str] = None,
+    slow: bool = False,
+    delay: float = 0.0
 ) -> Tuple[str, str]:
     """
     Thực thi chu trình cào tồn kho FPT Shop & F.Studio.
     mode: 'fast' (quét nhanh kho tổng 3-5s) hoặc 'deep' (quét sâu 602 siêu thị).
     target_category: 'iPhone', 'iPad', 'MacBook', 'Apple Watch', 'AirPods' hoặc None (tất cả).
+    slow: Quét chậm rãi, giảm tải, auto-retry 3 lần chống drop request và sleep giữa các SKU.
     """
     start_time = time.time()
     now = datetime.now()
@@ -244,11 +255,17 @@ def run_pipeline(
             in_stock_fpt = []
             in_stock_fstudio = []
         else:
-            raw_fpt = scan_store_inventory_for_sku(sku_code, sku_name, price, order_channel="1")
-            raw_fstudio = scan_store_inventory_for_sku(sku_code, sku_name, price, order_channel="12")
+            prov_workers = 4 if slow else 6
+            inter_delay = 0.2 if slow else 0.0
+            raw_fpt = scan_store_inventory_for_sku(sku_code, sku_name, price, order_channel="1", max_workers=prov_workers, delay_between_calls=inter_delay)
+            raw_fstudio = scan_store_inventory_for_sku(sku_code, sku_name, price, order_channel="12", max_workers=prov_workers, delay_between_calls=inter_delay)
             # Lọc chính xác các siêu thị CÓ HÀNG SẴN LẤY NGAY (pickupType == 0)
             in_stock_fpt = [s for s in raw_fpt if s.get("pickupType") == 0]
             in_stock_fstudio = [s for s in raw_fstudio if s.get("pickupType") == 0]
+
+            if slow or delay > 0:
+                sku_sleep = delay if delay > 0 else 0.35
+                time.sleep(sku_sleep)
 
         # Làm giàu thông tin siêu thị từ Registry
         enriched_fpt_stores = []
@@ -342,13 +359,16 @@ def run_pipeline(
             print(f"  [{idx:3d}/{len(all_skus_to_scan)}] {item['sku_name'][:40]:<40} | Tồn tổng: {tot_inv:3d} | FPT: {len(enriched_fpt_stores):3d} shop | F.Studio: {fstudio_count:2d} shop")
 
     # 5. Lưu trữ kết quả
-    if not output_json:
-        output_json = os.path.join(RAW_DATA_DIR, f"fpt_inventory_deep_{timestamp_str}.json")
-    if not output_csv:
-        output_csv = os.path.join(RAW_DATA_DIR, f"fpt_inventory_{timestamp_str}.csv")
+    prefix_json = "fpt_inventory_deep" if mode == "deep" else "fpt_inventory_fast"
+    prefix_csv = "fpt_inventory" if mode == "deep" else "fpt_inventory_fast"
 
-    latest_json = os.path.join(RAW_DATA_DIR, "fpt_inventory_deep_latest.json")
-    latest_csv = os.path.join(RAW_DATA_DIR, "fpt_inventory_latest.csv")
+    if not output_json:
+        output_json = os.path.join(RAW_DATA_DIR, f"{prefix_json}_{timestamp_str}.json")
+    if not output_csv:
+        output_csv = os.path.join(RAW_DATA_DIR, f"{prefix_csv}_{timestamp_str}.csv")
+
+    latest_json = os.path.join(RAW_DATA_DIR, f"{prefix_json}_latest.json")
+    latest_csv = os.path.join(RAW_DATA_DIR, f"{prefix_csv}_latest.csv")
 
     if flat_records:
         with open(output_json, "w", encoding="utf-8") as f:
@@ -385,5 +405,7 @@ if __name__ == "__main__":
     parser.add_argument("--workers", "-w", type=int, default=12, help="Số luồng xử lý")
     parser.add_argument("--mode", "-m", choices=["fast", "deep"], default="deep", help="Chế độ quét: 'fast' (quét nhanh kho tổng 3-5s) hoặc 'deep' (quét sâu 602 siêu thị)")
     parser.add_argument("--category", "-c", type=str, default=None, help="Chỉ quét 1 ngành hàng cụ thể (iPhone, iPad, MacBook, Apple Watch, AirPods)")
+    parser.add_argument("--slow", "-s", action="store_true", help="Chế độ quét chậm rãi, an toàn, có delay và retry để tránh bị chặn và đảm bảo data đầy đủ toàn diện")
+    parser.add_argument("--delay", "-d", type=float, default=0.0, help="Độ trễ giữa các SKU (giây)")
     args = parser.parse_args()
-    run_pipeline(max_workers=args.workers, mode=args.mode, target_category=args.category)
+    run_pipeline(max_workers=args.workers, mode=args.mode, target_category=args.category, slow=args.slow, delay=args.delay)

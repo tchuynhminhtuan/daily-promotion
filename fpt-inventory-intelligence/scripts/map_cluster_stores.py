@@ -162,9 +162,26 @@ def main():
                     score += 12
                     break
 
-            # Thưởng nếu tên shop trong Master có số và tên đường trùng khớp với tên tree
-            if clean_address_text(t_addr) and len(clean_address_text(t_addr)) > 3 and clean_address_text(t_addr) in clean_m_all:
-                score += 25
+            # Phân loại chuyên biệt: Garmin Brand Agency vs FPT Shop / F.Studio
+            is_garmin_shop = (
+                "garmin" in m_name.lower() or 
+                " g-" in m_name.lower() or 
+                m_name.startswith("G-") or
+                "(garmin store" in m_disp.lower() or
+                any(f.get("name") == "Garmin" for f in ms.get("shopFeatures", []))
+            )
+            is_fpt_or_fstudio = (
+                any(f.get("name") in ["FPTShop", "Điện máy", "Trung Tâm Laptop", "F Studio Side by side", "F.Studio"] for f in ms.get("shopFeatures", [])) or
+                "fpt shop" in m_name.lower() or "f.studio" in m_name.lower()
+            )
+
+            # Nếu cửa hàng từ cây nhân sự là kênh FPT/Apple nhưng shop ứng viên là Garmin: PHẠT NẶNG
+            tree_is_garmin = "garmin" in t_name.lower()
+            if is_garmin_shop and not tree_is_garmin:
+                score -= 100  # Loại bỏ hoàn toàn quầy Garmin chuyên biệt khỏi điểm bán Apple/FPT
+
+            if is_fpt_or_fstudio and not tree_is_garmin:
+                score += 30   # Ưu tiên tuyệt đối shop FPT Shop / F.Studio chuẩn
 
             if score > best_score:
                 best_score = score

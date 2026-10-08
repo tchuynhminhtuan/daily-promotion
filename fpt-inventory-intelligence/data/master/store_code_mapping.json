@@ -21,6 +21,17 @@
     "latitude": 21.182729,
     "longitude": 106.065151
   },
+  "1799477": {
+    "shopCode": "31302",
+    "shopName": "BNH 394 Âu Cơ- Thuận Thành",
+    "store_code": "1799477",
+    "store_name": "FPTSHOP@DABACO, TT. HO, H.THUAN THANH, BAC NINH, BNH",
+    "cluster_group": "A",
+    "asm_group": "",
+    "displayAddress": "394 Âu Cơ, P. Thuận Thành, Tỉnh Bắc Ninh",
+    "latitude": 21.054139,
+    "longitude": 106.087249
+  },
   "1666165": {
     "shopCode": "30139",
     "shopName": "BGG 01 Trường Chinh - Hiệp Hòa",
@@ -53,6 +64,17 @@
     "displayAddress": "34 Biên Hòa (Ngã 4 Vincom), P. Phủ Lý, Tỉnh Ninh Bình",
     "latitude": 20.543831,
     "longitude": 105.916883
+  },
+  "1528678": {
+    "shopCode": "30266",
+    "shopName": "HNM 297 Nguyễn Hữu Tiến",
+    "store_code": "1528678",
+    "store_name": "FPT SHOP@89 NGUYEN HUU TIEN, HNM",
+    "cluster_group": "A",
+    "asm_group": "",
+    "displayAddress": "297 Nguyễn Hữu Tiến, P. Đồng Văn, Tỉnh Ninh Bình",
+    "latitude": 20.643363,
+    "longitude": 105.923795
   },
   "2349579": {
     "shopCode": "30304",
@@ -99,15 +121,15 @@
     "longitude": 105.918055
   },
   "3527476": {
-    "shopCode": "30223",
-    "shopName": "HNM 34 Biên Hòa",
+    "shopCode": "30328",
+    "shopName": "QNH 01 Đường Hạ Long",
     "store_code": "3527476",
     "store_name": "FPTshop @ HYN Dân Tiến - Khoái Châu",
     "cluster_group": "A",
     "asm_group": "",
-    "displayAddress": "34 Biên Hòa (Ngã 4 Vincom), P. Phủ Lý, Tỉnh Ninh Bình",
-    "latitude": 20.543831,
-    "longitude": 105.916883
+    "displayAddress": "01 Đường Hạ Long (Ngã tư Ao Cá), Tổ 12, Khu 4, P. Việt Hưng, Tỉnh Quảng Ninh",
+    "latitude": 20.973006,
+    "longitude": 107.015122
   },
   "1579643": {
     "shopCode": "30330",
@@ -440,15 +462,15 @@
     "longitude": 105.212768
   },
   "1659577": {
-    "shopCode": "31502",
-    "shopName": "NAN G-45 Nguyễn Thị Minh Khai",
+    "shopCode": "30476",
+    "shopName": "NAN 47 Nguyễn Thị Minh Khai",
     "store_code": "1659577",
     "store_name": "F-STUDIO BY FPT @ 45 NGUYEN THI MINH KHAI, NAN",
     "cluster_group": "A",
     "asm_group": "",
-    "displayAddress": "45 Nguyễn Thị Minh Khai (Garmin Store, P. Thành Vinh, Tỉnh Nghệ An",
-    "latitude": 18.671551,
-    "longitude": 105.681872
+    "displayAddress": "47 Nguyễn Thị Minh Khai, P. Thành Vinh, Tỉnh Nghệ An",
+    "latitude": 18.671615,
+    "longitude": 105.681806
   },
   "1472418": {
     "shopCode": "30418",
@@ -506,13 +528,13 @@
     "longitude": 108.172093
   },
   "2586227": {
-    "shopCode": "31701",
-    "shopName": "DAG G-A8 Võ Văn Kiệt",
+    "shopCode": "30745",
+    "shopName": "DAG Lô A8 Võ Văn Kiệt",
     "store_code": "2586227",
     "store_name": "FPTSHOP@LO A8 VO VAN KIET, DAG",
     "cluster_group": "A",
     "asm_group": "",
-    "displayAddress": "Lô A8 Võ Văn Kiệt (Garmin Store), P. An Hải, TP. Đà Nẵng",
+    "displayAddress": "Lô A8 Võ Văn Kiệt (đầu Cầu Rồng), P. An Hải, TP. Đà Nẵng",
     "latitude": 16.061849,
     "longitude": 108.234581
   },
@@ -660,8 +682,8 @@
     "longitude": 108.490725
   },
   "1472413": {
-    "shopCode": "31708",
-    "shopName": "DAG G-318 Lê Duẩn",
+    "shopCode": "30703",
+    "shopName": "DAG 318 Lê Duẩn",
     "store_code": "1472413",
     "store_name": "FPT SHOP@318 LE DUAN, DAG",
     "cluster_group": "A",
@@ -1155,15 +1177,15 @@
     "longitude": 105.846282
   },
   "1472289": {
-    "shopCode": "31501",
-    "shopName": "HNI G-8 Phan Bội Châu",
+    "shopCode": "40206",
+    "shopName": "HNI Fstudio 92 Hai Bà Trưng 2",
     "store_code": "1472289",
     "store_name": "F-STUDIO@ 92HAI BA TRUNG, HNI",
     "cluster_group": "B",
     "asm_group": "",
-    "displayAddress": "8 Phan Bội Châu (Garmin Store), P. Cửa Nam, TP. Hà Nội",
-    "latitude": 21.027403,
-    "longitude": 105.843842
+    "displayAddress": "92 Hai Bà Trưng, P. Cửa Nam, TP. Hà Nội",
+    "latitude": 21.027174,
+    "longitude": 105.843727
   },
   "1995992": {
     "shopCode": "30238",
@@ -1177,15 +1199,15 @@
     "longitude": 105.817517
   },
   "1659583": {
-    "shopCode": "40205",
-    "shopName": "HNI Fstudio 269 Chùa Bộc",
+    "shopCode": "31335",
+    "shopName": "HNI 637 Quang Trung",
     "store_code": "1659583",
     "store_name": "F-STUDIO BY FPT @ 269 CHUA BOC (171TS), HNI",
     "cluster_group": "B",
     "asm_group": "",
-    "displayAddress": "269 Chùa Bộc (Ngã tư Chùa Bộc - Tây Sơn), P. Kim Liên, TP. Hà Nội",
-    "latitude": 21.008872,
-    "longitude": 105.824711
+    "displayAddress": "637 Quang Trung, P. Kiến Hưng, TP. Hà Nội",
+    "latitude": 20.960985,
+    "longitude": 105.763405
   },
   "1472335": {
     "shopCode": "31386",
@@ -1254,13 +1276,13 @@
     "longitude": 105.895385
   },
   "1986756": {
-    "shopCode": "31503",
-    "shopName": "HNI G-350 Minh Khai",
+    "shopCode": "31310",
+    "shopName": "HNI 350 Minh Khai - Cầu Mai Động",
     "store_code": "1986756",
     "store_name": "FPT SHOP @ 350 MINH KHAI, HNI",
     "cluster_group": "B",
     "asm_group": "",
-    "displayAddress": "350 Minh Khai (Garmin Store), P. Vĩnh Tuy, TP. Hà Nội",
+    "displayAddress": "350 Minh Khai (Đầu cầu Mai Động), P. Vĩnh Tuy, TP. Hà Nội",
     "latitude": 20.996411,
     "longitude": 105.863011
   },
@@ -1439,6 +1461,17 @@
     "displayAddress": "24 Hồ Tùng Mậu (Đối diện đường Trần Bình), P. Phú Diễn, TP. Hà Nội",
     "latitude": 21.036793,
     "longitude": 105.778899
+  },
+  "3794413": {
+    "shopCode": "31349",
+    "shopName": "HNI Đức Giang - Hoài Đức",
+    "store_code": "3794413",
+    "store_name": "FPT SHOP @ DUC GIANG - HOAI DUC",
+    "cluster_group": "B",
+    "asm_group": "",
+    "displayAddress": "Quốc lộ 32 (Đối diện khu đô thị Tân Tây Đô), Thôn Cao Trung, X. Hoài Đức, TP. Hà Nội",
+    "latitude": 21.073331,
+    "longitude": 105.701121
   },
   "2524474": {
     "shopCode": "31328",
@@ -1804,15 +1837,15 @@
     "longitude": 105.780438
   },
   "1693744": {
-    "shopCode": "31620",
-    "shopName": "CTO G-198B Đường 3/2",
+    "shopCode": "30959",
+    "shopName": "CTO 198B đường 3/2",
     "store_code": "1693744",
     "store_name": "FPT SHOP@198B Ba Thang Hai, Can Tho",
     "cluster_group": "C",
     "asm_group": "",
-    "displayAddress": "198-198A-198B Đường 3/2, P. Tân An, TP. Cần Thơ",
-    "latitude": 10.021511,
-    "longitude": 105.764364
+    "displayAddress": "198B Đường 3/2 (Ngã tư đường 3/2), P. Tân An, TP. Cần Thơ",
+    "latitude": 10.021441,
+    "longitude": 105.764492
   },
   "1819324": {
     "shopCode": "30965",
@@ -2013,15 +2046,15 @@
     "longitude": 106.688017
   },
   "1588035": {
-    "shopCode": "40805",
-    "shopName": "HCM Fstudio 141 Trần Não",
+    "shopCode": "31494",
+    "shopName": "HCM 42 Trần Não",
     "store_code": "1588035",
     "store_name": "F-STUDIO@141 Tran Nao, HCM",
     "cluster_group": "C",
     "asm_group": "",
-    "displayAddress": "141 Trần Não (Gần công chứng Thủ Thiêm), Khu phố 3, P. An Khánh, TP. Hồ Chí Minh",
-    "latitude": 10.791851,
-    "longitude": 106.730634
+    "displayAddress": "42 Trần Não (Gần Công viên Dạ Cầu), Khu phố 2, P. An Khánh, TP. Hồ Chí Minh",
+    "latitude": 10.796917,
+    "longitude": 106.731076
   },
   "1757972": {
     "shopCode": "31246",
@@ -2101,15 +2134,15 @@
     "longitude": 106.729348
   },
   "1472429": {
-    "shopCode": "31614",
-    "shopName": "HCM G-Landmark 81",
+    "shopCode": "31420",
+    "shopName": "BDG 2 Nguyễn Du, Bình Hòa - Thuận An",
     "store_code": "1472429",
     "store_name": "FPT SHOP@192A NGUYEN THI DINH HCM",
     "cluster_group": "C",
     "asm_group": "",
-    "displayAddress": "Lô L2-K3, Tầng 2, TTTM Vincom Center Landmark81, số 772 Điện Biên Phủ, P. Thạnh Mỹ Tây, TP. Hồ Chí Minh",
-    "latitude": 10.795171,
-    "longitude": 106.721773
+    "displayAddress": "2/23 Nguyễn Du, Khu phố Bình Đức 1, P. Bình Hòa, TP. Hồ Chí Minh",
+    "latitude": 10.905797,
+    "longitude": 106.728227
   },
   "2696350": {
     "shopCode": "31402",
@@ -2299,15 +2332,15 @@
     "longitude": 107.083601
   },
   "1472348": {
-    "shopCode": "31604",
-    "shopName": "BAR G-155 Nguyễn Thái Học",
+    "shopCode": "30841",
+    "shopName": "BAR 155 Nguyễn Thái Học",
     "store_code": "1472348",
     "store_name": "FPT SHOP@155 Nguyen Thai Hoc, BRVT",
     "cluster_group": "D",
     "asm_group": "",
-    "displayAddress": "155 Nguyễn Thái Học (Garmin Store), P. Tam Thắng, TP. Hồ Chí Minh",
-    "latitude": 10.367594,
-    "longitude": 107.085101
+    "displayAddress": "155 Nguyễn Thái Học (Đối diện Co.op Mart), P. Tam Thắng, TP. Hồ Chí Minh",
+    "latitude": 10.367592,
+    "longitude": 107.085192
   },
   "1510887": {
     "shopCode": "30893",
@@ -2376,15 +2409,15 @@
     "longitude": 105.178601
   },
   "3815063": {
-    "shopCode": "40807",
-    "shopName": "BDG FStudio 15 Yersin",
+    "shopCode": "31489",
+    "shopName": "BDG 637 Huỳnh Văn Lũy",
     "store_code": "3815063",
     "store_name": "FSTUDIO@226 YERSIN",
     "cluster_group": "D",
     "asm_group": "",
-    "displayAddress": "15 Yersin (Gần Ngã tư Chợ Đình), Tổ 15, Khu phố 1, P. Thủ Dầu Một, TP. Hồ Chí Minh",
-    "latitude": 10.983695,
-    "longitude": 106.664723
+    "displayAddress": "637 Huỳnh Văn Lũy, P. Bình Dương, TP. Hồ Chí Minh",
+    "latitude": 11.015138,
+    "longitude": 106.676307
   },
   "3812806": {
     "shopCode": "31232",

@@ -5,11 +5,12 @@ Tạo file HTML độc lập phục vụ tra cứu tồn kho chi tiết theo App
 hoặc mã siêu thị FPT Shop (shopCode).
 
 Đặc tính nâng cao:
-1. Hỗ trợ Deep Linking URL Hash: open "viewer.html#store=3815062" hoặc "#3815062"
-2. Tích hợp dữ liệu Cây Nhân Sự Apple: store_code, store_name, cluster_group, asm_group, Quản lý & Chuyên viên Apple.
-3. Bộ lọc thời gian thực: Theo Cụm (A, B, C, D), Live Autocomplete Search theo Apple ID / Tên đường.
-4. Thống kê KPI & Breakdown từng ngành hàng (iPhone, iPad, Mac, Watch, AirPods).
-5. Hiển thị danh mục toàn bộ máy Apple đang có sẵn tại quầy với tính năng Copy SKU và Link PDP.
+1. Hiển thị SỐ LƯỢNG TỒN KHO THỰC TẾ (Actual On-Hand Units) của từng sản phẩm tại quầy.
+2. Phân loại mức tồn: Cảnh báo hàng khan hiếm (Còn 1 máy) vs Sẵn hàng dồi dào (≥ 2 máy).
+3. Khử trùng lặp kênh (De-duplication): Gom FPT Shop & F.Studio thành 1 dòng sản phẩm duy nhất.
+4. Hỗ trợ Deep Linking URL Hash: open "viewer.html#store=3815062" hoặc "#3815062".
+5. Tích hợp dữ liệu Cây Nhân Sự Apple: Quản lý, Chuyên viên Apple, Quy mô diện tích & Phân hạng doanh thu.
+6. Live Autocomplete Search theo Apple ID / Tên đường / Mã Shop.
 """
 
 import os
@@ -30,15 +31,23 @@ def generate_store_viewer_html(output_file: str = None) -> str:
         output_file = os.path.join(REPORTS_DIR, "fpt_store_inventory_viewer.html")
 
     deep_json_file = os.path.join(RAW_DATA_DIR, "fpt_inventory_deep_latest.json")
+    fast_json_file = os.path.join(RAW_DATA_DIR, "fpt_inventory_fast_latest.json")
     mapping_file = os.path.join(MASTER_DIR, "store_code_mapping.json")
+    quantities_file = os.path.join(RAW_DATA_DIR, "store_inventory_quantities.json")
 
-    if not os.path.exists(MASTER_STORES_FILE) or not os.path.exists(deep_json_file):
-        print("⚠️ Chưa đủ file dữ liệu để tạo Store Inventory Viewer.")
+    catalog_file = None
+    if os.path.exists(deep_json_file):
+        catalog_file = deep_json_file
+    elif os.path.exists(fast_json_file):
+        catalog_file = fast_json_file
+
+    if not os.path.exists(MASTER_STORES_FILE) or not catalog_file:
+        print("⚠️ Chưa đủ file dữ liệu (cần master stores và ít nhất 1 snapshot fast/deep) để tạo Store Inventory Viewer.")
         return ""
 
     with open(MASTER_STORES_FILE, "r", encoding="utf-8") as f:
         master_stores = json.load(f)
-    with open(deep_json_file, "r", encoding="utf-8") as f:
+    with open(catalog_file, "r", encoding="utf-8") as f:
         products = json.load(f)
 
     # Đọc mapping file nếu có để bổ sung các Apple ID đa xạ
@@ -47,8 +56,17 @@ def generate_store_viewer_html(output_file: str = None) -> str:
         with open(mapping_file, "r", encoding="utf-8") as f:
             store_code_map = json.load(f)
 
-    # Lập chỉ mục tồn kho theo từng shopCode
-    # store_inventory[shopCode] = [ {sku, name, cat, price, channel, url}, ... ]
+    # Đọc dữ liệu số lượng tồn kho đã probe
+    probed_quantities = {}
+    if os.path.exists(quantities_file):
+        try:
+            with open(quantities_file, "r", encoding="utf-8") as f:
+                probed_quantities = json.load(f)
+        except Exception:
+            probed_quantities = {}
+
+    # Lập chỉ mục tồn kho theo từng shopCode (Đã khử trùng lặp kênh FPT Shop & F.Studio)
+    # store_inventory[shopCode] = [ {sku_code, sku_name, category, price, channel, url, quantity, is_exact_qty}, ... ]
     store_inventory = {}
     for p in products:
         sku = p.get("sku_code")
@@ -57,37 +75,59 @@ def generate_store_viewer_html(output_file: str = None) -> str:
         price = p.get("price")
         url = p.get("url")
 
-        for s in p.get("fpt_store_list", []):
-            sc = str(s.get("shopCode"))
+        fpt_shops = {str(s.get("shopCode")) for s in p.get("fpt_store_list", []) if s.get("shopCode")}
+        fstudio_shops = {str(s.get("shopCode")) for s in p.get("fstudio_store_list", []) if s.get("shopCode")}
+        all_shops = fpt_shops | fstudio_shops
+
+        for sc in all_shops:
             if sc not in store_inventory:
                 store_inventory[sc] = []
+
+            # Xác định kênh cung ứng
+            if sc in fpt_shops and sc in fstudio_shops:
+                channel = "FPT Shop & F.Studio"
+            elif sc in fstudio_shops:
+                channel = "F.Studio by FPT"
+            else:
+                channel = "FPT Shop"
+
+            # Xác định số lượng tồn kho thực tế
+            qty = 1
+            is_exact = False
+            if sc in probed_quantities:
+                probed_items = probed_quantities[sc].get("items", {})
+                if sku in probed_items:
+                    qty = probed_items[sku]
+                    is_exact = True
+
             store_inventory[sc].append({
                 "sku_code": sku,
                 "sku_name": name,
                 "category": cat,
                 "price": price,
-                "channel": "FPT Shop",
-                "url": url
+                "channel": channel,
+                "url": url,
+                "quantity": qty,
+                "is_exact_qty": is_exact
             })
 
-        for s in p.get("fstudio_store_list", []):
-            sc = str(s.get("shopCode"))
-            if sc not in store_inventory:
-                store_inventory[sc] = []
-            if not any(item["sku_code"] == sku and item["channel"] == "F.Studio by FPT" for item in store_inventory[sc]):
-                store_inventory[sc].append({
-                    "sku_code": sku,
-                    "sku_name": name,
-                    "category": cat,
-                    "price": price,
-                    "channel": "F.Studio by FPT",
-                    "url": url
-                })
+    # Ưu tiên tuyệt đối item_details từ on-demand prober nếu có
+    for sc, p_info in probed_quantities.items():
+        sc = str(sc)
+        if "item_details" in p_info and p_info["item_details"]:
+            store_inventory[sc] = p_info["item_details"]
+        elif sc in store_inventory and "items" in p_info:
+            for it in store_inventory[sc]:
+                sku = it["sku_code"]
+                if sku in p_info["items"]:
+                    it["quantity"] = p_info["items"][sku]
+                    it["is_exact_qty"] = True
 
     # Đóng gói JSON nhúng vào HTML
     stores_json_str = json.dumps(master_stores, ensure_ascii=False)
     inventory_json_str = json.dumps(store_inventory, ensure_ascii=False)
     mapping_json_str = json.dumps(store_code_map, ensure_ascii=False)
+    probed_json_str = json.dumps(probed_quantities, ensure_ascii=False)
     now_str = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
     html_content = f"""<!DOCTYPE html>
@@ -95,7 +135,7 @@ def generate_store_viewer_html(output_file: str = None) -> str:
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FPT Store Inventory Intelligence - Tra Cứu Tồn Kho Theo Apple Store ID</title>
+  <title>FPT Store Inventory Intelligence - Tra Cứu Tồn Kho Thực Tế Theo Apple Store ID</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -540,6 +580,59 @@ def generate_store_viewer_html(output_file: str = None) -> str:
       background: rgba(255, 255, 255, 0.02);
     }}
 
+    /* Badges cho Số Lượng Tồn Thực Tế */
+    .badge-qty-high {{
+      background: rgba(16, 185, 129, 0.2);
+      border: 1px solid rgba(16, 185, 129, 0.45);
+      color: #34d399;
+      font-weight: 800;
+      font-size: 13px;
+      padding: 5px 12px;
+      border-radius: 8px;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }}
+
+    .badge-qty-good {{
+      background: rgba(56, 189, 248, 0.2);
+      border: 1px solid rgba(56, 189, 248, 0.45);
+      color: #38bdf8;
+      font-weight: 800;
+      font-size: 13px;
+      padding: 5px 12px;
+      border-radius: 8px;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }}
+
+    .badge-qty-warning {{
+      background: rgba(245, 158, 11, 0.2);
+      border: 1px solid rgba(245, 158, 11, 0.45);
+      color: #fbbf24;
+      font-weight: 800;
+      font-size: 13px;
+      padding: 5px 12px;
+      border-radius: 8px;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }}
+
+    .badge-qty-normal {{
+      background: rgba(148, 163, 184, 0.15);
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      color: #cbd5e1;
+      font-weight: 700;
+      font-size: 13px;
+      padding: 5px 12px;
+      border-radius: 8px;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }}
+
     .badge-in-stock {{
       background: rgba(16, 185, 129, 0.15);
       color: #34d399;
@@ -551,6 +644,53 @@ def generate_store_viewer_html(output_file: str = None) -> str:
       display: inline-flex;
       align-items: center;
       gap: 6px;
+    }}
+
+    .badge-stock-warning {{
+      background: rgba(245, 158, 11, 0.15);
+      color: #fbbf24;
+      border: 1px solid rgba(245, 158, 11, 0.35);
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }}
+
+    /* Badges cho Kênh Cung Ứng */
+    .badge-channel-combo {{
+      background: linear-gradient(135deg, rgba(203, 28, 34, 0.25), rgba(41, 151, 255, 0.25));
+      border: 1px solid rgba(139, 92, 246, 0.4);
+      color: #e0e7ff;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 700;
+      display: inline-block;
+    }}
+
+    .badge-channel-studio {{
+      background: rgba(41, 151, 255, 0.2);
+      border: 1px solid rgba(41, 151, 255, 0.35);
+      color: #38bdf8;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 700;
+      display: inline-block;
+    }}
+
+    .badge-channel-fpt {{
+      background: rgba(203, 28, 34, 0.2);
+      border: 1px solid rgba(203, 28, 34, 0.35);
+      color: #f87171;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 700;
+      display: inline-block;
     }}
 
     .btn-copy {{
@@ -615,6 +755,15 @@ def generate_store_viewer_html(output_file: str = None) -> str:
       </div>
     </header>
 
+    <!-- Probed Stores Dynamic Bar (Auto-generated from store_inventory_quantities.json) -->
+    <div class="preset-bar" id="probedStoresBar" style="display: none; background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(52, 211, 153, 0.25); border-radius: 12px; padding: 10px 14px; margin-bottom: 14px;">
+      <span class="preset-label" style="color: #34d399; display: flex; align-items: center; gap: 6px;">
+        <span style="display: inline-block; width: 8px; height: 8px; background: #10b981; border-radius: 50%; box-shadow: 0 0 8px #10b981;"></span>
+        🎯 SIÊU THỊ ĐÃ XÁC MINH SỐ LƯỢNG THỰC TẾ:
+      </span>
+      <div id="probedChipsContainer" style="display: flex; gap: 8px; flex-wrap: wrap;"></div>
+    </div>
+
     <!-- Preset Shortcuts -->
     <div class="preset-bar">
       <span class="preset-label">⚡ Cửa Hàng Tiêu Biểu:</span>
@@ -663,6 +812,7 @@ def generate_store_viewer_html(output_file: str = None) -> str:
           <span class="tag-shop" id="lblShopCode">Mã FPT PAPI: 30501</span>
           <span class="tag-cluster" id="lblCluster">Nhóm A</span>
           <span class="tag-tree" id="lblChannelBadge" style="background: rgba(41, 151, 255, 0.15); border-color: rgba(41, 151, 255, 0.35); color: #38bdf8;">F.Studio</span>
+          <span class="tag-tree" id="lblProbeBadge" style="display: none; background: rgba(16, 185, 129, 0.2); border-color: rgba(52, 211, 153, 0.5); color: #34d399; font-weight: 700;">🎯 ĐÃ XÁC MINH SỐ LƯỢNG THỰC TẾ</span>
         </div>
         <div class="store-name-lg" id="lblStoreName">DLK 37 Lê Thánh Tông</div>
         <div style="font-size: 14px; color: var(--text-muted);" id="lblTreeName">F-Studio By Fpt @ 37 Le Thanh Tong</div>
@@ -693,7 +843,7 @@ def generate_store_viewer_html(output_file: str = None) -> str:
       <div class="hero-summary-box">
         <div>
           <div style="font-size: 13px; color: var(--text-muted); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">SỨC KHỎE TỒN KHO TẠI QUẦY:</div>
-          <div style="font-size: 32px; font-weight: 800; color: #34d399; margin: 6px 0;" id="lblTotalSkusHero">11 BIẾN THỂ</div>
+          <div style="font-size: 32px; font-weight: 800; color: #34d399; margin: 6px 0;" id="lblTotalSkusHero">11 BIẾN THỂ (15 MÁY)</div>
           <div style="font-size: 13px; color: var(--text-muted); line-height: 1.4;">
             Toàn bộ các mặt hàng hiển thị dưới đây đều <strong>có sẵn máy vật lý tại quầy</strong> để khách hàng ghé lấy ngay.
           </div>
@@ -728,12 +878,12 @@ def generate_store_viewer_html(output_file: str = None) -> str:
         <div class="kpi-num" style="color: #34d399;" id="kpiSkus">11</div>
       </div>
       <div class="kpi-box">
-        <div class="kpi-subtext">ƯỚC TÍNH MÁY VẬT LÝ</div>
-        <div class="kpi-num" style="color: #38bdf8;" id="kpiUnits">15+ máy</div>
+        <div class="kpi-subtext">SỐ MÁY VẬT LÝ TẠI QUẦY</div>
+        <div class="kpi-num" style="color: #38bdf8;" id="kpiUnits">15 máy</div>
       </div>
       <div class="kpi-box">
         <div class="kpi-subtext">TỔNG GIÁ TRỊ TỒN TRƯNG BÀY</div>
-        <div class="kpi-num" style="color: #fbbf24;" id="kpiValue">~360 Tr đ</div>
+        <div class="kpi-num" style="color: #fbbf24;" id="kpiValue">~450 Tr đ</div>
       </div>
       <div class="kpi-box">
         <div class="kpi-subtext">TỶ LỆ PHỦ DANH MỤC APPLE</div>
@@ -765,6 +915,7 @@ def generate_store_viewer_html(output_file: str = None) -> str:
             <th>Tên Sản Phẩm / Biến Thể</th>
             <th>Kênh Cung Ứng</th>
             <th>Giá Niêm Yết</th>
+            <th>Tồn Kho Tại Quầy</th>
             <th>Tình Trạng</th>
             <th>Thao Tác</th>
           </tr>
@@ -780,6 +931,7 @@ def generate_store_viewer_html(output_file: str = None) -> str:
     const storesData = {stores_json_str};
     const inventoryData = {inventory_json_str};
     const codeMapping = {mapping_json_str};
+    const probedData = {probed_json_str};
 
     let currentShopCode = "30501"; // Mặc định mở 30501 (3815062)
     let currentCategory = "all";
@@ -813,9 +965,37 @@ def generate_store_viewer_html(output_file: str = None) -> str:
         const treeInfo = s.store_code ? `[Apple: ${{s.store_code}}] ` : "";
         const clusterInfo = s.cluster_group ? `(Cụm ${{s.cluster_group}}) ` : "";
         const addrShort = (s.displayAddress || "").slice(0, 32);
-        opt.text = `${{treeInfo}}${{s.shopName}} ${{clusterInfo}}- ${{addrShort}}...`;
+        const isProbed = Boolean(probedData[s.shopCode]);
+        const probeTag = isProbed ? `🎯 [XÁC MINH: ${{probedData[s.shopCode].total_units}} MÁY] ` : "";
+        opt.text = `${{probeTag}}${{treeInfo}}${{s.shopName}} ${{clusterInfo}}- ${{addrShort}}...`;
         if (String(s.shopCode) === currentShopCode) opt.selected = true;
         select.appendChild(opt);
+      }});
+    }}
+
+    function renderProbedPresets() {{
+      const bar = document.getElementById("probedStoresBar");
+      const container = document.getElementById("probedChipsContainer");
+      if (!bar || !container) return;
+      const probedKeys = Object.keys(probedData);
+      if (probedKeys.length === 0) {{
+        bar.style.display = "none";
+        return;
+      }}
+      bar.style.display = "flex";
+      container.innerHTML = "";
+      probedKeys.forEach(sc => {{
+        const p = probedData[sc];
+        const s = storesData.find(st => String(st.shopCode) === sc);
+        const storeLabel = s ? (s.store_code ? `${{s.store_code}} - ${{s.shopName}}` : `${{sc}} - ${{s.shopName}}`) : (p.shop_name || sc);
+        const btn = document.createElement("button");
+        btn.className = "preset-chip";
+        btn.style.borderColor = "rgba(52, 211, 153, 0.45)";
+        btn.style.color = "#34d399";
+        btn.style.background = "rgba(16, 185, 129, 0.12)";
+        btn.innerHTML = `🎯 <strong>${{storeLabel}}</strong> (${{p.total_units}} máy)`;
+        btn.onclick = () => quickJump(sc);
+        container.appendChild(btn);
       }});
     }}
 
@@ -863,6 +1043,16 @@ def generate_store_viewer_html(output_file: str = None) -> str:
       document.getElementById("lblLegacyAddress").innerText = store.legacyAddress || "Không có thay đổi";
       document.getElementById("lblOpenTime").innerText = `${{store.timeOpen || '08:00'}} - ${{store.timeClose || '22:00'}} | Hotline: ${{store.phone || '1800 6601'}}`;
 
+      // Cập nhật Probe Badge
+      const probeBadge = document.getElementById("lblProbeBadge");
+      const pInfo = probedData[currentShopCode];
+      if (pInfo && pInfo.total_units !== undefined) {{
+        probeBadge.style.display = "inline-flex";
+        probeBadge.innerText = `🎯 ĐÃ XÁC MINH THỰC TẾ: ${{pInfo.total_units}} MÁY (${{pInfo.probed_at || ''}})`;
+      }} else {{
+        probeBadge.style.display = "none";
+      }}
+
       if (store.latitude && store.longitude) {{
         const mapUrl = `https://www.google.com/maps?q=${{store.latitude}},${{store.longitude}}`;
         const link = document.getElementById("linkGps");
@@ -878,18 +1068,24 @@ def generate_store_viewer_html(output_file: str = None) -> str:
       document.getElementById("lblStoreSize").innerText = store.store_size ? `${{store.store_size}} m²` : "Tiêu chuẩn";
       document.getElementById("lblRevenue").innerText = store.revenue ? `Hạng ${{store.revenue}}` : "Hạng A";
 
-      // Cập nhật danh sách tồn kho
+      // Cập nhật danh sách tồn kho & tính toán KPI số lượng
       const items = inventoryData[currentShopCode] || [];
-      document.getElementById("lblTotalSkusHero").innerText = `${{items.length}} BIẾN THỂ`;
-      document.getElementById("kpiSkus").innerText = items.length;
-
+      let totalUnits = 0;
       let totalVal = 0;
+      let hasExactProbe = false;
       let counts = {{ "iPhone": 0, "iPad": 0, "MacBook": 0, "Apple Watch": 0, "AirPods": 0 }};
 
       items.forEach(it => {{
-        totalVal += (it.price || 0);
+        const itemQty = it.quantity || 1;
+        totalUnits += itemQty;
+        totalVal += (it.price || 0) * itemQty;
+        if (it.is_exact_qty) hasExactProbe = true;
         if (counts[it.category] !== undefined) counts[it.category]++;
       }});
+
+      document.getElementById("lblTotalSkusHero").innerText = `${{items.length}} BIẾN THỂ (${{totalUnits}} MÁY VẬT LÝ)`;
+      document.getElementById("kpiSkus").innerText = items.length;
+      document.getElementById("kpiUnits").innerText = hasExactProbe ? `${{totalUnits}} máy vật lý` : `${{totalUnits}}+ máy`;
 
       document.getElementById("countAll").innerText = items.length;
       document.getElementById("countIphone").innerText = counts["iPhone"] || 0;
@@ -899,7 +1095,6 @@ def generate_store_viewer_html(output_file: str = None) -> str:
       document.getElementById("countAirpods").innerText = counts["AirPods"] || 0;
 
       document.getElementById("kpiValue").innerText = new Intl.NumberFormat('vi-VN', {{ style: 'currency', currency: 'VND' }}).format(totalVal);
-      document.getElementById("kpiUnits").innerText = `${{Math.round(items.length * 1.35)}}+ máy`;
       document.getElementById("kpiRate").innerText = `${{(items.length * 100 / 482).toFixed(1)}}%`;
 
       renderTable();
@@ -919,14 +1114,44 @@ def generate_store_viewer_html(output_file: str = None) -> str:
       }});
 
       if (filtered.length === 0) {{
-        tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; padding: 48px; color: var(--text-muted);">Hiện không có sản phẩm nào thuộc bộ lọc này có sẵn tại quầy.</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="8" style="text-align: center; padding: 48px; color: var(--text-muted);">Hiện không có sản phẩm nào thuộc bộ lọc này có sẵn tại quầy.</td></tr>`;
         return;
       }}
 
       filtered.forEach(it => {{
         const tr = document.createElement("tr");
         const priceStr = new Intl.NumberFormat('vi-VN', {{ style: 'currency', currency: 'VND' }}).format(it.price);
-        const isStudio = it.channel === "F.Studio by FPT";
+        
+        // Kênh cung ứng badge
+        let channelBadge = "";
+        if (it.channel === "FPT Shop & F.Studio") {{
+          channelBadge = `<span class="badge-channel-combo">FPT Shop & F.Studio</span>`;
+        }} else if (it.channel === "F.Studio by FPT") {{
+          channelBadge = `<span class="badge-channel-studio">F.Studio by FPT</span>`;
+        }} else {{
+          channelBadge = `<span class="badge-channel-fpt">FPT Shop</span>`;
+        }}
+
+        // Badge số lượng tồn kho thực tế
+        let qtyBadge = "";
+        let statusBadge = "";
+        const q = it.quantity || 1;
+
+        if (it.is_exact_qty) {{
+          if (q >= 3) {{
+            qtyBadge = `<span class="badge-qty-high">✓ ${{q}} máy</span>`;
+            statusBadge = `<span class="badge-in-stock">● Sẵn hàng dồi dào</span>`;
+          }} else if (q === 2) {{
+            qtyBadge = `<span class="badge-qty-good">✓ 2 máy</span>`;
+            statusBadge = `<span class="badge-in-stock">● Sẵn hàng quầy</span>`;
+          }} else {{
+            qtyBadge = `<span class="badge-qty-warning">⚠️ 1 máy</span>`;
+            statusBadge = `<span class="badge-stock-warning">● Cảnh báo còn 1 cây</span>`;
+          }}
+        }} else {{
+          qtyBadge = `<span class="badge-qty-normal">● ≥ 1 máy</span>`;
+          statusBadge = `<span class="badge-in-stock">● Sẵn hàng quầy</span>`;
+        }}
 
         tr.innerHTML = `
           <td><strong>${{it.category}}</strong></td>
@@ -935,13 +1160,10 @@ def generate_store_viewer_html(output_file: str = None) -> str:
             <button class="btn-copy" onclick="copySku('${{it.sku_code}}')" title="Sao chép SKU">📋 Copy</button>
           </td>
           <td><a href="${{it.url}}" target="_blank" style="color: #f3f4f6; text-decoration: none; font-weight: 600;">${{it.sku_name}}</a></td>
-          <td>
-            <span style="background: ${{isStudio ? 'rgba(41, 151, 255, 0.2)' : 'rgba(203, 28, 34, 0.2)'}}; color: ${{isStudio ? '#38bdf8' : '#f87171'}}; padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 700;">
-              ${{it.channel}}
-            </span>
-          </td>
+          <td>${{channelBadge}}</td>
           <td><strong>${{priceStr}}</strong></td>
-          <td><span class="badge-in-stock">● Sẵn hàng quầy</span></td>
+          <td>${{qtyBadge}}</td>
+          <td>${{statusBadge}}</td>
           <td><a href="${{it.url}}" target="_blank" style="color: #38bdf8; text-decoration: none; font-weight: 600; font-size: 13px;">Đặt Mua ↗</a></td>
         `;
         tbody.appendChild(tr);
@@ -1077,8 +1299,16 @@ def generate_store_viewer_html(output_file: str = None) -> str:
     }});
 
     // Khởi chạy
+    renderProbedPresets();
     initDropdown();
     handleUrlHash();
+    if (!window.location.hash) {{
+      const probedKeys = Object.keys(probedData);
+      if (probedKeys.length > 0) {{
+        currentShopCode = probedKeys[probedKeys.length - 1];
+        document.getElementById("storeDropdown").value = currentShopCode;
+      }}
+    }}
     loadStore(currentShopCode);
   </script>
 </body>

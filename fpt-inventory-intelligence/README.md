@@ -78,30 +78,52 @@ pip install -r requirements.txt
 ./scripts/automation/run_fpt_pipeline.sh
 ```
 
-### Bước 3: Hoặc chạy từng phân hệ độc lập
+### Bước 3: Vận hành theo Kiến Trúc 2 Tầng (Two-Tier Hybrid Architecture)
+
+Đây là phương thức vận hành chuẩn được khuyến nghị để tối ưu tốc độ và độ chính xác:
+
+#### ⚡ TẦNG 1: Quét Vĩ Mô Toàn Quốc (FAST MODE - Chỉ ~9.6 giây)
+Quét toàn bộ 482 SKU Apple đang kinh doanh để lấy giá bán, chương trình khuyến mãi và tổng số lượng tồn kho khả dụng toàn quốc (~23.781 máy, ~689 Tỷ VNĐ):
+```bash
+python3 src/pipeline/crawler.py --mode fast
+```
+*Kết quả xuất ra file:* `data/raw/fpt_inventory_fast_latest.json` & `.csv`.
+
+#### 🎯 TẦNG 2: Bóc Tách Vi Mô Tại Quầy (ON-DEMAND PROBER - Chỉ ~15 - 25 giây)
+Khi cần biết số lượng tồn kho thực tế của **bất kỳ siêu thị nào** mà không phải quét toàn bộ 602 shop:
+```bash
+# Dò theo Apple Store ID (Tree ID)
+python3 scripts/probe_single_store.py 3815062
+
+# Hoặc dò theo Mã Siêu Thị FPT PAPI
+python3 scripts/probe_single_store.py 30501
+
+# Hoặc dò theo tên đường / địa chỉ
+python3 scripts/probe_single_store.py "121 Hai Bà Trưng" --open
+```
+*Cơ chế:* Đọc danh mục từ FAST MODE, quét nhanh tỉnh chứa siêu thị mục tiêu (Giai đoạn 1 ~3s), sau đó áp dụng **Tìm Kiếm Nhị Phân (Binary Search $O(\log N)$)** để chốt số máy thực tế (Giai đoạn 2 ~15s). Kết quả được tự động lưu vào `data/raw/store_inventory_quantities.json` và cập nhật trực tiếp vào file HTML.
+
+#### 🌐 TẦNG 3: Báo Cáo Trực Quan Web HTML Độc Lập
+Mở file giao diện web tương tác để tra cứu và lọc theo Apple ID:
+```bash
+open data/reports/fpt_store_inventory_viewer.html#store=3815062
+```
+
+---
+
+### Bước 4: Hoặc chạy các phân hệ bổ trợ khác
 
 1. **Cập nhật danh bạ 602 siêu thị FPT & GPS:**
    ```bash
    python3 src/pipeline/store_master.py
    ```
 
-2. **Chạy Crawler quét tồn kho toàn quốc:**
+2. **Tra cứu siêu thị cụ thể bằng CLI:**
    ```bash
-   python3 src/pipeline/crawler.py --workers 12
+   python3 scripts/check_store_inventory.py "3815062" --probe
    ```
 
-3. **Tổng hợp báo cáo điều hành Markdown:**
-   ```bash
-   python3 src/inference/daily_inference.py
-   ```
-
-4. **Tra cứu siêu thị cụ thể (Ví dụ Shop 30878 hoặc theo đường):**
-   ```bash
-   python3 scripts/check_store_inventory.py "30878"
-   python3 scripts/check_store_inventory.py "Nguyễn Thị Thập"
-   ```
-
-5. **Xem thống kê mạng lưới địa lý 602 cửa hàng:**
+3. **Xem thống kê mạng lưới địa lý 602 cửa hàng:**
    ```bash
    python3 scripts/map_all_fpt_stores.py
    ```

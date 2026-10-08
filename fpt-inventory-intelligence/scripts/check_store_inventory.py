@@ -89,50 +89,11 @@ def check_store(shop_query: str, sku_code: Optional[str] = None, probe: bool = F
     else:
         print(f"  ✅ Có {len(available_items)} biến thể Apple sẵn sàng giao ngay tại siêu thị này:")
         
-        # Nếu bật --probe hoặc mặc định: dò chính xác số lượng máy
+        # Nếu bật --probe: gọi trực tiếp Engine dò tìm nhị phân độc lập tốc độ cao
         if probe:
-            print("  🔍 Đang kiểm tra số lượng máy thực tế từng biến thể tại quầy...")
-            from config import PICKUP_API_URL, HEADERS_FPTSHOP, HEADERS_FSTUDIO
-            import requests
-
-            total_units = 0
-            p_code = matched_shops[0].get("provinceCode", "79")
-
-            for item in available_items:
-                i_sku = item.get("sku_code")
-                i_name = item.get("sku_name")
-                i_price = item.get("price", 10000000)
-                
-                # Xác định kênh
-                in_fstudio = any(str(s.get("shopCode")) == target_shop_code for s in item.get("fstudio_store_list", []))
-                headers = HEADERS_FSTUDIO if in_fstudio else HEADERS_FPTSHOP
-                ch_label = "F.Studio" if in_fstudio else "FPT Shop"
-
-                qty_on_hand = 0
-                for test_q in range(1, 10):
-                    payload = {
-                        "cityCode": p_code,
-                        "orderDoctotal": i_price * test_q,
-                        "product": [{"id": i_sku, "name": i_name, "quantity": test_q, "price": i_price, "unit": 8, "isCheckInventory": True}]
-                    }
-                    try:
-                        r = requests.post(PICKUP_API_URL, headers=headers, json=payload, timeout=3)
-                        shops_res = r.json().get("data", [])
-                        match = any(str(s.get("shopCode")) == target_shop_code and s.get("pickupType") == 0 for s in shops_res)
-                        if match:
-                            qty_on_hand = test_q
-                        else:
-                            break
-                    except Exception:
-                        break
-
-                total_units += qty_on_hand
-                price_str = f"{i_price:,.0f} đ".replace(",", ".")
-                print(f"   • [{i_sku}] {i_name[:40]:<40} ({ch_label:<7}) | Có sẵn: {qty_on_hand:2d} máy | Giá: {price_str}")
-
-            print("-" * 80)
-            print(f"  🎯 TỔNG CỘNG SỐ MÁY APPLE VẬT LÝ CÓ SẴN TẠI QUẦY: {total_units} MÁY")
-            print("-" * 80)
+            from scripts.probe_single_store import probe_store_inventory
+            probe_store_inventory(target_shop_code)
+            return
         else:
             for item in available_items[:20]:
                 price_str = f"{item.get('price', 0):,.0f} đ".replace(",", ".")

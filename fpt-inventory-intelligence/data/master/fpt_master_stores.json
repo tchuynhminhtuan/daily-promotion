@@ -800,7 +800,53 @@
         "code": "1",
         "name": "FPTShop"
       }
-    ]
+    ],
+    "store_code": "3794413",
+    "store_name": "FPT SHOP @ DUC GIANG - HOAI DUC",
+    "cluster_group": "B",
+    "asm_group": "",
+    "store_id": "1569",
+    "store_size": "0",
+    "revenue": "0",
+    "manager": [
+      {
+        "name": "",
+        "phone": "",
+        "email": ""
+      },
+      {
+        "name": "",
+        "phone": "",
+        "email": ""
+      }
+    ],
+    "expert": [
+      {
+        "name": "",
+        "phone": "",
+        "email": "",
+        "level": ""
+      },
+      {
+        "name": "",
+        "phone": "",
+        "email": "",
+        "level": ""
+      },
+      {
+        "name": "",
+        "phone": "",
+        "email": "",
+        "level": ""
+      },
+      {
+        "name": "",
+        "phone": "",
+        "email": "",
+        "level": ""
+      }
+    ],
+    "tree_address_raw": "QL32,Đức Giang,Hoài Đức,Hà Nội"
   },
   {
     "shopCode": "31309",
@@ -1146,7 +1192,53 @@
         "code": "1",
         "name": "FPTShop"
       }
-    ]
+    ],
+    "store_code": "1986756",
+    "store_name": "FPT SHOP @ 350 MINH KHAI, HNI",
+    "cluster_group": "B",
+    "asm_group": "",
+    "store_id": "897",
+    "store_size": "3300",
+    "revenue": "0",
+    "manager": [
+      {
+        "name": "Thuý Nguyễn",
+        "phone": "0964026113",
+        "email": "thuynt131@fpt.com"
+      },
+      {
+        "name": "na",
+        "phone": "091234567",
+        "email": "na"
+      }
+    ],
+    "expert": [
+      {
+        "name": "trần Tuấn Anh",
+        "phone": "091234567",
+        "email": "anhtt135@fpt.com",
+        "level": ""
+      },
+      {
+        "name": "na",
+        "phone": "091234567",
+        "email": "na",
+        "level": ""
+      },
+      {
+        "name": "na",
+        "phone": "091234567",
+        "email": "na",
+        "level": ""
+      },
+      {
+        "name": "na",
+        "phone": "091234567",
+        "email": "na",
+        "level": ""
+      }
+    ],
+    "tree_address_raw": "350 Minh Khai,Vĩnh Tuy,Hai Bà Trưng,Hà Nội"
   },
   {
     "shopCode": "30255",
@@ -3524,7 +3616,53 @@
         "code": "2",
         "name": "F Studio Stand Alone"
       }
-    ]
+    ],
+    "store_code": "1472289",
+    "store_name": "F-STUDIO@ 92HAI BA TRUNG, HNI",
+    "cluster_group": "B",
+    "asm_group": "",
+    "store_id": "1556",
+    "store_size": "2147483647",
+    "revenue": "0",
+    "manager": [
+      {
+        "name": "Đỗ Thị Quỳnh Trang",
+        "phone": "098 2229383",
+        "email": "trangdtq3@fpt.com"
+      },
+      {
+        "name": "N/A",
+        "phone": "N/A",
+        "email": "N/A"
+      }
+    ],
+    "expert": [
+      {
+        "name": "N/A",
+        "phone": "09123456789",
+        "email": "N/A",
+        "level": ""
+      },
+      {
+        "name": "N/A",
+        "phone": "09123456789",
+        "email": "N/A",
+        "level": ""
+      },
+      {
+        "name": "N/A",
+        "phone": "09123456789",
+        "email": "N/A",
+        "level": ""
+      },
+      {
+        "name": "N/A",
+        "phone": "09123456789",
+        "email": "N/A",
+        "level": ""
+      }
+    ],
+    "tree_address_raw": "92 Hai Bà Trưng,Cửa Nam,Hoàn Kiếm,Hà Nội"
   },
   {
     "shopCode": "31337",
@@ -6240,7 +6378,53 @@
         "code": "1",
         "name": "FPTShop"
       }
-    ]
+    ],
+    "store_code": "3527476",
+    "store_name": "FPTshop @ HYN Dân Tiến - Khoái Châu",
+    "cluster_group": "A",
+    "asm_group": "",
+    "store_id": "1794",
+    "store_size": "150",
+    "revenue": "0",
+    "manager": [
+      {
+        "name": "Nguyễn Trương",
+        "phone": "0976491020",
+        "email": "N/A"
+      },
+      {
+        "name": "N/A",
+        "phone": "N/A",
+        "email": "N/A"
+      }
+    ],
+    "expert": [
+      {
+        "name": "N/A",
+        "phone": "N/A",
+        "email": "N/A",
+        "level": ""
+      },
+      {
+        "name": "N/A",
+        "phone": "N/A",
+        "email": "N/A",
+        "level": ""
+      },
+      {
+        "name": "N/A",
+        "phone": "N/A",
+        "email": "N/A",
+        "level": ""
+      },
+      {
+        "name": "N/A",
+        "phone": "N/A",
+        "email": "N/A",
+        "level": ""
+      }
+    ],
+    "tree_address_raw": "Ngã 4,Dân Tiến,Khoái Châu,Hưng Yên"
   },
   {
     "shopCode": "30316",
@@ -6968,7 +7152,53 @@
         "code": "1",
         "name": "FPTShop"
       }
-    ]
+    ],
+    "store_code": "1799477",
+    "store_name": "FPTSHOP@DABACO, TT. HO, H.THUAN THANH, BAC NINH, BNH",
+    "cluster_group": "A",
+    "asm_group": "",
+    "store_id": "1099",
+    "store_size": "120",
+    "revenue": "0",
+    "manager": [
+      {
+        "name": "Nguyen Thi Ngan",
+        "phone": "0989649502",
+        "email": "ngannt51@fpt.com"
+      },
+      {
+        "name": "Nguyễn Đăng Hiền",
+        "phone": "0344957608",
+        "email": "hiennd20@fpt.com"
+      }
+    ],
+    "expert": [
+      {
+        "name": "Lê Nhật Lệ",
+        "phone": "0988982768",
+        "email": "leln2@fpt.com",
+        "level": ""
+      },
+      {
+        "name": "Dương Xuân Duy",
+        "phone": "0912000000",
+        "email": "duydx2@fpt.com",
+        "level": ""
+      },
+      {
+        "name": "Trần Tùng Anh",
+        "phone": "0912000000",
+        "email": "anhtt163@fpt.com",
+        "level": ""
+      },
+      {
+        "name": "Nguyen Duy Nam",
+        "phone": "0867182203",
+        "email": "namnd65@fpt.com",
+        "level": ""
+      }
+    ],
+    "tree_address_raw": "Dabaco,Hồ,Thuận Thành,Bắc Ninh"
   },
   {
     "shopCode": "30126",
@@ -10278,7 +10508,53 @@
         "code": "1",
         "name": "FPTShop"
       }
-    ]
+    ],
+    "store_code": "1528678",
+    "store_name": "FPT SHOP@89 NGUYEN HUU TIEN, HNM",
+    "cluster_group": "A",
+    "asm_group": "",
+    "store_id": "282",
+    "store_size": "120",
+    "revenue": "5",
+    "manager": [
+      {
+        "name": "Mr. Luân",
+        "phone": "‭N/ A",
+        "email": "N/ A"
+      },
+      {
+        "name": "N/ A",
+        "phone": "N/ A",
+        "email": "N/ A"
+      }
+    ],
+    "expert": [
+      {
+        "name": "N/ A",
+        "phone": "N/ A",
+        "email": "N/ A",
+        "level": ""
+      },
+      {
+        "name": "N/ A",
+        "phone": "N/ A",
+        "email": "N/ A",
+        "level": ""
+      },
+      {
+        "name": "N/ A",
+        "phone": "N/ A",
+        "email": "N/ A",
+        "level": ""
+      },
+      {
+        "name": "N/ A",
+        "phone": "N/ A",
+        "email": "N/ A",
+        "level": ""
+      }
+    ],
+    "tree_address_raw": "89 Nguyễn Hữu Tiến, Đồng Văn,Duy Tiên,Hà Nam"
   },
   {
     "shopCode": "30332",
@@ -10695,17 +10971,17 @@
         "name": "FPTShop"
       }
     ],
-    "store_code": "3527476",
-    "store_name": "FPTshop @ HYN Dân Tiến - Khoái Châu",
+    "store_code": "1472515",
+    "store_name": "FPT SHOP @ 34 BIEN HOA, HNM",
     "cluster_group": "A",
     "asm_group": "",
-    "store_id": "1794",
-    "store_size": "150",
-    "revenue": "0",
+    "store_id": "280",
+    "store_size": "200",
+    "revenue": "5",
     "manager": [
       {
-        "name": "Nguyễn Trương",
-        "phone": "0976491020",
+        "name": "N/A",
+        "phone": "N/A",
         "email": "N/A"
       },
       {
@@ -10740,7 +11016,7 @@
         "level": ""
       }
     ],
-    "tree_address_raw": "Ngã 4,Dân Tiến,Khoái Châu,Hưng Yên"
+    "tree_address_raw": "34 Biên Hoà,Hai Bà Trưng,Phủ Lý,Hà Nam"
   },
   {
     "shopCode": "30245",
@@ -11775,7 +12051,53 @@
         "code": "3",
         "name": "F Studio Side by side"
       }
-    ]
+    ],
+    "store_code": "1659577",
+    "store_name": "F-STUDIO BY FPT @ 45 NGUYEN THI MINH KHAI, NAN",
+    "cluster_group": "A",
+    "asm_group": "",
+    "store_id": "797",
+    "store_size": "50",
+    "revenue": "0",
+    "manager": [
+      {
+        "name": "Hoàng",
+        "phone": "098 1838569",
+        "email": "na"
+      },
+      {
+        "name": "na",
+        "phone": "0912345678",
+        "email": "na"
+      }
+    ],
+    "expert": [
+      {
+        "name": "na",
+        "phone": "0912345678",
+        "email": "na",
+        "level": ""
+      },
+      {
+        "name": "na",
+        "phone": "0912345678",
+        "email": "na",
+        "level": ""
+      },
+      {
+        "name": "na",
+        "phone": "0912345678",
+        "email": "na",
+        "level": ""
+      },
+      {
+        "name": "na",
+        "phone": "0912345678",
+        "email": "na",
+        "level": ""
+      }
+    ],
+    "tree_address_raw": "45 Nguyễn Thị Minh Khai, TP Vinh, Nghệ an,Lê Mao,Vinh,Nghệ An"
   },
   {
     "shopCode": "30456",
@@ -14021,7 +14343,53 @@
         "code": "1",
         "name": "FPTShop"
       }
-    ]
+    ],
+    "store_code": "2586227",
+    "store_name": "FPTSHOP@LO A8 VO VAN KIET, DAG",
+    "cluster_group": "A",
+    "asm_group": "",
+    "store_id": "1122",
+    "store_size": "120",
+    "revenue": "0",
+    "manager": [
+      {
+        "name": "Nguyễn Thi",
+        "phone": "N/A",
+        "email": "thint@fpt.com"
+      },
+      {
+        "name": "N/A",
+        "phone": "N/A",
+        "email": "N/A"
+      }
+    ],
+    "expert": [
+      {
+        "name": "N/A",
+        "phone": "N/A",
+        "email": "N/A",
+        "level": ""
+      },
+      {
+        "name": "N/A",
+        "phone": "N/A",
+        "email": "N/A",
+        "level": ""
+      },
+      {
+        "name": "N/A",
+        "phone": "N/A",
+        "email": "N/A",
+        "level": ""
+      },
+      {
+        "name": "N/A",
+        "phone": "N/A",
+        "email": "N/A",
+        "level": ""
+      }
+    ],
+    "tree_address_raw": "Lô A8 Võ Văn Kiệt,An Hải Đông,Sơn Trà,Đà Nẵng"
   },
   {
     "shopCode": "31708",
@@ -14402,7 +14770,53 @@
         "code": "1",
         "name": "FPTShop"
       }
-    ]
+    ],
+    "store_code": "1472413",
+    "store_name": "FPT SHOP@318 LE DUAN, DAG",
+    "cluster_group": "A",
+    "asm_group": "",
+    "store_id": "19",
+    "store_size": "120",
+    "revenue": "5",
+    "manager": [
+      {
+        "name": "Phan Thành King",
+        "phone": "0939655866",
+        "email": "kingpt@fpt.com.vn"
+      },
+      {
+        "name": "Trần Thị Mỹ Hạnh",
+        "phone": "0939003552",
+        "email": "na"
+      }
+    ],
+    "expert": [
+      {
+        "name": "Trần Thanh Tân",
+        "phone": "0903200552",
+        "email": "tantt15@fpt.com.vn",
+        "level": ""
+      },
+      {
+        "name": "No Available",
+        "phone": "000000000",
+        "email": "No Available",
+        "level": ""
+      },
+      {
+        "name": "No Available",
+        "phone": "000000000",
+        "email": "No Available",
+        "level": ""
+      },
+      {
+        "name": "No Available",
+        "phone": "000000000",
+        "email": "No Available",
+        "level": ""
+      }
+    ],
+    "tree_address_raw": "318 Lê Duẩn,Tân Chính ,Thanh Khê,Đà Nẵng,Tân Chính,Thanh Khê,Đà Nẵng"
   },
   {
     "shopCode": "30755",
@@ -19231,7 +19645,53 @@
         "code": "1",
         "name": "FPTShop"
       }
-    ]
+    ],
+    "store_code": "3815063",
+    "store_name": "FSTUDIO@226 YERSIN",
+    "cluster_group": "D",
+    "asm_group": "",
+    "store_id": "1398",
+    "store_size": "5",
+    "revenue": "0",
+    "manager": [
+      {
+        "name": "Phạm Văn Lít",
+        "phone": "N/A",
+        "email": "N/A"
+      },
+      {
+        "name": "N/A",
+        "phone": "N/A",
+        "email": "N/A"
+      }
+    ],
+    "expert": [
+      {
+        "name": "N/A",
+        "phone": "N/A",
+        "email": "N/A",
+        "level": ""
+      },
+      {
+        "name": "N/A",
+        "phone": "N/A",
+        "email": "N/A",
+        "level": ""
+      },
+      {
+        "name": "N/A",
+        "phone": "N/A",
+        "email": "N/A",
+        "level": ""
+      },
+      {
+        "name": "N/A",
+        "phone": "N/A",
+        "email": "N/A",
+        "level": ""
+      }
+    ],
+    "tree_address_raw": "226 YERSIN P. PHÙ CƯỜNG ,THU DẦU MỘT . BINH DUONG,Phú Cường,Thủ Dầu Một,Bình Dương"
   },
   {
     "shopCode": "31614",
@@ -20496,7 +20956,53 @@
         "code": "1",
         "name": "FPTShop"
       }
-    ]
+    ],
+    "store_code": "1472429",
+    "store_name": "FPT SHOP@192A NGUYEN THI DINH HCM",
+    "cluster_group": "C",
+    "asm_group": "",
+    "store_id": "596",
+    "store_size": "90",
+    "revenue": "5",
+    "manager": [
+      {
+        "name": "N/A",
+        "phone": "00000000",
+        "email": "N/A"
+      },
+      {
+        "name": "N/A",
+        "phone": "00000000",
+        "email": "N/A"
+      }
+    ],
+    "expert": [
+      {
+        "name": "Cẩm Thu",
+        "phone": "038 3127906",
+        "email": "Thuntc5@fpt.com.vn",
+        "level": ""
+      },
+      {
+        "name": "Đào",
+        "phone": "035 5688042",
+        "email": "daoth5@fpt.com.vn",
+        "level": ""
+      },
+      {
+        "name": "Thu Ngân",
+        "phone": "00000000",
+        "email": "nguyenthungan120620bt@gmail.com",
+        "level": ""
+      },
+      {
+        "name": "N/A",
+        "phone": "00000000",
+        "email": "N/A",
+        "level": ""
+      }
+    ],
+    "tree_address_raw": "192a Nguyễn Thị Định,An Phú,Quận 2,Hồ Chí Minh"
   },
   {
     "shopCode": "31405",
@@ -22293,8 +22799,8 @@
         "name": "Garmin"
       }
     ],
-    "store_code": "1472348",
-    "store_name": "FPT SHOP@155 Nguyen Thai Hoc, BRVT",
+    "store_code": null,
+    "store_name": null,
     "cluster_group": "D",
     "asm_group": "",
     "store_id": "430",
@@ -23453,7 +23959,53 @@
         "code": "1",
         "name": "FPTShop"
       }
-    ]
+    ],
+    "store_code": "1472348",
+    "store_name": "FPT SHOP@155 Nguyen Thai Hoc, BRVT",
+    "cluster_group": "D",
+    "manager": [
+      {
+        "name": "mr Thành",
+        "phone": "+84 90 8880982",
+        "email": "N/A"
+      },
+      {
+        "name": "mr Trung",
+        "phone": "111",
+        "email": "N/A"
+      }
+    ],
+    "expert": [
+      {
+        "name": "N/A",
+        "phone": "1111",
+        "email": "N/A",
+        "level": ""
+      },
+      {
+        "name": "N/A",
+        "phone": "111",
+        "email": "N/A",
+        "level": ""
+      },
+      {
+        "name": "N/A",
+        "phone": "111",
+        "email": "N/A",
+        "level": ""
+      },
+      {
+        "name": "N/A",
+        "phone": "111",
+        "email": "N/A",
+        "level": ""
+      }
+    ],
+    "store_size": "120",
+    "revenue": "5",
+    "asm_group": "",
+    "store_id": "430",
+    "tree_address_raw": "155,Phường 7,Vũng Tàu,Bà Rịa - Vũng Tàu"
   },
   {
     "shopCode": "31237",
@@ -24161,7 +24713,53 @@
         "code": "1",
         "name": "FPTShop"
       }
-    ]
+    ],
+    "store_code": "1588035",
+    "store_name": "F-STUDIO@141 Tran Nao, HCM",
+    "cluster_group": "C",
+    "asm_group": "",
+    "store_id": "580",
+    "store_size": "300",
+    "revenue": "5",
+    "manager": [
+      {
+        "name": "Khoa",
+        "phone": "0935991919",
+        "email": "n/a"
+      },
+      {
+        "name": "n/a",
+        "phone": "000",
+        "email": "n/a"
+      }
+    ],
+    "expert": [
+      {
+        "name": "Nguyễn Minh Long",
+        "phone": "0765132126",
+        "email": "longnm9@fpt.com.vn",
+        "level": ""
+      },
+      {
+        "name": "n/a",
+        "phone": "000",
+        "email": "n/a",
+        "level": ""
+      },
+      {
+        "name": "Nguyễn Quang Danh",
+        "phone": "0336156798",
+        "email": "danhnq@fpt.com.vn",
+        "level": ""
+      },
+      {
+        "name": "n/a",
+        "phone": "000",
+        "email": "n/a",
+        "level": ""
+      }
+    ],
+    "tree_address_raw": "141,Bình An,2,Hồ Chí Minh"
   },
   {
     "shopCode": "31467",
@@ -27634,7 +28232,53 @@
         "code": "1",
         "name": "FPTShop"
       }
-    ]
+    ],
+    "store_code": "1693744",
+    "store_name": "FPT SHOP@198B Ba Thang Hai, Can Tho",
+    "cluster_group": "C",
+    "asm_group": "",
+    "store_id": "814",
+    "store_size": "80",
+    "revenue": "0",
+    "manager": [
+      {
+        "name": "N/A",
+        "phone": "000",
+        "email": "N/A"
+      },
+      {
+        "name": "N/A",
+        "phone": "000",
+        "email": "N/A"
+      }
+    ],
+    "expert": [
+      {
+        "name": "N/A",
+        "phone": "000",
+        "email": "N/A",
+        "level": ""
+      },
+      {
+        "name": "N/A",
+        "phone": "000",
+        "email": "N/A",
+        "level": ""
+      },
+      {
+        "name": "N/A",
+        "phone": "000",
+        "email": "N/A",
+        "level": ""
+      },
+      {
+        "name": "N/A",
+        "phone": "000",
+        "email": "N/A",
+        "level": ""
+      }
+    ],
+    "tree_address_raw": "198B,An Khánh,Ninh Kiều,Cần Thơ"
   },
   {
     "shopCode": "30970",
