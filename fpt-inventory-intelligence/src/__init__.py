@@ -1,0 +1,1 @@
+"""FPT Inventory Intelligence Package"""
