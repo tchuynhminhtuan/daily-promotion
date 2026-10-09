@@ -1,0 +1,1164 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Phong Vũ Inventory & Pricing Intelligence Dashboard</title>
+  <style>
+    :root {
+      --bg-primary: #0b0f19;
+      --bg-secondary: #111827;
+      --bg-card: #1f2937;
+      --border-color: #374151;
+      --text-main: #f9fafb;
+      --text-muted: #9ca3af;
+      --accent-blue: #3b82f6;
+      --accent-cyan: #06b6d4;
+      --accent-red: #ef4444;
+      --accent-yellow: #f59e0b;
+      --accent-green: #10b981;
+      --accent-purple: #8b5cf6;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    body {
+      background: var(--bg-primary);
+      color: var(--text-main);
+      padding: 24px;
+      line-height: 1.5;
+    }
+
+    .container {
+      max-width: 1440px;
+      margin: 0 auto;
+    }
+
+    /* Header */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--border-color);
+      margin-bottom: 24px;
+    }
+    .header-title h1 {
+      font-size: 26px;
+      font-weight: 700;
+      background: linear-gradient(135deg, #60a5fa, #a78bfa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .header-title p {
+      color: var(--text-muted);
+      font-size: 13px;
+      margin-top: 4px;
+    }
+    .badge-live {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(16, 185, 129, 0.15);
+      color: var(--accent-green);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      padding: 4px 10px;
+      border-radius: 9999px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .pulse-dot {
+      width: 8px;
+      height: 8px;
+      background: var(--accent-green);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--accent-green);
+    }
+
+    /* KPI Cards */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+    .kpi-card {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 20px;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+    .kpi-card:hover {
+      transform: translateY(-2px);
+      border-color: #4b5563;
+    }
+    .kpi-label {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+      font-weight: 600;
+    }
+    .kpi-value {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+    .kpi-subtext {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 6px;
+    }
+    .kpi-accent-red { border-top: 4px solid var(--accent-red); }
+    .kpi-accent-yellow { border-top: 4px solid var(--accent-yellow); }
+    .kpi-accent-blue { border-top: 4px solid var(--accent-blue); }
+    .kpi-accent-purple { border-top: 4px solid var(--accent-purple); }
+
+    /* Navigation Tabs */
+    .tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 20px;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 8px;
+    }
+    .tab-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 14px;
+      font-weight: 600;
+      padding: 10px 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+    .tab-btn:hover {
+      color: var(--text-main);
+      background: rgba(255, 255, 255, 0.05);
+    }
+    .tab-btn.active {
+      color: #fff;
+      background: var(--accent-blue);
+    }
+    .tab-badge {
+      background: rgba(255, 255, 255, 0.2);
+      padding: 2px 7px;
+      border-radius: 9999px;
+      font-size: 11px;
+    }
+
+    /* Table Sections */
+    .tab-pane {
+      display: none;
+    }
+    .tab-pane.active {
+      display: block;
+    }
+
+    .card-panel {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 24px;
+    }
+    .panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+    .panel-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .search-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 8px 14px;
+      color: #fff;
+      font-size: 13px;
+      width: 260px;
+      outline: none;
+    }
+    .search-box:focus {
+      border-color: var(--accent-blue);
+    }
+
+    /* Modern Table */
+    .table-container {
+      overflow-x: auto;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      text-align: left;
+    }
+    th {
+      background: var(--bg-card);
+      color: var(--text-muted);
+      font-weight: 600;
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--border-color);
+      white-space: nowrap;
+    }
+    td {
+      padding: 12px 14px;
+      border-bottom: 1px solid rgba(55, 65, 81, 0.6);
+      vertical-align: middle;
+    }
+    tr:hover td {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    /* Badges */
+    .badge {
+      display: inline-block;
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 700;
+      text-align: center;
+    }
+    .badge-danger {
+      background: rgba(239, 68, 68, 0.2);
+      color: #fca5a5;
+      border: 1px solid rgba(239, 68, 68, 0.4);
+    }
+    .badge-warning {
+      background: rgba(245, 158, 11, 0.2);
+      color: #fcd34d;
+      border: 1px solid rgba(245, 158, 11, 0.4);
+    }
+    .badge-info {
+      background: rgba(59, 130, 246, 0.2);
+      color: #93c5fd;
+      border: 1px solid rgba(59, 130, 246, 0.4);
+    }
+    .badge-gift {
+      background: rgba(139, 92, 246, 0.2);
+      color: #c4b5fd;
+      border: 1px solid rgba(139, 92, 246, 0.4);
+    }
+
+    .product-link {
+      color: #93c5fd;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .product-link:hover {
+      text-decoration: underline;
+    }
+    .sku-code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      color: #e5e7eb;
+      font-size: 12px;
+    }
+    .price-text {
+      font-weight: 700;
+      color: #34d399;
+    }
+    .retail-text {
+      color: var(--text-muted);
+      text-decoration: line-through;
+      font-size: 12px;
+    }
+
+    /* Notice box */
+    .notice-box {
+      background: rgba(59, 130, 246, 0.08);
+      border: 1px solid rgba(59, 130, 246, 0.25);
+      border-radius: 8px;
+      padding: 14px;
+      margin-bottom: 20px;
+      font-size: 13px;
+      color: #bfdbfe;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    
+    <!-- Header -->
+    <div class="header">
+      <div class="header-title">
+        <h1>📊 PHONG VŨ INVENTORY & PRICING INTELLIGENCE</h1>
+        <p>Báo cáo thông minh 3 trục dữ liệu xác thực (Ground Truth) • Nền tảng Microservices Teko</p>
+      </div>
+      <div>
+        <span class="badge-live"><span class="pulse-dot"></span> ĐÃ XÁC THỰC DỮ LIỆU THỰC</span>
+      </div>
+    </div>
+
+    <!-- Notice -->
+    <div class="notice-box">
+      <div>💡</div>
+      <div>
+        <strong>Nguyên tắc dữ liệu sạch (Data Integrity):</strong> Phong Vũ áp dụng cơ chế <em>Scarcity Threshold</em>. 
+        Chỉ những sản phẩm có số lượng <strong>&le; 5 chiếc</strong> mới hiển thị số tồn kho vật lý chính xác 100%. Các sản phẩm dồi dào còn lại được hệ thống gán trần ảo 1.000 chiếc. 
+        Dashboard này tập trung sâu sắc vào <strong>3 hướng dữ liệu có độ tin cậy tuyệt đối</strong>: (1) Radar hàng khan hiếm, (2) Dữ liệu giá & quà tặng thực tế, (3) Phân bố danh mục & độ phủ.
+      </div>
+    </div>
+
+    <!-- Top KPI Grid -->
+    <div class="kpi-grid">
+      <div class="kpi-card kpi-accent-red">
+        <div class="kpi-label">Hàng Khan Hiếm (&le; 5 chiếc)</div>
+        <div class="kpi-value">29 <span style="font-size:16px; color:#f87171">SKU</span></div>
+        <div class="kpi-subtext">Chiếm 20.4% tổng số SKU đã khảo sát</div>
+      </div>
+      <div class="kpi-card kpi-accent-yellow">
+        <div class="kpi-label">Chỉ Còn Đúng 1 - 2 Máy</div>
+        <div class="kpi-value">21 <span style="font-size:16px; color:#fbbf24">SKU</span></div>
+        <div class="kpi-subtext">15 mã còn 1 máy • 6 mã còn 2 máy</div>
+      </div>
+      <div class="kpi-card kpi-accent-blue">
+        <div class="kpi-label">Tổng Số SKU Khảo Sát</div>
+        <div class="kpi-value">142 <span style="font-size:16px; color:#60a5fa">Mã</span></div>
+        <div class="kpi-subtext">Trải rộng trên 5 danh mục chủ lực</div>
+      </div>
+      <div class="kpi-card kpi-accent-purple">
+        <div class="kpi-label">Có Quà Tặng Khuyến Mãi</div>
+        <div class="kpi-value">94 <span style="font-size:16px; color:#c084fc">SKU</span></div>
+        <div class="kpi-subtext">66.2% sản phẩm có quà tặng kèm</div>
+      </div>
+    </div>
+
+    <!-- Navigation Tabs -->
+    <div class="tabs">
+      <button class="tab-btn active" onclick="switchTab('tab-scarcity')">
+        🚨 Hướng 1: Radar Hàng Khan Hiếm (&le; 5 chiếc)
+        <span class="tab-badge">29</span>
+      </button>
+      <button class="tab-btn" onclick="switchTab('tab-pricing')">
+        🏷️ Hướng 2: Giá Bán, Giảm Giá & Quà Tặng
+        <span class="tab-badge">129</span>
+      </button>
+      <button class="tab-btn" onclick="switchTab('tab-categories')">
+        📍 Hướng 3: Phân Bố Danh Mục & Sẵn Hàng
+        <span class="tab-badge">5</span>
+      </button>
+    </div>
+
+    <!-- TAB 1: SCARCITY TRACKER -->
+    <div id="tab-scarcity" class="tab-pane active">
+      <div class="card-panel">
+        <div class="panel-header">
+          <div class="panel-title">
+            <span>🔥 Danh Sách Sản Phẩm Đang Trong Tình Trạng Khan Hiếm Nghiêm Trọng (Tồn Kho Thực Tế)</span>
+          </div>
+          <input type="text" id="searchScarcity" class="search-box" placeholder="Tìm theo tên hoặc mã SKU..." onkeyup="filterTable('scarcityTable', 'searchScarcity')">
+        </div>
+        <div class="table-container">
+          <table id="scarcityTable">
+            <thead>
+              <tr>
+                <th>Mã SKU</th>
+                <th>Tên sản phẩm</th>
+                <th>Danh mục</th>
+                <th>Giá bán</th>
+                <th>Giá gốc</th>
+                <th>Giảm giá</th>
+                <th>Tồn kho thực</th>
+                <th>Mức độ cảnh báo</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="sku-code">260300566</td>
+                <td><a href="https://phongvu.vn/macbook-pro-16-m5-max-18-cpu-32-gpu-36gb-2tb--p853261" target="_blank" class="product-link">MacBook Pro M5 Max 16 inch (18 CPU/ 32 GPU/ 36GB/ 2TB)</a></td>
+                <td><span class="badge badge-info">macbook</span></td>
+                <td class="price-text">117,990,000 ₫</td>
+                <td class="retail-text">119,990,000 ₫</td>
+                <td style="color:#f87171; font-weight:600;">-2%</td>
+                <td><span style="color:#f87171; font-weight:700;">🚨 Duy nhất 1 cái</span></td>
+                <td><span class="badge badge-danger">CHỈ CÒN 1 MÁY</span></td>
+              </tr>
+              <tr>
+                <td class="sku-code">260300565</td>
+                <td><a href="https://phongvu.vn/macbook-pro-16-m5-max-18-cpu-32-gpu-36gb-2tb--p853261" target="_blank" class="product-link">MacBook Pro M5 Max 16 inch (18 CPU/ 32 GPU/ 36GB/ 2TB)</a></td>
+                <td><span class="badge badge-info">macbook</span></td>
+                <td class="price-text">114,990,000 ₫</td>
+                <td class="retail-text">119,990,000 ₫</td>
+                <td style="color:#f87171; font-weight:600;">-4%</td>
+                <td><span style="color:#f87171; font-weight:700;">🚨 Duy nhất 1 cái</span></td>
+                <td><span class="badge badge-danger">CHỈ CÒN 1 MÁY</span></td>
+              </tr>
+              <tr>
+                <td class="sku-code">260900718</td>
+                <td><a href="https://phongvu.vn/iphone-18-pro-max-2tb--p896017" target="_blank" class="product-link">iPhone 18 Pro Max 2TB - Bạc (MJY34X/A)</a></td>
+                <td><span class="badge badge-info">san-pham-apple</span></td>
+                <td class="price-text">80,990,000 ₫</td>
+                <td class="retail-text">80,990,000 ₫</td>
+                <td style="color:#f87171; font-weight:600;">0%</td>
+                <td><span style="color:#f87171; font-weight:700;">🚨 Duy nhất 1 cái</span></td>
+                <td><span class="badge badge-danger">CHỈ CÒN 1 MÁY</span></td>
+              </tr>
+              <tr>
+                <td class="sku-code">260805287</td>
+                <td><a href="https://phongvu.vn/may-tinh-apple-mac-studio-m5-max-18cpu-32gpu-36gb-512gb-bac-mhl64sa-a--s260805287" target="_blank" class="product-link">Mac Studio M5 Max (18CPU/ 32GPU/ 36GB/ 512GB) - Bạc (MHL64SA/A)</a></td>
+                <td><span class="badge badge-info">san-pham-apple</span></td>
+                <td class="price-text">68,490,000 ₫</td>
+                <td class="retail-text">69,990,000 ₫</td>
+                <td style="color:#f87171; font-weight:600;">-2%</td>
+                <td><span style="color:#f87171; font-weight:700;">🚨 Duy nhất 1 cái</span></td>
+                <td><span class="badge badge-danger">CHỈ CÒN 1 MÁY</span></td>
+              </tr>
+              <tr>
+                <td class="sku-code">260900697</td>
+                <td><a href="https://phongvu.vn/iphone-18-pro-1tb--p896012" target="_blank" class="product-link">iPhone 18 Pro 1TB - Đen (MJRY4X/A)</a></td>
+                <td><span class="badge badge-info">san-pham-apple</span></td>
+                <td class="price-text">57,499,000 ₫</td>
+                <td class="retail-text">58,490,000 ₫</td>
+                <td style="color:#f87171; font-weight:600;">-2%</td>
+                <td><span style="color:#f87171; font-weight:700;">🚨 Duy nhất 1 cái</span></td>
+                <td><span class="badge badge-danger">CHỈ CÒN 1 MÁY</span></td>
+              </tr>
+              <tr>
+                <td class="sku-code">260900698</td>
+                <td><a href="https://phongvu.vn/iphone-18-pro-1tb--p896012" target="_blank" class="product-link">iPhone 18 Pro 1TB - Bạc (MJT04X/A)</a></td>
+                <td><span class="badge badge-info">san-pham-apple</span></td>
+                <td class="price-text">57,499,000 ₫</td>
+                <td class="retail-text">58,490,000 ₫</td>
+                <td style="color:#f87171; font-weight:600;">-2%</td>
+                <td><span style="color:#f87171; font-weight:700;">🚨 Duy nhất 1 cái</span></td>
+                <td><span class="badge badge-danger">CHỈ CÒN 1 MÁY</span></td>
+              </tr>
+              <tr>
+                <td class="sku-code">260900729</td>
+                <td><a href="https://phongvu.vn/iphone-18-pro-1tb--p896012" target="_blank" class="product-link">iPhone 18 Pro 1TB - Băng Thanh (MJT24X/A)</a></td>
+                <td><span class="badge badge-info">san-pham-apple</span></td>
+                <td class="price-text">57,499,000 ₫</td>
+                <td class="retail-text">58,490,000 ₫</td>
+                <td style="color:#f87171; font-weight:600;">-2%</td>
+                <td><span style="color:#f87171; font-weight:700;">🚨 Duy nhất 1 cái</span></td>
+                <td><span class="badge badge-danger">CHỈ CÒN 1 MÁY</span></td>
+              </tr>
+              <tr>
+                <td class="sku-code">260900695</td>
+                <td><a href="https://phongvu.vn/iphone-18-pro-512gb--p896011" target="_blank" class="product-link">iPhone 18 Pro 512GB - Bạc (MJRV4X/A)</a></td>
+                <td><span class="badge badge-info">san-pham-apple</span></td>
+                <td class="price-text">44,490,000 ₫</td>
+                <td class="retail-text">45,490,000 ₫</td>
+                <td style="color:#f87171; font-weight:600;">-2%</td>
+                <td><span style="color:#f87171; font-weight:700;">🚨 Duy nhất 1 cái</span></td>
+                <td><span class="badge badge-danger">CHỈ CÒN 1 MÁY</span></td>
+              </tr>
+              <tr>
+                <td class="sku-code">260300544</td>
+                <td><a href="https://phongvu.vn/macbook-air-15-m5-10-cpu-10-gpu-16gb-512gb--p853252" target="_blank" class="product-link">MacBook Air M5 15 inch (10CPU/10GPU/16GB/512GB)</a></td>
+                <td><span class="badge badge-info">macbook</span></td>
+                <td class="price-text">38,990,000 ₫</td>
+                <td class="retail-text">41,990,000 ₫</td>
+                <td style="color:#f87171; font-weight:600;">-7%</td>
+                <td><span style="color:#f87171; font-weight:700;">🚨 Duy nhất 1 cái</span></td>
+                <td><span class="badge badge-danger">CHỈ CÒN 1 MÁY</span></td>
+              </tr>
+              <tr>
+                <td class="sku-code">250900175</td>
+                <td><a href="https://phongvu.vn/iphone-17-256gb--p775263" target="_blank" class="product-link">iPhone 17 256GB</a></td>
+                <td><span class="badge badge-info">iphone</span></td>
+                <td class="price-text">25,990,000 ₫</td>
+                <td class="retail-text">28,990,000 ₫</td>
+                <td style="color:#f87171; font-weight:600;">-10%</td>
+                <td><span style="color:#f87171; font-weight:700;">🚨 Duy nhất 1 cái</span></td>
+                <td><span class="badge badge-danger">CHỈ CÒN 1 MÁY</span></td>
+              </tr>
+              <tr>
+                <td class="sku-code">260300209</td>
+                <td><a href="https://phongvu.vn/ipad-air-m4-11-inch-256gb--p852965" target="_blank" class="product-link">iPad Air M4 11 inch Wifi 256GB</a></td>
+                <td><span class="badge badge-info">ipad</span></td>
+                <td class="price-text">21,490,000 ₫</td>
+                <td class="retail-text">23,790,000 ₫</td>
+                <td style="color:#f87171; font-weight:600;">-10%</td>
+                <td><span style="color:#f87171; font-weight:700;">🚨 Duy nhất 1 cái</span></td>
+                <td><span class="badge badge-danger">CHỈ CÒN 1 MÁY</span></td>
+              </tr>
+              <tr>
+                <td class="sku-code">260901551</td>
+                <td><a href="https://phongvu.vn/op-lung-techwoven-magsafe-cho-iphone-18-pro-dau-tam-mkd24fe-a--s260901551" target="_blank" class="product-link">Ốp Lưng TechWoven MagSafe cho iPhone 18 Pro – Dâu Tằm (MKD24FE/A)</a></td>
+                <td><span class="badge badge-info">san-pham-apple</span></td>
+                <td class="price-text">1,390,000 ₫</td>
+                <td class="retail-text">1,649,000 ₫</td>
+                <td style="color:#f87171; font-weight:600;">-16%</td>
+                <td><span style="color:#f87171; font-weight:700;">🚨 Duy nhất 1 cái</span></td>
+                <td><span class="badge badge-danger">CHỈ CÒN 1 MÁY</span></td>
+              </tr>
+              <tr>
+                <td class="sku-code">260901556</td>
+                <td><a href="https://phongvu.vn/op-lung-silicon-magsafe-cho-iphone-18-pro-den-mk8y4fe-a--s260901556" target="_blank" class="product-link">Ốp Lưng Silicon MagSafe cho iPhone 18 Pro - Đen (MK8Y4FE/A)</a></td>
+                <td><span class="badge badge-info">san-pham-apple</span></td>
+                <td class="price-text">1,290,000 ₫</td>
+                <td class="retail-text">1,499,000 ₫</td>
+                <td style="color:#f87171; font-weight:600;">-14%</td>
+                <td><span style="color:#f87171; font-weight:700;">🚨 Duy nhất 1 cái</span></td>
+                <td><span class="badge badge-danger">CHỈ CÒN 1 MÁY</span></td>
+              </tr>
+              <tr>
+                <td class="sku-code">260901559</td>
+                <td><a href="https://phongvu.vn/op-lung-silicon-magsafe-cho-iphone-18-pro-do-tia-mk8t4fe-a--s260901559" target="_blank" class="product-link">Ốp Lưng Silicon MagSafe cho iPhone 18 Pro - Đỏ Tía (MK8T4FE/A)</a></td>
+                <td><span class="badge badge-info">san-pham-apple</span></td>
+                <td class="price-text">1,290,000 ₫</td>
+                <td class="retail-text">1,499,000 ₫</td>
+                <td style="color:#f87171; font-weight:600;">-14%</td>
+                <td><span style="color:#f87171; font-weight:700;">🚨 Duy nhất 1 cái</span></td>
+                <td><span class="badge badge-danger">CHỈ CÒN 1 MÁY</span></td>
+              </tr>
+              <tr>
+                <td class="sku-code">260901560</td>
+                <td><a href="https://phongvu.vn/op-lung-silicon-magsafe-cho-iphone-18-pro-xanh-o-liu-mk8v4fe-a--s260901560" target="_blank" class="product-link">Ốp Lưng Silicon MagSafe cho iPhone 18 Pro - Xanh Ô-liu (MK8V4FE/A)</a></td>
+                <td><span class="badge badge-info">san-pham-apple</span></td>
+                <td class="price-text">1,290,000 ₫</td>
+                <td class="retail-text">1,499,000 ₫</td>
+                <td style="color:#f87171; font-weight:600;">-14%</td>
+                <td><span style="color:#f87171; font-weight:700;">🚨 Duy nhất 1 cái</span></td>
+                <td><span class="badge badge-danger">CHỈ CÒN 1 MÁY</span></td>
+              </tr>
+              <tr>
+                <td class="sku-code">260900716</td>
+                <td><a href="https://phongvu.vn/iphone-18-pro-max-2tb--p896017" target="_blank" class="product-link">iPhone 18 Pro Max 2TB - Đỏ Burgundy (MJY44X/A)</a></td>
+                <td><span class="badge badge-info">iphone</span></td>
+                <td class="price-text">80,990,000 ₫</td>
+                <td class="retail-text">80,990,000 ₫</td>
+                <td style="color:#f87171; font-weight:600;">0%</td>
+                <td><span style="color:#fbbf24; font-weight:700;">⚠️ Rất ít (2 cái)</span></td>
+                <td><span class="badge badge-warning">CÒN 2 MÁY</span></td>
+              </tr>
+              <tr>
+                <td class="sku-code">260300553</td>
+                <td><a href="https://phongvu.vn/macbook-pro-14-m5-pro-15-cpu-16-gpu-24gb-1tb--p853255" target="_blank" class="product-link">MacBook Pro M5 Pro 14 inch (15 CPU/ 16 GPU/ 24GB/ 1TB)</a></td>
+                <td><span class="badge badge-info">macbook</span></td>
+                <td class="price-text">66,990,000 ₫</td>
+                <td class="retail-text">68,990,000 ₫</td>
+                <td style="color:#f87171; font-weight:600;">-3%</td>
+                <td><span style="color:#fbbf24; font-weight:700;">⚠️ Rất ít (2 cái)</span></td>
+                <td><span class="badge badge-warning">CÒN 2 MÁY</span></td>
+              </tr>
+              <tr>
+                <td class="sku-code">260300538</td>
+                <td><a href="https://phongvu.vn/macbook-air-13-m5-10-cpu-10-gpu-24gb-1tb--p853251" target="_blank" class="product-link">MacBook Air M5 13 inch (10CPU/10GPU/24GB/1TB)</a></td>
+                <td><span class="badge badge-info">macbook</span></td>
+                <td class="price-text">45,990,000 ₫</td>
+                <td class="retail-text">49,990,000 ₫</td>
+                <td style="color:#f87171; font-weight:600;">-8%</td>
+                <td><span style="color:#fbbf24; font-weight:700;">⚠️ Rất ít (2 cái)</span></td>
+                <td><span class="badge badge-warning">CÒN 2 MÁY</span></td>
+              </tr>
+              <tr>
+                <td class="sku-code">241003496</td>
+                <td><a href="https://phongvu.vn/ipad-mini-7-wifi-128gb--p757310" target="_blank" class="product-link">iPad Mini 7 (A17) 8.3 inch Wifi 128GB</a></td>
+                <td><span class="badge badge-info">ipad</span></td>
+                <td class="price-text">14,990,000 ₫</td>
+                <td class="retail-text">16,490,000 ₫</td>
+                <td style="color:#f87171; font-weight:600;">-9%</td>
+                <td><span style="color:#fbbf24; font-weight:700;">⚠️ Rất ít (2 cái)</span></td>
+                <td><span class="badge badge-warning">CÒN 2 MÁY</span></td>
+              </tr>
+              <tr>
+                <td class="sku-code">260901541</td>
+                <td><a href="https://phongvu.vn/op-lung-techwoven-magsafe-cho-iphone-18-pro-xanh-chambray-mkd54fe-a--s260901541" target="_blank" class="product-link">Ốp Lưng TechWoven MagSafe cho iPhone 18 Pro – Xanh Chambray (MKD54FE/A)</a></td>
+                <td><span class="badge badge-info">san-pham-apple</span></td>
+                <td class="price-text">1,390,000 ₫</td>
+                <td class="retail-text">1,649,000 ₫</td>
+                <td style="color:#f87171; font-weight:600;">-16%</td>
+                <td><span style="color:#fbbf24; font-weight:700;">⚠️ Rất ít (2 cái)</span></td>
+                <td><span class="badge badge-warning">CÒN 2 MÁY</span></td>
+              </tr>
+              <tr>
+                <td class="sku-code">260901549</td>
+                <td><a href="https://phongvu.vn/op-lung-techwoven-magsafe-cho-iphone-18-pro-nau-xam-mkd44fe-a--s260901549" target="_blank" class="product-link">Ốp Lưng TechWoven MagSafe cho iPhone 18 Pro – Nâu Xám (MKD44FE/A)</a></td>
+                <td><span class="badge badge-info">san-pham-apple</span></td>
+                <td class="price-text">1,390,000 ₫</td>
+                <td class="retail-text">1,649,000 ₫</td>
+                <td style="color:#f87171; font-weight:600;">-16%</td>
+                <td><span style="color:#fbbf24; font-weight:700;">⚠️ Rất ít (2 cái)</span></td>
+                <td><span class="badge badge-warning">CÒN 2 MÁY</span></td>
+              </tr>
+              <tr>
+                <td class="sku-code">251010234</td>
+                <td><a href="https://phongvu.vn/macbook-pro-14-m5-10-cpu-10-gpu-16gb-1tb--p800309" target="_blank" class="product-link">MacBook Pro M5 14 inch (10 CPU/ 10 GPU/ 16GB/ 1TB)</a></td>
+                <td><span class="badge badge-info">macbook</span></td>
+                <td class="price-text">52,990,000 ₫</td>
+                <td class="retail-text">54,990,000 ₫</td>
+                <td style="color:#f87171; font-weight:600;">-4%</td>
+                <td><span style="color:#93c5fd; font-weight:600;">Còn 4 cái</span></td>
+                <td><span class="badge badge-info">CÒN 3 - 5 MÁY</span></td>
+              </tr>
+              <tr>
+                <td class="sku-code">260300557</td>
+                <td><a href="https://phongvu.vn/macbook-pro-14-m5-pro-15-cpu-16-gpu-24gb-2tb--p853257" target="_blank" class="product-link">MacBook Pro M5 Pro 14 inch (15 CPU/ 16 GPU/ 24GB/ 2TB)</a></td>
+                <td><span class="badge badge-info">macbook</span></td>
+                <td class="price-text">77,990,000 ₫</td>
+                <td class="retail-text">82,990,000 ₫</td>
+                <td style="color:#f87171; font-weight:600;">-6%</td>
+                <td><span style="color:#93c5fd; font-weight:600;">Còn 5 cái</span></td>
+                <td><span class="badge badge-info">CÒN 3 - 5 MÁY</span></td>
+              </tr>
+              <tr>
+                <td class="sku-code">260900707</td>
+                <td><a href="https://phongvu.vn/iphone-18-pro-max-512gb--p896015" target="_blank" class="product-link">iPhone 18 Pro Max 512GB - Băng Thanh (MJXW4X/A)</a></td>
+                <td><span class="badge badge-info">iphone</span></td>
+                <td class="price-text">48,490,000 ₫</td>
+                <td class="retail-text">48,490,000 ₫</td>
+                <td style="color:#f87171; font-weight:600;">0%</td>
+                <td><span style="color:#93c5fd; font-weight:600;">Còn 5 cái</span></td>
+                <td><span class="badge badge-info">CÒN 3 - 5 MÁY</span></td>
+              </tr>
+              <tr>
+                <td class="sku-code">260300242</td>
+                <td><a href="https://phongvu.vn/ipad-air-m4-11-inch-5g-256gb--p852973" target="_blank" class="product-link">iPad Air M4 11 inch 5G 256GB</a></td>
+                <td><span class="badge badge-info">ipad</span></td>
+                <td class="price-text">27,490,000 ₫</td>
+                <td class="retail-text">27,990,000 ₫</td>
+                <td style="color:#f87171; font-weight:600;">-2%</td>
+                <td><span style="color:#93c5fd; font-weight:600;">Còn 5 cái</span></td>
+                <td><span class="badge badge-info">CÒN 3 - 5 MÁY</span></td>
+              </tr>
+              <tr>
+                <td class="sku-code">260300238</td>
+                <td><a href="https://phongvu.vn/ipad-air-m4-11-inch-5g-128gb--p852972" target="_blank" class="product-link">iPad Air M4 11 inch 5G 128GB</a></td>
+                <td><span class="badge badge-info">ipad</span></td>
+                <td class="price-text">24,490,000 ₫</td>
+                <td class="retail-text">25,190,000 ₫</td>
+                <td style="color:#f87171; font-weight:600;">-3%</td>
+                <td><span style="color:#93c5fd; font-weight:600;">Còn 5 cái</span></td>
+                <td><span class="badge badge-info">CÒN 3 - 5 MÁY</span></td>
+              </tr>
+              <tr>
+                <td class="sku-code">260901538</td>
+                <td><a href="https://phongvu.vn/op-lung-techwoven-magsafe-cho-iphone-18-pro-den-mkd64fe-a--s260901538" target="_blank" class="product-link">Ốp Lưng TechWoven MagSafe cho iPhone 18 Pro – Đen (MKD64FE/A)</a></td>
+                <td><span class="badge badge-info">san-pham-apple</span></td>
+                <td class="price-text">1,390,000 ₫</td>
+                <td class="retail-text">1,649,000 ₫</td>
+                <td style="color:#f87171; font-weight:600;">-16%</td>
+                <td><span style="color:#93c5fd; font-weight:600;">Còn 5 cái</span></td>
+                <td><span class="badge badge-info">CÒN 3 - 5 MÁY</span></td>
+              </tr>
+              <tr>
+                <td class="sku-code">260901546</td>
+                <td><a href="https://phongvu.vn/op-lung-techwoven-magsafe-cho-iphone-18-pro-max-xanh-chambray-mkdr4fe-a--s260901546" target="_blank" class="product-link">Ốp Lưng TechWoven MagSafe cho iPhone 18 Pro Max – Xanh Chambray (MKDR4FE/A)</a></td>
+                <td><span class="badge badge-info">san-pham-apple</span></td>
+                <td class="price-text">1,390,000 ₫</td>
+                <td class="retail-text">1,649,000 ₫</td>
+                <td style="color:#f87171; font-weight:600;">-16%</td>
+                <td><span style="color:#93c5fd; font-weight:600;">Còn 5 cái</span></td>
+                <td><span class="badge badge-info">CÒN 3 - 5 MÁY</span></td>
+              </tr>
+              <tr>
+                <td class="sku-code">260901552</td>
+                <td><a href="https://phongvu.vn/op-lung-techwoven-magsafe-cho-iphone-18-pro-max-nau-xam-mkdq4fe-a--s260901552" target="_blank" class="product-link">Ốp Lưng TechWoven MagSafe cho iPhone 18 Pro Max – Nâu Xám (MKDQ4FE/A)</a></td>
+                <td><span class="badge badge-info">san-pham-apple</span></td>
+                <td class="price-text">1,390,000 ₫</td>
+                <td class="retail-text">1,649,000 ₫</td>
+                <td style="color:#f87171; font-weight:600;">-16%</td>
+                <td><span style="color:#93c5fd; font-weight:600;">Còn 5 cái</span></td>
+                <td><span class="badge badge-info">CÒN 3 - 5 MÁY</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 2: PRICING & PROMOTIONS -->
+    <div id="tab-pricing" class="tab-pane">
+      <div class="card-panel">
+        <div class="panel-header">
+          <div class="panel-title">
+            <span>🎁 Top Sản Phẩm Giảm Giá Mạnh & Có Quà Tặng Kèm</span>
+          </div>
+          <input type="text" id="searchPricing" class="search-box" placeholder="Tìm theo tên hoặc mã SKU..." onkeyup="filterTable('pricingTable', 'searchPricing')">
+        </div>
+        <div class="table-container">
+          <table id="pricingTable">
+            <thead>
+              <tr>
+                <th>Mã SKU</th>
+                <th>Tên sản phẩm</th>
+                <th>Danh mục</th>
+                <th>Giá bán</th>
+                <th>Tiết kiệm (₫)</th>
+                <th>% Giảm</th>
+                <th>Quà tặng kèm</th>
+                <th>Tồn kho</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="sku-code">260300533</td>
+                <td><a href="https://phongvu.vn/macbook-air-13-m5-10-cpu-10-gpu-16gb-1tb--p853250" target="_blank" class="product-link">MacBook Air M5 13 inch (10CPU/10GPU/16GB/1TB)</a></td>
+                <td><span class="badge badge-info">macbook</span></td>
+                <td class="price-text">38,990,000 ₫</td>
+                <td style="color:#34d399; font-weight:600;">-5,500,000 ₫</td>
+                <td style="color:#f87171; font-weight:700;">-12%</td>
+                <td><span class="badge badge-gift">🎁 Có Quà Tặng</span></td>
+                <td>Dồi dào (>=10)</td>
+              </tr>
+              <tr>
+                <td class="sku-code">260300534</td>
+                <td><a href="https://phongvu.vn/macbook-air-13-m5-10-cpu-10-gpu-16gb-1tb--p853250" target="_blank" class="product-link">MacBook Air M5 13 inch (10CPU/10GPU/16GB/1TB)</a></td>
+                <td><span class="badge badge-info">macbook</span></td>
+                <td class="price-text">38,990,000 ₫</td>
+                <td style="color:#34d399; font-weight:600;">-5,500,000 ₫</td>
+                <td style="color:#f87171; font-weight:700;">-12%</td>
+                <td><span class="badge badge-gift">🎁 Có Quà Tặng</span></td>
+                <td>Dồi dào (>=10)</td>
+              </tr>
+              <tr>
+                <td class="sku-code">260300535</td>
+                <td><a href="https://phongvu.vn/macbook-air-13-m5-10-cpu-10-gpu-16gb-1tb--p853250" target="_blank" class="product-link">MacBook Air M5 13 inch (10CPU/10GPU/16GB/1TB)</a></td>
+                <td><span class="badge badge-info">macbook</span></td>
+                <td class="price-text">38,990,000 ₫</td>
+                <td style="color:#34d399; font-weight:600;">-5,500,000 ₫</td>
+                <td style="color:#f87171; font-weight:700;">-12%</td>
+                <td><span class="badge badge-gift">🎁 Có Quà Tặng</span></td>
+                <td>Dồi dào (>=10)</td>
+              </tr>
+              <tr>
+                <td class="sku-code">260300536</td>
+                <td><a href="https://phongvu.vn/macbook-air-13-m5-10-cpu-10-gpu-16gb-1tb--p853250" target="_blank" class="product-link">MacBook Air M5 13 inch (10CPU/10GPU/16GB/1TB)</a></td>
+                <td><span class="badge badge-info">macbook</span></td>
+                <td class="price-text">38,990,000 ₫</td>
+                <td style="color:#34d399; font-weight:600;">-5,500,000 ₫</td>
+                <td style="color:#f87171; font-weight:700;">-12%</td>
+                <td><span class="badge badge-gift">🎁 Có Quà Tặng</span></td>
+                <td>Dồi dào (>=10)</td>
+              </tr>
+              <tr>
+                <td class="sku-code">260300557</td>
+                <td><a href="https://phongvu.vn/macbook-pro-14-m5-pro-15-cpu-16-gpu-24gb-2tb--p853257" target="_blank" class="product-link">MacBook Pro M5 Pro 14 inch (15 CPU/ 16 GPU/ 24GB/ 2TB)</a></td>
+                <td><span class="badge badge-info">macbook</span></td>
+                <td class="price-text">77,990,000 ₫</td>
+                <td style="color:#34d399; font-weight:600;">-5,000,000 ₫</td>
+                <td style="color:#f87171; font-weight:700;">-6%</td>
+                <td><span class="badge badge-gift">🎁 Có Quà Tặng</span></td>
+                <td>5 cái (Thực)</td>
+              </tr>
+              <tr>
+                <td class="sku-code">260300565</td>
+                <td><a href="https://phongvu.vn/macbook-pro-16-m5-max-18-cpu-32-gpu-36gb-2tb--p853261" target="_blank" class="product-link">MacBook Pro M5 Max 16 inch (18 CPU/ 32 GPU/ 36GB/ 2TB)</a></td>
+                <td><span class="badge badge-info">macbook</span></td>
+                <td class="price-text">114,990,000 ₫</td>
+                <td style="color:#34d399; font-weight:600;">-5,000,000 ₫</td>
+                <td style="color:#f87171; font-weight:700;">-4%</td>
+                <td><span class="badge badge-gift">🎁 Có Quà Tặng</span></td>
+                <td>1 cái (Thực)</td>
+              </tr>
+              <tr>
+                <td class="sku-code">260508560</td>
+                <td><a href="https://phongvu.vn/macbook-air-m5-13-6-inch-10cpu-8gpu-16gb-512gb--p876966" target="_blank" class="product-link">MacBook Air M5 13 inch (10CPU/8GPU/16GB/512GB)</a></td>
+                <td><span class="badge badge-info">macbook</span></td>
+                <td class="price-text">32,990,000 ₫</td>
+                <td style="color:#34d399; font-weight:600;">-4,500,000 ₫</td>
+                <td style="color:#f87171; font-weight:700;">-12%</td>
+                <td><span class="badge badge-gift">🎁 Có Quà Tặng</span></td>
+                <td>Dồi dào (>=10)</td>
+              </tr>
+              <tr>
+                <td class="sku-code">260508568</td>
+                <td><a href="https://phongvu.vn/macbook-air-m5-13-6-inch-10cpu-8gpu-16gb-512gb--p876966" target="_blank" class="product-link">MacBook Air M5 13 inch (10CPU/8GPU/16GB/512GB)</a></td>
+                <td><span class="badge badge-info">macbook</span></td>
+                <td class="price-text">32,990,000 ₫</td>
+                <td style="color:#34d399; font-weight:600;">-4,500,000 ₫</td>
+                <td style="color:#f87171; font-weight:700;">-12%</td>
+                <td><span class="badge badge-gift">🎁 Có Quà Tặng</span></td>
+                <td>Dồi dào (>=10)</td>
+              </tr>
+              <tr>
+                <td class="sku-code">260508575</td>
+                <td><a href="https://phongvu.vn/macbook-air-m5-13-6-inch-10cpu-8gpu-16gb-512gb--p876966" target="_blank" class="product-link">MacBook Air M5 13 inch (10CPU/8GPU/16GB/512GB)</a></td>
+                <td><span class="badge badge-info">macbook</span></td>
+                <td class="price-text">32,990,000 ₫</td>
+                <td style="color:#34d399; font-weight:600;">-4,500,000 ₫</td>
+                <td style="color:#f87171; font-weight:700;">-12%</td>
+                <td><span class="badge badge-gift">🎁 Có Quà Tặng</span></td>
+                <td>Dồi dào (>=10)</td>
+              </tr>
+              <tr>
+                <td class="sku-code">260508582</td>
+                <td><a href="https://phongvu.vn/macbook-air-m5-13-6-inch-10cpu-8gpu-16gb-512gb--p876966" target="_blank" class="product-link">MacBook Air M5 13 inch (10CPU/8GPU/16GB/512GB)</a></td>
+                <td><span class="badge badge-info">macbook</span></td>
+                <td class="price-text">32,990,000 ₫</td>
+                <td style="color:#34d399; font-weight:600;">-4,500,000 ₫</td>
+                <td style="color:#f87171; font-weight:700;">-12%</td>
+                <td><span class="badge badge-gift">🎁 Có Quà Tặng</span></td>
+                <td>Dồi dào (>=10)</td>
+              </tr>
+              <tr>
+                <td class="sku-code">250900212</td>
+                <td><a href="https://phongvu.vn/iphone-17-pro-max-256gb--p775309" target="_blank" class="product-link">iPhone 17 Pro Max 256GB</a></td>
+                <td><span class="badge badge-info">iphone</span></td>
+                <td class="price-text">33,490,000 ₫</td>
+                <td style="color:#34d399; font-weight:600;">-4,500,000 ₫</td>
+                <td style="color:#f87171; font-weight:700;">-12%</td>
+                <td><span style="color:#6b7280">-</span></td>
+                <td>Dồi dào (>=10)</td>
+              </tr>
+              <tr>
+                <td class="sku-code">250900213</td>
+                <td><a href="https://phongvu.vn/iphone-17-pro-max-256gb--p775309" target="_blank" class="product-link">iPhone 17 Pro Max 256GB</a></td>
+                <td><span class="badge badge-info">iphone</span></td>
+                <td class="price-text">33,490,000 ₫</td>
+                <td style="color:#34d399; font-weight:600;">-4,500,000 ₫</td>
+                <td style="color:#f87171; font-weight:700;">-12%</td>
+                <td><span style="color:#6b7280">-</span></td>
+                <td>Dồi dào (>=10)</td>
+              </tr>
+              <tr>
+                <td class="sku-code">250900215</td>
+                <td><a href="https://phongvu.vn/iphone-17-pro-max-512gb--p775312" target="_blank" class="product-link">iPhone 17 Pro Max 512GB</a></td>
+                <td><span class="badge badge-info">iphone</span></td>
+                <td class="price-text">39,990,000 ₫</td>
+                <td style="color:#34d399; font-weight:600;">-4,500,000 ₫</td>
+                <td style="color:#f87171; font-weight:700;">-10%</td>
+                <td><span style="color:#6b7280">-</span></td>
+                <td>Dồi dào (>=10)</td>
+              </tr>
+              <tr>
+                <td class="sku-code">260300538</td>
+                <td><a href="https://phongvu.vn/macbook-air-13-m5-10-cpu-10-gpu-24gb-1tb--p853251" target="_blank" class="product-link">MacBook Air M5 13 inch (10CPU/10GPU/24GB/1TB)</a></td>
+                <td><span class="badge badge-info">macbook</span></td>
+                <td class="price-text">45,990,000 ₫</td>
+                <td style="color:#34d399; font-weight:600;">-4,000,000 ₫</td>
+                <td style="color:#f87171; font-weight:700;">-8%</td>
+                <td><span class="badge badge-gift">🎁 Có Quà Tặng</span></td>
+                <td>2 cái (Thực)</td>
+              </tr>
+              <tr>
+                <td class="sku-code">260300540</td>
+                <td><a href="https://phongvu.vn/macbook-air-13-m5-10-cpu-10-gpu-24gb-1tb--p853251" target="_blank" class="product-link">MacBook Air M5 13 inch (10CPU/10GPU/24GB/1TB)</a></td>
+                <td><span class="badge badge-info">macbook</span></td>
+                <td class="price-text">45,990,000 ₫</td>
+                <td style="color:#34d399; font-weight:600;">-4,000,000 ₫</td>
+                <td style="color:#f87171; font-weight:700;">-8%</td>
+                <td><span class="badge badge-gift">🎁 Có Quà Tặng</span></td>
+                <td>Dồi dào (>=10)</td>
+              </tr>
+              <tr>
+                <td class="sku-code">260603109</td>
+                <td><a href="https://phongvu.vn/macbook-air-m5-15-3-inch-10cpu-10gpu-16gb-512gb--p880773" target="_blank" class="product-link">MacBook Air M5 15 inch (10CPU/10GPU/16GB/512GB)</a></td>
+                <td><span class="badge badge-info">macbook</span></td>
+                <td class="price-text">37,990,000 ₫</td>
+                <td style="color:#34d399; font-weight:600;">-4,000,000 ₫</td>
+                <td style="color:#f87171; font-weight:700;">-10%</td>
+                <td><span class="badge badge-gift">🎁 Có Quà Tặng</span></td>
+                <td>Dồi dào (>=10)</td>
+              </tr>
+              <tr>
+                <td class="sku-code">260603116</td>
+                <td><a href="https://phongvu.vn/macbook-air-m5-15-3-inch-10cpu-10gpu-16gb-512gb--p880773" target="_blank" class="product-link">MacBook Air M5 15 inch (10CPU/10GPU/16GB/512GB)</a></td>
+                <td><span class="badge badge-info">macbook</span></td>
+                <td class="price-text">37,990,000 ₫</td>
+                <td style="color:#34d399; font-weight:600;">-4,000,000 ₫</td>
+                <td style="color:#f87171; font-weight:700;">-10%</td>
+                <td><span class="badge badge-gift">🎁 Có Quà Tặng</span></td>
+                <td>Dồi dào (>=10)</td>
+              </tr>
+              <tr>
+                <td class="sku-code">260603146</td>
+                <td><a href="https://phongvu.vn/macbook-air-m5-15-3-inch-10cpu-10gpu-16gb-512gb--p880773" target="_blank" class="product-link">MacBook Air M5 15 inch (10CPU/10GPU/16GB/512GB)</a></td>
+                <td><span class="badge badge-info">macbook</span></td>
+                <td class="price-text">37,990,000 ₫</td>
+                <td style="color:#34d399; font-weight:600;">-4,000,000 ₫</td>
+                <td style="color:#f87171; font-weight:700;">-10%</td>
+                <td><span class="badge badge-gift">🎁 Có Quà Tặng</span></td>
+                <td>Dồi dào (>=10)</td>
+              </tr>
+              <tr>
+                <td class="sku-code">260603149</td>
+                <td><a href="https://phongvu.vn/macbook-air-m5-15-3-inch-10cpu-10gpu-16gb-512gb--p880773" target="_blank" class="product-link">MacBook Air M5 15 inch (10CPU/10GPU/16GB/512GB)</a></td>
+                <td><span class="badge badge-info">macbook</span></td>
+                <td class="price-text">37,990,000 ₫</td>
+                <td style="color:#34d399; font-weight:600;">-4,000,000 ₫</td>
+                <td style="color:#f87171; font-weight:700;">-10%</td>
+                <td><span class="badge badge-gift">🎁 Có Quà Tặng</span></td>
+                <td>Dồi dào (>=10)</td>
+              </tr>
+              <tr>
+                <td class="sku-code">230900669</td>
+                <td><a href="https://phongvu.vn/iphone-15-128gb--p535040" target="_blank" class="product-link">iPhone 15 128GB</a></td>
+                <td><span class="badge badge-info">iphone</span></td>
+                <td class="price-text">18,990,000 ₫</td>
+                <td style="color:#34d399; font-weight:600;">-4,000,000 ₫</td>
+                <td style="color:#f87171; font-weight:700;">-17%</td>
+                <td><span style="color:#6b7280">-</span></td>
+                <td>Dồi dào (>=10)</td>
+              </tr>
+              <tr>
+                <td class="sku-code">250900217</td>
+                <td><a href="https://phongvu.vn/iphone-17-pro-max-512gb--p775312" target="_blank" class="product-link">iPhone 17 Pro Max 512GB</a></td>
+                <td><span class="badge badge-info">iphone</span></td>
+                <td class="price-text">40,490,000 ₫</td>
+                <td style="color:#34d399; font-weight:600;">-4,000,000 ₫</td>
+                <td style="color:#f87171; font-weight:700;">-9%</td>
+                <td><span style="color:#6b7280">-</span></td>
+                <td>Dồi dào (>=10)</td>
+              </tr>
+              <tr>
+                <td class="sku-code">260300529</td>
+                <td><a href="https://phongvu.vn/macbook-air-13-m5-10-cpu-8-gpu-16gb-512gb--p853249" target="_blank" class="product-link">MacBook Air M5 13 inch (10CPU/8GPU/16GB/512GB)</a></td>
+                <td><span class="badge badge-info">macbook</span></td>
+                <td class="price-text">32,490,000 ₫</td>
+                <td style="color:#34d399; font-weight:600;">-3,500,000 ₫</td>
+                <td style="color:#f87171; font-weight:700;">-10%</td>
+                <td><span class="badge badge-gift">🎁 Có Quà Tặng</span></td>
+                <td>Dồi dào (>=10)</td>
+              </tr>
+              <tr>
+                <td class="sku-code">260300530</td>
+                <td><a href="https://phongvu.vn/macbook-air-13-m5-10-cpu-8-gpu-16gb-512gb--p853249" target="_blank" class="product-link">MacBook Air M5 13 inch (10CPU/8GPU/16GB/512GB)</a></td>
+                <td><span class="badge badge-info">macbook</span></td>
+                <td class="price-text">32,490,000 ₫</td>
+                <td style="color:#34d399; font-weight:600;">-3,500,000 ₫</td>
+                <td style="color:#f87171; font-weight:700;">-10%</td>
+                <td><span class="badge badge-gift">🎁 Có Quà Tặng</span></td>
+                <td>Dồi dào (>=10)</td>
+              </tr>
+              <tr>
+                <td class="sku-code">260300531</td>
+                <td><a href="https://phongvu.vn/macbook-air-13-m5-10-cpu-8-gpu-16gb-512gb--p853249" target="_blank" class="product-link">MacBook Air M5 13 inch (10CPU/8GPU/16GB/512GB)</a></td>
+                <td><span class="badge badge-info">macbook</span></td>
+                <td class="price-text">32,490,000 ₫</td>
+                <td style="color:#34d399; font-weight:600;">-3,500,000 ₫</td>
+                <td style="color:#f87171; font-weight:700;">-10%</td>
+                <td><span class="badge badge-gift">🎁 Có Quà Tặng</span></td>
+                <td>Dồi dào (>=10)</td>
+              </tr>
+              <tr>
+                <td class="sku-code">260300532</td>
+                <td><a href="https://phongvu.vn/macbook-air-13-m5-10-cpu-8-gpu-16gb-512gb--p853249" target="_blank" class="product-link">MacBook Air M5 13 inch (10CPU/8GPU/16GB/512GB)</a></td>
+                <td><span class="badge badge-info">macbook</span></td>
+                <td class="price-text">32,490,000 ₫</td>
+                <td style="color:#34d399; font-weight:600;">-3,500,000 ₫</td>
+                <td style="color:#f87171; font-weight:700;">-10%</td>
+                <td><span class="badge badge-gift">🎁 Có Quà Tặng</span></td>
+                <td>Dồi dào (>=10)</td>
+              </tr>
+              <tr>
+                <td class="sku-code">260503924</td>
+                <td><a href="https://phongvu.vn/macbook-air-m5-13-6-inch-10cpu-10gpu-24gb-512gb--p872117" target="_blank" class="product-link">MacBook Air M5 13 inch (10CPU/10GPU/24GB/512GB)</a></td>
+                <td><span class="badge badge-info">macbook</span></td>
+                <td class="price-text">37,990,000 ₫</td>
+                <td style="color:#34d399; font-weight:600;">-3,500,000 ₫</td>
+                <td style="color:#f87171; font-weight:700;">-8%</td>
+                <td><span class="badge badge-gift">🎁 Có Quà Tặng</span></td>
+                <td>Dồi dào (>=10)</td>
+              </tr>
+              <tr>
+                <td class="sku-code">260503931</td>
+                <td><a href="https://phongvu.vn/macbook-air-m5-13-6-inch-10cpu-10gpu-24gb-512gb--p872117" target="_blank" class="product-link">MacBook Air M5 13 inch (10CPU/10GPU/24GB/512GB)</a></td>
+                <td><span class="badge badge-info">macbook</span></td>
+                <td class="price-text">37,990,000 ₫</td>
+                <td style="color:#34d399; font-weight:600;">-3,500,000 ₫</td>
+                <td style="color:#f87171; font-weight:700;">-8%</td>
+                <td><span class="badge badge-gift">🎁 Có Quà Tặng</span></td>
+                <td>Dồi dào (>=10)</td>
+              </tr>
+              <tr>
+                <td class="sku-code">260503937</td>
+                <td><a href="https://phongvu.vn/macbook-air-m5-13-6-inch-10cpu-10gpu-24gb-512gb--p872117" target="_blank" class="product-link">MacBook Air M5 13 inch (10CPU/10GPU/24GB/512GB)</a></td>
+                <td><span class="badge badge-info">macbook</span></td>
+                <td class="price-text">37,990,000 ₫</td>
+                <td style="color:#34d399; font-weight:600;">-3,500,000 ₫</td>
+                <td style="color:#f87171; font-weight:700;">-8%</td>
+                <td><span class="badge badge-gift">🎁 Có Quà Tặng</span></td>
+                <td>Dồi dào (>=10)</td>
+              </tr>
+              <tr>
+                <td class="sku-code">260503944</td>
+                <td><a href="https://phongvu.vn/macbook-air-m5-13-6-inch-10cpu-10gpu-24gb-512gb--p872117" target="_blank" class="product-link">MacBook Air M5 13 inch (10CPU/10GPU/24GB/512GB)</a></td>
+                <td><span class="badge badge-info">macbook</span></td>
+                <td class="price-text">37,990,000 ₫</td>
+                <td style="color:#34d399; font-weight:600;">-3,500,000 ₫</td>
+                <td style="color:#f87171; font-weight:700;">-8%</td>
+                <td><span class="badge badge-gift">🎁 Có Quà Tặng</span></td>
+                <td>Dồi dào (>=10)</td>
+              </tr>
+              <tr>
+                <td class="sku-code">260300544</td>
+                <td><a href="https://phongvu.vn/macbook-air-15-m5-10-cpu-10-gpu-16gb-512gb--p853252" target="_blank" class="product-link">MacBook Air M5 15 inch (10CPU/10GPU/16GB/512GB)</a></td>
+                <td><span class="badge badge-info">macbook</span></td>
+                <td class="price-text">38,990,000 ₫</td>
+                <td style="color:#34d399; font-weight:600;">-3,000,000 ₫</td>
+                <td style="color:#f87171; font-weight:700;">-7%</td>
+                <td><span class="badge badge-gift">🎁 Có Quà Tặng</span></td>
+                <td>1 cái (Thực)</td>
+              </tr>
+              <tr>
+                <td class="sku-code">240900701</td>
+                <td><a href="https://phongvu.vn/iphone-16--s240900701" target="_blank" class="product-link">iPhone 16 128GB</a></td>
+                <td><span class="badge badge-info">iphone</span></td>
+                <td class="price-text">21,990,000 ₫</td>
+                <td style="color:#34d399; font-weight:600;">-3,000,000 ₫</td>
+                <td style="color:#f87171; font-weight:700;">-12%</td>
+                <td><span style="color:#6b7280">-</span></td>
+                <td>Dồi dào (>=10)</td>
+              </tr>
+              <tr>
+                <td class="sku-code">250900173</td>
+                <td><a href="https://phongvu.vn/iphone-17-256gb--p775263" target="_blank" class="product-link">iPhone 17 256GB</a></td>
+                <td><span class="badge badge-info">iphone</span></td>
+                <td class="price-text">25,990,000 ₫</td>
+                <td style="color:#34d399; font-weight:600;">-3,000,000 ₫</td>
+                <td style="color:#f87171; font-weight:700;">-10%</td>
+                <td><span style="color:#6b7280">-</span></td>
+                <td>Dồi dào (>=10)</td>
+              </tr>
+              <tr>
+                <td class="sku-code">250900175</td>
+                <td><a href="https://phongvu.vn/iphone-17-256gb--p775263" target="_blank" class="product-link">iPhone 17 256GB</a></td>
+                <td><span class="badge badge-info">iphone</span></td>
+                <td class="price-text">25,990,000 ₫</td>
+                <td style="color:#34d399; font-weight:600;">-3,000,000 ₫</td>
+                <td style="color:#f87171; font-weight:700;">-10%</td>
+                <td><span style="color:#6b7280">-</span></td>
+                <td>1 cái (Thực)</td>
+              </tr>
+              <tr>
+                <td class="sku-code">250900176</td>
+                <td><a href="https://phongvu.vn/iphone-17-256gb--p775263" target="_blank" class="product-link">iPhone 17 256GB</a></td>
+                <td><span class="badge badge-info">iphone</span></td>
+                <td class="price-text">25,990,000 ₫</td>
+                <td style="color:#34d399; font-weight:600;">-3,000,000 ₫</td>
+                <td style="color:#f87171; font-weight:700;">-10%</td>
+                <td><span style="color:#6b7280">-</span></td>
+                <td>Dồi dào (>=10)</td>
+              </tr>
+              <tr>
+                <td class="sku-code">251010171</td>
+                <td><a href="https://phongvu.vn/ipad-pro-m5-11-inch-wifi-256gb--p798344" target="_blank" class="product-link">iPad Pro M5 11 inch Wifi 256GB</a></td>
+                <td><span class="badge badge-info">ipad</span></td>
+                <td class="price-text">32,990,000 ₫</td>
+                <td style="color:#34d399; font-weight:600;">-2,600,000 ₫</td>
+                <td style="color:#f87171; font-weight:700;">-7%</td>
+                <td><span style="color:#6b7280">-</span></td>
+                <td>Dồi dào (>=10)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 3: CATEGORY & STORE COVERAGE -->
+    <div id="tab-categories" class="tab-pane">
+      <div class="card-panel">
+        <div class="panel-header">
+          <div class="panel-title">
+            <span>🏢 Ma Trận Phân Bố Tồn Kho Theo Từng Nhóm Ngành Hàng</span>
+          </div>
+        </div>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Danh mục khảo sát</th>
+                <th>Tổng số SKU</th>
+                <th>Số SKU Khan Hiếm (&le; 5)</th>
+                <th>Tỷ lệ Khan Hiếm</th>
+                <th>Số SKU Dồi Dào (&ge; 10)</th>
+                <th>Giá bán trung bình</th>
+                <th>Đánh giá trạng thái</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="font-weight:600; text-transform:uppercase;">macbook</td>
+                <td style="font-weight:700;">40 SKU</td>
+                <td style="color:#f87171; font-weight:700;">7 SKU</td>
+                <td>17.5%</td>
+                <td style="color:#34d399;">30 SKU</td>
+                <td class="price-text">43,592,500 ₫</td>
+                <td><span class="badge badge-warning">Tồn kho cân bằng</span></td>
+              </tr>
+              <tr>
+                <td style="font-weight:600; text-transform:uppercase;">san-pham-apple</td>
+                <td style="font-weight:700;">40 SKU</td>
+                <td style="color:#f87171; font-weight:700;">15 SKU</td>
+                <td>37.5%</td>
+                <td style="color:#34d399;">25 SKU</td>
+                <td class="price-text">27,513,400 ₫</td>
+                <td><span class="badge badge-danger">Tồn kho mỏng / Rủi ro đứt hàng cao</span></td>
+              </tr>
+              <tr>
+                <td style="font-weight:600; text-transform:uppercase;">ipad</td>
+                <td style="font-weight:700;">40 SKU</td>
+                <td style="color:#f87171; font-weight:700;">4 SKU</td>
+                <td>10.0%</td>
+                <td style="color:#34d399;">18 SKU</td>
+                <td class="price-text">27,255,000 ₫</td>
+                <td><span class="badge badge-info">Dồi dào hàng</span></td>
+              </tr>
+              <tr>
+                <td style="font-weight:600; text-transform:uppercase;">iphone</td>
+                <td style="font-weight:700;">40 SKU</td>
+                <td style="color:#f87171; font-weight:700;">8 SKU</td>
+                <td>20.0%</td>
+                <td style="color:#34d399;">18 SKU</td>
+                <td class="price-text">48,628,625 ₫</td>
+                <td><span class="badge badge-warning">Tồn kho cân bằng</span></td>
+              </tr>
+              <tr>
+                <td style="font-weight:600; text-transform:uppercase;">airpods</td>
+                <td style="font-weight:700;">4 SKU</td>
+                <td style="color:#f87171; font-weight:700;">0 SKU</td>
+                <td>0.0%</td>
+                <td style="color:#34d399;">4 SKU</td>
+                <td class="price-text">3,715,000 ₫</td>
+                <td><span class="badge badge-info">Dồi dào hàng</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-pane').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+      
+      const targetPane = document.getElementById(tabId);
+      if (targetPane) targetPane.classList.add('active');
+      
+      event.currentTarget.classList.add('active');
+    }
+
+    function filterTable(tableId, inputId) {
+      const filter = document.getElementById(inputId).value.toLowerCase();
+      const rows = document.querySelectorAll('#' + tableId + ' tbody tr');
+      rows.forEach(row => {
+        const text = row.innerText.toLowerCase();
+        row.style.display = text.includes(filter) ? '' : 'none';
+      });
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,94 @@
+[
+  {
+    "sku": "240902178",
+    "seller_sku": "240902178",
+    "name": "Tai nghe Apple Airpods 4",
+    "brand": "Apple",
+    "price": 2990000,
+    "supplier_retail_price": 3790000,
+    "discount_amount": 800000,
+    "discount_percent": "-21%",
+    "stock_quantity": 1000,
+    "scarcity_flag": false,
+    "stock_status": "Dồi dào (>= 10)",
+    "has_gift": false,
+    "select_promotion_id": 3399423,
+    "categories": [
+      "Apple",
+      "Sản phẩm Apple khác",
+      "Tai nghe Apple",
+      "Tai nghe Apple"
+    ],
+    "canonical": "/tai-nghe-airpods-4-mxp63zp-a--s240902178",
+    "image_url": "https://lh3.googleusercontent.com/FedekMC-CvzVRJ5Dt9E8c44hdnBfAVkvnVNfqsJ_pFF3jGcpEuK59MxffBBQ_1TVTR9UIcf-_-iCgTu5juU0ZNZt5OwADLw=s0"
+  },
+  {
+    "sku": "240902180",
+    "seller_sku": "240902180",
+    "name": "Tai nghe Apple Airpods 4 (Chống ồn chủ động)",
+    "brand": "Apple",
+    "price": 3990000,
+    "supplier_retail_price": 4990000,
+    "discount_amount": 1000000,
+    "discount_percent": "-20%",
+    "stock_quantity": 1000,
+    "scarcity_flag": false,
+    "stock_status": "Dồi dào (>= 10)",
+    "has_gift": false,
+    "select_promotion_id": 3446598,
+    "categories": [
+      "Apple",
+      "Sản phẩm Apple khác",
+      "Tai nghe Apple",
+      "Tai nghe Apple"
+    ],
+    "canonical": "/tai-nghe-airpods-4-with-active-noise-cancellation-mxp93zp-a--s240902180",
+    "image_url": "https://lh3.googleusercontent.com/KLDqjIwnb403PrO6FZOGLyMxzx3yK074mMAfXm1DfclZx3s9pCBzcKQgcZyBYqQLVZduMgs1otG1E8JPSNplwV6GvDaMZT0=s0"
+  },
+  {
+    "sku": "260900725",
+    "seller_sku": "260900725",
+    "name": "Tai nghe Apple AirPods 5 (MKFW4ZP/A)",
+    "brand": "Apple",
+    "price": 3690000,
+    "supplier_retail_price": 3799000,
+    "discount_amount": 109000,
+    "discount_percent": "-3%",
+    "stock_quantity": 1000,
+    "scarcity_flag": false,
+    "stock_status": "Dồi dào (>= 10)",
+    "has_gift": false,
+    "select_promotion_id": 3415966,
+    "categories": [
+      "Apple",
+      "Sản phẩm Apple khác",
+      "Tai nghe Apple",
+      "Tai nghe Apple"
+    ],
+    "canonical": "/tai-nghe-apple-airpods-5--s260900725",
+    "image_url": "https://lh3.googleusercontent.com/OfVEPYHWVrGVmZu_NUcybHZRtJ-3GNMUexsiSyLUfbepn39B8RdCxAqPvqMNPs6da3ELMvg4o3lGDdUiOQX-ix3n5PX1IQE=s0"
+  },
+  {
+    "sku": "260900726",
+    "seller_sku": "260900726",
+    "name": "Tai nghe Apple AirPods 5 với Hộp sạc không dây (MKFT4ZP/A)",
+    "brand": "Apple",
+    "price": 4190000,
+    "supplier_retail_price": 4299000,
+    "discount_amount": 109000,
+    "discount_percent": "-3%",
+    "stock_quantity": 1000,
+    "scarcity_flag": false,
+    "stock_status": "Dồi dào (>= 10)",
+    "has_gift": false,
+    "select_promotion_id": 3415967,
+    "categories": [
+      "Apple",
+      "Sản phẩm Apple khác",
+      "Tai nghe Apple",
+      "Tai nghe Apple"
+    ],
+    "canonical": "/tai-nghe-apple-airpods-5-with-active-noise-cancellation--s260900726",
+    "image_url": "https://lh3.googleusercontent.com/H2c4PnkXfc5F-JLtEogn1hEwmKhV1zAkzvwMsKgJ9_8Kj2n3O4fOgfKrZUEV5XpMcISAKqNP82JfbKRno4cuFfCN7H-6hXgT=s0"
+  }
+]
